@@ -4,18 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import com.example.Entities.Teacher;
-import com.example.Entities.User;
-import com.example.Entities.Warning;
-import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.JDBCConnectionPool;
-import com.example.Logic.UserJPAManager;
 import com.example.Pdf.generatePDF;
 import com.example.Templates.ConfirmWarningPDF;
 import com.example.Templates.MainContentView;
 import com.itextpdf.text.DocumentException;
-import com.vaadin.addon.jpacontainer.JPAContainer;
-import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.data.Container.Filterable;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
@@ -35,29 +28,24 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class AdminViewWarning extends MainContentView  {
+public class AdminViewWarning extends MainContentView {
 
-	File sourceFile;
-	static Grid grid;
-	String nomCognoms;
-	String fecha;
-	String hora;
-	final Window window = new Window();
-	private JPAContainer<Warning> warnings;
-	UserJPAManager MA = new UserJPAManager();
-	ConfirmWarningPDF pdf = new ConfirmWarningPDF();
+	private static final long serialVersionUID = -7507262925682017298L;
+	private File sourceFile;
+	private Grid grid;
+	private String fecha;
+	private Window window = new Window();
+	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
+	private JDBCConnectionPool jdbccp;
 
-	JDBCConnectionPool jdbccp;
-	
 	public AdminViewWarning() throws SQLException {
-		// TODO Auto-generated constructor stub
-		
+
 		buttonsSettings();
 		filterTextProperties();
 		WindowProperties();
 		buttonsAction();
 		gridProperties();
-		
+
 		bAdd.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -73,17 +61,14 @@ public class AdminViewWarning extends MainContentView  {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-
 			}
 		});
 		vHorizontalMain.addComponent(gridProperties());
 
 	}
-	
-	
+
 	public void popupPDF() throws IOException, DocumentException {
-		
+
 		generatePDF generatepdf = new generatePDF();
 		Embedded c = new Embedded();
 		sourceFile = new File(generatepdf.getPath2(getItemNomCognomSelected(), getDateSelected()));
@@ -97,51 +82,42 @@ public class AdminViewWarning extends MainContentView  {
 		pdf.hbuttons.setVisible(false);
 		window.setContent(pdf);
 		UI.getCurrent().addWindow(window);
-		
+
 		window.setVisible(true);
 
 	}
-	
+
 	private String getItemNomCognomSelected() {
 
 		Object name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom").getValue();
-		Object surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms").getValue();
-		
-				
-		return name.toString()+" "+surname.toString();
+		Object surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms")
+				.getValue();
+
+		return name.toString() + " " + surname.toString();
 
 	}
-	
-	private String getDateSelected(){
-		
+
+	private String getDateSelected() {
+
 		Object data = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("data").getValue();
 		fecha = data.toString();
-	
-		return fecha.substring(11,16);
+
+		return fecha.substring(11, 16);
 	}
-	
+
 	private Grid gridProperties() throws SQLException {
-		// TODO Auto-generated method stub
-		// Fill the grid with data
+
 		jdbccp = new JDBCConnectionPool();
 
-		SQLContainer AllWarnings = new SQLContainer(new FreeformQuery(
-				"select al.nom, " + "al.cognoms," + " a.grup, " + "a.motius_selection," + " a.altres_motius,"
-						+ "a.materia, a.data, " + "a.localitzacio " + "from amonestacio a, docent d, alumne al "
-						+ "where a.docent=d.id and a.alumne=al.id ",
+		SQLContainer AllWarnings = new SQLContainer(new FreeformQuery("select al.nom, " + "al.cognoms," + " a.grup, "
+				+ "a.motius_selection," + " a.altres_motius," + "a.materia, a.data, " + "a.localitzacio "
+				+ "from amonestacio a, docent d, alumne al " + "where a.docent=d.id and a.alumne=al.id ",
 				jdbccp.GetConnection()));
 
-		
-	//	warnings = JPAContainerFactory.make(Warning.class, EntityManagerUtil.getEntityManager());
 		grid = new Grid("", AllWarnings);
 		grid.setSizeFull();
 		grid.setContainerDataSource(AllWarnings);
 		grid.setColumnReorderingAllowed(true);
-		//docent,grup,gravetat,motiu
-		//grid.setColumns("alumne","grup","data","gravetat","localitzacio","materia","tutor","amonestat","expulsat","curs","motiu","altres_motius");
-
-		//grid.setColumns("docent","alumne", "grup", "gravetat","motiu","altres_motius","data");
-
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addSelectionListener(new SelectionListener() {
 
@@ -149,8 +125,8 @@ public class AdminViewWarning extends MainContentView  {
 			public void select(SelectionEvent event) {
 				// TODO Auto-generated method stub
 				bAdd.setEnabled(true);
-//				buttonEdit.setEnabled(true);
-//				bDelete.setEnabled(true);
+				// buttonEdit.setEnabled(true);
+				// bDelete.setEnabled(true);
 
 			}
 		});
@@ -160,11 +136,11 @@ public class AdminViewWarning extends MainContentView  {
 
 	private void buttonsAction() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private void WindowProperties() {
-		// TODO Auto-generated method stub
+
 		window.setHeight("95%");
 		window.setWidth("95%");
 		window.setDraggable(false);
@@ -175,7 +151,7 @@ public class AdminViewWarning extends MainContentView  {
 	}
 
 	private TextField filterTextProperties() {
-		// TODO Auto-generated method stub
+
 		txtSearch.setInputPrompt("Filtra per cognom");
 		txtSearch.addTextChangeListener(new TextChangeListener() {
 
@@ -183,11 +159,9 @@ public class AdminViewWarning extends MainContentView  {
 
 			@Override
 			public void textChange(TextChangeEvent event) {
-				// TODO Auto-generated method stub
 
 				Filterable f = (Filterable) grid.getContainerDataSource();
 
-				// Remove old filter
 				if (filter != null)
 					f.removeContainerFilter(filter);
 
@@ -195,14 +169,13 @@ public class AdminViewWarning extends MainContentView  {
 				filter = new SimpleStringFilter("motiu", event.getText(), true, false);
 				f.addContainerFilter(filter);
 			}
-			
-	});
+
+		});
 		return txtSearch;
 	}
 
 	private void buttonsSettings() {
-		// TODO Auto-generated method stub
-		
+
 		horizontalTitle.addStyleName("horizontal-title");
 		txtTitle.addStyleName("main-title");
 		txtTitle.setValue("Visualitzar Amonestacions");
@@ -210,7 +183,6 @@ public class AdminViewWarning extends MainContentView  {
 		bAdd.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		bRegister.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonEdit.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		
 		bDelete.setVisible(false);
 		buttonEdit.setVisible(false);
 		bRegister.setVisible(false);
@@ -218,15 +190,13 @@ public class AdminViewWarning extends MainContentView  {
 		bAdd.setCaption("Veure Detalls");
 
 	}
-	
-	public void clear() {
-		// TODO Auto-generated method stub
 
-		//bAdd.setEnabled(false);
+	public void clear() {
+
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);
 		grid.deselectAll();
 
 	}
-	
+
 }

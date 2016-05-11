@@ -41,19 +41,19 @@ import com.vaadin.ui.themes.ValoTheme;
 
 public class AdminViewTeacherJava extends MainContentView {
 
-	static Grid grid;
-	final Window windowAdd = new Window();
-	final Window windowEdit = new Window();
+	private Grid grid;
+	private Window windowAdd = new Window();
+	private Window windowEdit = new Window();
 	private JPAContainer<Teacher> docents;
 	private JPAContainer<Group> container;
 	private TeachersJPAManager MA;
-	private AdminViewTeacherFormJava professorAddForm ;
-	private AdminViewTeacherFormJava professorEditForm ;
+	private AdminViewTeacherFormJava professorAddForm;
+	private AdminViewTeacherFormJava professorEditForm;
 
 	public AdminViewTeacherJava() {
+
 		professorAddForm = new AdminViewTeacherFormJava();
 		professorEditForm = new AdminViewTeacherFormJava();
-
 		buttonsSettings();
 		filterTextProperties();
 		WindowPropertiesAddTeacher();
@@ -160,8 +160,8 @@ public class AdminViewTeacherJava extends MainContentView {
 
 		professorEditForm.nom.setValue(nom.toString());
 		professorEditForm.cognoms.setValue(cognoms.toString());
-
 		professorEditForm.email.setValue(email.toString());
+
 
 		professorEditForm.aceptarButton.addClickListener(new ClickListener() {
 

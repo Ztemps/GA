@@ -44,6 +44,8 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class AdminView extends MainView implements View {
+	
+	private static final long serialVersionUID = 4184290153198838185L;
 	public static final String NAME = "Admin";
 	private static AdminViewGroupJava ViewGrupos;
 	private static AdminViewStudentJava ViewStudents;
@@ -55,10 +57,8 @@ public class AdminView extends MainView implements View {
 	private static TeacherOwnWarningsJava ViewTeachersWarnings;
 	private static AdminViewCharts ViewCharts;
 	private static AdminViewSettingsJava ViewSettings;
-
-	UserJPAManager ma;
+	private UserJPAManager ma;
 	private static AdminViewTutorJava Viewtutors;
-
 	private BufferedReader br = null;
 
 	@Override
@@ -497,6 +497,11 @@ public class AdminView extends MainView implements View {
 
 		no.addClickListener(new ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -53955506058926623L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
@@ -506,6 +511,11 @@ public class AdminView extends MainView implements View {
 		});
 
 		yes.addClickListener(new ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -4879272457392790648L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {

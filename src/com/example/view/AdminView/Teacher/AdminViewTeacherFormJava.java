@@ -55,7 +55,6 @@ public class AdminViewTeacherFormJava extends AdminViewTeacherForm {
 				} else {
 					selectGroup.setVisible(false);
 					selectGroup.clear();
-
 				}
 			}
 		});
@@ -66,6 +65,7 @@ public class AdminViewTeacherFormJava extends AdminViewTeacherForm {
 
 		MA = new TeachersJPAManager();
 		MA2 = new UserJPAManager();
+
 
 		String group;
 		String[] aux;

@@ -25,12 +25,12 @@ import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class AdminViewTutorJava extends MainContentView {
-	EntityManagerUtil etm;
-	Grid grid = new Grid();
-	JDBCConnectionPool jdbccp = new JDBCConnectionPool();
-	SQLContainer tutors;
 
-	
+	private EntityManagerUtil etm;
+	private Grid grid;
+	private JDBCConnectionPool jdbccp = new JDBCConnectionPool();
+	private SQLContainer tutors;
+
 	public AdminViewTutorJava() {
 
 		buttonsSettings();
@@ -39,7 +39,7 @@ public class AdminViewTutorJava extends MainContentView {
 		vHorizontalMain.addComponent(GridProperties());
 
 	}
-	
+
 	private TextField filterTextProperties() {
 		txtSearch.setInputPrompt("Filtra per grup");
 		txtSearch.addTextChangeListener(new TextChangeListener() {
@@ -76,9 +76,7 @@ public class AdminViewTutorJava extends MainContentView {
 		clearTxt.setIcon(FontAwesome.TIMES);
 
 	}
-	
-	
-	
+
 	private void buttonsSettings() {
 
 		horizontalTitle.addStyleName("horizontal-title");
@@ -92,37 +90,32 @@ public class AdminViewTutorJava extends MainContentView {
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);
 		bRegister.setVisible(false);
-		
 
 	}
-	
+
 	public Grid GridProperties() {
 
+		jdbccp = new JDBCConnectionPool();
 
 		try {
-			tutors = new SQLContainer(new FreeformQuery("SELECT d.nom, d.cognoms, t.grup"
-					+ " FROM tutor t, docent d"
-					+ " WHERE t.docent = d.id ", jdbccp.GetConnection()));
+			tutors = new SQLContainer(new FreeformQuery(
+					"SELECT d.nom, d.cognoms, t.grup" + " FROM tutor t, docent d" + " WHERE t.docent = d.id ",
+					jdbccp.GetConnection()));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		grid = new Grid("", tutors);
 		grid.setSizeFull();
 		grid.setColumnReorderingAllowed(true);
-		grid.setColumns("nom", "cognoms","grup");
-
+		grid.setColumns("nom", "cognoms", "grup");
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void select(SelectionEvent event) {
-
 				bDelete.setVisible(true);
 				buttonEdit.setVisible(true);
-
 			}
 		});
 
@@ -140,11 +133,9 @@ public class AdminViewTutorJava extends MainContentView {
 
 		return grid;
 	}
-	
-	
-	
+
 	public void reloadGrid() {
-		
+
 		vHorizontalMain.removeAllComponents();
 		vHorizontalMain.addComponent(GridProperties());
 
@@ -157,6 +148,4 @@ public class AdminViewTutorJava extends MainContentView {
 
 	}
 
-	
-	
 }
