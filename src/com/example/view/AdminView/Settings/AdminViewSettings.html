@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src&quot;,&quot;THEME&quot;:&quot;gestioamonestacions&quot;}">
+ </head> 
+ <body> 
+  <vaadin-css-layout width="50%" height="300px"> 
+   <vaadin-vertical-layout primary-style-name="v-verticallayout" id="vertical" size-full="true" _id="vertical"> 
+    <vaadin-horizontal-layout primary-style-name="v-horizontallayout" spacing="true" width-full="true"> 
+     <vaadin-date-field caption="Inici Curs" invalid-committed="true" width="192px" _id="dataIniciCurs"></vaadin-date-field> 
+     <vaadin-date-field caption="Final Curs" width="202px" _id="dataFinalCurs"></vaadin-date-field> 
+    </vaadin-horizontal-layout> 
+    <vaadin-horizontal-layout primary-style-name="v-horizontallayout" width-full="true" height="48px"> 
+     <vaadin-check-box caption="Enviar e-mail als Tutors" id="checkEmailTutors" _id="checkEmailTutors" :middle=""></vaadin-check-box> 
+    </vaadin-horizontal-layout> 
+    <vaadin-horizontal-layout primary-style-name="v-horizontallayout" width-full="true"> 
+     <vaadin-check-box caption="Enviar e-mail als Pares" width="521px" _id="checkEmailPares" :middle=""></vaadin-check-box> 
+    </vaadin-horizontal-layout> 
+    <vaadin-check-box caption="Enviar Whatsapp als Pares" width-full="true" _id="checkWhatsPares"></vaadin-check-box> 
+   </vaadin-vertical-layout> 
+  </vaadin-css-layout>  
+ </body>
+</html>

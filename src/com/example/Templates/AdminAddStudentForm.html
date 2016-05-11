@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src&quot;,&quot;THEME&quot;:&quot;gestioamonestacions&quot;}">
+ </head> 
+ <body> 
+  <vaadin-form-layout caption="Cancelar" id="FormAmonestacio" width-auto="true" height="451px" margin="true"> 
+   <vaadin-text-field caption="Nom" required="true" immediate="true" width="317px" _id="nom"></vaadin-text-field> 
+   <vaadin-text-field caption="Cognoms" required="true" immediate="true" width="317px" _id="cognom"></vaadin-text-field> 
+   <vaadin-date-field caption="Naixement" required="true" immediate="true" width="317px" _id="fecha" :bottom="" :center=""></vaadin-date-field> 
+   <vaadin-text-field caption="Teléfons" required="true" immediate="true" width="317px" _id="teléfons"></vaadin-text-field> 
+   <vaadin-text-field caption="Emails " required="true" immediate="true" width="317px" _id="emails"></vaadin-text-field> 
+   <vaadin-text-field caption="Curs" required="true" immediate="true" width="317px" _id="curs"></vaadin-text-field> 
+   <vaadin-native-select caption="Grup" required="true" item-caption-mode="id" immediate="true" width="317px" _id="grup" :middle=""></vaadin-native-select> 
+   <vaadin-horizontal-layout primary-style-name="v-horizontallayout" spacing="true" width="296px" height="103px" :middle=""> 
+    <vaadin-button icon="fonticon://FontAwesome/f00c" style-name="icon-align-right primary" width="118px" plain-text="" _id="aceptarButton" :middle="">
+      Aceptar 
+    </vaadin-button> 
+    <vaadin-button icon="fonticon://FontAwesome/f00d" style-name="danger icon-align-right" width="118px" plain-text="" _id="cancelarButton" :middle="">
+      Cancelar 
+    </vaadin-button> 
+   </vaadin-horizontal-layout> 
+  </vaadin-form-layout>  
+ </body>
+</html>
