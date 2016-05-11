@@ -26,23 +26,27 @@ import com.vaadin.ui.themes.ValoTheme;
 
 public class AdminViewCSVUploadJava extends MainContentView {
 	private static final long serialVersionUID = -4292553844521293140L;
-	FileReciverStudents receiver = new FileReciverStudents();
-	FileReciverTeachers receiver2 = new FileReciverTeachers();
-	public static File file;
 
-	Upload uploadStudent = new Upload("", receiver);
-	Upload uploadTeacher = new Upload("", receiver2);
-	Label studentlabel = new Label("Selecciona un fitxer amb extensió .\"csv\" en que els seus camps estiguin separats per"
-			+ " comes. \n El fitxer ha de tenir les següents columnes en el següent ordre: id de l'alumne, cognoms, nom, grup, date de naixement, pais, nacionalitat i telefons");
-	public static AdminCSVUpload csv = new AdminCSVUpload();
+	private FileReciverStudents receiver = new FileReciverStudents();
+	private FileReciverTeachers receiver2 = new FileReciverTeachers();
+	private AdminCSVUpload csv;
+	private File file;
+	private Upload uploadStudent;
+	private Upload uploadTeacher;
+	private Label studentlabel = new Label(
+			"Selecciona un fitxer amb extensió .\"csv\" en que els seus camps estiguin separats per"
+					+ " comes. \n El fitxer ha de tenir les següents columnes en el següent ordre: id de l'alumne, cognoms, nom, grup, date de naixement, pais, nacionalitat i telefons");
+
 	public AdminViewCSVUploadJava() throws IOException {
+		csv = new AdminCSVUpload();
+		uploadTeacher = new Upload("", receiver2);
+		uploadStudent = new Upload("", receiver);
+		
 		buttonsSettings();
-
 		File currDir = new File(".");
 		String path = currDir.getCanonicalPath();
 		FileResource resource = new FileResource(
 				new File(path + "/git/ga/WebContent/VAADIN/themes/images/upload-icon.png"));
-		FileReciverStudents receiver = new FileReciverStudents();
 
 		// CSV STUDENTS
 		uploadStudent.setButtonCaption(null);
@@ -59,11 +63,11 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		});
 
 		csv.txtUpStudents.setValue("Carrega de alumnes");
-		
+
 		csv.vStudents.addStyleName("csvstudent");
 		csv.vStudents.removeAllComponents();
-		csv.vStudents.addComponents(studentlabel,new Image("", resource), uploadStudent);
-	
+		csv.vStudents.addComponents(studentlabel, new Image("", resource), uploadStudent);
+
 		csv.vStudents.setComponentAlignment(uploadStudent, Alignment.MIDDLE_CENTER);
 
 		// CSV DOCENTS
@@ -138,8 +142,8 @@ public class AdminViewCSVUploadJava extends MainContentView {
 					fos = new FileOutputStream(file);
 
 				} catch (final java.io.FileNotFoundException e) {
-					new Notification("No s'ha pogut obrir el fitxer", e.getMessage(),
-							Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());
+					new Notification("No s'ha pogut obrir el fitxer", e.getMessage(), Notification.Type.ERROR_MESSAGE)
+							.show(Page.getCurrent());
 					return null;
 				}
 
@@ -204,8 +208,8 @@ public class AdminViewCSVUploadJava extends MainContentView {
 					file = new File(path + "/git/ga/WebContent/CSVContent/" + filename);
 					fos = new FileOutputStream(file);
 				} catch (final java.io.FileNotFoundException e) {
-					new Notification("No s'ha pogut obrir el fitxer", e.getMessage(),
-							Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());
+					new Notification("No s'ha pogut obrir el fitxer", e.getMessage(), Notification.Type.ERROR_MESSAGE)
+							.show(Page.getCurrent());
 					return null;
 				}
 			} else {
@@ -220,9 +224,6 @@ public class AdminViewCSVUploadJava extends MainContentView {
 
 			return fos;
 		}
-		
-	
-		
 
 		@Override
 		public void uploadSucceeded(SucceededEvent event) {
@@ -235,6 +236,5 @@ public class AdminViewCSVUploadJava extends MainContentView {
 
 		}
 	}
-
 
 }

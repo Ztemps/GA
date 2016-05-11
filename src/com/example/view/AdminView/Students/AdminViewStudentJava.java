@@ -1,17 +1,6 @@
 package com.example.view.AdminView.Students;
 
-import java.io.File; 
-import java.text.DateFormat ;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
-import javax.persistence.EntityManager;
-import javax.persistence.NonUniqueResultException;
-import javax.persistence.Query;
-
 
 import com.example.Entities.Group;
 import com.example.Entities.Student;
@@ -66,21 +55,24 @@ import com.vaadin.ui.themes.ValoTheme;
 
 public class AdminViewStudentJava extends MainContentView {
 
-	EntityManagerUtil etm;
-	Grid grid = new Grid();
-	final Window windowAdd = new Window();
-	final Window windowEdit = new Window();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8408971161693178388L;
+
+	private Grid grid = new Grid();
+	private StudentsJPAManager MA;
+	private Window windowAdd = new Window();
+	private Window windowEdit = new Window();
 	private JPAContainer<Student> alumnes;
 	private JPAContainer<Group> container;
-	AdminAddStudentForm alumneformAdd = new AdminAddStudentForm();
-	AdminAddStudentForm alumneformEdit = new AdminAddStudentForm();
-	private EntityManager em = EntityManagerUtil.getEntityManager();
-	Query query = null;
-
-
-	StudentsJPAManager MA;
+	private AdminAddStudentForm alumneformAdd;
+	private AdminAddStudentForm alumneformEdit;
 
 	public AdminViewStudentJava() {
+
+		alumneformEdit = new AdminAddStudentForm();
+		alumneformAdd = new AdminAddStudentForm();
 
 		buttonsSettings();
 		filterTextProperties();
@@ -126,8 +118,6 @@ public class AdminViewStudentJava extends MainContentView {
 
 	}
 
-	
-
 	private void addStudent() {
 		PopulateNativeSelect();
 
@@ -153,7 +143,6 @@ public class AdminViewStudentJava extends MainContentView {
 					grid.scrollTo(id);
 					clearAddForm();
 					notif("Alumne afegit corretament");
-
 
 				} catch (NullPointerException e) {
 
@@ -264,8 +253,7 @@ public class AdminViewStudentJava extends MainContentView {
 		UI.getCurrent().addWindow(windowEdit);
 
 	}
-	
-	
+
 	private void deleteStudent() {
 		MA = new StudentsJPAManager();
 
@@ -282,11 +270,9 @@ public class AdminViewStudentJava extends MainContentView {
 				email.toString(), phone.toString(), curs.toString(), grup.toString());
 		MA.removeStudent(alumn);
 		MA.closeTransaction();
-		
-		notif( "Alumne esborrat correctament");
 
+		notif("Alumne esborrat correctament");
 
- 
 	}
 
 	private Student getStudentAdd() {
@@ -299,7 +285,6 @@ public class AdminViewStudentJava extends MainContentView {
 		String telf = alumneformAdd.teléfons.getValue().toString();
 		String grup = alumneformAdd.grup.getValue().toString();
 
-		
 		Student al = new Student(nom, cognom, email, telf, fecha, curs, grup);
 
 		return al;
@@ -396,18 +381,18 @@ public class AdminViewStudentJava extends MainContentView {
 	public Grid GridProperties() {
 
 		alumnes = JPAContainerFactory.make(Student.class, EntityManagerUtil.getEntityManager());
-		grid = new Grid("",alumnes);
+		grid = new Grid("", alumnes);
 		grid.setSizeFull();
 		grid.setColumnReorderingAllowed(true);
-	
-		grid.setColumns("foto","nom", "cognoms", "curs", "grup", "email", "data_naixement");
-					
-//		grid.addRow(new ThemeResource("no_user.png"));
-		
-//		grid.setIcon(new ThemeResource("no_user.png"));
+
+		grid.setColumns("foto", "nom", "cognoms", "curs", "grup", "email", "data_naixement");
+
+		// grid.addRow(new ThemeResource("no_user.png"));
+
+		// grid.setIcon(new ThemeResource("no_user.png"));
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addSelectionListener(new SelectionListener() {
-		
+
 			@Override
 			public void select(SelectionEvent event) {
 
@@ -468,25 +453,23 @@ public class AdminViewStudentJava extends MainContentView {
 	}
 
 	public void reloadGrid() {
-	
+
 		vHorizontalMain.removeAllComponents();
 		vHorizontalMain.addComponent(GridProperties());
 
 	}
-	public void notif(String mensaje){
-		
-		
-		 Notification notif = new Notification(
-                mensaje,
-                null,
-                Notification.Type.TRAY_NOTIFICATION,
-                true); // Contains HTML
 
-            // Customize it
-		 notif.show(Page.getCurrent());
-            notif.setDelayMsec(500);
-            notif.setPosition(Position.TOP_CENTER);
+	public void notif(String mensaje) {
+
+		Notification notif = new Notification(mensaje, null, Notification.Type.TRAY_NOTIFICATION, true); // Contains
+																											// HTML
+
+		// Customize it
+		notif.show(Page.getCurrent());
+		notif.setDelayMsec(500);
+		notif.setPosition(Position.TOP_CENTER);
 	}
+
 	public void clear() {
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);

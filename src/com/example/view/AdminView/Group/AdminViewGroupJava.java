@@ -45,18 +45,23 @@ import com.vaadin.ui.themes.ValoTheme;
 
 public class AdminViewGroupJava extends MainContentView {
 
-	Grid grid;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8190160807165820720L;
+	private Grid grid;
 	private JPAContainer<Group> grupos;
-	AdminViewGroupForm grupFormAdd = new AdminViewGroupForm();
-	AdminViewGroupForm grupFormEdit = new AdminViewGroupForm();
+	private AdminViewGroupForm grupFormAdd;
+	private AdminViewGroupForm grupFormEdit;
 
-	final Window windowAdd = new Window();
-	final Window windowEdit = new Window();
-	private GroupJPAManager MA = new GroupJPAManager();
+	private Window windowAdd = new Window();
+	private Window windowEdit = new Window();
+	private GroupJPAManager MA;
 
 	public AdminViewGroupJava() {
 		// TODO Auto-generated constructor stub
-
+		grupFormAdd = new AdminViewGroupForm();
+		grupFormAdd = new AdminViewGroupForm();
 		buttonsSettings();
 		GridProperties();
 		WindowPropertiesEditGroup();
@@ -111,6 +116,8 @@ public class AdminViewGroupJava extends MainContentView {
 				try {
 
 					MA = new GroupJPAManager();
+
+					MA = new GroupJPAManager();
 					Group grup = getGroupAdd();
 					MA.updateGroup(grup);
 					MA.closeTransaction();
@@ -124,10 +131,9 @@ public class AdminViewGroupJava extends MainContentView {
 					m.select(id);
 					grid.scrollTo(id);
 					clearAddForm();
-					
+
 					notif("Grup creat correctament");
 
-					
 				} catch (NullPointerException e) {
 
 					notif("Omple els camps obligatoris");
@@ -182,9 +188,8 @@ public class AdminViewGroupJava extends MainContentView {
 					m.select(fila);
 					grid.scrollTo(fila);
 					clearEditForm();
-					
-					notif("Grup modificat correctament");
 
+					notif("Grup modificat correctament");
 
 				} catch (NullPointerException e) {
 
@@ -236,21 +241,21 @@ public class AdminViewGroupJava extends MainContentView {
 	}
 
 	private Group getGroupEdit() {
-		
+
 		String id = grupFormEdit.txtGrup.getValue().toString();
-		int numAlumnes=0;
-		 try {
-		      //Por algún motivo, al editar por segunda vez, da error de formato del número
-			  numAlumnes = Integer.parseInt(grupFormEdit.txtMaxAl.getValue().toString());
-			  
+		int numAlumnes = 0;
+		try {
+			// Por algún motivo, al editar por segunda vez, da error de formato
+			// del número
+			numAlumnes = Integer.parseInt(grupFormEdit.txtMaxAl.getValue().toString());
+
 		} catch (NumberFormatException nfe) {
 			notif("Format del número incorrecte");
 
 		}
-		
-		
+
 		Group gr = new Group(id, numAlumnes);
-		
+
 		return gr;
 	}
 
@@ -452,19 +457,15 @@ public class AdminViewGroupJava extends MainContentView {
 	 * }
 	 */
 
-	public void notif(String mensaje){
-		
-		
-		 Notification notif = new Notification(
-                mensaje,
-                null,
-                Notification.Type.ASSISTIVE_NOTIFICATION,
-                true); // Contains HTML
+	public void notif(String mensaje) {
 
-            // Customize it
-		 notif.show(Page.getCurrent());
-            notif.setDelayMsec(500);
-            notif.setPosition(Position.TOP_CENTER);
+		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
+																												// HTML
+
+		// Customize it
+		notif.show(Page.getCurrent());
+		notif.setDelayMsec(500);
+		notif.setPosition(Position.TOP_CENTER);
 	}
 
 }

@@ -6,7 +6,12 @@ import com.vaadin.ui.Window;
 
 public class AdminViewSettingsJava extends MainContentView {
 
-	private static AdminViewSettings adminsettings;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private AdminViewSettings adminsettings;
 
 	public AdminViewSettingsJava() {
 
