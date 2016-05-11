@@ -6,8 +6,9 @@ import javax.persistence.Query;
 import com.example.Entities.Teacher;
 
 public class TeachersJPAManager {
-	Teacher teacher; 
-	private EntityManager em = EntityManagerUtil.getEntityManager();
+
+	private EntityManagerUtil entman = new EntityManagerUtil();
+	private EntityManager em = entman.getEntityManager();
 
 	public void addTeacher(Teacher teacher) {
 

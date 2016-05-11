@@ -2,55 +2,36 @@ package com.example.view.AdminView.Students;
 
 import java.util.Date;
 
+import javax.persistence.EntityManager;
+
 import com.example.Entities.Group;
 import com.example.Entities.Student;
 import com.example.Logic.Cursos;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.StudentsJPAManager;
-import com.example.Logic.UserJPAManager;
 import com.example.Templates.AdminAddStudentForm;
 import com.example.Templates.MainContentView;
-import com.example.view.AdminView.AdminView;
-import com.google.gwt.dev.util.Name;
-import com.google.gwt.user.client.ui.Image;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
-import com.vaadin.data.Container.Filter;
 import com.vaadin.data.Container.Filterable;
-import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.data.util.converter.Converter;
-import com.vaadin.data.util.filter.Compare;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.SelectionEvent.SelectionListener;
-import com.vaadin.server.ExternalResource;
-import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
-import com.vaadin.server.Resource;
-import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.Position;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.renderers.ImageRenderer;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Grid.SingleSelectionModel;
-import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.PopupDateField;
-import com.vaadin.ui.Table.TableDragMode;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class AdminViewStudentJava extends MainContentView {
@@ -68,6 +49,8 @@ public class AdminViewStudentJava extends MainContentView {
 	private JPAContainer<Group> container;
 	private AdminAddStudentForm alumneformAdd;
 	private AdminAddStudentForm alumneformEdit;
+	private EntityManagerUtil entman = new EntityManagerUtil();
+	private EntityManager em = entman.getEntityManager();
 
 	public AdminViewStudentJava() {
 
@@ -380,7 +363,7 @@ public class AdminViewStudentJava extends MainContentView {
 
 	public Grid GridProperties() {
 
-		alumnes = JPAContainerFactory.make(Student.class, EntityManagerUtil.getEntityManager());
+		alumnes = JPAContainerFactory.make(Student.class, em);
 		grid = new Grid("", alumnes);
 		grid.setSizeFull();
 		grid.setColumnReorderingAllowed(true);
@@ -441,7 +424,7 @@ public class AdminViewStudentJava extends MainContentView {
 
 	private void PopulateNativeSelect() {
 
-		container = JPAContainerFactory.make(Group.class, EntityManagerUtil.getEntityManager());
+		container = JPAContainerFactory.make(Group.class, em);
 		alumneformAdd.grup.setContainerDataSource(container);
 		alumneformAdd.grup.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 		alumneformAdd.grup.setItemCaptionPropertyId("id");

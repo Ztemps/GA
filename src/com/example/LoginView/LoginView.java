@@ -51,26 +51,22 @@ import com.vaadin.ui.themes.ValoTheme;
 
 public class LoginView extends CustomComponent implements View, Button.ClickListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4731762934864687953L;
 	public static final String NAME = "login";
-
 	private final TextField user;
-
 	private final Label title;
-
 	private final PasswordField password;
-
 	private User usuari;
-
 	private final Button loginButton;
-
 	private boolean isAdmin;
-
 	public boolean conectado;
-
 	private boolean login = true;
-	static ArrayList<User> users;
-	static Notification notif;
-	static Notification notifMayus;
+	private ArrayList<User> users;
+	private Notification notif;
+	private Notification notifMayus;
 	private final Label Mayus;
 
 	public LoginView() throws ClassNotFoundException, IOException {
@@ -112,6 +108,11 @@ public class LoginView extends CustomComponent implements View, Button.ClickList
 		password.setNullSettingAllowed(true);
 
 		password.addTextChangeListener(new TextChangeListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 7811790145041299537L;
 
 			@Override
 			public void textChange(TextChangeEvent event) {
@@ -376,26 +377,21 @@ public class LoginView extends CustomComponent implements View, Button.ClickList
 				setAttributeSession(username);
 				AdminView adminView = new AdminView();
 				
-				//getUI().getNavigator().navigateTo(AdminView.NAME);//
-				notif("funciona");
+				getUI().getNavigator().navigateTo(AdminView.NAME);//
 
 
 			}
 			if (usuari.getRol().equals("Tutor")) {
 
 				setAttributeSession(username);
-			// 	getUI().getNavigator().navigateTo(TutorView.NAME);
-				notif("funciona");
+			 	getUI().getNavigator().navigateTo(TutorView.NAME);
 
 			}
 			if (usuari.getRol().equals("Profesor")) {
-
 				// Si el usuario y el nombre coinciden y su rol es
 				// tutor, se abre la vista del tutor
 				setAttributeSession(username);
-				//getUI().getNavigator().navigateTo(TeacherView.NAME);
-
-				notif("funciona");
+				getUI().getNavigator().navigateTo(TeacherView.NAME);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

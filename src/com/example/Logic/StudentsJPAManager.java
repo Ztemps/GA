@@ -9,8 +9,9 @@ import com.example.Entities.Student;
 import com.example.Entities.Warning;
 
 public class StudentsJPAManager {
-	Student alumne; 
-	private EntityManager em = EntityManagerUtil.getEntityManager();
+	private Student alumne; 
+	private EntityManagerUtil entman = new EntityManagerUtil();
+	private EntityManager em = entman.getEntityManager();
 
 	public void addStudent(Student alumne) {
 

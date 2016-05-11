@@ -55,7 +55,8 @@ public class TutorViewGrupsJava extends MainContentView {
 	private Window windowDetails = new Window();
 	private TutorViewDetailsForm tutorviewdetailsform = new TutorViewDetailsForm();
 	private GroupJPAManager MA = new GroupJPAManager();
-	private EntityManager em = EntityManagerUtil.getEntityManager();
+	private EntityManagerUtil entman = new EntityManagerUtil();
+	private EntityManager em = entman.getEntityManager();
 
 	private Query query = null;
 
@@ -235,7 +236,7 @@ public class TutorViewGrupsJava extends MainContentView {
 
 	public Grid gridProperties() {
 
-		students = JPAContainerFactory.make(Student.class, EntityManagerUtil.getEntityManager());
+		students = JPAContainerFactory.make(Student.class, em);
 
 		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 

@@ -16,10 +16,10 @@
   		<param-name>UI</param-name>
   		<param-value>com.example.ga.GaUI</param-value>
   	</init-param>
-  <!--	<init-param>
+  <init-param>
   		<param-name>widgetset</param-name>
   		<param-value>com.example.WarningManagement.widgetset.GestioamonestacionsWidgetset</param-value>
-  	</init-param> -->
+  	</init-param>
   	<init-param>
   		<description>
   		Legacy mode to return the value of the property as a string from AbstractProperty.toString()</description>

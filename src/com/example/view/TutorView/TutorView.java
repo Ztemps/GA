@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import javax.persistence.EntityManager;
+
 import com.example.Entities.Student;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.UserJPAManager;
@@ -39,7 +41,8 @@ public class TutorView  extends MainView implements View {
 	private JPAContainer<Student> alumnes;
 	private Grid grid;
 	private UserJPAManager ma;
-
+	private EntityManagerUtil entman = new EntityManagerUtil();
+	private EntityManager em = entman.getEntityManager();
 	
 	private TutorViewGrupsJava TutorViewGrups;
 
@@ -152,7 +155,7 @@ public class TutorView  extends MainView implements View {
 	private Grid GridProperties() {
 
 		// Fill the grid with data
-		alumnes = JPAContainerFactory.make(Student.class, EntityManagerUtil.getEntityManager());
+		alumnes = JPAContainerFactory.make(Student.class, em);
 		grid = new Grid("", alumnes);
 		grid.setSizeFull();
 		grid.setContainerDataSource(alumnes);

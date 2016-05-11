@@ -22,13 +22,11 @@ import com.itextpdf.text.DocumentException;
 
 public class WarningJPAManager  {
 	boolean amonestat2 = false;
-	User user;
+	private User user;
 	boolean expulsat = false;
 	boolean gravetat = false;
-
-	private EntityManager em = EntityManagerUtil.getEntityManager();
-	
-	
+	private EntityManagerUtil entman = new EntityManagerUtil();
+	private EntityManager em = entman.getEntityManager();
 
 	public void introducirParte(String[] query) throws MalformedURLException, DocumentException, IOException {
 

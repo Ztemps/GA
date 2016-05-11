@@ -2,16 +2,12 @@ package com.example.view.TeacherView;
 
 import java.net.MalformedURLException;
 
-import javax.print.PrintService;
-import javax.print.PrintServiceLookup;
-
+import javax.persistence.EntityManager;
 import com.example.Entities.Student;
-import com.example.Entities.Teacher;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.UserJPAManager;
 import com.example.Logic.WarningJPAManager;
 import com.example.Pdf.generatePDF;
-import com.example.SendMail.sendMail;
 import com.example.Templates.ConfirmWarningPDF;
 import com.example.Templates.MainContentView;
 import com.example.view.AdminView.AdminView;
@@ -22,8 +18,6 @@ import com.vaadin.data.Container.Filterable;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
-import com.vaadin.event.ContextClickEvent;
-import com.vaadin.event.ContextClickEvent.ContextClickListener;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.event.SelectionEvent;
@@ -31,34 +25,27 @@ import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
-import com.vaadin.server.VaadinService;
-import com.vaadin.server.ClientConnector.AttachEvent;
 import com.vaadin.shared.Position;
-import com.vaadin.ui.BrowserFrame;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
-import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Window.CloseEvent;
-import com.vaadin.ui.Window.CloseListener;
-import com.vaadin.ui.Window.WindowModeChangeEvent;
-import com.vaadin.ui.Window.WindowModeChangeListener;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.ValoTheme;
 
-import java.awt.Desktop;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import java.io.*;
 
 public class TeacherViewWarningJava extends MainContentView {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6224440074961752155L;
 	private Grid grid;
 	private Window window = new Window();
 	private Window windowpdf = new Window();
@@ -70,6 +57,8 @@ public class TeacherViewWarningJava extends MainContentView {
 	private File sourceFile;
 	private FileResource resource;
 	private String nomCognom;
+	private EntityManagerUtil entman = new EntityManagerUtil();
+	private EntityManager em = entman.getEntityManager();
 
 	public TeacherViewWarningJava() throws MalformedURLException, DocumentException, IOException {
 
@@ -297,7 +286,7 @@ public class TeacherViewWarningJava extends MainContentView {
 	private Grid GridProperties() {
 
 		// Fill the grid with data
-		alumnes = JPAContainerFactory.make(Student.class, EntityManagerUtil.getEntityManager());
+		alumnes = JPAContainerFactory.make(Student.class, em);
 		grid = new Grid("", alumnes);
 		grid.setSizeFull();
 		grid.setContainerDataSource(alumnes);
@@ -306,6 +295,11 @@ public class TeacherViewWarningJava extends MainContentView {
 
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addItemClickListener(new ItemClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 991142819147193429L;
 
 			@Override
 			public void itemClick(ItemClickEvent event) {
@@ -353,7 +347,12 @@ public class TeacherViewWarningJava extends MainContentView {
 	}
 
 	public void getItemSelectedToAmonestacioForm(ItemClickEvent event) {
-
+		
+		amonestacioForm.nom.setReadOnly(false);
+		amonestacioForm.cognoms.setReadOnly(false);
+		amonestacioForm.tutor.setReadOnly(false);
+		amonestacioForm.grup.setReadOnly(false);
+		
 		if (window.isAttached())
 			getUI().getWindows().remove(window);
 
@@ -387,7 +386,12 @@ public class TeacherViewWarningJava extends MainContentView {
 	}
 
 	private void getItemSelectedToAmonestacioForm() {
-
+		
+		amonestacioForm.nom.setReadOnly(false);
+		amonestacioForm.cognoms.setReadOnly(false);
+		amonestacioForm.tutor.setReadOnly(false);
+		amonestacioForm.grup.setReadOnly(false);
+		
 		if (window.isAttached())
 			getUI().getWindows().remove(window);
 

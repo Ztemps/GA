@@ -3,6 +3,8 @@ package com.example.view.AdminView.Group;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import com.example.Entities.Group;
 import com.example.Entities.Student;
 import com.example.Logic.Cursos;
@@ -53,10 +55,11 @@ public class AdminViewGroupJava extends MainContentView {
 	private JPAContainer<Group> grupos;
 	private AdminViewGroupForm grupFormAdd;
 	private AdminViewGroupForm grupFormEdit;
-
 	private Window windowAdd = new Window();
 	private Window windowEdit = new Window();
 	private GroupJPAManager MA;
+	private EntityManagerUtil entman = new EntityManagerUtil();
+	private EntityManager em = entman.getEntityManager();
 
 	public AdminViewGroupJava() {
 		// TODO Auto-generated constructor stub
@@ -329,8 +332,9 @@ public class AdminViewGroupJava extends MainContentView {
 	}
 
 	public Grid GridProperties() {
-
-		grupos = JPAContainerFactory.make(Group.class, EntityManagerUtil.getEntityManager());
+		
+		
+		grupos = JPAContainerFactory.make(Group.class, em);
 		grid = new Grid("", grupos);
 
 		grid.setSizeFull();

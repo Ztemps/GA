@@ -2,6 +2,7 @@ package com.example.view.AdminView.Teacher;
 
 import java.util.Date;
 
+import javax.persistence.EntityManager;
 import javax.persistence.NonUniqueResultException;
 
 import com.example.Entities.Group;
@@ -49,6 +50,8 @@ public class AdminViewTeacherJava extends MainContentView {
 	private TeachersJPAManager MA;
 	private AdminViewTeacherFormJava professorAddForm;
 	private AdminViewTeacherFormJava professorEditForm;
+	private EntityManagerUtil entman = new EntityManagerUtil();
+	private EntityManager em = entman.getEntityManager();
 
 	public AdminViewTeacherJava() {
 
@@ -304,7 +307,7 @@ public class AdminViewTeacherJava extends MainContentView {
 	public Grid GridProperties() {
 
 		// Fill the grid with data
-		docents = JPAContainerFactory.make(Teacher.class, EntityManagerUtil.getEntityManager());
+		docents = JPAContainerFactory.make(Teacher.class, em);
 		grid = new Grid("", docents);
 		grid.setSizeFull();
 		grid.setContainerDataSource(docents);
@@ -383,7 +386,7 @@ public class AdminViewTeacherJava extends MainContentView {
 
 	private void PopulateNativeSelect() {
 
-		container = JPAContainerFactory.make(Group.class, EntityManagerUtil.getEntityManager());
+		container = JPAContainerFactory.make(Group.class, em);
 		professorAddForm.selectGroup.setContainerDataSource(container);
 		professorAddForm.selectGroup.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 		professorAddForm.selectGroup.setItemCaptionPropertyId("id");

@@ -28,16 +28,17 @@ import com.itextpdf.text.DocumentException;
 
 public class UserJPAManager {
 	User user;
-	static List<User> list_users;
-	static List<Group> list_grups;
+	private List<User> list_users;
+	private List<Group> list_grups;
 	boolean amonestat2 = false;
 	boolean expulsat = false;
 	boolean gravetat = false;
 
+	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em;
 
 	public UserJPAManager(){
-	 em = EntityManagerUtil.getEntityManager();
+		em = entman.getEntityManager();
 	}
 
 	public void addUser(User user) {

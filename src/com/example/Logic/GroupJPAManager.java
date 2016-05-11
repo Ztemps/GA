@@ -10,8 +10,9 @@ import com.example.Entities.Student;
 import com.example.Entities.Tutor;
 
 public class GroupJPAManager {
-	Group group;
-	private EntityManager em = EntityManagerUtil.getEntityManager();
+	private Group group;
+	private EntityManagerUtil entman = new EntityManagerUtil();
+	private EntityManager em = entman.getEntityManager();
 
 	public void addGroup(Group grup) {
 

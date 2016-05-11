@@ -99,7 +99,7 @@ public class AdminViewCharts extends MainContentView {
 	public Chart WarningsPerGroup() {
 
 		Chart chart = new Chart(ChartType.COLUMN);
-
+		jdbccp = new JDBCConnectionPool();
 		// Query for get amonestats per group
 		try {
 			container = new SQLContainer(new FreeformQuery(

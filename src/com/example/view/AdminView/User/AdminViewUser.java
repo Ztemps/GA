@@ -1,5 +1,7 @@
 package com.example.view.AdminView.User;
 
+import javax.persistence.EntityManager;
+
 import com.example.Entities.Student;
 import com.example.Entities.Teacher;
 import com.example.Entities.User;
@@ -39,7 +41,9 @@ public class AdminViewUser extends MainContentView {
 	private Grid grid;
 	private Window window = new Window();
 	private JPAContainer<User> usuaris;
-	UserJPAManager MA;
+	private UserJPAManager MA;
+	private EntityManagerUtil entman = new EntityManagerUtil();
+	private EntityManager em = entman.getEntityManager();
 
 	public AdminViewUser() {
 
@@ -105,7 +109,7 @@ public class AdminViewUser extends MainContentView {
 	public Grid GridProperties() {
 
 		// Fill the grid with data
-		usuaris = JPAContainerFactory.make(User.class, EntityManagerUtil.getEntityManager());
+		usuaris = JPAContainerFactory.make(User.class, em);
 		grid = new Grid("", usuaris);
 		grid.setSizeFull();
 		grid.setContainerDataSource(usuaris);
