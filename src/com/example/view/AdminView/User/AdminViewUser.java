@@ -36,13 +36,12 @@ import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class AdminViewUser extends MainContentView {
-	static Grid grid;
-	final Window window = new Window();
+	private Grid grid;
+	private Window window = new Window();
 	private JPAContainer<User> usuaris;
 	UserJPAManager MA;
 
 	public AdminViewUser() {
-		// TODO Auto-generated constructor stub
 
 		buttonsSettings();
 		filterTextProperties();
@@ -51,9 +50,7 @@ public class AdminViewUser extends MainContentView {
 		vHorizontalMain.removeAllComponents();
 		vHorizontalMain.addComponent(GridProperties());
 
-		
 	}
-	
 
 	private void buttonsAction() {
 		// TODO Auto-generated method stub
@@ -73,7 +70,6 @@ public class AdminViewUser extends MainContentView {
 
 		});
 		clearTxt.setIcon(FontAwesome.TIMES);
-	
 
 		buttonEdit.addClickListener(new ClickListener() {
 
@@ -85,32 +81,7 @@ public class AdminViewUser extends MainContentView {
 			}
 
 		});
-		bDelete.addClickListener(e-> deleteUser());
-		// addprofessorForm.cancelarButton.addClickListener(new ClickListener()
-		// {
-		//
-		// @Override
-		// public void buttonClick(ClickEvent event) {
-		// // TODO Auto-generated method stub
-		//
-		// // limpiar campos antes de cerrar
-		// window.close();
-		//
-		// }
-		// });
-
-		// addprofessorForm.aceptarButton.addClickListener(new ClickListener() {
-		//
-		// @Override
-		// public void buttonClick(ClickEvent event) {
-		// // TODO Auto-generated method stub
-		//
-		// // funcion para añadir professor
-		//
-		// window.close();
-		//
-		// }
-		// });
+		bDelete.addClickListener(e -> deleteUser());
 	}
 
 	private void getItemSelected() {
@@ -122,14 +93,13 @@ public class AdminViewUser extends MainContentView {
 	private void WindowProperties() {
 
 		window.setWidth(900.0f, Unit.PIXELS);
-		// window.setContent(form);
 		window.setHeight("45%");
 		window.setWidth("45%");
 		window.setDraggable(false);
 		window.setModal(true);
 		window.setCaption("Donar d'alta a un usuari");
 		window.center();
-		// window.setContent(addprofessorForm);
+
 	}
 
 	public Grid GridProperties() {
@@ -157,33 +127,29 @@ public class AdminViewUser extends MainContentView {
 
 		return grid;
 	}
-	
-	
+
 	private void deleteUser() {
 		MA = new UserJPAManager();
-		
-		int id = Integer.parseInt(grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id").toString());
-		String usuari = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("username").toString();
 
-		getUI().getCurrent().addWindow(DeleteSubWindows(id,usuari));		
-		
+		int id = Integer.parseInt(
+				grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id").toString());
+		String usuari = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("username")
+				.toString();
 
+		getUI().getCurrent().addWindow(DeleteSubWindows(id, usuari));
 
 	}
-	
-	public Window DeleteSubWindows(int id,String nom) {
+
+	public Window DeleteSubWindows(int id, String nom) {
 
 		Window win = new Window("Esborrar usuari");
-		
-		if(nom.equals("admin")){
-			
+
+		if (nom.equals("admin")) {
+
 			win.setVisible(false);
 			notif("No es pot borrar aquest usuari");
-			
-			
-		}else{
-			
-			
+
+		} else {
 
 			win.setWidth("20%");
 			win.setHeight("20%");
@@ -193,7 +159,7 @@ public class AdminViewUser extends MainContentView {
 			win.setModal(true);
 			win.center();
 
-			Label question = new Label("Esborrar l'usuari "+nom);
+			Label question = new Label("Esborrar l'usuari " + nom);
 			Button yes = new Button("Sí");
 			Button no = new Button("No");
 			yes.addStyleName(ValoTheme.BUTTON_FRIENDLY);
@@ -226,31 +192,26 @@ public class AdminViewUser extends MainContentView {
 
 			VerticalLayout content = new VerticalLayout(question, buttons);
 			win.setContent(content);
-	
-			
+
 		}
-		
+
 		return win;
 
 	}
-	
-	public void notif(String mensaje){
-		
-		
-		 Notification notif = new Notification(
-                 mensaje,
-                 null,
-                 Notification.Type.ASSISTIVE_NOTIFICATION,
-                 true); // Contains HTML
 
-             // Customize it
-		 notif.show(Page.getCurrent());
-             notif.setDelayMsec(500);
-             notif.setPosition(Position.TOP_CENTER);
+	public void notif(String mensaje) {
+
+		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
+																												// HTML
+
+		// Customize it
+		notif.show(Page.getCurrent());
+		notif.setDelayMsec(500);
+		notif.setPosition(Position.TOP_CENTER);
 	}
-	
+
 	public void reloadGrid() {
-		
+
 		vHorizontalMain.removeAllComponents();
 		vHorizontalMain.addComponent(GridProperties());
 
@@ -305,13 +266,10 @@ public class AdminViewUser extends MainContentView {
 	}
 
 	public void clear() {
-		// TODO Auto-generated method stub
-
-	//	bAdd.setEnabled(false);
+		// bAdd.setEnabled(false);
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);
 		grid.deselectAll();
-
 	}
 
 }

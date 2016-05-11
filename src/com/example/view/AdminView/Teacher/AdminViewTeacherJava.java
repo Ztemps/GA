@@ -39,19 +39,21 @@ import com.vaadin.ui.Grid.SingleSelectionModel;
 import com.vaadin.ui.Table.TableDragMode;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class AdminViewTeacherJava extends MainContentView{
+public class AdminViewTeacherJava extends MainContentView {
 
-	static Grid grid;
-	final Window windowAdd = new Window();
-	final Window windowEdit = new Window();	private JPAContainer<Teacher> docents;
+	private Grid grid;
+	private Window windowAdd = new Window();
+	private Window windowEdit = new Window();
+	private JPAContainer<Teacher> docents;
 	private JPAContainer<Group> container;
 	private TeachersJPAManager MA;
-	private AdminViewTeacherFormJava professorAddForm = new AdminViewTeacherFormJava();
-	private AdminViewTeacherFormJava professorEditForm = new AdminViewTeacherFormJava();
-
+	private AdminViewTeacherFormJava professorAddForm;
+	private AdminViewTeacherFormJava professorEditForm;
 
 	public AdminViewTeacherJava() {
-		
+
+		professorAddForm = new AdminViewTeacherFormJava();
+		professorEditForm = new AdminViewTeacherFormJava();
 		buttonsSettings();
 		filterTextProperties();
 		WindowPropertiesAddTeacher();
@@ -60,13 +62,9 @@ public class AdminViewTeacherJava extends MainContentView{
 		ClearText();
 		PopulateNativeSelect();
 		vHorizontalMain.addComponent(GridProperties());
-
-	
-		
-		
 	}
-	
-	private void listeners(){
+
+	private void listeners() {
 		buttonEdit.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -90,16 +88,13 @@ public class AdminViewTeacherJava extends MainContentView{
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				
+
 				addTeacher();
 			}
 
 		});
 	}
-	
-	
-	
-	
+
 	private void addTeacher() {
 		professorAddForm.aceptarButton.addClickListener(new ClickListener() {
 
@@ -120,10 +115,8 @@ public class AdminViewTeacherJava extends MainContentView{
 					m.select(id);
 					grid.scrollTo(id);
 					clearAddForm();
-					
+
 					notif("Professor creat correctament");
-					
-					
 
 				} catch (NullPointerException e) {
 
@@ -149,12 +142,10 @@ public class AdminViewTeacherJava extends MainContentView{
 
 		UI.getCurrent().addWindow(windowAdd);
 
-		
-		
 	}
-	
+
 	private void editTeacher() {
-		
+
 		UI.getCurrent().addWindow(windowEdit);
 		professorEditForm.isTutor.setVisible(false);
 		professorEditForm.selectGroup.setVisible(false);
@@ -165,14 +156,10 @@ public class AdminViewTeacherJava extends MainContentView{
 		Object nom = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom");
 		Object email = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("email");
 		Object cognoms = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms");
-		
 
 		professorEditForm.nom.setValue(nom.toString());
 		professorEditForm.cognoms.setValue(cognoms.toString());
-		
 		professorEditForm.email.setValue(email.toString());
-
-	
 		professorEditForm.aceptarButton.addClickListener(new ClickListener() {
 
 			@Override
@@ -216,15 +203,14 @@ public class AdminViewTeacherJava extends MainContentView{
 		UI.getCurrent().addWindow(windowEdit);
 
 	}
-	
-	
+
 	private void deleteTeacher() {
 		MA = new TeachersJPAManager();
 		Object id = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
 		Object nom = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom");
 		Object cognoms = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms");
 		Object email = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("email");
-		
+
 		Teacher teacher = new Teacher(Integer.parseInt(id.toString()), nom.toString(), cognoms.toString(),
 				email.toString());
 		MA.removeTeacher(teacher);
@@ -232,31 +218,28 @@ public class AdminViewTeacherJava extends MainContentView{
 		notif("Professor esborrat correctament");
 
 	}
-	
-	
+
 	private Teacher getTeacherAdd() {
 
 		String nom = professorAddForm.nom.getValue().toString();
 		String cognom = professorAddForm.cognoms.getValue().toString();
 		String email = professorAddForm.email.getValue().toString();
 
-		Teacher tc = new Teacher(nom,cognom,email);
+		Teacher tc = new Teacher(nom, cognom, email);
 
 		return tc;
 	}
-	
-	
+
 	private Teacher getTeacherEdit() {
 		Object id = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
 		String nom = professorEditForm.nom.getValue().toString();
 		String cognom = professorEditForm.cognoms.getValue().toString();
 		String email = professorEditForm.email.getValue().toString();
-	
-		Teacher tc = new Teacher(Integer.parseInt(id.toString()),nom,cognom,email);
+
+		Teacher tc = new Teacher(Integer.parseInt(id.toString()), nom, cognom, email);
 		return tc;
 	}
 
-	
 	private TextField filterTextProperties() {
 		// TODO Auto-generated method stub
 		txtSearch.setInputPrompt("Filtra docent cognom");
@@ -281,7 +264,7 @@ public class AdminViewTeacherJava extends MainContentView{
 		});
 		return txtSearch;
 	}
-	
+
 	private void clearEditForm() {
 		professorEditForm.nom.clear();
 		professorEditForm.cognoms.clear();
@@ -296,11 +279,10 @@ public class AdminViewTeacherJava extends MainContentView{
 		professorAddForm.isTutor.clear();
 
 	}
-	
 
 	private void buttonsSettings() {
 		// TODO Auto-generated method stub
-		
+
 		horizontalTitle.addStyleName("horizontal-title");
 		txtTitle.addStyleName("main-title");
 		bAdd.setCaption("Afegir");
@@ -315,34 +297,33 @@ public class AdminViewTeacherJava extends MainContentView{
 		bRegister.setVisible(false);
 		bAdd.setEnabled(true);
 	}
-	
-	
-	public Grid GridProperties(){
-		
+
+	public Grid GridProperties() {
+
 		// Fill the grid with data
-				docents = JPAContainerFactory.make(Teacher.class, EntityManagerUtil.getEntityManager());
-				grid = new Grid("", docents);
-				grid.setSizeFull();
-				grid.setContainerDataSource(docents);
-				grid.setColumnReorderingAllowed(true);
-				grid.setColumns("nom", "cognoms", "email");
+		docents = JPAContainerFactory.make(Teacher.class, EntityManagerUtil.getEntityManager());
+		grid = new Grid("", docents);
+		grid.setSizeFull();
+		grid.setContainerDataSource(docents);
+		grid.setColumnReorderingAllowed(true);
+		grid.setColumns("nom", "cognoms", "email");
 
-				grid.setSelectionMode(SelectionMode.SINGLE);
-				grid.addSelectionListener(new SelectionListener() {
+		grid.setSelectionMode(SelectionMode.SINGLE);
+		grid.addSelectionListener(new SelectionListener() {
 
-					@Override
-					public void select(SelectionEvent event) {
-						// TODO Auto-generated method stub
-						bAdd.setEnabled(true);
-						buttonEdit.setEnabled(true);
-						bDelete.setEnabled(true);
+			@Override
+			public void select(SelectionEvent event) {
+				// TODO Auto-generated method stub
+				bAdd.setEnabled(true);
+				buttonEdit.setEnabled(true);
+				bDelete.setEnabled(true);
 
-					}
-				});
+			}
+		});
 
-				return grid;
+		return grid;
 	}
-	
+
 	private void WindowPropertiesAddTeacher() {
 
 		windowAdd.setCaption("Introdueix nou professor");
@@ -365,30 +346,25 @@ public class AdminViewTeacherJava extends MainContentView{
 		windowEdit.center();
 		windowEdit.setContent(professorEditForm);
 	}
-	
 
-	public void notif(String mensaje){
-		
-		
-		 Notification notif = new Notification(
-                mensaje,
-                null,
-                Notification.Type.ASSISTIVE_NOTIFICATION,
-                true); // Contains HTML
+	public void notif(String mensaje) {
 
-            // Customize it
-		 notif.show(Page.getCurrent());
-            notif.setDelayMsec(500);
-            notif.setPosition(Position.TOP_CENTER);
+		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
+																												// HTML
+
+		// Customize it
+		notif.show(Page.getCurrent());
+		notif.setDelayMsec(500);
+		notif.setPosition(Position.TOP_CENTER);
 	}
-	
+
 	public void reloadGrid() {
 		grid.setVisible(false);
 		grid = new Grid();
 		vHorizontalMain.addComponent(GridProperties());
 
 	}
-	
+
 	private void ClearText() {
 
 		clearTxt.setDescription("Limpiar contenido actual...");
@@ -409,22 +385,16 @@ public class AdminViewTeacherJava extends MainContentView{
 		professorAddForm.selectGroup.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 		professorAddForm.selectGroup.setItemCaptionPropertyId("id");
 
-		
-
 	}
-	
-	
+
 	public void clear() {
 		// TODO Auto-generated method stub
 
-		//bAdd.setEnabled(false);
+		// bAdd.setEnabled(false);
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);
 		grid.deselectAll();
 
 	}
-	
 
-	
-	
 }

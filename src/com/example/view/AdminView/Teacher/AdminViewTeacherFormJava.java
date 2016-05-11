@@ -26,17 +26,17 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
 public class AdminViewTeacherFormJava extends AdminViewTeacherForm {
-	TeachersJPAManager MA = new TeachersJPAManager();
-	UserJPAManager MA2 = new UserJPAManager();
+	private TeachersJPAManager MA = new TeachersJPAManager();
+	private UserJPAManager MA2 = new UserJPAManager();
 
-	String username;
-	String rol = "Profesor";
-	String password = "Nomeolvides1";
+	private String username;
+	private String rol = "Profesor";
+	private String password = "Nomeolvides1";
+
 	@SuppressWarnings("deprecation")
 	public AdminViewTeacherFormJava() {
 
 		nom.focus();
-
 
 		selectGroup.setVisible(false);
 
@@ -50,7 +50,6 @@ public class AdminViewTeacherFormJava extends AdminViewTeacherForm {
 				} else {
 					selectGroup.setVisible(false);
 					selectGroup.clear();
-
 				}
 			}
 		});
@@ -59,8 +58,6 @@ public class AdminViewTeacherFormJava extends AdminViewTeacherForm {
 
 	public void insertDocent(Teacher teacher) {
 
-		
-		
 		String group;
 		String[] aux;
 		aux = teacher.getCognoms().split(" ");
@@ -74,12 +71,12 @@ public class AdminViewTeacherFormJava extends AdminViewTeacherForm {
 		else
 			username = teacher.getNom().substring(0, 1) + aux[0];
 
-		if (isTutor.getValue()){
+		if (isTutor.getValue()) {
 			group = this.selectGroup.getValue().toString();
 			MA2.addTutor(new Tutor(id, group));
 			rol = "Tutor";
 		}
-		MA2.addUser(new User(id, password,username.toLowerCase(), rol));
+		MA2.addUser(new User(id, password, username.toLowerCase(), rol));
 		MA.closeTransaction();
 		MA2.closeTransaction();
 	}
