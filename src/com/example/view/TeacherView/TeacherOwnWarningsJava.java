@@ -35,18 +35,18 @@ import sun.text.normalizer.UBiDiProps;
 
 public class TeacherOwnWarningsJava extends MainContentView {
 	
-	File sourceFile;
-	String nomCognoms;
-	String fecha;
-	String hora;
-	SQLContainer container;
-	String usuari;
-	static Grid grid;
-	static Window window = new Window();
-	UserJPAManager MA = new UserJPAManager();
-	JDBCConnectionPool jdbccp = new JDBCConnectionPool();
-	ConfirmWarningPDF pdf = new ConfirmWarningPDF();
-	Button b = new Button();
+	private File sourceFile;
+	private String nomCognoms;
+	private String fecha;
+	private String hora;
+	private SQLContainer container;
+	private String usuari;
+	private Grid grid;
+	private Window window = new Window();
+	private UserJPAManager MA = new UserJPAManager();
+	private JDBCConnectionPool jdbccp = new JDBCConnectionPool();
+	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
+	private Button b = new Button();
 
 	public TeacherOwnWarningsJava() throws MalformedURLException, DocumentException, IOException {
 

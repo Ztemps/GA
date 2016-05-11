@@ -59,41 +59,30 @@ import java.io.*;
 
 public class TeacherViewWarningJava extends MainContentView {
 
-	/**
-	 * 
-	 */
 	private Grid grid;
-	static Window window = new Window("Window");
-	static Window windowpdf = new Window();
-	ConfirmWarningPDF pdf = new ConfirmWarningPDF();
+	private Window window = new Window();
+	private Window windowpdf = new Window();
+	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
 	private JPAContainer<Student> alumnes;
-	public TeacherViewNewWarningFormJava amonestacioForm;
-	private UserJPAManager MA ;
+	private TeacherViewNewWarningFormJava amonestacioForm;
+	private UserJPAManager MA;
 	private WarningJPAManager MA1;
-	File sourceFile ;
-	FileResource resource ;
-	static String nomCognom;
+	private File sourceFile;
+	private FileResource resource;
+	private String nomCognom;
 
 	public TeacherViewWarningJava() throws MalformedURLException, DocumentException, IOException {
-		// TODO Auto-generated constructor stub
 
-		// Grid properties
 		GridProperties();
 		filterTextProperties();
 		WindowProperties();
 		buttonsSettings();
 		WindowPdfProperties();
 
-		// Show the image in the application
-
 		try {
-	
-			
+
 			amonestacioForm.baceptar.addClickListener(new ClickListener() {
 
-				/**
-				 * 
-				 */
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -108,12 +97,12 @@ public class TeacherViewWarningJava extends MainContentView {
 					 * "S'ha de seleccionar almenys un motiu"); }
 					 */
 
-					if(!check()){
+					if (!check()) {
 
 						notif("Omple els camps obligatoris");
-						
+
 					} else {
-						
+
 						if (windowpdf.isAttached()) {
 							getUI().removeWindow(windowpdf);
 						}
@@ -133,20 +122,19 @@ public class TeacherViewWarningJava extends MainContentView {
 
 				private boolean check() {
 					// TODO Auto-generated method stub
-					
-					
-					if(amonestacioForm.nom.getValue() == "" || amonestacioForm.cognoms.getValue() == ""
+
+					if (amonestacioForm.nom.getValue() == "" || amonestacioForm.cognoms.getValue() == ""
 							|| amonestacioForm.accio.getValue() == null || amonestacioForm.caracter.getValue() == null
 							|| amonestacioForm.motiu.getValue() == null || amonestacioForm.motiu2.getValue() == null
 							|| amonestacioForm.circunstancia.getValue() == null || amonestacioForm.grup.getValue() == ""
-							|| amonestacioForm.tutor.getValue() == ""){
-						
+							|| amonestacioForm.tutor.getValue() == "") {
+
 						return false;
-					}else{
-						
+					} else {
+
 						return true;
 					}
-					
+
 				}
 
 			});
@@ -165,14 +153,14 @@ public class TeacherViewWarningJava extends MainContentView {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				try {
-					//printPDF(FicheroPdf(),choosePrinter());
+					// printPDF(FicheroPdf(),choosePrinter());
 					WarningJPAManager war = new WarningJPAManager();
 					war.introducirParte(returnQuery());
 					notif("Amonestació posada correctament");
 				} catch (DocumentException | IOException | NullPointerException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}  finally {
+				} finally {
 					window.close();
 					windowpdf.close();
 
@@ -180,7 +168,6 @@ public class TeacherViewWarningJava extends MainContentView {
 
 			}
 
-			
 		});
 
 		pdf.cancelarButton.addClickListener(new Button.ClickListener() {
@@ -190,7 +177,7 @@ public class TeacherViewWarningJava extends MainContentView {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				
+
 				sourceFile.delete();
 				windowpdf.close();
 
@@ -240,14 +227,12 @@ public class TeacherViewWarningJava extends MainContentView {
 
 	}
 
-	private String mailStudent(){
-		
-		
-		
+	private String mailStudent() {
+
 		return null;
-		
-		
+
 	}
+
 	private void buttonsSettings() {
 		// TODO Auto-generated method stub
 
@@ -269,21 +254,17 @@ public class TeacherViewWarningJava extends MainContentView {
 
 	}
 
-	public void notif(String mensaje){
-		
-		
-		 Notification notif = new Notification(
-                mensaje,
-                null,
-                Notification.Type.ASSISTIVE_NOTIFICATION,
-                true); // Contains HTML
+	public void notif(String mensaje) {
 
-            // Customize it
-		 notif.show(Page.getCurrent());
-            notif.setDelayMsec(500);
-            notif.setPosition(Position.TOP_CENTER);
+		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
+																												// HTML
+
+		// Customize it
+		notif.show(Page.getCurrent());
+		notif.setDelayMsec(500);
+		notif.setPosition(Position.TOP_CENTER);
 	}
-	
+
 	private TextField filterTextProperties() {
 		// TODO Auto-generated method stub
 		txtSearch.setInputPrompt("Filtra alumno por nombre");
@@ -372,16 +353,17 @@ public class TeacherViewWarningJava extends MainContentView {
 	}
 
 	public void getItemSelectedToAmonestacioForm(ItemClickEvent event) {
-		
-		if(window.isAttached()) getUI().getWindows().remove(window);
-		
+
+		if (window.isAttached())
+			getUI().getWindows().remove(window);
+
 		UI.getCurrent().addWindow(window);
 		window.setVisible(true);
 		clearFields();
 
 		MA1 = new WarningJPAManager();
 		MA = new UserJPAManager();
-		
+
 		Object name = event.getItem().getItemProperty("nom");
 		Object surname = event.getItem().getItemProperty("cognoms");
 		Object grup = event.getItem().getItemProperty("grup");
@@ -405,13 +387,13 @@ public class TeacherViewWarningJava extends MainContentView {
 	}
 
 	private void getItemSelectedToAmonestacioForm() {
-		
-		if(window.isAttached()) getUI().getWindows().remove(window);
-		
+
+		if (window.isAttached())
+			getUI().getWindows().remove(window);
+
 		UI.getCurrent().addWindow(window);
 		window.setVisible(true);
 
-		
 		MA1 = new WarningJPAManager();
 		MA = new UserJPAManager();
 		clearFields();
@@ -427,8 +409,8 @@ public class TeacherViewWarningJava extends MainContentView {
 		amonestacioForm.cognoms.setValue(surname.toString());
 		amonestacioForm.grup.setValue(grup.toString());
 		amonestacioForm.tutor.setValue(nametutor);
-		
-		nomCognom = amonestacioForm.nom.getValue()+" "+amonestacioForm.cognoms.getValue();
+
+		nomCognom = amonestacioForm.nom.getValue() + " " + amonestacioForm.cognoms.getValue();
 
 		fieldsRequired();
 
@@ -438,7 +420,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		amonestacioForm.cognoms.setReadOnly(true);
 		amonestacioForm.tutor.setReadOnly(true);
 		amonestacioForm.grup.setReadOnly(true);
-		
+
 	}
 
 	private void fieldsRequired() {
@@ -462,8 +444,6 @@ public class TeacherViewWarningJava extends MainContentView {
 		amonestacioForm.caracter.setRequiredError("El camp caracter és obligatori");
 		amonestacioForm.accio.setRequiredError("El camp acció és obligatori");
 	}
-	
-	
 
 	@SuppressWarnings("deprecation")
 	public void popupPDF() throws IOException, DocumentException {
@@ -472,12 +452,12 @@ public class TeacherViewWarningJava extends MainContentView {
 		// the PDF is generated.
 		generatePDF generatepdf = new generatePDF();
 		generatepdf.generate(returnQuery());
-		
-		String nomCognom = amonestacioForm.nom.getValue()+" "+amonestacioForm.cognoms.getValue();
+
+		String nomCognom = amonestacioForm.nom.getValue() + " " + amonestacioForm.cognoms.getValue();
 
 		Embedded c = new Embedded();
 		sourceFile = new File(generatepdf.getPath(nomCognom));
-		
+
 		c.setSource(new FileResource(sourceFile));
 		c.setWidth("100%");
 		c.setHeight("600px");
@@ -554,10 +534,9 @@ public class TeacherViewWarningJava extends MainContentView {
 		String assignatura = null;
 		String altres_motius = null;
 		String amonestat2 = null;
-		
+
 		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 
-		
 		tutor = MA.getNomTutor(id);
 		try {
 			grup = amonestacioForm.grup.getValue();
@@ -617,29 +596,13 @@ public class TeacherViewWarningJava extends MainContentView {
 		grid.deselectAll();
 
 	}
-	
-	public static  File FicheroPdf() throws IOException, DocumentException{
-		
+
+	public File FicheroPdf() throws IOException, DocumentException {
+
 		generatePDF generatepdf1 = new generatePDF();
 		File file = new File(generatepdf1.getPath(nomCognom));
-				
+
 		return file;
 	}
-
-	public static PrintService choosePrinter() {
-	    PrinterJob printJob = PrinterJob.getPrinterJob();
-	    if(printJob.printDialog()) {
-	        return printJob.getPrintService();          
-	    }
-	    else {
-	        return null;
-	    }
-	}
-
-
-    		
-    
-    		
-
 
 }
