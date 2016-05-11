@@ -47,7 +47,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 public class TutorViewGrupsJava extends MainContentView {
 
-	Grid mygrid;
+	private Grid mygrid;
 	private JPAContainer<Student> students;
 	private JPAContainer<Group> container;
 
@@ -57,7 +57,7 @@ public class TutorViewGrupsJava extends MainContentView {
 	private GroupJPAManager MA = new GroupJPAManager();
 	private EntityManager em = EntityManagerUtil.getEntityManager();
 
-	Query query = null;
+	private Query query = null;
 
 	public TutorViewGrupsJava() {
 		// TODO Auto-generated constructor stub

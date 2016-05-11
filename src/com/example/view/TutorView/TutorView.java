@@ -34,11 +34,11 @@ import com.vaadin.ui.Grid.SelectionMode;
 
 public class TutorView  extends MainView implements View {
 	public static final String NAME = "Tutor";
-	TutorOwnWarningsJava tutorownwarning;
-	TeacherViewWarningJava vistaAmonestacion ;
+	private TutorOwnWarningsJava tutorownwarning;
+	private TeacherViewWarningJava vistaAmonestacion ;
 	private JPAContainer<Student> alumnes;
 	private Grid grid;
-	UserJPAManager ma;
+	private UserJPAManager ma;
 
 	
 	private TutorViewGrupsJava TutorViewGrups;
