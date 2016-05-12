@@ -73,7 +73,7 @@ public class generatePDF extends WarningJPAManager {
 
 		File currDir = new File(".");
 		String path2 = currDir.getCanonicalPath();
-		Image img = Image.getInstance(String.format(path2 + "/git/ga/WebContent/PDFContent/icons/logo1.jpg"));
+		Image img = Image.getInstance(String.format(path2 + "/git/ga2/WebContent/PDFContent/icons/logo1.jpg"));
 		img.setWidthPercentage(50);
 		// X - Y
 		img.setAbsolutePosition(45, 770);
@@ -515,7 +515,7 @@ public class generatePDF extends WarningJPAManager {
 
 		String user = jpa.currentUser();
 
-		return path2 + "/git/ga/WebContent/PDFContent/pdftmp/amonestacio(" + dateFormat.format(date) + ")(" + nomCognom
+		return path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + dateFormat.format(date) + ")(" + nomCognom
 				+ ").pdf";
 
 	}
@@ -525,7 +525,7 @@ public class generatePDF extends WarningJPAManager {
 		String path2 = currDir.getCanonicalPath();
 
 
-		return path2 + "/git/ga/WebContent/PDFContent/pdftmp/amonestacio(" + fecha + ")(" + nomCognom
+		return path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + fecha + ")(" + nomCognom
 				+ ").pdf";
 
 	}

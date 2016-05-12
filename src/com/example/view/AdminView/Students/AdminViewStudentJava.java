@@ -368,7 +368,7 @@ public class AdminViewStudentJava extends MainContentView {
 		grid.setSizeFull();
 		grid.setColumnReorderingAllowed(true);
 
-		grid.setColumns("foto", "nom", "cognoms", "curs", "grup", "email", "data_naixement");
+		grid.setColumns("nom", "cognoms", "curs", "grup", "email", "data_naixement");
 
 		// grid.addRow(new ThemeResource("no_user.png"));
 

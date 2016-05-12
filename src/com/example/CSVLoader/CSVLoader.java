@@ -66,13 +66,13 @@ public class CSVLoader {
 
 		String linea = "";
 		
-		Image iconUser = new Image("/home/javi/Escritorio/no_user.png");
+		//Image iconUser = new Image("/home/javi/Escritorio/no_user.png");
 
 		while ((linea = br.readLine()) != null) {
 			
 			StringTokenizer str = new StringTokenizer(linea, ",\"\"");
 
-			Image imageurl= new Image("/home/javi/Escritorio/no_user.png");
+		//	Image imageurl= new Image("/home/javi/Escritorio/no_user.png");
 			id = Integer.parseInt(str.nextToken());
 			cognoms = str.nextToken();
 			nom = str.nextToken();
@@ -83,7 +83,7 @@ public class CSVLoader {
 			nacionalitat = str.nextToken();
 			telefons = str.nextToken();
 			grups.add(grup);
-			students.add(new Student(nom,cognoms,null,telefons,naixement,Cursos.ObtenerCursoActual(),grup,imageurl));
+			students.add(new Student(nom,cognoms,null,telefons,naixement,Cursos.ObtenerCursoActual(),grup));
 		}
 		
 		
@@ -109,7 +109,7 @@ System.out.println("====================== ALUMNES ========================");
 		
 		 Notification notif = new Notification(
                  "ATENCIÓ:",
-                 "<br>Dades Carregades| Agreements to: Dani Pérez<br/>",
+                 "<br>Dades Carregades<br/>",
                  Notification.Type.HUMANIZED_MESSAGE,
                  true); // Contains HTML
 
@@ -149,7 +149,7 @@ System.out.println("====================== ALUMNES ========================");
 		
 		 Notification notif = new Notification(
                  "ATENCIÓ:",
-                 "<br>Dades Carregades| Agreements to: Dani Pérez<br/>",
+                 "<br>Dades Carregades<br/>",
                  Notification.Type.HUMANIZED_MESSAGE,
                  true); // Contains HTML
 

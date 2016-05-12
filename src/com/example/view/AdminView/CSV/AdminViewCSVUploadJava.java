@@ -46,7 +46,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		File currDir = new File(".");
 		String path = currDir.getCanonicalPath();
 		FileResource resource = new FileResource(
-				new File(path + "/git/ga/WebContent/VAADIN/themes/images/upload-icon.png"));
+				new File(path + "/git/ga2/WebContent/VAADIN/themes/images/upload-icon.png"));
 
 		// CSV STUDENTS
 		uploadStudent.setButtonCaption(null);
@@ -138,7 +138,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 						e.printStackTrace();
 					}
 
-					file = new File(path + "/git/ga/WebContent/CSVContent/" + filename);
+					file = new File(path + "/git/ga2/WebContent/CSVContent/" + filename);
 					fos = new FileOutputStream(file);
 
 				} catch (final java.io.FileNotFoundException e) {
@@ -205,7 +205,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 						e.printStackTrace();
 					}
 
-					file = new File(path + "/git/ga/WebContent/CSVContent/" + filename);
+					file = new File(path + "/git/ga2/WebContent/CSVContent/" + filename);
 					fos = new FileOutputStream(file);
 				} catch (final java.io.FileNotFoundException e) {
 					new Notification("No s'ha pogut obrir el fitxer", e.getMessage(), Notification.Type.ERROR_MESSAGE)

@@ -406,8 +406,21 @@ public class TeacherViewWarningJava extends MainContentView {
 		Object surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms");
 		Object grup = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("grup");
 
-		int idtutor = MA1.getIdTutor(grup.toString());
-		String nametutor = MA.getNomTutor(idtutor);
+		int idtutor=0;
+		String nametutor="";
+		try {
+			idtutor = MA1.getIdTutor(grup.toString());
+			nametutor = MA.getNomTutor(idtutor);
+
+		} catch (Exception e) {
+			 Notification notif = new Notification(
+	                 "ATENCIÓ:",
+	                 "<br>L'alumne no te cap tutor<br/>",
+	                 Notification.Type.HUMANIZED_MESSAGE,
+	                 true); // Contains HTML
+		}
+		
+		
 
 		amonestacioForm.nom.setValue(name.toString());
 		amonestacioForm.cognoms.setValue(surname.toString());

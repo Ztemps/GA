@@ -62,17 +62,17 @@ public class Student implements Serializable {
 		this.grup = grup;
 	}
 	
-	public Student(String nom, String cognom, String email, String telefon, Date data_naixement, String curs, String grup,Image iconURL) {
-		super();
-		this.nom = nom;
-		this.cognoms = cognom;
-		this.email = email;
-		this.telefon = telefon;
-		this.data_naixement = data_naixement;
-		this.curs = curs;
-		this.grup = grup;
-		this.foto= iconURL;
-	}
+//	public Student(String nom, String cognom, String email, String telefon, Date data_naixement, String curs, String grup,Image iconURL) {
+//		super();
+//		this.nom = nom;
+//		this.cognoms = cognom;
+//		this.email = email;
+//		this.telefon = telefon;
+//		this.data_naixement = data_naixement;
+//		this.curs = curs;
+//		this.grup = grup;
+//		this.foto= iconURL;
+//	}
 	
 	
 	

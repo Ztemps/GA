@@ -111,7 +111,7 @@ public class AdminViewSettingsJava extends MainContentView {
 			boolean checkTelegram = adminsettings.checkWhatsPares.getValue();
 
 			path2 = currDir.getCanonicalPath();
-			File f = new File(path2 + "/git/ga/WebContent/Settings/settings.txt");
+			File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
 			FileWriter fw = new FileWriter(f, false);
 			BufferedWriter bf = new BufferedWriter(fw);
 
@@ -155,7 +155,7 @@ public class AdminViewSettingsJava extends MainContentView {
 				e1.printStackTrace();
 			}
 
-			File f = new File(path2 + "/git/ga/WebContent/Settings/settings.txt");
+			File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
 			
 			BufferedReader br = new BufferedReader(new FileReader(f));     
 			if (br.readLine() == null) {
