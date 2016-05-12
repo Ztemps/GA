@@ -1,6 +1,8 @@
 package com.example.view.TeacherView;
 
 import java.net.MalformedURLException;
+import java.text.ParseException;
+import java.util.Date;
 
 import javax.persistence.EntityManager;
 import com.example.Entities.Student;
@@ -56,6 +58,7 @@ public class TeacherViewWarningJava extends MainContentView {
 	private WarningJPAManager MA1;
 	private File sourceFile;
 	private FileResource resource;
+	private String timewarning;
 	private String nomCognom;
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em = entman.getEntityManager();
@@ -146,7 +149,7 @@ public class TeacherViewWarningJava extends MainContentView {
 					WarningJPAManager war = new WarningJPAManager();
 					war.introducirParte(returnQuery());
 					notif("Amonestació posada correctament");
-				} catch (DocumentException | IOException | NullPointerException e) {
+				} catch (DocumentException | IOException | NullPointerException | ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} finally {
@@ -468,7 +471,8 @@ public class TeacherViewWarningJava extends MainContentView {
 		// A user interface for a (trivial) data model from which
 		// the PDF is generated.
 		generatePDF generatepdf = new generatePDF();
-		generatepdf.generate(returnQuery());
+		timewarning = generatepdf.generate(returnQuery());
+		
 
 		String nomCognom = amonestacioForm.nom.getValue() + " " + amonestacioForm.cognoms.getValue();
 
@@ -586,7 +590,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		System.out.println("amonestat2:" + amonestat2 + " gravetat: " + gravetat);
 
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
-				altres_motius, motiu2 };
+				altres_motius, motiu2,timewarning };
 
 		// DATOS PARA INTRODUCIR EN EL PARTE
 

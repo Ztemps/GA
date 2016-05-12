@@ -5,11 +5,14 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
+import org.postgresql.jdbc2.optional.SimpleDataSource;
 
 import com.example.Entities.Student;
 import com.example.Entities.Teacher;
@@ -20,6 +23,8 @@ import com.example.SendMail.sendMail;
 import com.example.ga.GaUI;
 import com.itextpdf.text.DocumentException;
 
+import java_cup.parse_action;
+
 public class WarningJPAManager  {
 	boolean amonestat2 = false;
 	private User user;
@@ -28,14 +33,14 @@ public class WarningJPAManager  {
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em = entman.getEntityManager();
 
-	public void introducirParte(String[] query) throws MalformedURLException, DocumentException, IOException {
+	public void introducirParte(String[] query) throws MalformedURLException, DocumentException, IOException, ParseException {
 
 		File currDir = new File(".");
 		String path2 = currDir.getCanonicalPath();
 		
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
 		// get current date time with Date()
-		Date date = new Date();
+		Date date ;
 		
 		
 		System.out.println("query7" +query[7]);
@@ -75,16 +80,19 @@ public class WarningJPAManager  {
 		// assignatura,
 		// tutor, amonestat, expulsat,motiu, altres_motius };
 		// ARREGLO PARA QUE NO SE REPITAN LOS PARTES
-		String path =  path2 + "/git/ga/WebContent/PDFContent/pdftmp/amonestacio(" + dateFormat.format(date) + ")(" 
-		+ al.getNom() + " " + al.getCognoms()
+		date = new Date();
+		
+		String path =  path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + query[12].substring(0, 5) + ")("+al.getNom() + " " + al.getCognoms()
 		+ ").pdf";
 		
 		sendMail mail;
 		
+		System.out.println("hora:"+path);
 		if(al.getEmail() != null)
 			mail = new sendMail(al.getEmail(),"El seu fill "+query[0]+" "+query[1]+" a sigut amonestat ",path);
 
-		addWarning(new Warning(user.getId(), getCurrentTimeStamp(), al.getGrup(), al.getId(), query[3], query[4],
+		
+		addWarning(new Warning(user.getId(), dateFormat.parse(query[12]), al.getGrup(), al.getId(), query[3], query[4],
 				query[5], tutor, amonestat2, expulsat, "15/16", querycon, query[10]));
 		
 		

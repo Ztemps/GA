@@ -35,6 +35,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class generatePDF extends WarningJPAManager {
 
+	private String timewarning;
 	WarningJPAManager jpa = new WarningJPAManager();
 
 	/**
@@ -50,7 +51,7 @@ public class generatePDF extends WarningJPAManager {
 
 	}
 
-	public void generate(String[] query) throws DocumentException, IOException {
+	public String generate(String[] query) throws DocumentException, IOException {
 
 		UserJPAManager MA = new UserJPAManager();
 		// OBTENER ALUMNO
@@ -151,12 +152,12 @@ public class generatePDF extends WarningJPAManager {
 		campMateria.setSpacingBefore(-12);
 
 		// Prueba
-		String horaAlumne = horaparte;
+		timewarning = horaparte;
 		// CAMP ALUMNE
 		Paragraph hora = new Paragraph("HORA: ", CAPS);
 		hora.setIndentationLeft(195);
 		hora.setSpacingBefore(-13);
-		Paragraph campHora = new Paragraph(horaAlumne, DADES);
+		Paragraph campHora = new Paragraph(timewarning, DADES);
 		campHora.setIndentationLeft(230);
 		campHora.setSpacingBefore(-12);
 
@@ -466,6 +467,8 @@ public class generatePDF extends WarningJPAManager {
 
 		document.add(preface);
 		document.close();
+		
+		return timewarning;
 	}
 
 	public generatePDF(String[] query) throws DocumentException, IOException {
@@ -504,7 +507,7 @@ public class generatePDF extends WarningJPAManager {
 		return cell;
 	}
 
-	public String getPath(String nomCognom) throws IOException {
+	public String getPath(String nom) throws IOException {
 		File currDir = new File(".");
 		String path2 = currDir.getCanonicalPath();
 
@@ -515,7 +518,7 @@ public class generatePDF extends WarningJPAManager {
 
 		String user = jpa.currentUser();
 
-		return path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + dateFormat.format(date) + ")(" + nomCognom
+		return path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + dateFormat.format(date) + ")(" + nom
 				+ ").pdf";
 
 	}
