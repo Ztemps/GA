@@ -25,7 +25,6 @@ public class WarningTeacher extends CssLayout {
 	protected TextField nom;
 	protected TextField cognoms;
 	protected TextField materia;
-	protected TextField professor;
 	protected NativeSelect circunstancia;
 	protected TextField tutor;
 	protected TextField grup;
