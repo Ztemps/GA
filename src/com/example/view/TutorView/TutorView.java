@@ -34,18 +34,17 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Grid.SelectionMode;
 
-public class TutorView  extends MainView implements View {
+public class TutorView extends MainView implements View {
 	public static final String NAME = "Tutor";
 	private TutorOwnWarningsJava tutorownwarning;
-	private TeacherViewWarningJava vistaAmonestacion ;
+	private TeacherViewWarningJava vistaAmonestacion;
 	private JPAContainer<Student> alumnes;
 	private Grid grid;
 	private UserJPAManager ma;
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em = entman.getEntityManager();
-	
-	private TutorViewGrupsJava TutorViewGrups;
 
+	private TutorViewGrupsJava TutorViewGrups;
 
 	public TutorView() throws MalformedURLException, DocumentException, IOException {
 
@@ -55,7 +54,8 @@ public class TutorView  extends MainView implements View {
 		vistaAmonestacion = new TeacherViewWarningJava();
 		TutorViewGrups = new TutorViewGrupsJava();
 		tutorownwarning = new TutorOwnWarningsJava();
-		//false para que no aparezca junto con las amonestaciones nada mas entrar
+		// false para que no aparezca junto con las amonestaciones nada mas
+		// entrar
 		TutorViewGrups.setVisible(false);
 		tutorownwarning.setVisible(false);
 
@@ -81,11 +81,10 @@ public class TutorView  extends MainView implements View {
 		sep3.setVisible(false);
 		mevesAmonestacions.addClickListener(e -> ownWarnings());
 
-		content.addComponents(vistaAmonestacion,TutorViewGrups,tutorownwarning);
-		
-		
+		content.addComponents(vistaAmonestacion, TutorViewGrups, tutorownwarning);
+
 		groupsTutor.addClickListener(new ClickListener() {
-			
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
@@ -99,13 +98,13 @@ public class TutorView  extends MainView implements View {
 
 	private void viewWarnings() {
 		// TODO Auto-generated method stub
-		
+
 		TutorViewGrups.setVisible(false);
 		vistaAmonestacion.setVisible(true);
 		tutorownwarning.setVisible(false);
 
 	}
-	
+
 	private void ownWarnings() {
 		// TODO Auto-generated method stub
 		tutorownwarning.reloadGrid();
@@ -117,41 +116,33 @@ public class TutorView  extends MainView implements View {
 	public void logoutActions() {
 
 		getUI().getCurrent().addWindow(DeleteSubWindows());
-		
+
 	}
 
 	private void setWellcome() {
 		// TODO Auto-generated method stub
 		ma = new UserJPAManager();
-		int id;
-		try {
-			id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
-			wellcome.setValue("Benvingut "+ma.getNomTutorHeader(id));
-		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// TODO Auto-generated method stub
-		
+
+		int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
+		wellcome.setCaption("Benvingut " + ma.getNomTutorHeader(id));
+
 	}
 
-	
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
-//		if((getSession().getAttribute("user")) == null){
-//
-//			getUI().getNavigator().navigateTo(LoginView.NAME);//
-//
-//		} else {
-//
-//			getUI().getNavigator().navigateTo(ProfessorView.NAME);//
-//
-//		}
+		// if((getSession().getAttribute("user")) == null){
+		//
+		// getUI().getNavigator().navigateTo(LoginView.NAME);//
+		//
+		// } else {
+		//
+		// getUI().getNavigator().navigateTo(ProfessorView.NAME);//
+		//
+		// }
 
 	}
 
-	
 	private Grid GridProperties() {
 
 		// Fill the grid with data
@@ -173,9 +164,9 @@ public class TutorView  extends MainView implements View {
 			@Override
 			public void select(SelectionEvent event) {
 				// TODO Auto-generated method stub
-//				bAdd.setEnabled(true);
-//				buttonEdit.setEnabled(true);
-//				bDelete.setEnabled(true);
+				// bAdd.setEnabled(true);
+				// buttonEdit.setEnabled(true);
+				// bDelete.setEnabled(true);
 
 			}
 		});
@@ -183,7 +174,7 @@ public class TutorView  extends MainView implements View {
 		return grid;
 
 	}
-	
+
 	public Window DeleteSubWindows() {
 
 		Window win = new Window(" Tancar sessió");
@@ -219,7 +210,6 @@ public class TutorView  extends MainView implements View {
 
 				win.close();
 				getUI().getNavigator().navigateTo(LoginView.NAME);
-				
 
 			}
 		});

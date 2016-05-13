@@ -44,7 +44,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class AdminView extends MainView implements View {
-	
+
 	private static final long serialVersionUID = 4184290153198838185L;
 	public static final String NAME = "Admin";
 	private static AdminViewGroupJava ViewGrupos;
@@ -106,7 +106,7 @@ public class AdminView extends MainView implements View {
 	public AdminView() throws IOException, DocumentException, SQLException {
 
 		loadView();
-		
+
 		ViewGrupos = new AdminViewGroupJava();
 		ViewStudents = new AdminViewStudentJava();
 		ViewDocents = new AdminViewTeacherJava();
@@ -118,7 +118,7 @@ public class AdminView extends MainView implements View {
 		Viewtutors = new AdminViewTutorJava();
 		ViewCharts = new AdminViewCharts();
 		ViewSettings = new AdminViewSettingsJava();
-		
+
 		content.removeAllComponents();
 		content.addComponents(ViewGrupos);
 		content.addComponents(ViewStudents);
@@ -146,21 +146,12 @@ public class AdminView extends MainView implements View {
 		Viewtutors.setVisible(false);
 		ViewSettings.setVisible(false);
 
-		
 		sep.addClickListener(e -> subMenuWarning());
 		sep3.addClickListener(e -> subMenuGeneral());
 		sep4.addClickListener(e -> subMenuGeneral2());
 		sep5.setDisableOnClick(true);
 
-		File currDir = new File(".");
-		String path2 = currDir.getCanonicalPath();
-		
-	/*	FileResource resource = new FileResource(new File(path2 + "/git/ga/WebContent/VAADIN/themes/images/iconAPP.png")); 
-		Image logo = new Image("",resource);
-		vImage.removeAllComponents();
-		vImage.addComponent(logo);*/
-}
-
+	}
 
 	private void subMenuGeneral2() {
 		// TODO Auto-generated method stub
@@ -180,6 +171,7 @@ public class AdminView extends MainView implements View {
 		}
 
 	}
+
 	private void subMenuGeneral() {
 		// TODO Auto-generated method stub
 		if (students.isVisible()) {
@@ -211,7 +203,7 @@ public class AdminView extends MainView implements View {
 
 	}
 
-	private void loadView() {
+	private void loadView() throws IOException {
 		// TODO Auto-generated method stub
 
 		warning.setVisible(true);
@@ -227,6 +219,7 @@ public class AdminView extends MainView implements View {
 		usuaris.setVisible(true);
 		charts.setVisible(true);
 		setWellcome();
+		setLogo();
 
 		// AMONESTAR
 		warning.addClickListener(e -> viewWarning());
@@ -266,12 +259,26 @@ public class AdminView extends MainView implements View {
 
 	} // end loadView
 
+	private void setLogo() throws IOException {
+		// TODO Auto-generated method stub
+		File currDir = new File(".");
+		String path2 = currDir.getCanonicalPath();
+
+		FileResource resource = new FileResource(new File(path2 + "/git/ga2/WebContent/VAADIN/themes/images/logo.png"));
+		Image logo = new Image("", resource);
+		logo.setWidth("90px");
+		logo.setHeight("90px");
+		vImage.removeAllComponents();
+		vImage.addComponent(logo);
+
+	}
+
 	private void ViewCharts() {
 		// TODO Auto-generated method stub
 
 		ViewCharts.clear();
 		ViewCharts.reloadChart();
-		
+
 		ViewTeachersWarnings.setVisible(false);
 		ViewListWarnings.setVisible(false);
 		ViewUsers.setVisible(false);
@@ -284,7 +291,6 @@ public class AdminView extends MainView implements View {
 		ViewCharts.setVisible(true);
 		ViewSettings.setVisible(false);
 
-		
 	}
 
 	private void viewConfiguracio() {
@@ -319,7 +325,6 @@ public class AdminView extends MainView implements View {
 		Viewtutors.setVisible(true);
 		ViewSettings.setVisible(false);
 
-
 	}
 
 	private void ViewTeachersWarnings() {
@@ -337,7 +342,6 @@ public class AdminView extends MainView implements View {
 		Viewtutors.setVisible(false);
 		ViewTeachersWarnings.setVisible(true);
 		ViewSettings.setVisible(false);
-
 
 	}
 
@@ -357,7 +361,6 @@ public class AdminView extends MainView implements View {
 		Viewtutors.setVisible(false);
 		ViewCharts.setVisible(false);
 		ViewSettings.setVisible(false);
-
 
 	}
 
@@ -395,7 +398,6 @@ public class AdminView extends MainView implements View {
 		Viewtutors.setVisible(false);
 		ViewCharts.setVisible(false);
 		ViewSettings.setVisible(false);
-
 
 	}
 
@@ -454,9 +456,9 @@ public class AdminView extends MainView implements View {
 
 	}
 
-	public static  void viewCsv() {
+	public static void viewCsv() {
 
-		//ViewCSV.reloadGrid();
+		// ViewCSV.reloadGrid();
 		ViewStudents.setVisible(false);
 		ViewGrupos.setVisible(false);
 		ViewDocents.setVisible(false);
@@ -472,8 +474,7 @@ public class AdminView extends MainView implements View {
 	}
 
 	public void logoutActions() {
-		
-		
+
 		getUI().getCurrent().addWindow(DeleteSubWindows());
 
 	}
@@ -522,8 +523,8 @@ public class AdminView extends MainView implements View {
 				// TODO Auto-generated method stub
 
 				win.close();
-                getUI().getNavigator().navigateTo(LoginView.NAME);
-                getSession().close();
+				getUI().getNavigator().navigateTo(LoginView.NAME);
+				getSession().close();
 
 			}
 		});
@@ -543,6 +544,8 @@ public class AdminView extends MainView implements View {
 		ma = new UserJPAManager();
 		int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
 		// TODO Auto-generated method stub
-		wellcome.setValue("Benvingut " + ma.getNomTutorHeader(id));
+
+		wellcome.addStyleName("wellcome");
+		wellcome.setCaption("Benvingut " + ma.getNomTutorHeader(id));
 	}
 }

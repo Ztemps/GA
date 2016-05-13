@@ -1036,6 +1036,7 @@
 	-moz-user-select: text;
 	-ms-user-select: text;
 	user-select: text;
+	
 }
 
 .v-app input::-ms-clear {
@@ -1114,7 +1115,6 @@
 }
 
 .v-caption {
-	display: inline-block;
 	white-space: nowrap;
 	line-height: 1.55;
 }
@@ -2264,6 +2264,8 @@ div.v-layout.v-horizontal.v-widget {
 	-webkit-box-shadow: 0 0 0 2px rgba(25, 125, 225, 0.5);
 	box-shadow: 0 0 0 2px rgba(25, 125, 225, 0.5);
 }
+
+
 
 .ga .v-button-danger:active:after {
 	background-color: rgba(146, 12, 2, 0.2);
