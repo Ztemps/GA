@@ -11405,6 +11405,19 @@ div.v-layout.v-horizontal.v-widget {
 	user-select: text;
 }
 
+
+.ga .v-label-title {
+	-webkit-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
+	user-select: text;
+	color: white; 
+	text-align:center;
+    font-weight: bold;
+}
+
+
+
 .ga .v-label-undef-w {
 	white-space: nowrap;
 }
@@ -12526,7 +12539,7 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .ga .valo-menu-subtitle {
-	color: #868686;
+	color: #1362b1;
 	margin: 7px 0 7px 19px;
 	border-bottom: 1px solid #666666;
 }
@@ -12545,11 +12558,29 @@ div.v-layout.v-horizontal.v-widget {
 	padding: 0 37px 0 19px;
 	cursor: pointer;
 	position: relative;
+	color:white;
 	overflow: hidden;
 	text-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
 	-webkit-transition: background-color 300ms, color 60ms;
 	-moz-transition: background-color 300ms, color 60ms;
 	transition: background-color 300ms, color 60ms;
+}
+
+.ga .valo-menu-item-title{
+	
+	outline: none;
+	color: #197de1;
+    font-weight: bold;
+	cursor: pointer;
+	position: relative;
+	font-size:larger;
+	overflow: hidden;
+	text-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
+	-webkit-transition: background-color 300ms, color 60ms;
+	-moz-transition: background-color 300ms, color 60ms;
+	transition: background-color 300ms, color 60ms;
+	
+	
 }
 
 .ga .valo-menu-item [class*="caption"] {
