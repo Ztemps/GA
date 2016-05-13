@@ -1,12 +1,15 @@
 package com.example.view.TeacherView;
 
 import java.net.MalformedURLException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
 
 import javax.persistence.EntityManager;
 import com.example.Entities.Student;
+import com.example.Entities.Teacher;
 import com.example.Logic.EntityManagerUtil;
+import com.example.Logic.JDBCConnectionPool;
 import com.example.Logic.UserJPAManager;
 import com.example.Logic.WarningJPAManager;
 import com.example.Pdf.generatePDF;
@@ -17,7 +20,11 @@ import com.itextpdf.text.DocumentException;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.data.Container.Filterable;
+import com.vaadin.data.Item;
+import com.vaadin.data.Property;
 import com.vaadin.data.util.filter.SimpleStringFilter;
+import com.vaadin.data.util.sqlcontainer.SQLContainer;
+import com.vaadin.data.util.sqlcontainer.query.FreeformQuery;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent;
@@ -28,6 +35,7 @@ import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.shared.Position;
+import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Grid;
@@ -38,6 +46,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.themes.ValoTheme;
 
 import java.io.*;
@@ -62,14 +71,17 @@ public class TeacherViewWarningJava extends MainContentView {
 	private String nomCognom;
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em = entman.getEntityManager();
+	private JDBCConnectionPool jdbccp;
 
-	public TeacherViewWarningJava() throws MalformedURLException, DocumentException, IOException {
+
+	public TeacherViewWarningJava() throws MalformedURLException, DocumentException, IOException, SQLException {
 
 		GridProperties();
 		filterTextProperties();
 		WindowProperties();
 		buttonsSettings();
 		WindowPdfProperties();
+		PopulateComboBoxProf();
 
 		try {
 
@@ -172,6 +184,7 @@ public class TeacherViewWarningJava extends MainContentView {
 
 				sourceFile.delete();
 				windowpdf.close();
+				
 
 			}
 		});
@@ -218,6 +231,51 @@ public class TeacherViewWarningJava extends MainContentView {
 		vHorizontalMain.addComponent(GridProperties());
 
 	}
+	
+	private void PopulateComboBoxProf() throws SQLException {
+		
+		jdbccp = new JDBCConnectionPool();
+		
+		SQLContainer containerComboBox = new SQLContainer(new FreeformQuery("select  nom ||' '|| cognoms as professors from docent",
+					jdbccp.GetConnection()));
+		
+		
+		amonestacioForm.comboProf.setContainerDataSource(containerComboBox);
+		amonestacioForm.comboProf.setItemCaptionPropertyId("professors");
+		amonestacioForm.comboProf.setNullSelectionAllowed(true);
+		amonestacioForm.comboProf.setFilteringMode(FilteringMode.CONTAINS);
+
+		amonestacioForm.comboProf.setInputPrompt("Seleccioni professor");
+	
+	}
+	
+	private int TeacherIDComboBox(ItemClickEvent event){
+		
+		
+		/*Item item = amonestacioForm.comboProf.getItem(amonestacioForm.comboProf.getValue());
+		
+		String cadena = item.getItemProperty("professors").toString();
+		
+		/*Object cadena = amonestacioForm.comboProf.getContainerProperty(amonestacioForm.comboProf.getValue(), "professors").toString();
+		Object id1 = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
+		
+		String cadena = amonestacioForm.comboProf.getPropertyDataSource().toString();
+		String cadena2 = amonestacioForm.comboProf.getConvertedValue().toString();
+		
+		System.out.println("cadenaaa" +cadena);
+		System.out.println("cadena nombrw??" +cadena2);
+
+		//Object id = amonestacioForm.comboProf.getContainerDataSource().getItem(1).getItemProperty("professors");
+		
+
+		System.out.println("PRUEBAAAA" +cadena.toString());
+		System.out.println("cadenaaa" +cadena);*/
+
+		
+		return 0;	
+	
+	}
+	
 
 	private String mailStudent() {
 
@@ -418,7 +476,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		} catch (Exception e) {
 			 Notification notif = new Notification(
 	                 "ATENCIÓ:",
-	                 "<br>L'alumne no te cap tutor<br/>",
+	                 "<br>L'alumne no té cap tutor<br/>",
 	                 Notification.Type.HUMANIZED_MESSAGE,
 	                 true); // Contains HTML
 		}
@@ -555,6 +613,9 @@ public class TeacherViewWarningJava extends MainContentView {
 		String assignatura = null;
 		String altres_motius = null;
 		String amonestat2 = null;
+		int teacherid = TeacherIDComboBox(null);
+		
+		
 
 		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 

@@ -2,6 +2,7 @@ package com.example.view.TeacherView;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.sql.SQLException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -54,7 +55,7 @@ public class TeacherView extends MainView implements View {
 	TeacherViewWarningJava vistaAmonestacion ;
 	TeacherOwnWarningsJava vistaOwn;
 	UserJPAManager ma;
-	public TeacherView() throws MalformedURLException, DocumentException, IOException {
+	public TeacherView() throws MalformedURLException, DocumentException, IOException, SQLException {
 
 		// Side menu button options
 		vistaAmonestacion = new TeacherViewWarningJava();
