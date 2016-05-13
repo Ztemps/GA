@@ -120,7 +120,7 @@ public class TeacherView extends MainView implements View {
 		ma = new UserJPAManager();
 		int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
 		// TODO Auto-generated method stub
-		wellcome.setValue("Benvingut "+ma.getNomTutorHeader(id));
+		wellcome.setCaption("Benvingut "+ma.getNomTutorHeader(id));
 	}
 
 	public void logoutActions() {

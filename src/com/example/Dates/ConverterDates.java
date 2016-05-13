@@ -9,7 +9,7 @@ public class ConverterDates {
 	public static String converterDate(Date datainici) {
 		String fechaFinal = null;
 		String month = null;
-System.out.println("DAta sin cambiar: "+datainici.toLocaleString());
+		//System.out.println("DAta sin cambiar: "+datainici.toLocaleString());
 		String datainicial = datainici.toLocaleString();
 
 		String[] fecha = datainicial.substring(0, 11).split("-");
@@ -98,7 +98,7 @@ System.out.println("DAta sin cambiar: "+datainici.toLocaleString());
 
 		fechaFinal = fecha[0] + "-" + month + "-" + fecha[2];
 
-		System.out.println(fechaFinal);
+		//System.out.println(fechaFinal);
 
 		return fechaFinal;
 
