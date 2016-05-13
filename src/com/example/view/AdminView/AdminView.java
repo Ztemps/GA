@@ -524,7 +524,6 @@ public class AdminView extends MainView implements View {
 
 				win.close();
 				getUI().getNavigator().navigateTo(LoginView.NAME);
-				getSession().close();
 
 			}
 		});

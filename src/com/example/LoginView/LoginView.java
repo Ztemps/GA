@@ -190,7 +190,11 @@ public class LoginView extends LoginViewDesign implements View {
 			// posteriormente
 			// validar el login
 			while (rs.next()) {
-				usuari = new User(Integer.parseInt(rs.getString(1)),rs.getString(2),rs.getString(3),rs.getString(4));
+				usuari = new User();
+					usuari.setId(Integer.parseInt(rs.getString(1)));
+					usuari.setPassword(rs.getString(2));
+					usuari.setUsername(rs.getString(3));
+					usuari.setRol(rs.getString(4));
 
 				// Si el usuario y el nombre coinciden y su rol es
 				// administrador, se abre la vista del administrador
@@ -198,37 +202,42 @@ public class LoginView extends LoginViewDesign implements View {
 				// Si el usuario o contraseña no son validos, se muestra un
 				// mensaje emergente
 			}
-			rs.close();
 			
-			if (!(usuari.getUsername().equals(username) && usuari.getPassword().equals(userpassword))) {
+			// comparamos otra vez si el usuario y el nombre son el mismo
+			if (usuari.getUsername().equals(username) && usuari.getPassword().equals(userpassword)){
+				if (usuari.getRol().equals("Administrador")) {
 
+					FileWriter fw = new FileWriter("userList.txt");
+					BufferedWriter br = new BufferedWriter(fw);
+					br.write("true");
+					br.close();
+
+					setAttributeSession(username);
+					getUI().getNavigator().navigateTo(AdminView.NAME);//
+
+				}else if (usuari.getRol().equals("Tutor")) {
+
+					setAttributeSession(username);
+					getUI().getNavigator().navigateTo(TutorView.NAME);
+
+				}else if(usuari.getRol().equals("Profesor")) {
+					// Si el usuario y el nombre coinciden y su rol es
+					// tutor, se abre la vista del tutor
+					setAttributeSession(username);
+					getUI().getNavigator().navigateTo(TeacherView.NAME);
+				}
+				
+			}else{
+				// si no son el mismo la contraseña o usuario son incorrectos
 				notif("Usuari/Contraseña incorrectes");
-
 			}
+			
+			
+//			if (!(usuari.getUsername().equals(username) && usuari.getPassword().equals(userpassword))) {
 
-			if (usuari.getRol().equals("Administrador")) {
+				 // notif("Usuari/Contraseña incorrectes");
 
-				FileWriter fw = new FileWriter("userList.txt");
-				BufferedWriter br = new BufferedWriter(fw);
-				br.write("true");
-				br.close();
-
-				setAttributeSession(username);
-				getUI().getNavigator().navigateTo(AdminView.NAME);//
-
-			}
-			if (usuari.getRol().equals("Tutor")) {
-
-				setAttributeSession(username);
-				getUI().getNavigator().navigateTo(TutorView.NAME);
-
-			}
-			if (usuari.getRol().equals("Profesor")) {
-				// Si el usuario y el nombre coinciden y su rol es
-				// tutor, se abre la vista del tutor
-				setAttributeSession(username);
-				getUI().getNavigator().navigateTo(TeacherView.NAME);
-			}
+		//	}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

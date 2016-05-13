@@ -5,7 +5,7 @@
  </head> 
  <body> 
   <vaadin-css-layout responsive width-full height="575px"> 
-   <vaadin-vertical-layout responsive width="80%" height-full> 
+   <vaadin-vertical-layout responsive width="80%"> 
     <vaadin-horizontal-layout spacing size-full :middle :center :expand> 
      <vaadin-text-field icon="fonticon://FontAwesome/f007" caption="Nom" width-full _id="nom" :middle :center :expand></vaadin-text-field> 
      <vaadin-text-field icon="fonticon://FontAwesome/f007" caption="Cognoms" width-full _id="cognoms" :middle :center :expand></vaadin-text-field> 
@@ -47,14 +47,19 @@
       <option>Molestar o distreure de forma reiterada als companys</option> 
      </vaadin-option-group> 
     </vaadin-horizontal-layout> 
-    <vaadin-horizontal-layout spacing width-full> 
+    <vaadin-horizontal-layout spacing width-full :middle :center> 
      <vaadin-text-area icon="fonticon://FontAwesome/f086" caption="Altres motius" width-full _id="amotius" :middle :center :expand></vaadin-text-area> 
     </vaadin-horizontal-layout> 
-    <vaadin-horizontal-layout spacing size-full :middle :center :expand> 
+    <vaadin-horizontal-layout size-full> 
+     <vaadin-label plain-text :middle :center :expand>
+       * Els camps amb astericos són obligatoris 
+     </vaadin-label> 
+    </vaadin-horizontal-layout> 
+    <vaadin-horizontal-layout spacing width-full margin :middle :center> 
      <vaadin-button icon="fonticon://FontAwesome/f057" style-name="danger" width="115px" plain-text _id="bcancelar" :middle :center>
        Cancelar 
      </vaadin-button> 
-     <vaadin-button icon="fonticon://FontAwesome/f0a9" style-name="friendly" width="115px" plain-text _id="baceptar" :middle :center>
+     <vaadin-button icon="fonticon://FontAwesome/f0a9" style-name="friendly" width="115px" height-full plain-text _id="baceptar" :middle :center>
        Aceptar 
      </vaadin-button> 
     </vaadin-horizontal-layout> 
