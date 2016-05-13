@@ -60,10 +60,11 @@ public class AdminView extends MainView implements View {
 	private UserJPAManager ma;
 	private static AdminViewTutorJava Viewtutors;
 	private BufferedReader br = null;
+	
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-
+		
 		try {
 			br = new BufferedReader(new FileReader("userList.txt"));
 
@@ -104,7 +105,9 @@ public class AdminView extends MainView implements View {
 	}
 
 	public AdminView() throws IOException, DocumentException, SQLException {
-
+		
+		content.addStyleName("contenido");
+		
 		loadView();
 		
 		ViewGrupos = new AdminViewGroupJava();
