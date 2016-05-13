@@ -55,6 +55,7 @@ public class AdminViewCharts extends MainContentView {
 
 	public AdminViewCharts() {
 		buttonsSettings();
+		vHorizontalMain.setSpacing(true);
 		vl.addComponent(WarningsPerGroup());
 		vl1.addComponent(WarningsPerGroup());
 		vHorizontalMain.addComponent(vl);
@@ -271,7 +272,9 @@ public class AdminViewCharts extends MainContentView {
 	public void reloadChart() {
 
 		vHorizontalMain.removeAllComponents();
-		vHorizontalMain.addComponent(WarningsPerGroup());
+		vHorizontalMain.addComponent(vl);
+		vHorizontalMain.addComponent(vl1);
+
 		//vHorizontalMain.addComponent(WarningPerTime("2016-05-08", "2016-05-08"));
 		//vHorizontalMain.addComponent(WarningsP());
 
