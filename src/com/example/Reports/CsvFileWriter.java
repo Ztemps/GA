@@ -359,7 +359,7 @@ public class CsvFileWriter {
 
 			for (int j = 0; j < idList.size(); j++) {
 				query = new ReportQuerys();
-				amonestacions1.add(query.getWarningCurs(Integer.parseInt(idList.get(j).toString()), semana2, semana1));
+				amonestacions1.add(query.getWarningCurs(Integer.parseInt(idList.get(j).toString()), semana1, semana2));
 				query.closeTransaction();
 
 			}
@@ -391,7 +391,7 @@ public class CsvFileWriter {
 
 			for (int j = 0; j < idList.size(); j++) {
 				query = new ReportQuerys();
-				expulsions1.add(query.getExpulsionCurs(Integer.parseInt(idList.get(j).toString()), semana2, semana1));
+				expulsions1.add(query.getExpulsionCurs(Integer.parseInt(idList.get(j).toString()), semana1, semana2));
 				query.closeTransaction();
 
 			}
