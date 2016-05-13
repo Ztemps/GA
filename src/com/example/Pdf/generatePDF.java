@@ -20,7 +20,6 @@ import com.example.Entities.Teacher;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.UserJPAManager;
 import com.example.Logic.WarningJPAManager;
-import com.example.view.TeacherView.TeacherViewNewWarningFormJava;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
