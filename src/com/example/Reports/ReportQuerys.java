@@ -1,6 +1,6 @@
 package com.example.Reports;
 
-import java.io.FileWriter;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -12,12 +12,26 @@ public class ReportQuerys {
 	public Query queryNom = null;
 	public Query queryCognom = null;
 	public Query queryDate = null;
+	public Query queryIds = null;
+	public Query queryWarnings = null;
+	public Query queryExpulsion = null;
+	
 	EntityManagerUtil emu = new EntityManagerUtil();
 	private EntityManager em = emu.getEntityManager();
 
 	public ReportQuerys() {
 
 	}
+	
+	public List getIdAlumnes(String grup) {
+		em.getTransaction().begin();
+		// Curso que escoja el admin esto será una variable
+		queryIds = em.createNativeQuery("SELECT id FROM alumne  WHERE grup LIKE '" + grup + "'");
+		List idQuery = queryIds.getResultList();
+		em.getTransaction().commit();
+		return idQuery;
+	}
+	
 
 	public List getNomAlumnes(String grup) {
 
@@ -33,7 +47,7 @@ public class ReportQuerys {
 
 		em.getTransaction().begin();
 		// Curso que escoja el admin esto será una variable
-		queryCognom = em.createNativeQuery("SELECT cognoms FROM alumne");
+		queryCognom = em.createNativeQuery("SELECT cognoms FROM alumne WHERE grup LIKE '" + grup + "'");
 		List cognomsQuery = queryCognom.getResultList();
 		em.getTransaction().commit();
 		return cognomsQuery;
@@ -51,10 +65,41 @@ public class ReportQuerys {
 		return dateCurs;
 
 	}
+	
+	public String getExpulsionCurs(int id, Date semana1, Date semana2) {
+
+		em.getTransaction().begin();
+		// Curso que escoja el admin esto será una variable
+		queryExpulsion = em.createNativeQuery("SELECT count(expulsat) FROM amonestacio WHERE expulsat=true AND alumne = '" + id + "' "
+				+ "AND data BETWEEN '" + semana1 + "' AND '" + semana2 + "'");
+		String expulsions = queryExpulsion.getSingleResult().toString();;
+		em.getTransaction().commit();
+		
+	
+		
+		return expulsions;
+
+	}
+	
+	public String getWarningCurs(int id , Date semana1, Date semana2) {
+
+		em.getTransaction().begin();
+		// Curso que escoja el admin esto será una variable
+		queryWarnings = em.createNativeQuery("SELECT count(amonestat) FROM amonestacio WHERE amonestat=true AND alumne = '" + id + "'"
+				+ "AND data BETWEEN '" + semana1 + "' AND '" + semana2 + "'");
+		String amonestacions = queryWarnings.getSingleResult().toString();
+		em.getTransaction().commit();
+		return amonestacions;
+
+	}
+	
+	
 
 	public void closeTransaction() {
 		em.close();
 
 	}
+
+	
 
 }
