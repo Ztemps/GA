@@ -53,7 +53,7 @@ public class TeacherViewWarningJava extends MainContentView {
 	private Window windowpdf = new Window();
 	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
 	private JPAContainer<Student> alumnes;
-	private TeacherViewNewWarningFormJava amonestacioForm;
+	private WarningTeacher amonestacioForm;
 	private UserJPAManager MA;
 	private WarningJPAManager MA1;
 	private File sourceFile;
@@ -233,7 +233,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		horizontalTitle.addStyleName("horizontal-title");
 		txtTitle.addStyleName("main-title");
 		bAdd.setCaption("Amonestar");
-		txtTitle.setValue("Gestió de Amonestacions");
+		txtTitle.setValue("Gestió d'Amonestacions");
 		bDelete.addStyleName(ValoTheme.BUTTON_DANGER);
 		bAdd.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		bRegister.addStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -334,7 +334,7 @@ public class TeacherViewWarningJava extends MainContentView {
 
 	private void WindowProperties() throws MalformedURLException, DocumentException, IOException {
 
-		amonestacioForm = new TeacherViewNewWarningFormJava();
+		amonestacioForm = new WarningTeacher();
 
 		window.setWidth(900.0f, Unit.PIXELS);
 		// window.setContent(form);
