@@ -1,5 +1,8 @@
 package com.example.Logic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -9,7 +12,7 @@ public class TeachersJPAManager {
 
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em = entman.getEntityManager();
-
+	private List<Teacher> listTeachers;
 	public void addTeacher(Teacher teacher) {
 
 		em.getTransaction().begin();
@@ -46,6 +49,25 @@ public class TeachersJPAManager {
 		// em.close();
 		// em.flush();
 		return docent.getId();
+	}
+	public List<Teacher> getNoms(){
+		
+		
+		try {
+
+			em.getTransaction().begin();
+			listTeachers = em.createQuery("Select e From Teacher e").getResultList();
+
+			em.getTransaction().commit();
+			return listTeachers;
+
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+		}
+	
+		return listTeachers;
+
+
 	}
 	
 	public void closeTransaction() {

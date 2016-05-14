@@ -3,13 +3,16 @@ package com.example.view.TeacherView;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import com.example.Entities.Student;
 import com.example.Entities.Teacher;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.JDBCConnectionPool;
+import com.example.Logic.TeachersJPAManager;
 import com.example.Logic.UserJPAManager;
 import com.example.Logic.WarningJPAManager;
 import com.example.Pdf.generatePDF;
@@ -19,9 +22,13 @@ import com.example.view.AdminView.AdminView;
 import com.itextpdf.text.DocumentException;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
+import com.vaadin.data.Container;
 import com.vaadin.data.Container.Filterable;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.data.util.sqlcontainer.query.FreeformQuery;
@@ -36,11 +43,14 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.shared.Position;
 import com.vaadin.shared.ui.combobox.FilteringMode;
+import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
+import com.vaadin.ui.AbstractSelect.NewItemHandler;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
@@ -48,6 +58,8 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.themes.ValoTheme;
+
+import jdk.nashorn.internal.runtime.ListAdapter;
 
 import java.io.*;
 
@@ -72,9 +84,9 @@ public class TeacherViewWarningJava extends MainContentView {
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em = entman.getEntityManager();
 	private JDBCConnectionPool jdbccp;
+	private String nameTeacher;
 
-
-	public TeacherViewWarningJava() throws MalformedURLException, DocumentException, IOException, SQLException {
+	public TeacherViewWarningJava() throws MalformedURLException, DocumentException, IOException {
 
 		GridProperties();
 		filterTextProperties();
@@ -83,6 +95,15 @@ public class TeacherViewWarningJava extends MainContentView {
 		WindowPdfProperties();
 		PopulateComboBoxProf();
 
+		amonestacioForm.comboProf.addValueChangeListener(new ValueChangeListener() {
+
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				// TODO Auto-generated method stub
+
+				nameTeacher = String.valueOf(event.getProperty().getValue());
+			}
+		});
 		try {
 
 			amonestacioForm.baceptar.addClickListener(new ClickListener() {
@@ -184,7 +205,6 @@ public class TeacherViewWarningJava extends MainContentView {
 
 				sourceFile.delete();
 				windowpdf.close();
-				
 
 			}
 		});
@@ -215,12 +235,11 @@ public class TeacherViewWarningJava extends MainContentView {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				try{
+				try {
 					getItemSelectedToAmonestacioForm();
-				}catch(NullPointerException e){
+				} catch (NullPointerException e) {
 					notif("L'alume no te un tutor asignat ");
 				}
-				
 
 			}
 		});
@@ -236,51 +255,91 @@ public class TeacherViewWarningJava extends MainContentView {
 		vHorizontalMain.addComponent(GridProperties());
 
 	}
-	
-	private void PopulateComboBoxProf() throws SQLException {
-		
-		jdbccp = new JDBCConnectionPool();
-		
-		SQLContainer containerComboBox = new SQLContainer(new FreeformQuery("select  nom ||' '|| cognoms as professors from docent",
-					jdbccp.GetConnection()));
-		
-		
-		amonestacioForm.comboProf.setContainerDataSource(containerComboBox);
-		amonestacioForm.comboProf.setItemCaptionPropertyId("professors");
-		amonestacioForm.comboProf.setNullSelectionAllowed(true);
+
+	private void PopulateComboBoxProf() {
+
+		TeachersJPAManager ma = new TeachersJPAManager();
+		List<Teacher> lista = ma.getNoms();
+		// Set the appropriate filtering mode for this example
 		amonestacioForm.comboProf.setFilteringMode(FilteringMode.CONTAINS);
+		amonestacioForm.comboProf.setImmediate(true);
 
-		amonestacioForm.comboProf.setInputPrompt("Seleccioni professor");
-	
+		// Disallow null selections
+		amonestacioForm.comboProf.setNullSelectionAllowed(false);
+
+		// Check if the caption for new item already exists in the list of item
+		// captions before approving it as a new item.
+
+		amonestacioForm.comboProf.removeAllItems();
+
+		for (int i = 0; i < lista.size(); i++) {
+
+			amonestacioForm.comboProf.addItem(lista.get(i).getNom() + " " + lista.get(i).getCognoms());
+
+		}
+
+		amonestacioForm.comboProf.setNewItemHandler(new NewItemHandler() {
+			@Override
+			public void addNewItem(final String newItemCaption) {
+				boolean newItem = true;
+				for (final Object itemId : amonestacioForm.comboProf.getItemIds()) {
+					if (newItemCaption.equalsIgnoreCase(amonestacioForm.comboProf.getItemCaption(itemId))) {
+						newItem = false;
+						break;
+					}
+				}
+				if (newItem) {
+					// Adds new option
+					if (amonestacioForm.comboProf.addItem(newItemCaption) != null) {
+						final Item item = amonestacioForm.comboProf.getItem(newItemCaption);
+
+						amonestacioForm.comboProf.setValue(newItemCaption);
+					}
+				}
+			}
+		});
+
+		// amonestacioForm.comboProf.addValueChangeListener(e ->
+		// Notification.show("Value changed:",
+		// String.valueOf(e.getProperty().getValue()),
+		// Type.TRAY_NOTIFICATION));
+
 	}
-	
-	private int TeacherIDComboBox(ItemClickEvent event){
-		
-		
-		/*Item item = amonestacioForm.comboProf.getItem(amonestacioForm.comboProf.getValue());
-		
-		String cadena = item.getItemProperty("professors").toString();
-		
-		/*Object cadena = amonestacioForm.comboProf.getContainerProperty(amonestacioForm.comboProf.getValue(), "professors").toString();
-		Object id1 = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
-		
-		String cadena = amonestacioForm.comboProf.getPropertyDataSource().toString();
-		String cadena2 = amonestacioForm.comboProf.getConvertedValue().toString();
-		
-		System.out.println("cadenaaa" +cadena);
-		System.out.println("cadena nombrw??" +cadena2);
 
-		//Object id = amonestacioForm.comboProf.getContainerDataSource().getItem(1).getItemProperty("professors");
-		
+	private int TeacherIDComboBox(ItemClickEvent event) {
 
-		System.out.println("PRUEBAAAA" +cadena.toString());
-		System.out.println("cadenaaa" +cadena);*/
+		/*
+		 * Item item =
+		 * amonestacioForm.comboProf.getItem(amonestacioForm.comboProf.getValue(
+		 * ));
+		 * 
+		 * String cadena = item.getItemProperty("professors").toString();
+		 * 
+		 * /*Object cadena =
+		 * amonestacioForm.comboProf.getContainerProperty(amonestacioForm.
+		 * comboProf.getValue(), "professors").toString(); Object id1 =
+		 * grid.getContainerDataSource().getItem(grid.getSelectedRow()).
+		 * getItemProperty("id");
+		 * 
+		 * String cadena =
+		 * amonestacioForm.comboProf.getPropertyDataSource().toString(); String
+		 * cadena2 = amonestacioForm.comboProf.getConvertedValue().toString();
+		 * 
+		 * System.out.println("cadenaaa" +cadena); System.out.println(
+		 * "cadena nombrw??" +cadena2);
+		 * 
+		 * //Object id =
+		 * amonestacioForm.comboProf.getContainerDataSource().getItem(1).
+		 * getItemProperty("professors");
+		 * 
+		 * 
+		 * System.out.println("PRUEBAAAA" +cadena.toString());
+		 * System.out.println("cadenaaa" +cadena);
+		 */
 
-		
-		return 0;	
-	
+		return 0;
+
 	}
-	
 
 	private String mailStudent() {
 
@@ -372,16 +431,14 @@ public class TeacherViewWarningJava extends MainContentView {
 				// TODO Auto-generated method stub
 				// IF EVENT DOUBLE CLICK, WINDOW WARNING APPEARS
 				if (event.isDoubleClick()) {
-					try{
+					try {
 						getItemSelectedToAmonestacioForm(event);
-					}catch(NullPointerException e){
+					} catch (NullPointerException e) {
 						notif("L'alumne no te asignat un tutor");
-						
+
 					}
 				}
-				
 
-				
 			}
 		});
 		grid.addSelectionListener(new SelectionListener() {
@@ -420,12 +477,12 @@ public class TeacherViewWarningJava extends MainContentView {
 	}
 
 	public void getItemSelectedToAmonestacioForm(ItemClickEvent event) {
-		
+
 		amonestacioForm.nom.setReadOnly(false);
 		amonestacioForm.cognoms.setReadOnly(false);
 		amonestacioForm.tutor.setReadOnly(false);
 		amonestacioForm.grup.setReadOnly(false);
-		
+
 		if (window.isAttached())
 			getUI().getWindows().remove(window);
 
@@ -459,12 +516,12 @@ public class TeacherViewWarningJava extends MainContentView {
 	}
 
 	private void getItemSelectedToAmonestacioForm() {
-		
+
 		amonestacioForm.nom.setReadOnly(false);
 		amonestacioForm.cognoms.setReadOnly(false);
 		amonestacioForm.tutor.setReadOnly(false);
 		amonestacioForm.grup.setReadOnly(false);
-		
+
 		if (window.isAttached())
 			getUI().getWindows().remove(window);
 
@@ -479,21 +536,16 @@ public class TeacherViewWarningJava extends MainContentView {
 		Object surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms");
 		Object grup = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("grup");
 
-		int idtutor=0;
-		String nametutor="";
+		int idtutor = 0;
+		String nametutor = "";
 		try {
 			idtutor = MA1.getIdTutor(grup.toString());
 			nametutor = MA.getNomTutor(idtutor);
 
 		} catch (Exception e) {
-			 Notification notif = new Notification(
-	                 "ATENCIÓ:",
-	                 "<br>L'alumne no té cap tutor<br/>",
-	                 Notification.Type.HUMANIZED_MESSAGE,
-	                 true); // Contains HTML
+			Notification notif = new Notification("ATENCIÓ:", "<br>L'alumne no té cap tutor<br/>",
+					Notification.Type.HUMANIZED_MESSAGE, true); // Contains HTML
 		}
-		
-		
 
 		amonestacioForm.nom.setValue(name.toString());
 		amonestacioForm.cognoms.setValue(surname.toString());
@@ -542,7 +594,6 @@ public class TeacherViewWarningJava extends MainContentView {
 		// the PDF is generated.
 		generatePDF generatepdf = new generatePDF();
 		timewarning = generatepdf.generate(returnQuery());
-		
 
 		String nomCognom = amonestacioForm.nom.getValue() + " " + amonestacioForm.cognoms.getValue();
 
@@ -562,34 +613,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		windowpdf.setContent(pdf);
 
 		windowpdf.setVisible(true);
-
-		// windowpdf.setContent(pdf);
-		// windowpdf.setVisible(true);
-		// layout.addComponent(pdf);
-
-		// layout.setSizeFull();
 	}
-
-	// public boolean required() {
-	// // TODO Auto-generated method stub
-	//
-	// if (amonestacioForm.nom.getValue().equals("") ||
-	// amonestacioForm.cognom.getValue().equals("")
-	// || amonestacioForm.curs.getValue().equals("") ||
-	// amonestacioForm.grup.getValue().equals("")
-	// || amonestacioForm.motiu.getValue().equals("") ||
-	// amonestacioForm.tipus.getValue().equals(null)
-	// || amonestacioForm.accio.getValue().equals(null) ||
-	// amonestacioForm.assignatura.getValue().equals("")) {
-	//
-	// return false;
-	//
-	// } else {
-	//
-	// return true;
-	// }
-	//
-	// }
 
 	private void clearFields() {
 		// TODO Auto-generated method stub
@@ -625,9 +649,6 @@ public class TeacherViewWarningJava extends MainContentView {
 		String assignatura = null;
 		String altres_motius = null;
 		String amonestat2 = null;
-		int teacherid = TeacherIDComboBox(null);
-		
-		
 
 		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 
@@ -639,7 +660,7 @@ public class TeacherViewWarningJava extends MainContentView {
 			motiu2 = amonestacioForm.motiu2.getValue().toString();
 			amonestat = amonestacioForm.accio.getValue().toString();
 			localitzacio = amonestacioForm.circunstancia.getValue().toString();
-
+			System.out.println("Nombreprofe: " + nameTeacher);
 			if (amonestat.equals("Amonestat")) {
 				amonestat2 = "true";
 			} else
@@ -663,7 +684,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		System.out.println("amonestat2:" + amonestat2 + " gravetat: " + gravetat);
 
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
-				altres_motius, motiu2,timewarning };
+				altres_motius, motiu2, timewarning,nameTeacher};
 
 		// DATOS PARA INTRODUCIR EN EL PARTE
 
