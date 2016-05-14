@@ -188,8 +188,6 @@ public class AdminViewSettingsJava extends MainContentView {
 					}
 					
 					
-					
-					
 					if(st.nextToken().equals("true")){ checkTutor=true;}
 					else{checkTutor=false;}
 					

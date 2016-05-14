@@ -3,6 +3,7 @@ package com.example.view.TutorView;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.sql.SQLException;
 
 import javax.persistence.EntityManager;
 
@@ -46,7 +47,7 @@ public class TutorView extends MainView implements View {
 
 	private TutorViewGrupsJava TutorViewGrups;
 
-	public TutorView() throws MalformedURLException, DocumentException, IOException {
+	public TutorView() throws MalformedURLException, DocumentException, IOException, SQLException {
 
 		setWellcome();
 
