@@ -265,7 +265,8 @@ public class TeacherViewWarningJava extends MainContentView {
 		amonestacioForm.comboProf.setImmediate(true);
 
 		// Disallow null selections
-		amonestacioForm.comboProf.setNullSelectionAllowed(false);
+		amonestacioForm.comboProf.setNullSelectionAllowed(true);
+		amonestacioForm.comboProf.setDescription("El camp vuit, indica l'usuari actual Per passar l'amonestació per un altre professor, indiqui el nom del professor.");
 
 		// Check if the caption for new item already exists in the list of item
 		// captions before approving it as a new item.
@@ -278,7 +279,7 @@ public class TeacherViewWarningJava extends MainContentView {
 
 		}
 
-		amonestacioForm.comboProf.setNewItemHandler(new NewItemHandler() {
+		/*amonestacioForm.comboProf.setNewItemHandler(new NewItemHandler() {
 			@Override
 			public void addNewItem(final String newItemCaption) {
 				boolean newItem = true;
@@ -297,49 +298,16 @@ public class TeacherViewWarningJava extends MainContentView {
 					}
 				}
 			}
-		});
+		});*/
 
-		// amonestacioForm.comboProf.addValueChangeListener(e ->
-		// Notification.show("Value changed:",
-		// String.valueOf(e.getProperty().getValue()),
-		// Type.TRAY_NOTIFICATION));
-
-	}
-
-	private int TeacherIDComboBox(ItemClickEvent event) {
-
-		/*
-		 * Item item =
-		 * amonestacioForm.comboProf.getItem(amonestacioForm.comboProf.getValue(
-		 * ));
-		 * 
-		 * String cadena = item.getItemProperty("professors").toString();
-		 * 
-		 * /*Object cadena =
-		 * amonestacioForm.comboProf.getContainerProperty(amonestacioForm.
-		 * comboProf.getValue(), "professors").toString(); Object id1 =
-		 * grid.getContainerDataSource().getItem(grid.getSelectedRow()).
-		 * getItemProperty("id");
-		 * 
-		 * String cadena =
-		 * amonestacioForm.comboProf.getPropertyDataSource().toString(); String
-		 * cadena2 = amonestacioForm.comboProf.getConvertedValue().toString();
-		 * 
-		 * System.out.println("cadenaaa" +cadena); System.out.println(
-		 * "cadena nombrw??" +cadena2);
-		 * 
-		 * //Object id =
-		 * amonestacioForm.comboProf.getContainerDataSource().getItem(1).
-		 * getItemProperty("professors");
-		 * 
-		 * 
-		 * System.out.println("PRUEBAAAA" +cadena.toString());
-		 * System.out.println("cadenaaa" +cadena);
-		 */
-
-		return 0;
+		 amonestacioForm.comboProf.addValueChangeListener(e ->
+		Notification.show("Value changed:",
+		String.valueOf(e.getProperty().getValue()),
+		 Type.TRAY_NOTIFICATION));
 
 	}
+
+
 
 	private String mailStudent() {
 
