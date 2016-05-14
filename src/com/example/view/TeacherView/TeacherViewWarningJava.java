@@ -202,7 +202,12 @@ public class TeacherViewWarningJava extends MainContentView {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				getItemSelectedToAmonestacioForm();
+				try{
+					getItemSelectedToAmonestacioForm();
+				}catch(NullPointerException e){
+					notif("L'alume no te un tutor asignat ");
+				}
+				
 
 			}
 		});
@@ -309,9 +314,16 @@ public class TeacherViewWarningJava extends MainContentView {
 				// TODO Auto-generated method stub
 				// IF EVENT DOUBLE CLICK, WINDOW WARNING APPEARS
 				if (event.isDoubleClick()) {
-					getItemSelectedToAmonestacioForm(event);
-
+					try{
+						getItemSelectedToAmonestacioForm(event);
+					}catch(NullPointerException e){
+						notif("L'alumne no te asignat un tutor");
+						
+					}
 				}
+				
+
+				
 			}
 		});
 		grid.addSelectionListener(new SelectionListener() {

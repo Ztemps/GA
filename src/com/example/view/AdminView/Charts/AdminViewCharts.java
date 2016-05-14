@@ -145,8 +145,15 @@ public class AdminViewCharts extends MainContentView {
 
 		XAxis xaxis = new XAxis();
 		xaxis.setTitle("Grupos");
-
-		String names[] = new String[container.size()];
+		String names[] = null;
+		
+		try{
+			
+			names = new String[container.size()];
+		}catch(NullPointerException e){
+			
+		}
+		
 
 		xaxis.setCategories(names);
 		configuration.addxAxis(xaxis);
