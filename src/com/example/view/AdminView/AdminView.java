@@ -24,7 +24,7 @@ import com.example.view.AdminView.Students.AdminViewStudentJava;
 import com.example.view.AdminView.Teacher.AdminViewTeacherJava;
 import com.example.view.AdminView.Tutor.AdminViewTutorJava;
 import com.example.view.AdminView.User.AdminViewUser;
-import com.example.view.AdminView.Warning.AdminViewWarning;
+import com.example.view.AdminView.Warnings.AdminViewWarnings;
 import com.example.view.TeacherView.TeacherOwnWarningsJava;
 import com.example.view.TeacherView.TeacherViewWarningJava;
 import com.itextpdf.text.DocumentException;
@@ -51,7 +51,7 @@ public class AdminView extends MainView implements View {
 	private static AdminViewStudentJava ViewStudents;
 	private static AdminViewTeacherJava ViewDocents;
 	private static AdminViewUser ViewUsers;
-	private static AdminViewWarning ViewListWarnings;
+	private static AdminViewWarnings ViewListWarnings;
 	private static TeacherViewWarningJava ViewWarning;
 	private static AdminViewCSVUploadJava ViewCSV;
 	private static TeacherOwnWarningsJava ViewTeachersWarnings;
@@ -115,7 +115,7 @@ public class AdminView extends MainView implements View {
 		ViewDocents = new AdminViewTeacherJava();
 		ViewWarning = new TeacherViewWarningJava();
 		ViewUsers = new AdminViewUser();
-		ViewListWarnings = new AdminViewWarning();
+		ViewListWarnings = new AdminViewWarnings();
 		ViewCSV = new AdminViewCSVUploadJava();
 		ViewTeachersWarnings = new TeacherOwnWarningsJava();
 		Viewtutors = new AdminViewTutorJava();

@@ -1,4 +1,4 @@
-package com.example.view.AdminView.Warning;
+package com.example.view.AdminView.Warnings;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +28,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class AdminViewWarning extends MainContentView {
+public class AdminViewWarnings extends MainContentView {
 
 	private static final long serialVersionUID = -7507262925682017298L;
 	private File sourceFile;
@@ -38,7 +38,7 @@ public class AdminViewWarning extends MainContentView {
 	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
 	private JDBCConnectionPool jdbccp;
 
-	public AdminViewWarning() throws SQLException {
+	public AdminViewWarnings() throws SQLException {
 
 		buttonsSettings();
 		filterTextProperties();
