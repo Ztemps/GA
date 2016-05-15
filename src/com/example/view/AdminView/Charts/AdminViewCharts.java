@@ -168,7 +168,8 @@ public class AdminViewCharts extends MainContentView {
 		// Query for get amonestats per group
 		try {
 			container2 = new SQLContainer(new FreeformQuery(
-					"select count(expulsat) AS expulsats,grup from amonestacio where expulsat = TRUE group by grup",
+					"select count(expulsat) AS expulsats,grup "
+					+ "from amonestacio where expulsat = TRUE group by grup",
 					jdbccp.GetConnection()));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

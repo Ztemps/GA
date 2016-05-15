@@ -17,6 +17,7 @@ import com.example.Pdf.generatePDF;
 import com.example.Templates.MainView;
 import com.example.view.AdminView.CSV.AdminViewCSVUploadJava;
 import com.example.view.AdminView.Charts.AdminViewCharts;
+import com.example.view.AdminView.Forms.AdminViewFormsJava;
 import com.example.view.AdminView.Group.AdminViewGroupJava;
 import com.example.view.AdminView.Settings.AdminViewSettings;
 import com.example.view.AdminView.Settings.AdminViewSettingsJava;
@@ -58,6 +59,7 @@ public class AdminView extends MainView implements View {
 	private static AdminViewCSVUploadJava ViewCSV;
 	private static TeacherOwnWarningsJava ViewTeachersWarnings;
 	private static AdminViewCharts ViewCharts;
+	private static AdminViewFormsJava ViewForms;
 	private static AdminViewSettingsJava ViewSettings;
 	private UserJPAManager ma;
 	private static AdminViewTutorJava Viewtutors;
@@ -122,6 +124,7 @@ public class AdminView extends MainView implements View {
 		ViewTeachersWarnings = new TeacherOwnWarningsJava();
 		Viewtutors = new AdminViewTutorJava();
 		ViewCharts = new AdminViewCharts();
+		ViewForms = new AdminViewFormsJava();
 		ViewSettings = new AdminViewSettingsJava();
 
 		content.removeAllComponents();
@@ -135,12 +138,14 @@ public class AdminView extends MainView implements View {
 		content.addComponent(ViewTeachersWarnings);
 		content.addComponent(Viewtutors);
 		content.addComponent(ViewCharts);
+		content.addComponent(ViewForms);
 		content.addComponent(ViewSettings);
 
 		warning.focus();
 		ViewDocents.setVisible(false);
 		ViewStudents.setVisible(false);
 		ViewCharts.setVisible(false);
+		ViewForms.setVisible(false);
 		ViewGrupos.setVisible(false);
 		ViewUsers.setVisible(false);
 		ViewListWarnings.setVisible(false);
@@ -255,6 +260,9 @@ public class AdminView extends MainView implements View {
 
 		// CHARTS
 		charts.addClickListener(e -> ViewCharts());
+		
+		//FORMS
+		informes.addClickListener(e -> ViewForms());
 
 		// CONFIGURACIO
 		configuracio.addClickListener(e -> viewConfiguracio());
@@ -263,6 +271,8 @@ public class AdminView extends MainView implements View {
 		logout.addClickListener(e -> logoutActions());
 
 	} // end loadView
+
+	
 
 	private void setLogo() throws IOException {
 		// TODO Auto-generated method stub
@@ -295,6 +305,7 @@ public class AdminView extends MainView implements View {
 		Viewtutors.setVisible(false);
 		ViewCharts.setVisible(true);
 		ViewSettings.setVisible(false);
+		ViewForms.setVisible(false);
 
 	}
 
@@ -310,6 +321,8 @@ public class AdminView extends MainView implements View {
 		Viewtutors.setVisible(false);
 		ViewCharts.setVisible(false);
 		ViewSettings.setVisible(true);
+		ViewForms.setVisible(false);
+
 	}
 
 	private void ViewTutors() {
@@ -329,6 +342,8 @@ public class AdminView extends MainView implements View {
 		ViewCSV.setVisible(false);
 		Viewtutors.setVisible(true);
 		ViewSettings.setVisible(false);
+		ViewForms.setVisible(false);
+
 
 	}
 
@@ -347,6 +362,8 @@ public class AdminView extends MainView implements View {
 		Viewtutors.setVisible(false);
 		ViewTeachersWarnings.setVisible(true);
 		ViewSettings.setVisible(false);
+		ViewForms.setVisible(false);
+
 
 	}
 
@@ -366,6 +383,8 @@ public class AdminView extends MainView implements View {
 		Viewtutors.setVisible(false);
 		ViewCharts.setVisible(false);
 		ViewSettings.setVisible(false);
+		ViewForms.setVisible(false);
+
 
 	}
 
@@ -385,6 +404,8 @@ public class AdminView extends MainView implements View {
 		Viewtutors.setVisible(false);
 		ViewCharts.setVisible(false);
 		ViewSettings.setVisible(false);
+		ViewForms.setVisible(false);
+
 
 	}
 
@@ -403,6 +424,8 @@ public class AdminView extends MainView implements View {
 		Viewtutors.setVisible(false);
 		ViewCharts.setVisible(false);
 		ViewSettings.setVisible(false);
+		ViewForms.setVisible(false);
+
 
 	}
 
@@ -421,6 +444,8 @@ public class AdminView extends MainView implements View {
 		Viewtutors.setVisible(false);
 		ViewCharts.setVisible(false);
 		ViewSettings.setVisible(false);
+		ViewForms.setVisible(false);
+
 
 	}
 
@@ -440,6 +465,8 @@ public class AdminView extends MainView implements View {
 		Viewtutors.setVisible(false);
 		ViewCharts.setVisible(false);
 		ViewSettings.setVisible(false);
+		ViewForms.setVisible(false);
+
 
 	}
 
@@ -458,6 +485,8 @@ public class AdminView extends MainView implements View {
 		Viewtutors.setVisible(false);
 		ViewCharts.setVisible(false);
 		ViewSettings.setVisible(false);
+		ViewForms.setVisible(false);
+
 
 	}
 
@@ -475,7 +504,27 @@ public class AdminView extends MainView implements View {
 		Viewtutors.setVisible(false);
 		ViewCharts.setVisible(false);
 		ViewSettings.setVisible(false);
+		ViewForms.setVisible(false);
 
+
+	}
+	
+	private static void ViewForms() {
+		
+		ViewStudents.setVisible(false);
+		ViewGrupos.setVisible(false);
+		ViewDocents.setVisible(false);
+		ViewWarning.setVisible(false);
+		ViewUsers.setVisible(false);
+		ViewListWarnings.setVisible(false);
+		ViewCSV.setVisible(false);
+		ViewTeachersWarnings.setVisible(false);
+		Viewtutors.setVisible(false);
+		ViewCharts.setVisible(false);
+		ViewSettings.setVisible(false);
+		ViewForms.setVisible(true);
+
+		
 	}
 
 	public void logoutActions() {
