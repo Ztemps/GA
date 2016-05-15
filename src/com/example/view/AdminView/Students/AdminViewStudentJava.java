@@ -373,24 +373,14 @@ public class AdminViewStudentJava extends MainContentView {
 		// grid.addRow(new ThemeResource("no_user.png"));
 
 		// grid.setIcon(new ThemeResource("no_user.png"));
-		grid.setSelectionMode(SelectionMode.SINGLE);
-		grid.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void select(SelectionEvent event) {
-
-				bDelete.setVisible(true);
-				buttonEdit.setVisible(true);
-
-			}
-		});
+	
 
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void select(SelectionEvent event) {
-				bAdd.setEnabled(true);
+				//bAdd.setEnabled(true);
 				buttonEdit.setEnabled(true);
 				bDelete.setEnabled(true);
 

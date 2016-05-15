@@ -178,6 +178,15 @@ public class generatePDF extends WarningJPAManager {
 		
 		// Prueba
 		String nomProfessor = MA.currentTeacher();
+		
+		if(query[13]!=null){
+			nomProfessor = query[13];
+		}
+		
+		if(query[13]== "null"){
+			nomProfessor = MA.currentTeacher();
+		}
+		
 		// CAMP PROFESSOR
 		Paragraph professor = new Paragraph("PROFESSOR: ", CAPS);
 		professor.setIndentationLeft(25);
