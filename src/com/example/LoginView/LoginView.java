@@ -212,6 +212,15 @@ public class LoginView extends LoginViewDesign implements View {
 		 String encrypted = EncryptDecryptStringWithDES.encrypt(userpassword);
 		 
 		 System.out.println("PAAAASSSSS" +encrypted );*/
+		
+		/*
+		 * MANERA DE HACERLO!!
+		 * 
+		 * SecretKey key = KeyGenerator.getInstance("DES").generateKey();
+			byte[] encoded = key.getEncoded();
+			// save this somewhere
+		 * SAVE BYTE IN FILE FileUtils.writeByteArrayToFile(new File("pathname"), myByteArray)*/
+
 
 
 		try {
