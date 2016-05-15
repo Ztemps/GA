@@ -4,17 +4,32 @@
   <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src&quot;,&quot;THEME&quot;:&quot;gestioamonestacions&quot;}">
  </head> 
  <body> 
-  <vaadin-css-layout width="50%" height="300px"> 
+  <vaadin-css-layout width="50%" height="400px"> 
    <vaadin-vertical-layout primary-style-name="v-verticallayout" id="vertical" size-full="true" _id="vertical"> 
+ 
     <vaadin-horizontal-layout primary-style-name="v-horizontallayout" spacing="true" width-full="true"> 
-     <vaadin-date-field caption="Inici Curs" invalid-committed="true" width="192px" _id="dataIniciCurs"></vaadin-date-field> 
-     <vaadin-date-field caption="Final Curs" width="202px" _id="dataFinalCurs"></vaadin-date-field> 
+     <vaadin-date-field caption="Inici 1er Trimestre" invalid-committed="true" width="192px" _id="dataIniciCurs"></vaadin-date-field> 
+     	<vaadin-date-field caption="Final 1er Trimestre" width="202px" _id="dataFinaltrimestre1"></vaadin-date-field> 
      
     </vaadin-horizontal-layout> 
+    
+    
+     
+    
+    
     <vaadin-horizontal-layout primary-style-name="v-horizontallayout2" spacing="true" width-full="true"> 
-	<vaadin-date-field caption="Final 1er Trimestre" width="202px" _id="dataFinaltrimestre1"></vaadin-date-field> 
-     <vaadin-date-field caption="Final 2er Trimestre" width="202px" _id="dataFinaltrimestre2"></vaadin-date-field> 
+    	<vaadin-date-field caption="Inici 2n Trimestre" width="202px" _id="dataInicitrimestre2"></vaadin-date-field> 
+     <vaadin-date-field caption="Final 2n Trimestre" width="202px" _id="dataFinaltrimestre2"></vaadin-date-field> 
     </vaadin-horizontal-layout> 
+    
+    
+      <vaadin-horizontal-layout primary-style-name="v-horizontallayout3" spacing="true" width-full="true"> 
+     <vaadin-date-field caption="Inici 3er Trimestre" width="202px" _id="dataInicitrimestre3"></vaadin-date-field> 
+              <vaadin-date-field caption="Final 3er Trimestre" width="202px" _id="dataFinalCurs"></vaadin-date-field> 
+     
+    </vaadin-horizontal-layout> 
+    
+    
     <vaadin-horizontal-layout primary-style-name="v-horizontallayout" width-full="true" height="48px"> 
      <vaadin-check-box caption="Enviar e-mail als Tutors" id="checkEmailTutors" _id="checkEmailTutors" :middle=""></vaadin-check-box> 
     </vaadin-horizontal-layout> 
