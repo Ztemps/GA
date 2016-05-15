@@ -47,6 +47,16 @@ public class UserJPAManager {
 		em.persist(user);
 		em.getTransaction().commit();
 	}
+	
+
+	public void updateUser(Integer id, String password) {
+		em.getTransaction().begin();
+		User user = (User) em.find(User.class, id );
+		user.setPassword(password);
+		em.merge(user);
+		em.getTransaction().commit();
+		em.close();
+	}
 
 	
 

@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,8 +15,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+
 import org.eclipse.jetty.security.authentication.SessionAuthentication;
 
+import com.example.Encrypter.EncryptDecryptStringWithDES;
 import com.example.Entities.User;
 import com.example.view.AdminView.AdminView;
 import com.example.view.TeacherView.TeacherView;
@@ -183,6 +191,28 @@ public class LoginView extends LoginViewDesign implements View {
 		// Cogemos los valores de los campos que rellena el usuario
 		String username = this.txtUsername.getValue();
 		String userpassword = this.txtPassword.getValue();
+		
+		/*try {
+			SecretKey key = KeyGenerator.getInstance("DES").generateKey();
+			try {
+				EncryptDecryptStringWithDES.ecipher = Cipher.getInstance("DES");
+				EncryptDecryptStringWithDES.ecipher.init(Cipher.ENCRYPT_MODE, key);
+			} catch (NoSuchPaddingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidKeyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		 String encrypted = EncryptDecryptStringWithDES.encrypt(userpassword);
+		 
+		 System.out.println("PAAAASSSSS" +encrypted );*/
+
 
 		try {
 			// Mientras el resultset tenga resultados, cogemos los valores y
