@@ -59,8 +59,6 @@ public class WarningJPAManager  {
 			
 		}
 
-		String[] query1 = query;
-
 		String queryCon = query[9].concat(query[11]).trim().replace("][", ", ");
 
 		String querycon = queryCon.substring(1, queryCon.length() - 1).trim();
@@ -92,9 +90,8 @@ public class WarningJPAManager  {
 			mail = new sendMail(al.getEmail(),"El seu fill "+query[0]+" "+query[1]+" a sigut amonestat ",path);
 
 		
-		addWarning(new Warning(user.getId(), dateFormat.parse(query[12]), al.getGrup(), al.getId(), query[3], query[4],
+		addWarning(new Warning(user.getId(), dateFormat.parse(query[12]), query[2], al.getId(), query[3], query[4],
 				query[5], tutor, amonestat2, expulsat, "15/16", querycon, query[10]));
-		
 		
 		
 	}

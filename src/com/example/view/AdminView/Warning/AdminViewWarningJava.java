@@ -1,13 +1,13 @@
-package com.example.view.TeacherView;
+package com.example.view.AdminView.Warning;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
-import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+
 import com.example.Entities.Student;
 import com.example.Entities.Teacher;
 import com.example.Logic.EntityManagerUtil;
@@ -19,62 +19,53 @@ import com.example.Pdf.generatePDF;
 import com.example.Templates.ConfirmWarningPDF;
 import com.example.Templates.MainContentView;
 import com.example.view.AdminView.AdminView;
+import com.example.view.TeacherView.WarningTeacher;
 import com.itextpdf.text.DocumentException;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
-import com.vaadin.data.Container;
 import com.vaadin.data.Container.Filterable;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.Item;
-import com.vaadin.data.Property;
-import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.SimpleStringFilter;
-import com.vaadin.data.util.sqlcontainer.SQLContainer;
-import com.vaadin.data.util.sqlcontainer.query.FreeformQuery;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
-import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
-import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
+import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.shared.Position;
 import com.vaadin.shared.ui.combobox.FilteringMode;
-import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
-import com.vaadin.ui.AbstractSelect.NewItemHandler;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
 
-import jdk.nashorn.internal.runtime.ListAdapter;
-
-import java.io.*;
-
-public class TeacherViewWarningJava extends MainContentView {
+public class AdminViewWarningJava extends MainContentView {
 
 	/**
 	 * 
+	 * 
+	 * 
 	 */
-	private static final long serialVersionUID = 6224440074961752155L;
+	private static final long serialVersionUID = 1L;
 	private Grid grid;
 	private Window window = new Window();
 	private Window windowpdf = new Window();
 	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
 	private JPAContainer<Student> alumnes;
-	private WarningTeacher amonestacioForm;
+	private AdminWarning amonestacioForm;
 	private UserJPAManager MA;
 	private WarningJPAManager MA1;
 	private File sourceFile;
@@ -86,7 +77,7 @@ public class TeacherViewWarningJava extends MainContentView {
 	private JDBCConnectionPool jdbccp;
 	private String nameTeacher;
 
-	public TeacherViewWarningJava() throws MalformedURLException, DocumentException, IOException {
+	public AdminViewWarningJava() throws MalformedURLException, DocumentException, IOException {
 
 		GridProperties();
 		filterTextProperties();
@@ -115,9 +106,8 @@ public class TeacherViewWarningJava extends MainContentView {
 					// REVISAR!!!! PARA COMPROBAR QUE ALGUNO DE LOS MOTIVOS NO
 					// HA DE SER NULO
 					/*
-					 * if(amonestacioForm.motiu.getValue() == null &&
-					 * amonestacioForm.motiu2.getValue() == null &&
-					 * amonestacioForm.amotius.getValue() == ""){ notif.show(
+					 * if( motiu.getValue() == null && motiu2.getValue() == null
+					 * && amotius.getValue() == ""){ notif.show(
 					 * "S'ha de seleccionar almenys un motiu"); }
 					 */
 
@@ -255,65 +245,6 @@ public class TeacherViewWarningJava extends MainContentView {
 
 	}
 
-	private void PopulateComboBoxProf() {
-
-		TeachersJPAManager ma = new TeachersJPAManager();
-		List<Teacher> lista = ma.getNoms();
-		// Set the appropriate filtering mode for this example
-		amonestacioForm.comboProf.setFilteringMode(FilteringMode.CONTAINS);
-		amonestacioForm.comboProf.setImmediate(true);
-
-		// Disallow null selections
-		amonestacioForm.comboProf.setNullSelectionAllowed(true);
-		amonestacioForm.comboProf.setDescription("El camp vuit, indica l'usuari actual Per passar l'amonestació per un altre professor, indiqui el nom del professor.");
-
-		// Check if the caption for new item already exists in the list of item
-		// captions before approving it as a new item.
-
-		amonestacioForm.comboProf.removeAllItems();
-
-		for (int i = 0; i < lista.size(); i++) {
-
-			amonestacioForm.comboProf.addItem(lista.get(i).getNom() + " " + lista.get(i).getCognoms());
-
-		}
-
-		/*amonestacioForm.comboProf.setNewItemHandler(new NewItemHandler() {
-			@Override
-			public void addNewItem(final String newItemCaption) {
-				boolean newItem = true;
-				for (final Object itemId : amonestacioForm.comboProf.getItemIds()) {
-					if (newItemCaption.equalsIgnoreCase(amonestacioForm.comboProf.getItemCaption(itemId))) {
-						newItem = false;
-						break;
-					}
-				}
-				if (newItem) {
-					// Adds new option
-					if (amonestacioForm.comboProf.addItem(newItemCaption) != null) {
-						final Item item = amonestacioForm.comboProf.getItem(newItemCaption);
-
-						amonestacioForm.comboProf.setValue(newItemCaption);
-					}
-				}
-			}
-		});*/
-
-		 amonestacioForm.comboProf.addValueChangeListener(e ->
-		Notification.show("Value changed:",
-		String.valueOf(e.getProperty().getValue()),
-		 Type.TRAY_NOTIFICATION));
-
-	}
-
-
-
-	private String mailStudent() {
-
-		return null;
-
-	}
-
 	private void buttonsSettings() {
 		// TODO Auto-generated method stub
 
@@ -428,7 +359,7 @@ public class TeacherViewWarningJava extends MainContentView {
 
 	private void WindowProperties() throws MalformedURLException, DocumentException, IOException {
 
-		amonestacioForm = new WarningTeacher();
+		amonestacioForm = new AdminWarning();
 
 		window.setWidth(900.0f, Unit.PIXELS);
 		// window.setContent(form);
@@ -651,7 +582,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		System.out.println("amonestat2:" + amonestat2 + " gravetat: " + gravetat);
 
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
-				altres_motius, motiu2, timewarning,nameTeacher};
+				altres_motius, motiu2, timewarning, nameTeacher };
 
 		// DATOS PARA INTRODUCIR EN EL PARTE
 
@@ -685,6 +616,47 @@ public class TeacherViewWarningJava extends MainContentView {
 		File file = new File(generatepdf1.getPath(nomCognom));
 
 		return file;
+	}
+
+	private void PopulateComboBoxProf() {
+
+		TeachersJPAManager ma = new TeachersJPAManager();
+		List<Teacher> lista = ma.getNoms();
+		// Set the appropriate filtering mode for this example
+		amonestacioForm.comboProf.setFilteringMode(FilteringMode.CONTAINS);
+		amonestacioForm.comboProf.setImmediate(true);
+
+		// Disallow null selections
+		amonestacioForm.comboProf.setNullSelectionAllowed(true);
+		amonestacioForm.comboProf.setDescription(
+				"El camp vuit, indica l'usuari actual Per passar l'amonestació per un altre professor, indiqui el nom del professor.");
+
+		// Check if the caption for new item already exists in the list of item
+		// captions before approving it as a new item.
+
+		amonestacioForm.comboProf.removeAllItems();
+
+		for (int i = 0; i < lista.size(); i++) {
+
+			amonestacioForm.comboProf.addItem(lista.get(i).getNom() + " " + lista.get(i).getCognoms());
+
+		}
+
+		/*
+		 * amonestacioForm.comboProf.setNewItemHandler(new NewItemHandler() {
+		 * 
+		 * @Override public void addNewItem(final String newItemCaption) {
+		 * boolean newItem = true; for (final Object itemId :
+		 * amonestacioForm.comboProf.getItemIds()) { if
+		 * (newItemCaption.equalsIgnoreCase(
+		 * amonestacioForm.comboProf.getItemCaption(itemId))) { newItem = false;
+		 * break; } } if (newItem) { // Adds new option if (
+		 * amonestacioForm.comboProf.addItem(newItemCaption) != null) { final
+		 * Item item = amonestacioForm.comboProf.getItem(newItemCaption);
+		 * 
+		 * amonestacioForm.comboProf.setValue(newItemCaption); } } } });
+		 */
+
 	}
 
 }
