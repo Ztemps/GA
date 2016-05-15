@@ -1,6 +1,7 @@
 package com.example.view.TutorView;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
@@ -24,10 +25,12 @@ import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -50,7 +53,7 @@ public class TutorView extends MainView implements View {
 	public TutorView() throws MalformedURLException, DocumentException, IOException, SQLException {
 
 		setWellcome();
-
+		setLogo();
 		// Side menu button options
 		vistaAmonestacion = new TeacherViewWarningJava();
 		TutorViewGrups = new TutorViewGrupsJava();
@@ -222,6 +225,20 @@ public class TutorView extends MainView implements View {
 		win.setContent(content);
 
 		return win;
+
+	}
+	
+	private void setLogo() throws IOException {
+		// TODO Auto-generated method stub
+		File currDir = new File(".");
+		String path2 = currDir.getCanonicalPath();
+
+		FileResource resource = new FileResource(new File(path2 + "/git/ga2/WebContent/VAADIN/themes/images/logo.png"));
+		Image logo = new Image("", resource);
+		logo.setWidth("90px");
+		logo.setHeight("90px");
+		vImage.removeAllComponents();
+		vImage.addComponent(logo);
 
 	}
 

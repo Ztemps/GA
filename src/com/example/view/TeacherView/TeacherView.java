@@ -1,5 +1,6 @@
 package com.example.view.TeacherView;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
@@ -28,6 +29,7 @@ import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Alignment;
@@ -39,6 +41,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
@@ -74,9 +77,10 @@ public class TeacherView extends MainView implements View {
 
 	}
 
-	private void Items() {
+	private void Items() throws IOException {
 		
 		setWellcome();
+		setLogo();
 		students.setVisible(false);
 		teachers.setVisible(false);
 		groups.setVisible(false);
@@ -193,4 +197,17 @@ public class TeacherView extends MainView implements View {
 
 	}
 
+	private void setLogo() throws IOException {
+		// TODO Auto-generated method stub
+		File currDir = new File(".");
+		String path2 = currDir.getCanonicalPath();
+
+		FileResource resource = new FileResource(new File(path2 + "/git/ga2/WebContent/VAADIN/themes/images/logo.png"));
+		Image logo = new Image("", resource);
+		logo.setWidth("90px");
+		logo.setHeight("90px");
+		vImage.removeAllComponents();
+		vImage.addComponent(logo);
+
+	}
 }
