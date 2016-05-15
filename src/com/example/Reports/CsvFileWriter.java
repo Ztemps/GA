@@ -34,7 +34,9 @@ public class CsvFileWriter {
 
 	
 	public static void main(String[] args) {
-		calcularPrimerTrimestre();
+		//calcularPrimerTrimestre();
+		//	calcularSegundoTrimestre();
+		calcularTercerTrimestre();
 	}
 
 	public static void calcularPrimerTrimestre() {
@@ -43,49 +45,51 @@ public class CsvFileWriter {
 		try {
 			dates = readFile();
 		} catch (ReadOnlyException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (ConversionException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		Date diaInici = dates.get(0);
-		Date diaFinal = dates.get(1);
-		Calendar diaIniciCal = Calendar.getInstance();
-		diaIniciCal.setTime(diaInici);
+		Date diaIniciTrimestre1 ;
+		Calendar diaIniciCal;
 		
-		List calculoAmonest=null;
-		List calculoExpuls=null;
-		int contador=0;
-		Date diaFinalTrimestre1 = dates.get(2);
-		Date diaFinalTrimestre2 = dates.get(3);
-		System.out.println(dates.get(0));
-		System.out.println(dates.get(1));
-		System.out.println(dates.get(2));
-		System.out.println(dates.get(3));
+		List calculoAmonest;
+		List calculoExpuls;
+		Date diaFinalTrimestre1 = dates.get(1);
 
 
-		long diff = diaFinalTrimestre1.getTime() - diaInici.getTime();
-	//	System.out.println(diff);
-		long numSetmanes = (diff / (24 * 60 * 60 * 1000)) / 7;
-	//	System.out.println(numSetmanes);
-		//System.out.print(numSetmanes + " setmanes, ");
-		// Delimiter used in CSV file
+
+		long diff;
+		long numSetmanes;
+	
 
 		FileWriter fileWriter = null;
 
-		// Create new students objects
-		//String grupCurs = "ESO 1A";
+		
 		jpa = new GroupJPAManager();
 		grupos=new ArrayList<>();
 		grupos= jpa.getGroups();
 		
 		for (int x=0; x<grupos.size(); x++){
-		//	System.out.println(grupos.get(i));
 		
+			diaIniciTrimestre1 = dates.get(0);
+			diaIniciCal = Calendar.getInstance();
+			diaIniciCal.setTime(diaIniciTrimestre1);
+			
+			calculoAmonest=null;
+			calculoExpuls=null;
+			diaFinalTrimestre1 = dates.get(1);
+
+
+
+			diff = diaFinalTrimestre1.getTime() - diaIniciTrimestre1.getTime();
+			numSetmanes = (diff / (24 * 60 * 60 * 1000)) / 7;	
+			
+			
+			
+			
+			
 
 		// FOR STUDENT ID
 		query = new ReportQuerys();
@@ -111,7 +115,6 @@ public class CsvFileWriter {
 		for (int i = 0; i < noms.size(); i++) {
 			nomsList.add(noms.get(i));
 
-			// System.out.println(noms.get(i));
 
 		}
 
@@ -126,45 +129,9 @@ public class CsvFileWriter {
 		for (int i = 0; i < cognoms.size(); i++) {
 			cognomsList.add(cognoms.get(i));
 
-			// System.out.println(cognomsList.get(i));
-
 		}
 
-		// //FOR 2rstWEEK
-		// List amonestacions2 =new ArrayList<>();
-		// List expulsions2 = new ArrayList<>();
-		//
-		//
-		// diaInicisetmanes.add(Calendar.DATE, 7);
-		// Date semana3=diaInicisetmanes.getTime();
-		//
-		//
-		// for (int j=0; j<idList.size(); j++){
-		// query = new ReportQuerys();
-		// amonestacions2.add(query.getWarningCurs(Integer.parseInt(idList.get(j).toString()),semana2,semana3));
-		// query.closeTransaction();
-		//
-		// query = new ReportQuerys();
-		// expulsions2.add(query.getExpulsionCurs(Integer.parseInt(idList.get(j).toString()),semana2,semana3));
-		// query.closeTransaction();
-		//
-		// }
-		// List amonestacionsList2 = new ArrayList<>();
-		// List expulsionsList2 = new ArrayList<>();
-		//
-		// for (int i = 0; i < amonestacions2.size(); i++) {
-		// amonestacionsList2.add(amonestacions2.get(i));
-		//
-		// System.out.println(amonestacionsList2.get(i));
-		//
-		// }
-		//
-		// for (int i = 0; i < expulsions2.size(); i++) {
-		// expulsionsList2.add(expulsions2.get(i));
-		//
-		// System.out.println(expulsionsList2.get(i));
-		//
-		// }
+		
 
 		try {
 			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre1/alumnes"+grupos.get(x).getId()+".xls");
@@ -172,13 +139,12 @@ public class CsvFileWriter {
 			String dateCurs = query.getDateCurs();
 			query.closeTransaction();
 
-			fileWriter.append("1r Trimestre   Any: " + dateCurs);
+			fileWriter.append("1r Trimestre   Curs: " + dateCurs);
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append(NEW_LINE_SEPARATOR);
 			fileWriter.append(NEW_LINE_SEPARATOR);
 
-			// CONSULTA habrá que preguntarlo al usuario con un checkbox
-			String grup = "1r A";
+			String grup = grupos.get(x).getId();
 			fileWriter.append(grup);
 			fileWriter.append(COMMA_DELIMITER);
 
@@ -186,11 +152,10 @@ public class CsvFileWriter {
 			String setmana = "Set. ";
 
 			for (int i = 1; i <= numSetmanes; i++) {
+				
 				setmana.equals(numSetmanes + i);
 				fileWriter.append(setmana + i);
 				fileWriter.append(COMMA_DELIMITER);
-				// CONSULTA mejorar con date y la data incii y final que
-				// introduzca el admin
 
 				
 				Date diaInicial = diaIniciCal.getTime();
@@ -225,7 +190,220 @@ public class CsvFileWriter {
 			// ADD STUDENTS
 			for (int i = 0; i < nomsList.size(); i++) {
 				Calendar diaInicisetmanes = Calendar.getInstance();
-				diaInicisetmanes.setTime(diaInici);
+				diaInicisetmanes.setTime(diaIniciTrimestre1);
+				Date semana2 = null;
+				Date semana1 = diaInicisetmanes.getTime();
+				diaInicisetmanes.add(Calendar.DATE, 7);
+
+				semana2 = diaInicisetmanes.getTime();
+				fileWriter.append(nomsList.get(i).toString() + " " + cognomsList.get(i).toString());
+				fileWriter.append(COMMA_DELIMITER);
+				
+				
+				for (int l = 0; l < numSetmanes; l++) {
+
+					
+
+					calculoAmonest= new ArrayList<>();
+					calculoAmonest = new ArrayList<>();
+					
+			
+					
+					calculoAmonest =	calcularAmonestadosPorSemana(idList,semana1,semana2);
+					calculoExpuls= calcularExpulsadosPorSemana(idList,semana1,semana2);
+					
+					semana1 = semana2;
+					diaInicisetmanes.add(Calendar.DATE, 7);
+					semana2 = diaInicisetmanes.getTime();
+
+				if (calculoAmonest.get(i).toString().equals("0")) {
+					fileWriter.append("");
+
+				} else {
+					fileWriter.append(calculoAmonest.get(i).toString());
+
+				}
+				fileWriter.append(COMMA_DELIMITER);
+				
+				
+				
+
+				if (calculoExpuls.get(i).toString().equals("0")) {
+					fileWriter.append("");
+
+				} else {
+					fileWriter.append(calculoExpuls.get(i).toString());
+
+				}
+				fileWriter.append(COMMA_DELIMITER);
+					}
+				
+				 fileWriter.append(NEW_LINE_SEPARATOR);
+
+				
+
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			fileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		
+		System.out.println("Grup "+grupos.get(x).getId()+"finalitzat");
+
+		}
+	}
+	
+	
+	public static void calcularSegundoTrimestre() {
+		// CALCULO DE FECHAS
+		// VARIABLE A COJER
+		try {
+			dates = readFile();
+		} catch (ReadOnlyException e1) {
+			e1.printStackTrace();
+		} catch (ConversionException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		Date diaIniciTrimestre2;
+		Calendar diaIniciCal;		
+		List calculoAmonest=null;
+		List calculoExpuls=null;
+		Date diaFinalTrimestre2;
+	
+
+		long diff;
+		long numSetmanes;
+		// Delimiter used in CSV file
+
+		FileWriter fileWriter = null;
+
+		// Create new students objects
+		jpa = new GroupJPAManager();
+		grupos=new ArrayList<>();
+		grupos= jpa.getGroups();
+		
+		for (int x=0; x<grupos.size(); x++){
+			diaIniciTrimestre2 = dates.get(2);
+			diaIniciCal = Calendar.getInstance();
+			diaIniciCal.setTime(diaIniciTrimestre2);
+			
+			calculoAmonest=null;
+			calculoExpuls=null;
+			diaFinalTrimestre2 = dates.get(3);
+		
+
+			diff = diaFinalTrimestre2.getTime() - diaIniciTrimestre2.getTime();
+			numSetmanes = (diff / (24 * 60 * 60 * 1000)) / 7;	
+			
+		
+
+		// FOR STUDENT ID
+		query = new ReportQuerys();
+		List ids = query.getIdAlumnes(grupos.get(x).getId());
+		
+		query.closeTransaction();
+
+		List idList = new ArrayList<>();
+
+		for (int i = 0; i < ids.size(); i++) {
+			idList.add(ids.get(i));
+
+			// System.out.println(ids.get(i));
+		}
+
+		// FOR NOMS
+		query = new ReportQuerys();
+		List noms = query.getNomAlumnes(grupos.get(x).getId());
+		query.closeTransaction();
+
+		List nomsList = new ArrayList<>();
+
+		for (int i = 0; i < noms.size(); i++) {
+			nomsList.add(noms.get(i));
+
+
+		}
+
+		// FOR COGNOMS
+
+		query = new ReportQuerys();
+		List cognoms = query.getCognomsAlumnes(grupos.get(x).getId());
+		query.closeTransaction();
+
+		List cognomsList = new ArrayList<>();
+
+		for (int i = 0; i < cognoms.size(); i++) {
+			cognomsList.add(cognoms.get(i));
+
+
+		}
+
+		
+
+		try {
+			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre2/alumnes"+grupos.get(x).getId()+".xls");
+			query = new ReportQuerys();
+			String dateCurs = query.getDateCurs();
+			query.closeTransaction();
+
+			fileWriter.append("2r Trimestre   Curs: " + dateCurs);
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(NEW_LINE_SEPARATOR);
+			fileWriter.append(NEW_LINE_SEPARATOR);
+
+			String grup = grupos.get(x).getId();
+			fileWriter.append(grup);
+			fileWriter.append(COMMA_DELIMITER);
+
+			// CONSULTA
+			String setmana = "Set. ";
+
+			for (int i = 1; i <= numSetmanes; i++) {
+				
+				setmana.equals(numSetmanes + i);
+				fileWriter.append(setmana + i);
+				fileWriter.append(COMMA_DELIMITER);
+
+				
+				Date diaInicial = diaIniciCal.getTime();
+				String fechainicialBuena = ConverterDates.converterDate(diaInicial);
+
+				fileWriter.append(fechainicialBuena);
+				fileWriter.append(COMMA_DELIMITER);
+				diaIniciCal.add(Calendar.DATE, 7);
+
+
+			}
+			fileWriter.append(NEW_LINE_SEPARATOR);
+
+			// Headers
+			fileWriter.append("ALUMNE");
+			fileWriter.append(COMMA_DELIMITER);
+
+			for (int i = 0; i < numSetmanes; i++) {
+				fileWriter.append("A");
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append("E");
+				fileWriter.append(COMMA_DELIMITER);
+
+			}
+
+
+			fileWriter.append(NEW_LINE_SEPARATOR);
+			
+
+			// ADD STUDENTS
+			for (int i = 0; i < nomsList.size(); i++) {
+				Calendar diaInicisetmanes = Calendar.getInstance();
+				diaInicisetmanes.setTime(diaIniciTrimestre2);
 				Date semana2 = null;
 				Date semana1 = diaInicisetmanes.getTime();
 				diaInicisetmanes.add(Calendar.DATE, 7);
@@ -234,7 +412,6 @@ public class CsvFileWriter {
 				fileWriter.append(nomsList.get(i).toString() + " " + cognomsList.get(i).toString());
 				fileWriter.append(COMMA_DELIMITER);
 
-				// SEMANA 1
 				
 				
 				for (int l = 0; l < numSetmanes; l++) {
@@ -279,101 +456,248 @@ public class CsvFileWriter {
 
 				
 				
-				// //SEMANA 2
-				//
-				// if (amonestacionsList2.get(i).toString().equals("0")){
-				// fileWriter.append("");
-				//
-				// }
-				// else{
-				// fileWriter.append(amonestacionsList2.get(i).toString());
-				//
-				// }
-				// fileWriter.append(COMMA_DELIMITER);
-				//
-				// if (expulsionsList2.get(i).toString().equals("0")){
-				// fileWriter.append("");
-				//
-				// }
-				// else{
-				// fileWriter.append(expulsionsList2.get(i).toString());
-				//
-				// }
-				// fileWriter.append(NEW_LINE_SEPARATOR);
-
-				//
-				// fileWriter.append(cognomsList.get(i).toString());
-				// fileWriter.append(NEW_LINE_SEPARATOR);
+				
 
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			fileWriter.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		// try {
-		// fileWriter = new FileWriter(fileName);
-		//
-		// //Write the CSV file header
-		// fileWriter.append(FILE_HEADER.toString());
-		//
-		// //Add a new line separator after the header
-		// fileWriter.append(NEW_LINE_SEPARATOR);
-		//
-		// //Write a new student object list to the CSV file
-		// for (Student student : students) {
-		// fileWriter.append(String.valueOf(student.getId()));
-		// fileWriter.append(COMMA_DELIMITER);
-		// fileWriter.append(student.getFirstName());
-		// fileWriter.append(COMMA_DELIMITER);
-		// fileWriter.append(student.getLastName());
-		// fileWriter.append(COMMA_DELIMITER);
-		// fileWriter.append(student.getGender());
-		// fileWriter.append(COMMA_DELIMITER);
-		//
-		// fileWriter.append(String.valueOf(student.getAge()));
-		//
-		// fileWriter.append(NEW_LINE_SEPARATOR);
 	
-
-	// System.out.println("CSV file was created successfully !!!");
-	//
-	// } catch (Exception e) {
-	// System.out.println("Error in CsvFileWriter !!!");
-	// e.printStackTrace();
-	// } finally {
-	//
-	// try {
-	// fileWriter.flush();
-	// fileWriter.close();
-	// } catch (IOException e) {
-	//
-	// System.out.println("Error while flushing/closing fileWriter !!!");
-	//
-	// e.printStackTrace();
-	//
-	// }
-
-	// }
 		System.out.println("Grup "+grupos.get(x).getId()+"finalitzat");
 
 		}
 	}
+	
+	
+	
+	public static void calcularTercerTrimestre() {
+		// CALCULO DE FECHAS
+		// VARIABLE A COJER
+		try {
+			dates = readFile();
+		} catch (ReadOnlyException e1) {
+			e1.printStackTrace();
+		} catch (ConversionException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		Date diaIniciTrimestre3;
+		Calendar diaIniciCal;		
+		List calculoAmonest=null;
+		List calculoExpuls=null;
+		Date diaFinalTrimestre3;
+	
+
+		long diff;
+		long numSetmanes;
+		// Delimiter used in CSV file
+
+		FileWriter fileWriter = null;
+
+		// Create new students objects
+		jpa = new GroupJPAManager();
+		grupos=new ArrayList<>();
+		grupos= jpa.getGroups();
+		
+		for (int x=0; x<grupos.size(); x++){
+			diaIniciTrimestre3 = dates.get(4);
+			diaIniciCal = Calendar.getInstance();
+			diaIniciCal.setTime(diaIniciTrimestre3);
+			
+			calculoAmonest=null;
+			calculoExpuls=null;
+			diaFinalTrimestre3 = dates.get(5);
+		
+
+			diff = diaFinalTrimestre3.getTime() - diaIniciTrimestre3.getTime();
+			numSetmanes = (diff / (24 * 60 * 60 * 1000)) / 7;	
+			
+		
+
+		// FOR STUDENT ID
+		query = new ReportQuerys();
+		List ids = query.getIdAlumnes(grupos.get(x).getId());
+		
+		query.closeTransaction();
+
+		List idList = new ArrayList<>();
+
+		for (int i = 0; i < ids.size(); i++) {
+			idList.add(ids.get(i));
+
+			// System.out.println(ids.get(i));
+		}
+
+		// FOR NOMS
+		query = new ReportQuerys();
+		List noms = query.getNomAlumnes(grupos.get(x).getId());
+		query.closeTransaction();
+
+		List nomsList = new ArrayList<>();
+
+		for (int i = 0; i < noms.size(); i++) {
+			nomsList.add(noms.get(i));
+
+
+		}
+
+		// FOR COGNOMS
+
+		query = new ReportQuerys();
+		List cognoms = query.getCognomsAlumnes(grupos.get(x).getId());
+		query.closeTransaction();
+
+		List cognomsList = new ArrayList<>();
+
+		for (int i = 0; i < cognoms.size(); i++) {
+			cognomsList.add(cognoms.get(i));
+
+
+		}
+
+		
+
+		try {
+			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre3/alumnes"+grupos.get(x).getId()+".xls");
+			query = new ReportQuerys();
+			String dateCurs = query.getDateCurs();
+			query.closeTransaction();
+
+			fileWriter.append("3r Trimestre   Curs: " + dateCurs);
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(NEW_LINE_SEPARATOR);
+			fileWriter.append(NEW_LINE_SEPARATOR);
+
+			String grup = grupos.get(x).getId();
+			fileWriter.append(grup);
+			fileWriter.append(COMMA_DELIMITER);
+
+			// CONSULTA
+			String setmana = "Set. ";
+
+			for (int i = 1; i <= numSetmanes; i++) {
+				
+				setmana.equals(numSetmanes + i);
+				fileWriter.append(setmana + i);
+				fileWriter.append(COMMA_DELIMITER);
+
+				
+				Date diaInicial = diaIniciCal.getTime();
+				String fechainicialBuena = ConverterDates.converterDate(diaInicial);
+
+				fileWriter.append(fechainicialBuena);
+				fileWriter.append(COMMA_DELIMITER);
+				diaIniciCal.add(Calendar.DATE, 7);
+
+
+			}
+			fileWriter.append(NEW_LINE_SEPARATOR);
+
+			// Headers
+			fileWriter.append("ALUMNE");
+			fileWriter.append(COMMA_DELIMITER);
+
+			for (int i = 0; i < numSetmanes; i++) {
+				fileWriter.append("A");
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append("E");
+				fileWriter.append(COMMA_DELIMITER);
+
+			}
+
+
+			fileWriter.append(NEW_LINE_SEPARATOR);
+			
+
+			// ADD STUDENTS
+			for (int i = 0; i < nomsList.size(); i++) {
+				Calendar diaInicisetmanes = Calendar.getInstance();
+				diaInicisetmanes.setTime(diaIniciTrimestre3);
+				Date semana2 = null;
+				Date semana1 = diaInicisetmanes.getTime();
+				diaInicisetmanes.add(Calendar.DATE, 7);
+
+				semana2 = diaInicisetmanes.getTime();
+				fileWriter.append(nomsList.get(i).toString() + " " + cognomsList.get(i).toString());
+				fileWriter.append(COMMA_DELIMITER);
+
+				
+				
+				for (int l = 0; l < numSetmanes; l++) {
+
+					
+
+					calculoAmonest= new ArrayList<>();
+					calculoAmonest = new ArrayList<>();
+					
+			
+					
+					calculoAmonest =	calcularAmonestadosPorSemana(idList,semana1,semana2);
+					calculoExpuls= calcularExpulsadosPorSemana(idList,semana1,semana2);
+					
+					semana1 = semana2;
+					diaInicisetmanes.add(Calendar.DATE, 7);
+					semana2 = diaInicisetmanes.getTime();
+
+				if (calculoAmonest.get(i).toString().equals("0")) {
+					fileWriter.append("");
+
+				} else {
+					fileWriter.append(calculoAmonest.get(i).toString());
+
+				}
+				fileWriter.append(COMMA_DELIMITER);
+				
+				
+				
+
+				if (calculoExpuls.get(i).toString().equals("0")) {
+					fileWriter.append("");
+
+				} else {
+					fileWriter.append(calculoExpuls.get(i).toString());
+
+				}
+				fileWriter.append(COMMA_DELIMITER);
+					}
+				
+				 fileWriter.append(NEW_LINE_SEPARATOR);
+
+				
+				
+				
+
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			fileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	
+		System.out.println("Grup "+grupos.get(x).getId()+"finalitzat");
+
+		}
+	}
+	
+	
 	private static List  calcularAmonestadosPorSemana(List idList,Date semana1, Date semana2) {
 
-		// FOR 1rstWEEK
 		List amonestacions1;
 	
-		//System.out.println("Semana 1: "+semana2.toString());
-	//	System.out.println("Semana 2: "+semana1.toString());
-
+		
 			amonestacions1 = new ArrayList<>();
 			
 			
@@ -393,7 +717,6 @@ public class CsvFileWriter {
 
 	private static List calcularExpulsadosPorSemana(List idList,Date semana1, Date semana2) {
 
-		// FOR 1rstWEEK
 		List expulsions1;
 		List expulsionsList1 = null;
 
@@ -418,17 +741,18 @@ public class CsvFileWriter {
 		String path2 = null;
 		File currDir = new File(".");
 		String linea = null;
-		Date fechaInici = null;
-		Date fechaFi = null;
-		Date fechafinaltrimestre1 = null;
-		Date fechafinaltrimestre2 = null;
+		Date fechaIniciTrimestre1=null;
+		Date fechaFinalTrimestre3=null;
+		Date fechafinaltrimestre1=null;
+		Date fechafinaltrimestre2=null;
+		Date fechaIniciTrimestre3=null;
+		Date fechaIniciTrimestre2=null;
 		ArrayList<Date> fechas = new ArrayList<Date>();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
 		try {
 			path2 = currDir.getCanonicalPath();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -449,13 +773,14 @@ public class CsvFileWriter {
 
 					try {
 
-						fechaInici = formatter.parse(st.nextToken());
-						fechaFi = formatter.parse(st.nextToken());
-						fechafinaltrimestre1 = formatter.parse(st.nextToken());
-						fechafinaltrimestre2 = formatter.parse(st.nextToken());
+						fechaIniciTrimestre1 =formatter.parse(st.nextToken());
+						fechafinaltrimestre1 =formatter.parse(st.nextToken());
+						fechaIniciTrimestre2=formatter.parse(st.nextToken());
+						fechafinaltrimestre2 =formatter.parse(st.nextToken());
+						fechaIniciTrimestre3=formatter.parse(st.nextToken());
+						fechaFinalTrimestre3 =formatter.parse(st.nextToken());
 
 					} catch (ParseException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
@@ -464,10 +789,12 @@ public class CsvFileWriter {
 					st.nextToken();
 
 				}
-				fechas.add(fechaInici);
-				fechas.add(fechaFi);
+				fechas.add(fechaIniciTrimestre1);
 				fechas.add(fechafinaltrimestre1);
+				fechas.add(fechaIniciTrimestre2);
 				fechas.add(fechafinaltrimestre2);
+				fechas.add(fechaIniciTrimestre3);
+				fechas.add(fechaFinalTrimestre3);
 
 			}
 
@@ -477,4 +804,3 @@ public class CsvFileWriter {
 
 }
 
-// }
