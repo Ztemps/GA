@@ -24,6 +24,7 @@ import com.example.view.AdminView.Students.AdminViewStudentJava;
 import com.example.view.AdminView.Teacher.AdminViewTeacherJava;
 import com.example.view.AdminView.Tutor.AdminViewTutorJava;
 import com.example.view.AdminView.User.AdminViewUser;
+import com.example.view.AdminView.Warning.AdminWarning;
 import com.example.view.AdminView.Warnings.AdminViewWarnings;
 import com.example.view.TeacherView.TeacherOwnWarningsJava;
 import com.example.view.TeacherView.TeacherViewWarningJava;
@@ -52,7 +53,7 @@ public class AdminView extends MainView implements View {
 	private static AdminViewTeacherJava ViewDocents;
 	private static AdminViewUser ViewUsers;
 	private static AdminViewWarnings ViewListWarnings;
-	private static TeacherViewWarningJava ViewWarning;
+	private static AdminWarning ViewWarning;
 	private static AdminViewCSVUploadJava ViewCSV;
 	private static TeacherOwnWarningsJava ViewTeachersWarnings;
 	private static AdminViewCharts ViewCharts;
@@ -113,7 +114,7 @@ public class AdminView extends MainView implements View {
 		ViewGrupos = new AdminViewGroupJava();
 		ViewStudents = new AdminViewStudentJava();
 		ViewDocents = new AdminViewTeacherJava();
-		ViewWarning = new TeacherViewWarningJava();
+		ViewWarning = new AdminWarning();
 		ViewUsers = new AdminViewUser();
 		ViewListWarnings = new AdminViewWarnings();
 		ViewCSV = new AdminViewCSVUploadJava();
@@ -389,7 +390,7 @@ public class AdminView extends MainView implements View {
 	private void viewWarning() {
 		// TODO Auto-generated method stub
 
-		ViewWarning.clear();
+		//ViewWarning.clear();
 		ViewWarning.setVisible(true);
 		ViewGrupos.setVisible(false);
 		ViewDocents.setVisible(false);

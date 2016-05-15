@@ -100,7 +100,6 @@ public class TeacherViewWarningJava extends MainContentView {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				// TODO Auto-generated method stub
-
 				nameTeacher = String.valueOf(event.getProperty().getValue());
 			}
 		});
