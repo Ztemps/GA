@@ -66,6 +66,11 @@ public class ConverterDates {
 			
 			
 			//Catalan and Spanish format
+			
+		case "ene":
+			month = "01";
+			break;
+			
 		case "gen":
 			month = "01";
 			break;
@@ -92,7 +97,7 @@ public class ConverterDates {
 			
 
 		default:
-			System.out.println("error mes");
+			System.out.println("error mes:  " + fecha[1]);
 			break;
 		}
 

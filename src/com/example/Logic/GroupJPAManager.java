@@ -7,12 +7,14 @@ import javax.persistence.Query;
 
 import com.example.Entities.Group;
 import com.example.Entities.Student;
+import com.example.Entities.Teacher;
 import com.example.Entities.Tutor;
 
 public class GroupJPAManager {
 	private Group group;
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em = entman.getEntityManager();
+	private List<Group> listGroups;
 
 	public void addGroup(Group grup) {
 
@@ -60,6 +62,29 @@ public class GroupJPAManager {
 		// return list_grups;
 		return query.getResultList();
 	}
+	
+	
+public List<Group> getGroups(){
+		
+		
+		try {
+
+			em.getTransaction().begin();
+			listGroups = em.createQuery("Select e From Group e").getResultList();
+
+			em.getTransaction().commit();
+			return listGroups;
+
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+		}
+	
+		return listGroups;
+
+
+	}
+	
+	
 	
 	public String getGroupTutor(int docent) {
 

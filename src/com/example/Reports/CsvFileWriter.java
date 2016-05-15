@@ -16,6 +16,8 @@ import java.util.StringTokenizer;
 import javax.persistence.Query;
 
 import com.example.Dates.ConverterDates;
+import com.example.Entities.Group;
+import com.example.Logic.GroupJPAManager;
 import com.vaadin.data.Property.ReadOnlyException;
 import com.vaadin.data.util.converter.Converter.ConversionException;
 
@@ -27,9 +29,11 @@ public class CsvFileWriter {
 	static ArrayList<Date> dates = new ArrayList<Date>();
 	// CSV file header
 	private static final String FILE_HEADER = "ALUMNE,A,E";
+	public static GroupJPAManager jpa;
+	private static List <Group> grupos = null;
 
+	
 	public static void main(String[] args) {
-
 		calcularPrimerTrimestre();
 	}
 
@@ -74,11 +78,19 @@ public class CsvFileWriter {
 		FileWriter fileWriter = null;
 
 		// Create new students objects
-		String grupCurs = "ESO 1A";
+		//String grupCurs = "ESO 1A";
+		jpa = new GroupJPAManager();
+		grupos=new ArrayList<>();
+		grupos= jpa.getGroups();
+		
+		for (int x=0; x<grupos.size(); x++){
+		//	System.out.println(grupos.get(i));
+		
 
 		// FOR STUDENT ID
 		query = new ReportQuerys();
-		List ids = query.getIdAlumnes(grupCurs);
+		List ids = query.getIdAlumnes(grupos.get(x).getId());
+		
 		query.closeTransaction();
 
 		List idList = new ArrayList<>();
@@ -91,7 +103,7 @@ public class CsvFileWriter {
 
 		// FOR NOMS
 		query = new ReportQuerys();
-		List noms = query.getNomAlumnes(grupCurs);
+		List noms = query.getNomAlumnes(grupos.get(x).getId());
 		query.closeTransaction();
 
 		List nomsList = new ArrayList<>();
@@ -106,7 +118,7 @@ public class CsvFileWriter {
 		// FOR COGNOMS
 
 		query = new ReportQuerys();
-		List cognoms = query.getCognomsAlumnes(grupCurs);
+		List cognoms = query.getCognomsAlumnes(grupos.get(x).getId());
 		query.closeTransaction();
 
 		List cognomsList = new ArrayList<>();
@@ -155,7 +167,7 @@ public class CsvFileWriter {
 		// }
 
 		try {
-			fileWriter = new FileWriter("/home/katano/Escritorio/alumnes.xls");
+			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre1/alumnes"+grupos.get(x).getId()+".xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			query.closeTransaction();
@@ -329,7 +341,7 @@ public class CsvFileWriter {
 		// fileWriter.append(String.valueOf(student.getAge()));
 		//
 		// fileWriter.append(NEW_LINE_SEPARATOR);
-	}
+	
 
 	// System.out.println("CSV file was created successfully !!!");
 	//
@@ -350,7 +362,10 @@ public class CsvFileWriter {
 	// }
 
 	// }
+		System.out.println("Grup "+grupos.get(x).getId()+"finalitzat");
 
+		}
+	}
 	private static List  calcularAmonestadosPorSemana(List idList,Date semana1, Date semana2) {
 
 		// FOR 1rstWEEK
