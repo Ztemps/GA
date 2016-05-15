@@ -24,6 +24,7 @@ import com.example.view.AdminView.Students.AdminViewStudentJava;
 import com.example.view.AdminView.Teacher.AdminViewTeacherJava;
 import com.example.view.AdminView.Tutor.AdminViewTutorJava;
 import com.example.view.AdminView.User.AdminViewUser;
+import com.example.view.AdminView.Warning.AdminViewWarningJava;
 import com.example.view.AdminView.Warning.AdminWarning;
 import com.example.view.AdminView.Warnings.AdminViewWarnings;
 import com.example.view.TeacherView.TeacherOwnWarningsJava;
@@ -53,7 +54,7 @@ public class AdminView extends MainView implements View {
 	private static AdminViewTeacherJava ViewDocents;
 	private static AdminViewUser ViewUsers;
 	private static AdminViewWarnings ViewListWarnings;
-	private static AdminWarning ViewWarning;
+	private static AdminViewWarningJava ViewWarning;
 	private static AdminViewCSVUploadJava ViewCSV;
 	private static TeacherOwnWarningsJava ViewTeachersWarnings;
 	private static AdminViewCharts ViewCharts;
@@ -114,7 +115,7 @@ public class AdminView extends MainView implements View {
 		ViewGrupos = new AdminViewGroupJava();
 		ViewStudents = new AdminViewStudentJava();
 		ViewDocents = new AdminViewTeacherJava();
-		ViewWarning = new AdminWarning();
+		ViewWarning = new AdminViewWarningJava();
 		ViewUsers = new AdminViewUser();
 		ViewListWarnings = new AdminViewWarnings();
 		ViewCSV = new AdminViewCSVUploadJava();

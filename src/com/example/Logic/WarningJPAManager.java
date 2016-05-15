@@ -94,7 +94,6 @@ public class WarningJPAManager  {
 				query[5], tutor, amonestat2, expulsat, "15/16", querycon, query[10]));
 		
 		
-		
 	}
 
 	
