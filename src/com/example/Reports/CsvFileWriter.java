@@ -64,7 +64,7 @@ public class CsvFileWriter {
 		System.out.println(dates.get(3));
 
 
-		long diff = diaFinalTrimestre2.getTime() - diaFinalTrimestre1.getTime();
+		long diff = diaFinalTrimestre1.getTime() - diaInici.getTime();
 	//	System.out.println(diff);
 		long numSetmanes = (diff / (24 * 60 * 60 * 1000)) / 7;
 	//	System.out.println(numSetmanes);
