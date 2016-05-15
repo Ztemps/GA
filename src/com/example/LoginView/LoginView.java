@@ -220,6 +220,11 @@ public class LoginView extends LoginViewDesign implements View {
 			byte[] encoded = key.getEncoded();
 			// save this somewhere
 		 * SAVE BYTE IN FILE FileUtils.writeByteArrayToFile(new File("pathname"), myByteArray)*/
+		
+		/*PARA RECUPERARLA
+		 * 
+		 * byte[] encoded = // load it again
+			SecretKey key = new SecretKeySpec(encoded, "DES");*/
 
 
 
