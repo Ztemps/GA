@@ -653,6 +653,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
 				altres_motius, motiu2, timewarning,nameTeacher};
 
+		System.out.println("TIEMPO: " + timewarning);
 		// DATOS PARA INTRODUCIR EN EL PARTE
 
 		return query;
