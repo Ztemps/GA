@@ -54,7 +54,9 @@ public class AdminViewSettingsJava extends MainContentView {
 		adminsettings.dataIniciCurs.addStyleName("dataInit");
 		adminsettings.dataFinalCurs.addStyleName("dataFi");
 		adminsettings.dataFinaltrimestre1.addStyleName("dataFi");
-		adminsettings.dataFinaltrimestre2.addStyleName("dataFi");;
+		adminsettings.dataFinaltrimestre2.addStyleName("dataFi");
+		adminsettings.dataInicitrimestre2.addStyleName("dataFi");
+		adminsettings.dataInicitrimestre3.addStyleName("dataFi");
 
 		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
@@ -84,26 +86,34 @@ public class AdminViewSettingsJava extends MainContentView {
 
 	private void writeFile() {
 
-		String fechainicibuena = null;
-		String fechafinalbuena = null;
+		String datainicitrimestre1buena = null;
+		String datafinaltrimestre3buena = null;
 		String datafintrimestre1buena = null;
 		String datafintrimestre2buena = null;
-
+		String fechaIniciTrimestre3buena=null;
+		String fechaIniciTrimestre2buena=null;
 		File currDir = new File(".");
 		String path2;
 		try {
 
-			Date datainici = adminsettings.dataIniciCurs.getValue();
-			fechainicibuena = ConverterDates.converterDate(datainici);
+			Date datainicitrimestre1 = adminsettings.dataIniciCurs.getValue();
+			datainicitrimestre1buena = ConverterDates.converterDate(datainicitrimestre1);
 
-			Date datafi = adminsettings.dataFinalCurs.getValue();
-			fechafinalbuena = ConverterDates.converterDate(datafi);
+			Date datafinaltrimestre3 = adminsettings.dataFinalCurs.getValue();
+			datafinaltrimestre3buena = ConverterDates.converterDate(datafinaltrimestre3);
 			
 			Date datafintrimestre1 = adminsettings.dataFinaltrimestre1.getValue();
 			datafintrimestre1buena = ConverterDates.converterDate(datafintrimestre1);
 
 			Date datafintrimestre2 = adminsettings.dataFinaltrimestre2.getValue();
 			datafintrimestre2buena = ConverterDates.converterDate(datafintrimestre2);
+			
+			Date fechaIniciTrimestre3 = adminsettings.dataInicitrimestre3.getValue();
+			fechaIniciTrimestre3buena = ConverterDates.converterDate(fechaIniciTrimestre3);
+			
+			
+			Date fechaIniciTrimestre2 = adminsettings.dataInicitrimestre2.getValue();
+			fechaIniciTrimestre2buena = ConverterDates.converterDate(fechaIniciTrimestre2);
 			
 			
 			boolean checkTutor = adminsettings.checkEmailTutors.getValue();
@@ -115,10 +125,13 @@ public class AdminViewSettingsJava extends MainContentView {
 			FileWriter fw = new FileWriter(f, false);
 			BufferedWriter bf = new BufferedWriter(fw);
 
-			bf.write(fechainicibuena + ",");
-			bf.write(fechafinalbuena + ",");
+			bf.write(datainicitrimestre1buena + ",");
 			bf.write(datafintrimestre1buena + ",");
+			bf.write(fechaIniciTrimestre2buena+",");
 			bf.write(datafintrimestre2buena + ",");
+			bf.write(fechaIniciTrimestre3buena+",");
+			bf.write(datafinaltrimestre3buena + ",");
+
 			bf.write(Boolean.toString(checkTutor) + ",");
 			bf.write(Boolean.toString(checkPares) + ",");
 			bf.write(Boolean.toString(checkTelegram));
@@ -138,10 +151,12 @@ public class AdminViewSettingsJava extends MainContentView {
 		String path2 = null;
 		File currDir = new File(".");
 		String linea = null;
-		Date fechaInici=null;
-		Date fechaFi=null;
+		Date fechaIniciTrimestre1=null;
+		Date fechaFinalTrimestre3=null;
 		Date fechafinaltrimestre1=null;
 		Date fechafinaltrimestre2=null;
+		Date fechaIniciTrimestre3=null;
+		Date fechaIniciTrimestre2=null;
 		boolean checkTutor=false;
 		boolean checkPares=false;
 		boolean checkTelegram=false;
@@ -156,6 +171,10 @@ public class AdminViewSettingsJava extends MainContentView {
 			}
 
 			File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
+			
+			if (!f.exists()){
+				f.createNewFile();
+			}
 			
 			BufferedReader br = new BufferedReader(new FileReader(f));     
 			if (br.readLine() == null) {
@@ -176,10 +195,12 @@ public class AdminViewSettingsJava extends MainContentView {
 
 					try {
 						
-						fechaInici =formatter.parse(st.nextToken());
-						fechaFi =formatter.parse(st.nextToken());
+						fechaIniciTrimestre1 =formatter.parse(st.nextToken());
 						fechafinaltrimestre1 =formatter.parse(st.nextToken());
+						fechaIniciTrimestre2=formatter.parse(st.nextToken());
 						fechafinaltrimestre2 =formatter.parse(st.nextToken());
+						fechaIniciTrimestre3=formatter.parse(st.nextToken());
+						fechaFinalTrimestre3 =formatter.parse(st.nextToken());
 
 
 					} catch (ParseException e) {
@@ -202,15 +223,16 @@ public class AdminViewSettingsJava extends MainContentView {
 
 			}
 			
-			adminsettings.dataIniciCurs.setValue(fechaInici);
-			adminsettings.dataFinalCurs.setValue(fechaFi);
+			adminsettings.dataIniciCurs.setValue(fechaIniciTrimestre1);
+			adminsettings.dataFinalCurs.setValue(fechaFinalTrimestre3);
 			adminsettings.dataFinaltrimestre1.setValue(fechafinaltrimestre1);
 			adminsettings.dataFinaltrimestre2.setValue(fechafinaltrimestre2);
 			adminsettings.checkEmailTutors.setValue(checkTutor);
 			adminsettings.checkEmailPares.setValue(checkPares);
 			adminsettings.checkWhatsPares.setValue(checkTelegram);
-			
-			
+			adminsettings.dataInicitrimestre2.setValue(fechaIniciTrimestre2);
+			adminsettings.dataInicitrimestre3.setValue(fechaIniciTrimestre3);
+
 
 		
 		}

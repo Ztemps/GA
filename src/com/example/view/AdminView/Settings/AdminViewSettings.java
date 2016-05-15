@@ -25,6 +25,9 @@ public class AdminViewSettings extends CssLayout {
 	public DateField dataFinalCurs;
 	public DateField dataFinaltrimestre1;
 	public DateField dataFinaltrimestre2;
+	public DateField dataInicitrimestre2;
+	public DateField dataInicitrimestre3;
+	
 	public CheckBox checkEmailTutors;
 	public CheckBox checkEmailPares;
 	public CheckBox checkWhatsPares;
