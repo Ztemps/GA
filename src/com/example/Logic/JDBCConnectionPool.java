@@ -6,21 +6,28 @@ import com.vaadin.data.util.sqlcontainer.connection.SimpleJDBCConnectionPool;
 
 public class JDBCConnectionPool {
 	
-	public static SimpleJDBCConnectionPool connectionPool;
+	private SimpleJDBCConnectionPool connectionPool;
 	
-	
-	public SimpleJDBCConnectionPool GetConnection(){
+	public JDBCConnectionPool(){
 		
 		try {
 			connectionPool = new SimpleJDBCConnectionPool("org.postgresql.Driver",
 			        "jdbc:postgresql://localhost:5432/GAdb", 
-			        "postgres", "postgres");
+			        "postgres", "postgres",2,5);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		
+	}
+	public SimpleJDBCConnectionPool GetConnection(){
+		
 		return connectionPool;
+	}
+	
+	public void close(){
+		connectionPool.destroy();
 	}
 	
 

@@ -128,28 +128,29 @@ public class AdminViewCharts extends MainContentView {
 
 	}
 
-	public Table taula() {
-
-		jdbccp = new JDBCConnectionPool();
-		try {
-			container = new SQLContainer(new FreeformQuery(
-					"select count(amonestat) AS amonestacions,grup "
-							+ "from amonestacio "
-							+ "where amonestat = TRUE "
-							+ "and data between '2016-05-09' and '2016-05-11' "
-									+ "group by grup",
-							jdbccp.GetConnection()));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		Table table = new Table("Grups", container);
-		table.setPageLength(container.size());
-
-		return table;
-
-	}
+//	public Table taula() {
+//
+//		jdbccp = new JDBCConnectionPool();
+//		
+//		try {
+//			container = new SQLContainer(new FreeformQuery(
+//					"select count(amonestat) AS amonestacions,grup "
+//							+ "from amonestacio "
+//							+ "where amonestat = TRUE "
+//							+ "and data between '2016-05-09' and '2016-05-11' "
+//									+ "group by grup",
+//							jdbccp.GetConnection()));
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		Table table = new Table("Grups", container);
+//		table.setPageLength(container.size());
+//
+//		return table;
+//
+//	}
 
 	public Chart WarningsPerGroup() {
 
@@ -238,6 +239,7 @@ public class AdminViewCharts extends MainContentView {
 	public Chart WarningsPerTeacher() {
 
 		Chart chart = new Chart(ChartType.COLUMN);
+		
 		jdbccp = new JDBCConnectionPool();
 		// Query for get amonestats per group
 		try {
@@ -248,7 +250,7 @@ public class AdminViewCharts extends MainContentView {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		
 
 		Configuration configuration = chart.getConfiguration();

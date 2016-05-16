@@ -61,7 +61,8 @@ public class GaUI extends UI {
 
 		getUI().getConnectorTracker().cleanConnectorMap();
 		getUI().getNavigator().navigateTo(LoginView.NAME);
-//			
+//		
+		
 			
 		//	getSession().setAttribute("user", username)
 
