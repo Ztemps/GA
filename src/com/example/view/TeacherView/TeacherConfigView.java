@@ -1,6 +1,7 @@
 package com.example.view.TeacherView;
 
 import java.security.InvalidKeyException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,6 +13,7 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
 import com.example.Encrypter.EncryptDecryptStringWithDES;
 import com.example.Entities.User;
@@ -22,6 +24,7 @@ import com.vaadin.shared.Position;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
@@ -29,8 +32,8 @@ import com.vaadin.ui.Button.ClickListener;
 
 public class TeacherConfigView extends MainContentView{
 
-	private TextField oldPass= new TextField();
-	private TextField newPass = new TextField();
+	private PasswordField oldPass= new PasswordField();
+	private PasswordField newPass = new PasswordField();
 	private Button acceptOldPass = new Button("Acceptar");
 	private Button acceptNewPass = new Button("Acceptar");
 	private User usuari;
@@ -70,7 +73,14 @@ public class TeacherConfigView extends MainContentView{
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				
+				MessageDigest md = null;
+				try {
+					md = MessageDigest.getInstance("SHA-1");
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+				HexBinaryAdapter hbinary = new HexBinaryAdapter();
 				String password = newPass.getValue();
 				
 				/*try {
@@ -91,14 +101,14 @@ public class TeacherConfigView extends MainContentView{
 				}
 				String passwordEncrypted = EncryptDecryptStringWithDES.encrypt(password);*/
 				
-				
+				String passwordhash = hbinary.marshal(md.digest(password.getBytes())).toLowerCase();
+				System.out.println("Encriptada: "+ passwordhash);
 				
 				int id = Integer.parseInt(getUI().getSession().getAttribute("id").toString());
 				System.out.println("IDDDDD "+id);
-				MA.updateUser(id, passwordEncrypted);
+				MA.updateUser(id, passwordhash);
 				notif("Contraseña nova acceptada. ");
 				
-				// pass profe U+u+rz0n7ak=
 
 
 			}
