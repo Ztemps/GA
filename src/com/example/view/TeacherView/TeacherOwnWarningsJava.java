@@ -90,14 +90,15 @@ public class TeacherOwnWarningsJava extends MainContentView {
 							+ "a.materia, a.data, " + "a.localitzacio " + "from amonestacio a, docent d, alumne al "
 							+ "where a.docent=d.id and a.alumne=al.id and d.nom LIKE '" + usuari + "'",
 					jdbccp.GetConnection()));
+			grid = new Grid("", container);
+			grid.setContainerDataSource(container);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		grid = new Grid("", container);
-		grid.setContainerDataSource(container);
+	
 		grid.setColumns("nom", "cognoms", "grup", "data");
 		grid.setSizeFull();
 		grid.setColumnReorderingAllowed(true);

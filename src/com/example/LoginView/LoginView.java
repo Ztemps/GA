@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.security.InvalidKeyException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,11 +14,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
 import org.eclipse.jetty.security.authentication.SessionAuthentication;
 
@@ -122,7 +122,7 @@ public class LoginView extends LoginViewDesign implements View {
 				// TODO Auto-generated method stub
 				try {
 					LoginValidator();
-				} catch (ClassNotFoundException | SQLException e) {
+				} catch (ClassNotFoundException | SQLException | NoSuchAlgorithmException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -174,9 +174,12 @@ public class LoginView extends LoginViewDesign implements View {
 	
 	
 
-	public void LoginValidator() throws ClassNotFoundException, SQLException {
+	public void LoginValidator() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 
-		// Conecxión con la base de datos
+		 MessageDigest md = MessageDigest.getInstance("SHA-1"); 
+		 HexBinaryAdapter hbinary = new HexBinaryAdapter();
+		
+		 // Conecxión con la base de datos
 		String dbURL = "jdbc:postgresql:GAdb";
 		Class.forName("org.postgresql.Driver");
 		Connection conn = null;
@@ -192,6 +195,10 @@ public class LoginView extends LoginViewDesign implements View {
 		String username = this.txtUsername.getValue();
 		String userpassword = this.txtPassword.getValue();
 		
+		// cifrar clave con SHA-1
+//		String passwordhash = hbinary.marshal(md.digest(userpassword.getBytes())).toLowerCase();
+//		System.out.println("Encriptada: "+ passwordhash);
+
 		/*try {
 			SecretKey key = KeyGenerator.getInstance("DES").generateKey();
 			try {
@@ -225,9 +232,6 @@ public class LoginView extends LoginViewDesign implements View {
 		 * 
 		 * byte[] encoded = // load it again
 			SecretKey key = new SecretKeySpec(encoded, "DES");*/
-
-
-
 		try {
 			// Mientras el resultset tenga resultados, cogemos los valores y
 			// creamos un usuari con los valores de la consulta para
