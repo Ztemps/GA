@@ -22,7 +22,7 @@ import com.google.gwt.user.client.rpc.core.java.util.Collections;
 import com.vaadin.data.Property.ReadOnlyException;
 import com.vaadin.data.util.converter.Converter.ConversionException;
 
-public class CsvFileWriter {
+public class TrimestralReports {
 	private static final String COMMA_DELIMITER = ",";
 	private static final String NEW_LINE_SEPARATOR = "\n";
 	static public ReportQuerys query;
@@ -34,13 +34,15 @@ public class CsvFileWriter {
 	private static List<Group> grupos = null;
 
 	public static void main(String[] args) {
-		// calcularPrimerTrimestre();
-		// calcularSegundoTrimestre();
-		// calcularTercerTrimestre();
-		//calcularResumenTrimestre1();
-		//calcularResumenTrimestre2();
+		calcularPrimerTrimestre();
+		calcularSegundoTrimestre();
+		calcularTercerTrimestre();
+		calcularResumenTrimestre1();
+		calcularResumenTrimestre2();
 		calcularResumenTrimestre3();
-
+		calcularResumen2Trimestre1();
+		calcularResumen2Trimestre2();
+		calcularResumen2Trimestre3();
 	}
 
 	public static void calcularPrimerTrimestre() {
@@ -667,7 +669,7 @@ public class CsvFileWriter {
 
 			dates = readFile();
 
-			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre1/resumenTrimestre1.xls");
+			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre1/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			query.closeTransaction();
@@ -835,7 +837,7 @@ public class CsvFileWriter {
 
 			dates = readFile();
 
-			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre1/resumenTrimestre2.xls");
+			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre2/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			query.closeTransaction();
@@ -1008,7 +1010,7 @@ public class CsvFileWriter {
 
 			dates = readFile();
 
-			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre1/resumenTrimestre3.xls");
+			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre3/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			query.closeTransaction();
@@ -1163,6 +1165,521 @@ public class CsvFileWriter {
 		}
 
 	}
+	
+	public static void calcularResumen2Trimestre1() {
+		FileWriter fileWriter = null;
+
+		Date diaIniciTrimestre1;
+		Calendar diaIniciCal;
+		List calculoAmonest;
+		List calculoExpuls;
+		Date diaFinalTrimestre1;
+		long diff;
+		long numSetmanes;
+		int totalAmonest=0;
+		int totalExpuls=0;
+		int total=0;
+		float mediaParteAlumnoGrupo=0;
+		
+
+		try {
+
+			dates = readFile();
+
+			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre1/resumen2.xls");
+			query = new ReportQuerys();
+			String dateCurs = query.getDateCurs();
+			query.closeTransaction();
+
+			jpa = new GroupJPAManager();
+			grupos = new ArrayList<>();
+			grupos = jpa.getGroups();
+			jpa.closeTransaction();
+
+			diaIniciTrimestre1 = dates.get(0);
+			diaIniciCal = Calendar.getInstance();
+			diaIniciCal.setTime(diaIniciTrimestre1);
+			diaFinalTrimestre1 = dates.get(1);
+			diff = diaFinalTrimestre1.getTime() - diaIniciTrimestre1.getTime();
+			numSetmanes = (diff / (24 * 60 * 60 * 1000)) / 7;
+
+			calculoAmonest = null;
+			calculoExpuls = null;
+
+			fileWriter.append("1r Trimestre   Curs: " + dateCurs);
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(NEW_LINE_SEPARATOR);
+			fileWriter.append(NEW_LINE_SEPARATOR);
+
+			// Headers
+			
+
+			// CONSULTA
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(COMMA_DELIMITER);
+
+	
+			fileWriter.append(NEW_LINE_SEPARATOR);
+			fileWriter.append("GRUP");
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("Nº ALUMNES");
+
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append("A");
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append("E");
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append("TOTAL");
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append("Partes per alumne i grup");
+				fileWriter.append(COMMA_DELIMITER);
+
+				
+			
+
+			fileWriter.append(NEW_LINE_SEPARATOR);
+
+			for (int i = 0; i < grupos.size(); i++) {
+				fileWriter.append(grupos.get(i).getId());
+				fileWriter.append(COMMA_DELIMITER);
+
+				// FOR STUDENT ID
+				query = new ReportQuerys();
+				List ids = query.getIdAlumnes(grupos.get(i).getId());
+
+				query.closeTransaction();
+
+				List idList = new ArrayList<>();
+
+				for (int j = 0; j < ids.size(); j++) {
+					idList.add(ids.get(j));
+
+					// System.out.println(ids.get(j));
+				}
+				fileWriter.append(String.valueOf(idList.size()));
+				fileWriter.append(COMMA_DELIMITER);
+
+				total=0;
+				totalAmonest=0;
+				totalExpuls=0;
+				mediaParteAlumnoGrupo=0;
+				/////////////////////////////
+					
+					calculoExpuls = new ArrayList<>();
+					calculoAmonest = new ArrayList<>();
+
+					calculoAmonest = calcularAmonestadosPorSemana(idList, diaIniciTrimestre1, diaFinalTrimestre1);
+					calculoExpuls = calcularExpulsadosPorSemana(idList, diaIniciTrimestre1, diaFinalTrimestre1);
+					
+					for (int n=0; n<calculoAmonest.size(); n++){
+						totalAmonest=totalAmonest+Integer.parseInt(calculoAmonest.get(n).toString());
+					}
+					
+					for (int n=0; n<calculoExpuls.size(); n++){
+						totalExpuls=totalExpuls+Integer.parseInt(calculoExpuls.get(n).toString());
+					}
+					
+					total=totalExpuls+totalAmonest;
+					mediaParteAlumnoGrupo=((total/1024.0f)*255)/((idList.size()/1024.0f)*255);
+
+				////////////////////////////////////
+				if (totalAmonest==0) {
+					fileWriter.append("");
+
+				} else {
+					fileWriter.append(String.valueOf(totalAmonest));
+
+				}
+				fileWriter.append(COMMA_DELIMITER);
+
+				if (totalExpuls==0) {
+					fileWriter.append("");
+
+				} else {
+					fileWriter.append(String.valueOf(totalExpuls));
+
+				}
+				fileWriter.append(COMMA_DELIMITER);
+				
+				if (total==0) {
+					fileWriter.append("");
+
+				} else {
+					fileWriter.append(String.valueOf(total));
+
+				}
+				fileWriter.append(COMMA_DELIMITER);
+
+				if (mediaParteAlumnoGrupo==0) {
+					fileWriter.append("");
+
+				} else {
+					fileWriter.append(Float.toString(mediaParteAlumnoGrupo));
+
+				}
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(NEW_LINE_SEPARATOR);
+
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			fileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public static void calcularResumen2Trimestre2() {
+		FileWriter fileWriter = null;
+
+		Date diaIniciTrimestre2;
+		Calendar diaIniciCal;
+		List calculoAmonest;
+		List calculoExpuls;
+		Date diaFinalTrimestre2;
+		long diff;
+		long numSetmanes;
+		int totalAmonest=0;
+		int totalExpuls=0;
+		int total=0;
+		float mediaParteAlumnoGrupo=0;
+		
+
+		try {
+
+			dates = readFile();
+
+			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre2/resumen2.xls");
+			query = new ReportQuerys();
+			String dateCurs = query.getDateCurs();
+			query.closeTransaction();
+
+			jpa = new GroupJPAManager();
+			grupos = new ArrayList<>();
+			grupos = jpa.getGroups();
+			jpa.closeTransaction();
+
+			diaIniciTrimestre2 = dates.get(2);
+			diaIniciCal = Calendar.getInstance();
+			diaIniciCal.setTime(diaIniciTrimestre2);
+			diaFinalTrimestre2 = dates.get(3);
+			diff = diaFinalTrimestre2.getTime() - diaIniciTrimestre2.getTime();
+			numSetmanes = (diff / (24 * 60 * 60 * 1000)) / 7;
+
+			calculoAmonest = null;
+			calculoExpuls = null;
+
+			fileWriter.append("2r Trimestre   Curs: " + dateCurs);
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(NEW_LINE_SEPARATOR);
+			fileWriter.append(NEW_LINE_SEPARATOR);
+
+			// Headers
+			
+
+			// CONSULTA
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(COMMA_DELIMITER);
+
+	
+			fileWriter.append(NEW_LINE_SEPARATOR);
+			fileWriter.append("GRUP");
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("Nº ALUMNES");
+
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append("A");
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append("E");
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append("TOTAL");
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append("Partes per alumne i grup");
+				fileWriter.append(COMMA_DELIMITER);
+
+				
+			
+
+			fileWriter.append(NEW_LINE_SEPARATOR);
+
+			for (int i = 0; i < grupos.size(); i++) {
+				fileWriter.append(grupos.get(i).getId());
+				fileWriter.append(COMMA_DELIMITER);
+
+				// FOR STUDENT ID
+				query = new ReportQuerys();
+				List ids = query.getIdAlumnes(grupos.get(i).getId());
+
+				query.closeTransaction();
+
+				List idList = new ArrayList<>();
+
+				for (int j = 0; j < ids.size(); j++) {
+					idList.add(ids.get(j));
+
+					// System.out.println(ids.get(j));
+				}
+				fileWriter.append(String.valueOf(idList.size()));
+				fileWriter.append(COMMA_DELIMITER);
+
+				total=0;
+				totalAmonest=0;
+				totalExpuls=0;
+				mediaParteAlumnoGrupo=0;
+				/////////////////////////////
+					
+					calculoExpuls = new ArrayList<>();
+					calculoAmonest = new ArrayList<>();
+
+					calculoAmonest = calcularAmonestadosPorSemana(idList, diaIniciTrimestre2, diaFinalTrimestre2);
+					calculoExpuls = calcularExpulsadosPorSemana(idList, diaIniciTrimestre2, diaFinalTrimestre2);
+					
+					for (int n=0; n<calculoAmonest.size(); n++){
+						totalAmonest=totalAmonest+Integer.parseInt(calculoAmonest.get(n).toString());
+					}
+					
+					for (int n=0; n<calculoExpuls.size(); n++){
+						totalExpuls=totalExpuls+Integer.parseInt(calculoExpuls.get(n).toString());
+					}
+					
+					total=totalExpuls+totalAmonest;
+					mediaParteAlumnoGrupo=((total/1024.0f)*255)/((idList.size()/1024.0f)*255);
+
+				////////////////////////////////////
+				if (totalAmonest==0) {
+					fileWriter.append("");
+
+				} else {
+					fileWriter.append(String.valueOf(totalAmonest));
+
+				}
+				fileWriter.append(COMMA_DELIMITER);
+
+				if (totalExpuls==0) {
+					fileWriter.append("");
+
+				} else {
+					fileWriter.append(String.valueOf(totalExpuls));
+
+				}
+				fileWriter.append(COMMA_DELIMITER);
+				
+				if (total==0) {
+					fileWriter.append("");
+
+				} else {
+					fileWriter.append(String.valueOf(total));
+
+				}
+				fileWriter.append(COMMA_DELIMITER);
+
+				if (mediaParteAlumnoGrupo==0) {
+					fileWriter.append("");
+
+				} else {
+					fileWriter.append(Float.toString(mediaParteAlumnoGrupo));
+
+				}
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(NEW_LINE_SEPARATOR);
+
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			fileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	
+	public static void calcularResumen2Trimestre3() {
+		FileWriter fileWriter = null;
+
+		Date diaIniciTrimestre3;
+		Calendar diaIniciCal;
+		List calculoAmonest;
+		List calculoExpuls;
+		Date diaFinalTrimestre3;
+		long diff;
+		long numSetmanes;
+		int totalAmonest=0;
+		int totalExpuls=0;
+		int total=0;
+		float mediaParteAlumnoGrupo=0;
+		
+
+		try {
+
+			dates = readFile();
+
+			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre3/resumen2.xls");
+			query = new ReportQuerys();
+			String dateCurs = query.getDateCurs();
+			query.closeTransaction();
+
+			jpa = new GroupJPAManager();
+			grupos = new ArrayList<>();
+			grupos = jpa.getGroups();
+			jpa.closeTransaction();
+
+			
+			
+			
+			diaIniciTrimestre3 = dates.get(4);
+			diaIniciCal = Calendar.getInstance();
+			diaIniciCal.setTime(diaIniciTrimestre3);
+			diaFinalTrimestre3 = dates.get(5);
+			diff = diaFinalTrimestre3.getTime() - diaIniciTrimestre3.getTime();
+			numSetmanes = (diff / (24 * 60 * 60 * 1000)) / 7;
+
+			calculoAmonest = null;
+			calculoExpuls = null;
+
+			fileWriter.append("3r Trimestre   Curs: " + dateCurs);
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(NEW_LINE_SEPARATOR);
+			fileWriter.append(NEW_LINE_SEPARATOR);
+
+			// Headers
+			
+
+			// CONSULTA
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(COMMA_DELIMITER);
+
+	
+			fileWriter.append(NEW_LINE_SEPARATOR);
+			fileWriter.append("GRUP");
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("Nº ALUMNES");
+
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append("A");
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append("E");
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append("TOTAL");
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append("Partes per alumne i grup");
+				fileWriter.append(COMMA_DELIMITER);
+
+				
+			
+
+			fileWriter.append(NEW_LINE_SEPARATOR);
+
+			for (int i = 0; i < grupos.size(); i++) {
+				fileWriter.append(grupos.get(i).getId());
+				fileWriter.append(COMMA_DELIMITER);
+
+				// FOR STUDENT ID
+				query = new ReportQuerys();
+				List ids = query.getIdAlumnes(grupos.get(i).getId());
+
+				query.closeTransaction();
+
+				List idList = new ArrayList<>();
+
+				for (int j = 0; j < ids.size(); j++) {
+					idList.add(ids.get(j));
+
+					// System.out.println(ids.get(j));
+				}
+				fileWriter.append(String.valueOf(idList.size()));
+				fileWriter.append(COMMA_DELIMITER);
+
+				total=0;
+				totalAmonest=0;
+				totalExpuls=0;
+				mediaParteAlumnoGrupo=0;
+				/////////////////////////////
+					
+					calculoExpuls = new ArrayList<>();
+					calculoAmonest = new ArrayList<>();
+
+					calculoAmonest = calcularAmonestadosPorSemana(idList, diaIniciTrimestre3, diaFinalTrimestre3);
+					calculoExpuls = calcularExpulsadosPorSemana(idList, diaIniciTrimestre3, diaFinalTrimestre3);
+					
+					for (int n=0; n<calculoAmonest.size(); n++){
+						totalAmonest=totalAmonest+Integer.parseInt(calculoAmonest.get(n).toString());
+					}
+					
+					for (int n=0; n<calculoExpuls.size(); n++){
+						totalExpuls=totalExpuls+Integer.parseInt(calculoExpuls.get(n).toString());
+					}
+					
+					total=totalExpuls+totalAmonest;
+					mediaParteAlumnoGrupo=((total/1024.0f)*255)/((idList.size()/1024.0f)*255);
+
+				////////////////////////////////////
+				if (totalAmonest==0) {
+					fileWriter.append("");
+
+				} else {
+					fileWriter.append(String.valueOf(totalAmonest));
+
+				}
+				fileWriter.append(COMMA_DELIMITER);
+
+				if (totalExpuls==0) {
+					fileWriter.append("");
+
+				} else {
+					fileWriter.append(String.valueOf(totalExpuls));
+
+				}
+				fileWriter.append(COMMA_DELIMITER);
+				
+				if (total==0) {
+					fileWriter.append("");
+
+				} else {
+					fileWriter.append(String.valueOf(total));
+
+				}
+				fileWriter.append(COMMA_DELIMITER);
+
+				if (mediaParteAlumnoGrupo==0) {
+					fileWriter.append("");
+
+				} else {
+					fileWriter.append(Float.toString(mediaParteAlumnoGrupo));
+
+				}
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(NEW_LINE_SEPARATOR);
+
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			fileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	
 	
 	
 	
