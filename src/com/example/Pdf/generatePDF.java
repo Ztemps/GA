@@ -68,7 +68,7 @@ public class generatePDF extends WarningJPAManager {
 		String fechaparte = dateparsed.substring(0, 10);
 		String horaparte = dateparsed.substring(11, 19);
 
-		if (query[13].length() > 2 ) {
+		if (query[13].length() > 2) {
 			fechaparte = query[13];
 			horaparte = query[14];
 		}
@@ -83,18 +83,11 @@ public class generatePDF extends WarningJPAManager {
 		img.setAbsolutePosition(45, 770);
 		img.scaleToFit(25, 25);
 
-		// P1
-		String nomCognom = (query[0].concat(" "+query[1])).replaceFirst(" ", "").replaceAll(" ", "_");
-
+		String nomCognom = query[0] + query[1];
 		String user = jpa.currentUser();
 
-		String path = path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" +horaparte.substring(0, 5)+ ")(" + nomCognom
-				+ ").pdf";
-		
-		
-
-		
-		PdfWriter.getInstance(document, new FileOutputStream(getPath(nomCognom)));
+		String path = path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + horaparte.substring(0, 5) + ")("
+				+ nomCognom + ").pdf";
 
 		PdfWriter.getInstance(document, new FileOutputStream(path));
 		Paragraph paragraph1 = new Paragraph("Generalitat de Catalunya\nDepartament d'Ensenyament", BLACK_BOLD);
@@ -136,12 +129,12 @@ public class generatePDF extends WarningJPAManager {
 		campGrup.setSpacingBefore(-13);
 
 		// Prueba
-//		if(query[14] != "null"){
-//			
-//			String dataAlumne = query[14];
-//
-//			
-//		}
+		// if(query[14] != "null"){
+		//
+		// String dataAlumne = query[14];
+		//
+		//
+		// }
 		// CAMP ALUMNE
 		String dataAlumne = fechaparte;
 
@@ -170,12 +163,12 @@ public class generatePDF extends WarningJPAManager {
 		campMateria.setSpacingBefore(-12);
 
 		// Prueba
-//		if(query[15] != "null" || query[15] != ""){
-//			
-//			timewarning = query[15].substring(11, 16);
-//
-//		}
-		
+		// if(query[15] != "null" || query[15] != ""){
+		//
+		// timewarning = query[15].substring(11, 16);
+		//
+		// }
+
 		// CAMP ALUMNE
 		Paragraph hora = new Paragraph("HORA: ", CAPS);
 		hora.setIndentationLeft(195);
@@ -501,12 +494,10 @@ public class generatePDF extends WarningJPAManager {
 		document.add(preface);
 		document.close();
 
-		String[] re = {path,fechaparte,horaparte};
-		
+		String[] re = { path, fechaparte, horaparte };
+
 		return re;
 	}
-
-
 
 	/**
 	 * Creates a PDF with information about the movies
@@ -534,22 +525,6 @@ public class generatePDF extends WarningJPAManager {
 		Image img = Image.getInstance(path);
 		PdfPCell cell = new PdfPCell(img, true);
 		return cell;
-	}
-
-	public String getPath(String nom) throws IOException {
-		File currDir = new File(".");
-		String path2 = currDir.getCanonicalPath();
-
-		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-		// get current date time with Date()
-		Date date = new Date();
-
-
-		String user = jpa.currentUser();
-
-		return path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio("+ dateFormat.format(date)+")(" + nom
-				+").pdf";
-
 	}
 
 	public String getPath2(String nomCognom, String fecha) throws IOException {

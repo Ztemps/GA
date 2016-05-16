@@ -187,19 +187,6 @@ public class AdminViewWarningJava extends MainContentView {
 				try {
 					// printPDF(FicheroPdf(),choosePrinter());
 					WarningJPAManager war = new WarningJPAManager();
-
-					war.introducirParte(returnQuery());
-//					sendTel = new SendTelegram();
-//					genPDF = new generatePDF();
-//					String nomCognom = amonestacioForm.nom.getValue() + " " + amonestacioForm.cognoms.getValue();
-//
-//					String ruta = genPDF.getPath(nomCognom);
-//					String contacteProba = "Cari";
-////					sendTel.sendmsg(contacteProba);
-//					System.out.println(ruta);
-//					sendTel.sendFile(contacteProba,ruta);
-					
-					
 					war.introducirParte(returnQuery2());
 					notif("Amonestació posada correctament");
 				} catch (DocumentException | IOException | NullPointerException | ParseException e) {

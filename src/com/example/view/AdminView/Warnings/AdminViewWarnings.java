@@ -93,7 +93,7 @@ public class AdminViewWarnings extends MainContentView {
 		Object surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms")
 				.getValue();
 
-		return name.toString() + " " + surname.toString();
+		return name.toString()+ surname.toString();
 
 	}
 

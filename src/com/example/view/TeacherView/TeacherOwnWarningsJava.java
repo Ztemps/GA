@@ -161,8 +161,8 @@ public class TeacherOwnWarningsJava extends MainContentView {
 
 		Object name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom").getValue();
 		Object surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms").getValue();
-		nomCognoms = name.toString()+" "+surname.toString();
-		
+		nomCognoms = name.toString()+surname.toString();
+		System.out.println(nomCognoms);
 				
 		return nomCognoms;
 

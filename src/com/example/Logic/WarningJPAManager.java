@@ -81,9 +81,9 @@ public class WarningJPAManager  {
 		date = new Date();
 		
 
-		String path =  (path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio("
-				+ "" + query[12].substring(0, 5) + ")"
-						+ "("+al.getNom().concat(" "+al.getCognoms())+").pdf").replaceFirst(" ", "").replaceAll(" ", "_");
+//		String path =  (path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio("
+//				+ "" + query[12].substring(0, 5) + ")"
+//						+ "("+al.getNom().concat(" "+al.getCognoms())+").pdf").replaceFirst(" ", "").replaceAll(" ", "_");
 		sendMail mail;
 		
 //		if(al.getEmail().length() > 5 || al.getEmail() != null)
