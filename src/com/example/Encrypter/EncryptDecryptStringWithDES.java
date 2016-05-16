@@ -13,9 +13,9 @@ import com.sun.mail.util.BASE64EncoderStream;
 
 public class EncryptDecryptStringWithDES {
 
-	private static Cipher ecipher;
-	private static Cipher dcipher;
-	private static SecretKey key;
+	public static Cipher ecipher;
+	public static Cipher dcipher;
+	public static  SecretKey key;
 
 	public static String encrypt(String str) {
 

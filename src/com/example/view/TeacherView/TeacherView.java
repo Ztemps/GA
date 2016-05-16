@@ -57,22 +57,29 @@ public class TeacherView extends MainView implements View {
 	
 	TeacherViewWarningJava vistaAmonestacion ;
 	TeacherOwnWarningsJava vistaOwn;
+	TeacherConfigView vistaConfig;
 	UserJPAManager ma;
+	
 	public TeacherView() throws MalformedURLException, DocumentException, IOException, SQLException {
 
 		// Side menu button options
 		vistaAmonestacion = new TeacherViewWarningJava();
 		vistaOwn = new TeacherOwnWarningsJava();
+		vistaConfig = new TeacherConfigView();
 		Items();
+		vistaConfig.setVisible(false);
 		
 		content.addComponent(vistaAmonestacion);
 		content.addComponent(vistaOwn);
+		content.addComponent(vistaConfig);
+
 		
 		
 		
 
 		warning.addClickListener(e -> Amonestacions() );
 		mevesAmonestacions.addClickListener(e -> MevesAmonestacions() );
+		configuracio.addClickListener(e-> Config());
 
 
 	}
@@ -104,17 +111,24 @@ public class TeacherView extends MainView implements View {
 
 	}
 	
+	public void Config(){
+		vistaAmonestacion.setVisible(false);
+		vistaOwn.setVisible(false);
+		vistaConfig.setVisible(true);
+	
+	}
 	
 	public void MevesAmonestacions(){
 		vistaAmonestacion.setVisible(false);
+		vistaConfig.setVisible(false);
 		vistaOwn.setVisible(true);
 		
 	}
 	
 	public void Amonestacions(){
 		vistaOwn.setVisible(false);
+		vistaConfig.setVisible(false);
 		vistaAmonestacion.setVisible(true);
-		
 		
 	}
 	

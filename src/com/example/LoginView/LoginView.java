@@ -17,8 +17,14 @@ import java.util.ArrayList;
 
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+
 import org.eclipse.jetty.security.authentication.SessionAuthentication;
 
+import com.example.Encrypter.EncryptDecryptStringWithDES;
 import com.example.Entities.User;
 import com.example.view.AdminView.AdminView;
 import com.example.view.TeacherView.TeacherView;
@@ -172,10 +178,9 @@ public class LoginView extends LoginViewDesign implements View {
 
 	public void LoginValidator() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 
-		 MessageDigest md;
+		 MessageDigest md = MessageDigest.getInstance("SHA-1"); 
 		 HexBinaryAdapter hbinary = new HexBinaryAdapter();
 		
-			md = MessageDigest.getInstance("SHA-1"); 
 		 // Conecxión con la base de datos
 		String dbURL = "jdbc:postgresql:GAdb";
 		Class.forName("org.postgresql.Driver");
@@ -192,8 +197,43 @@ public class LoginView extends LoginViewDesign implements View {
 		String username = this.txtUsername.getValue();
 		String userpassword = this.txtPassword.getValue();
 		
+		//
 		String passwordhash = hbinary.marshal(md.digest(userpassword.getBytes())).toLowerCase();
 		System.out.println("Encriptada: "+ passwordhash);
+
+		/*try {
+			SecretKey key = KeyGenerator.getInstance("DES").generateKey();
+			try {
+				EncryptDecryptStringWithDES.ecipher = Cipher.getInstance("DES");
+				EncryptDecryptStringWithDES.ecipher.init(Cipher.ENCRYPT_MODE, key);
+			} catch (NoSuchPaddingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidKeyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		 String encrypted = EncryptDecryptStringWithDES.encrypt(userpassword);
+		 
+		 System.out.println("PAAAASSSSS" +encrypted );*/
+		
+		/*
+		 * MANERA DE HACERLO!!
+		 * 
+		 * SecretKey key = KeyGenerator.getInstance("DES").generateKey();
+			byte[] encoded = key.getEncoded();
+			// save this somewhere
+		 * SAVE BYTE IN FILE FileUtils.writeByteArrayToFile(new File("pathname"), myByteArray)*/
+		
+		/*PARA RECUPERARLA
+		 * 
+		 * byte[] encoded = // load it again
+			SecretKey key = new SecretKeySpec(encoded, "DES");*/
 
 		try {
 			// Mientras el resultset tenga resultados, cogemos los valores y
