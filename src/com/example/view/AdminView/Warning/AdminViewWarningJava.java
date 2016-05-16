@@ -16,6 +16,7 @@ import com.example.Logic.TeachersJPAManager;
 import com.example.Logic.UserJPAManager;
 import com.example.Logic.WarningJPAManager;
 import com.example.Pdf.generatePDF;
+import com.example.SendTelegram.SendTelegram;
 import com.example.Templates.ConfirmWarningPDF;
 import com.example.Templates.MainContentView;
 import com.example.view.AdminView.AdminView;
@@ -77,6 +78,9 @@ public class AdminViewWarningJava extends MainContentView {
 	private JDBCConnectionPool jdbccp;
 	private String nameTeacher;
 
+	private SendTelegram sendTel = new SendTelegram();
+	private generatePDF genPDF = new generatePDF();
+	
 	public AdminViewWarningJava() throws MalformedURLException, DocumentException, IOException {
 
 		GridProperties();
@@ -170,6 +174,17 @@ public class AdminViewWarningJava extends MainContentView {
 					// printPDF(FicheroPdf(),choosePrinter());
 					WarningJPAManager war = new WarningJPAManager();
 					war.introducirParte(returnQuery());
+//					sendTel = new SendTelegram();
+//					genPDF = new generatePDF();
+//					String nomCognom = amonestacioForm.nom.getValue() + " " + amonestacioForm.cognoms.getValue();
+//
+//					String ruta = genPDF.getPath(nomCognom);
+//					String contacteProba = "Cari";
+////					sendTel.sendmsg(contacteProba);
+//					System.out.println(ruta);
+//					sendTel.sendFile(contacteProba,ruta);
+					
+					
 					notif("Amonestació posada correctament");
 				} catch (DocumentException | IOException | NullPointerException | ParseException e) {
 					// TODO Auto-generated catch block
@@ -493,7 +508,11 @@ public class AdminViewWarningJava extends MainContentView {
 		generatePDF generatepdf = new generatePDF();
 		timewarning = generatepdf.generate(returnQuery());
 
-		String nomCognom = amonestacioForm.nom.getValue() + " " + amonestacioForm.cognoms.getValue();
+		String nomCognom = (amonestacioForm.nom.getValue().concat(" "+amonestacioForm.cognoms.getValue())).replaceFirst(" ", "").replaceAll(" ", "_");
+
+//		String nomCognom = amonestacioForm.nom.getValue();
+		
+		System.out.println("adminViewWarning: "+nomCognom);
 
 		Embedded c = new Embedded();
 		sourceFile = new File(generatepdf.getPath(nomCognom));

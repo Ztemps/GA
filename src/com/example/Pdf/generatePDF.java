@@ -81,8 +81,9 @@ public class generatePDF extends WarningJPAManager {
 
 		// P1
 		
-		String nomCognom = query[0]+" "+query[1];
+		String nomCognom = (query[0].concat(" "+query[1])).replaceFirst(" ", "").replaceAll(" ", "_");
 		
+
 		
 		PdfWriter.getInstance(document, new FileOutputStream(getPath(nomCognom)));
 		Paragraph paragraph1 = new Paragraph("Generalitat de Catalunya\nDepartament d'Ensenyament", BLACK_BOLD);
@@ -526,8 +527,8 @@ public class generatePDF extends WarningJPAManager {
 
 		String user = jpa.currentUser();
 
-		return path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + dateFormat.format(date) + ")(" + nom
-				+ ").pdf";
+		return path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio("+ dateFormat.format(date)+")(" + nom
+				+").pdf";
 
 	}
 	
