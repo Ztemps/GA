@@ -14,13 +14,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
-import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
-
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
 import org.eclipse.jetty.security.authentication.SessionAuthentication;
 
@@ -234,7 +232,6 @@ public class LoginView extends LoginViewDesign implements View {
 		 * 
 		 * byte[] encoded = // load it again
 			SecretKey key = new SecretKeySpec(encoded, "DES");*/
-
 		try {
 			// Mientras el resultset tenga resultados, cogemos los valores y
 			// creamos un usuari con los valores de la consulta para
