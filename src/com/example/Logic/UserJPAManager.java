@@ -55,7 +55,7 @@ public class UserJPAManager {
 		user.setPassword(password);
 		em.merge(user);
 		em.getTransaction().commit();
-		em.close();
+		
 	}
 
 	
