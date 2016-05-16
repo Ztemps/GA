@@ -6,12 +6,16 @@ import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
 import org.eclipse.jetty.security.authentication.SessionAuthentication;
 
@@ -114,7 +118,7 @@ public class LoginView extends LoginViewDesign implements View {
 				// TODO Auto-generated method stub
 				try {
 					LoginValidator();
-				} catch (ClassNotFoundException | SQLException e) {
+				} catch (ClassNotFoundException | SQLException | NoSuchAlgorithmException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -166,9 +170,13 @@ public class LoginView extends LoginViewDesign implements View {
 	
 	
 
-	public void LoginValidator() throws ClassNotFoundException, SQLException {
+	public void LoginValidator() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 
-		// Conecxión con la base de datos
+		 MessageDigest md;
+		 HexBinaryAdapter hbinary = new HexBinaryAdapter();
+		
+			md = MessageDigest.getInstance("SHA-1"); 
+		 // Conecxión con la base de datos
 		String dbURL = "jdbc:postgresql:GAdb";
 		Class.forName("org.postgresql.Driver");
 		Connection conn = null;
@@ -183,6 +191,9 @@ public class LoginView extends LoginViewDesign implements View {
 		// Cogemos los valores de los campos que rellena el usuario
 		String username = this.txtUsername.getValue();
 		String userpassword = this.txtPassword.getValue();
+		
+		String passwordhash = hbinary.marshal(md.digest(userpassword.getBytes())).toLowerCase();
+		System.out.println("Encriptada: "+ passwordhash);
 
 		try {
 			// Mientras el resultset tenga resultados, cogemos los valores y
@@ -198,13 +209,13 @@ public class LoginView extends LoginViewDesign implements View {
 
 				// Si el usuario y el nombre coinciden y su rol es
 				// administrador, se abre la vista del administrador
-				if (usuari.getUsername().equals(username) && usuari.getPassword().equals(userpassword)) break;
+				if (usuari.getUsername().equals(username) && usuari.getPassword().equals(passwordhash)) break;
 				// Si el usuario o contraseña no son validos, se muestra un
 				// mensaje emergente
 			}
 			
 			// comparamos otra vez si el usuario y el nombre son el mismo
-			if (usuari.getUsername().equals(username) && usuari.getPassword().equals(userpassword)){
+			if (usuari.getUsername().equals(username) && usuari.getPassword().equals(passwordhash)){
 				if (usuari.getRol().equals("Administrador")) {
 
 					FileWriter fw = new FileWriter("userList.txt");

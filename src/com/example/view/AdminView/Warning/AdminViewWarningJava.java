@@ -549,11 +549,15 @@ public class AdminViewWarningJava extends MainContentView {
 		String assignatura = null;
 		String altres_motius = null;
 		String amonestat2 = null;
+		String data = null;
+		String time  = null;
 
 		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 
 		tutor = MA.getNomTutor(id);
 		try {
+			data = amonestacioForm.datefield.getValue().toString();
+			System.out.println("DATA: " + data);
 			grup = amonestacioForm.grup.getValue();
 			gravetat = amonestacioForm.caracter.getValue().toString();
 			motiu = amonestacioForm.motiu.getValue().toString();
@@ -561,6 +565,7 @@ public class AdminViewWarningJava extends MainContentView {
 			amonestat = amonestacioForm.accio.getValue().toString();
 			localitzacio = amonestacioForm.circunstancia.getValue().toString();
 			System.out.println("Nombreprofe: " + nameTeacher);
+			
 			if (amonestat.equals("Amonestat")) {
 				amonestat2 = "true";
 			} else

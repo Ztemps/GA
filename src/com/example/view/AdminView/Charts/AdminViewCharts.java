@@ -206,12 +206,13 @@ public class AdminViewCharts extends MainContentView {
 		try{
 			
 			names = new String[container.size()];
+			xaxis.setCategories(names);
+
 		}catch(NullPointerException e){
 			
 		}
 		
 
-		xaxis.setCategories(names);
 		configuration.addxAxis(xaxis);
 
 		YAxis yaxis = new YAxis();
