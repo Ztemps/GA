@@ -70,9 +70,10 @@ public class TeacherConfigView extends MainContentView{
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-
+				
 				String password = newPass.getValue();
-				try {
+				
+				/*try {
 					SecretKey key = KeyGenerator.getInstance("DES").generateKey();
 					try {
 						EncryptDecryptStringWithDES.dcipher = Cipher.getInstance("DES");
@@ -80,7 +81,7 @@ public class TeacherConfigView extends MainContentView{
 					} catch (NoSuchPaddingException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					} catch (InvalidKeyException e) {
+				} catch (InvalidKeyException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -88,8 +89,10 @@ public class TeacherConfigView extends MainContentView{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				String passwordEncrypted = EncryptDecryptStringWithDES.encrypt(password);
-				System.out.println(passwordEncrypted);
+				String passwordEncrypted = EncryptDecryptStringWithDES.encrypt(password);*/
+				
+				
+				
 				int id = Integer.parseInt(getUI().getSession().getAttribute("id").toString());
 				System.out.println("IDDDDD "+id);
 				MA.updateUser(id, passwordEncrypted);
