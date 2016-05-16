@@ -7,7 +7,6 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.OptionGroup;
-import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.declarative.Design;
@@ -28,7 +27,7 @@ public class AdminWarning extends CssLayout {
 	protected TextField cognoms;
 	protected TextField materia;
 	protected ComboBox comboProf;
-	protected PopupDateField datefield;
+	protected TextField datefield;
 	protected NativeSelect circunstancia;
 	protected TextField tutor;
 	protected TextField grup;

@@ -38,13 +38,10 @@ public class WarningJPAManager  {
 		File currDir = new File(".");
 		String path2 = currDir.getCanonicalPath();
 		
-		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		// get current date time with Date()
 		Date date ;
-		
-		
-		System.out.println("query7" +query[7]);
-		
+				
 		try {
 			if (query[7].equals("true")) {
 				System.out.println("query7" +query[7]);
@@ -80,21 +77,22 @@ public class WarningJPAManager  {
 		// ARREGLO PARA QUE NO SE REPITAN LOS PARTES
 		date = new Date();
 		
-		String path =  path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + query[12].substring(0, 5) + ")("+al.getNom() + " " + al.getCognoms()
-		+ ").pdf";
+//		String path =  path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + query[12].substring(11, 16) + ")("+al.getNom() + " " + al.getCognoms()
+//		+ ").pdf";
 		
 		sendMail mail;
 		
-		System.out.println("hora:"+path);
-		if(al.getEmail() != null)
-			mail = new sendMail(al.getEmail(),"El seu fill "+query[0]+" "+query[1]+" a sigut amonestat ",path);
+//		if(al.getEmail().length() > 5 || al.getEmail() != null)
+//			mail = new sendMail(al.getEmail(),"El seu fill "+query[0]+" "+query[1]+" a sigut amonestat ",query[12]);
 
+		String fecha = query[14]+" "+query[15];
 		
-		addWarning(new Warning(user.getId(), dateFormat.parse(query[12]), query[2], al.getId(), query[3], query[4],
+		addWarning(new Warning(user.getId(), dateFormat.parse(fecha), query[2], al.getId(), query[3], query[4],
 				query[5], tutor, amonestat2, expulsat, "15/16", querycon, query[10]));
 		
-		
 	}
+	
+
 
 	
 	public User getIdCurrentDocent(String currentUser) {

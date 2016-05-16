@@ -195,9 +195,9 @@ public class LoginView extends LoginViewDesign implements View {
 		String username = this.txtUsername.getValue();
 		String userpassword = this.txtPassword.getValue();
 		
-		//
-		String passwordhash = hbinary.marshal(md.digest(userpassword.getBytes())).toLowerCase();
-		System.out.println("Encriptada: "+ passwordhash);
+		// cifrar clave con SHA-1
+//		String passwordhash = hbinary.marshal(md.digest(userpassword.getBytes())).toLowerCase();
+//		System.out.println("Encriptada: "+ passwordhash);
 
 		/*try {
 			SecretKey key = KeyGenerator.getInstance("DES").generateKey();
@@ -246,13 +246,13 @@ public class LoginView extends LoginViewDesign implements View {
 
 				// Si el usuario y el nombre coinciden y su rol es
 				// administrador, se abre la vista del administrador
-				if (usuari.getUsername().equals(username) && usuari.getPassword().equals(passwordhash)) break;
+				if (usuari.getUsername().equals(username) && usuari.getPassword().equals(userpassword)) break;
 				// Si el usuario o contraseña no son validos, se muestra un
 				// mensaje emergente
 			}
 			
 			// comparamos otra vez si el usuario y el nombre son el mismo
-			if (usuari.getUsername().equals(username) && usuari.getPassword().equals(passwordhash)){
+			if (usuari.getUsername().equals(username) && usuari.getPassword().equals(userpassword)){
 				if (usuari.getRol().equals("Administrador")) {
 
 					FileWriter fw = new FileWriter("userList.txt");
