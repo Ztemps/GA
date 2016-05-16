@@ -70,7 +70,7 @@ public List<Group> getGroups(){
 		try {
 
 			em.getTransaction().begin();
-			listGroups = em.createQuery("Select e From Group e").getResultList();
+			listGroups = em.createQuery("Select e From Group e ORDER BY e.id").getResultList();
 
 			em.getTransaction().commit();
 			return listGroups;

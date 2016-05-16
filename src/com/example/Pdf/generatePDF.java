@@ -50,7 +50,7 @@ public class generatePDF extends WarningJPAManager {
 
 	}
 
-	public String generate(String[] query) throws DocumentException, IOException {
+	public String[] generate(String[] query) throws DocumentException, IOException {
 
 		UserJPAManager MA = new UserJPAManager();
 		// OBTENER ALUMNO
@@ -68,6 +68,10 @@ public class generatePDF extends WarningJPAManager {
 		String fechaparte = dateparsed.substring(0, 10);
 		String horaparte = dateparsed.substring(11, 19);
 
+		if (query[13].length() > 2 ) {
+			fechaparte = query[13];
+			horaparte = query[14];
+		}
 		Document document = new Document();
 		Paragraph preface = new Paragraph();
 
@@ -80,12 +84,19 @@ public class generatePDF extends WarningJPAManager {
 		img.scaleToFit(25, 25);
 
 		// P1
-		
 		String nomCognom = (query[0].concat(" "+query[1])).replaceFirst(" ", "").replaceAll(" ", "_");
+
+		String user = jpa.currentUser();
+
+		String path = path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" +horaparte.substring(0, 5)+ ")(" + nomCognom
+				+ ").pdf";
+		
 		
 
 		
 		PdfWriter.getInstance(document, new FileOutputStream(getPath(nomCognom)));
+
+		PdfWriter.getInstance(document, new FileOutputStream(path));
 		Paragraph paragraph1 = new Paragraph("Generalitat de Catalunya\nDepartament d'Ensenyament", BLACK_BOLD);
 		paragraph1.setIndentationLeft(40);
 		paragraph1.setSpacingBefore(11);
@@ -125,8 +136,15 @@ public class generatePDF extends WarningJPAManager {
 		campGrup.setSpacingBefore(-13);
 
 		// Prueba
-		String dataAlumne = fechaparte;
+//		if(query[14] != "null"){
+//			
+//			String dataAlumne = query[14];
+//
+//			
+//		}
 		// CAMP ALUMNE
+		String dataAlumne = fechaparte;
+
 		Paragraph data = new Paragraph("DATA: ", CAPS);
 		data.setIndentationLeft(340);
 		data.setSpacingBefore(-13);
@@ -152,12 +170,17 @@ public class generatePDF extends WarningJPAManager {
 		campMateria.setSpacingBefore(-12);
 
 		// Prueba
-		timewarning = horaparte;
+//		if(query[15] != "null" || query[15] != ""){
+//			
+//			timewarning = query[15].substring(11, 16);
+//
+//		}
+		
 		// CAMP ALUMNE
 		Paragraph hora = new Paragraph("HORA: ", CAPS);
 		hora.setIndentationLeft(195);
 		hora.setSpacingBefore(-13);
-		Paragraph campHora = new Paragraph(timewarning, DADES);
+		Paragraph campHora = new Paragraph(horaparte, DADES);
 		campHora.setIndentationLeft(230);
 		campHora.setSpacingBefore(-12);
 
@@ -171,23 +194,24 @@ public class generatePDF extends WarningJPAManager {
 		campCirc.setIndentationLeft(430);
 		campCirc.setSpacingBefore(-12);
 
-//		
-//		ma = new UserJPAManager();
-//		int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
-//		// TODO Auto-generated method stub
-//		wellcome.setValue("Benvingut "+ma.getNomTutor(id));
-		
+		//
+		// ma = new UserJPAManager();
+		// int id =
+		// Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
+		// // TODO Auto-generated method stub
+		// wellcome.setValue("Benvingut "+ma.getNomTutor(id));
+
 		// Prueba
 		String nomProfessor = MA.currentTeacher();
-		
-		if(query[13]!=null){
-			nomProfessor = query[13];
+
+		if (query[12] != null) {
+			nomProfessor = query[12];
 		}
-		
-		if(query[13]== "null"){
+
+		if (query[12] == "null") {
 			nomProfessor = MA.currentTeacher();
 		}
-		
+
 		// CAMP PROFESSOR
 		Paragraph professor = new Paragraph("PROFESSOR: ", CAPS);
 		professor.setIndentationLeft(25);
@@ -476,17 +500,13 @@ public class generatePDF extends WarningJPAManager {
 
 		document.add(preface);
 		document.close();
+
+		String[] re = {path,fechaparte,horaparte};
 		
-		return timewarning;
+		return re;
 	}
 
-	public generatePDF(String[] query) throws DocumentException, IOException {
 
-		WarningJPAManager jpa = new WarningJPAManager();
-
-		jpa.ObtenerAlumno(query[0], query[1]);
-
-	}
 
 	/**
 	 * Creates a PDF with information about the movies
@@ -531,14 +551,12 @@ public class generatePDF extends WarningJPAManager {
 				+").pdf";
 
 	}
-	
+
 	public String getPath2(String nomCognom, String fecha) throws IOException {
 		File currDir = new File(".");
 		String path2 = currDir.getCanonicalPath();
 
-
-		return path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + fecha + ")(" + nomCognom
-				+ ").pdf";
+		return path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + fecha + ")(" + nomCognom + ").pdf";
 
 	}
 }

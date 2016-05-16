@@ -3,6 +3,7 @@ package com.example.view.TeacherView;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -79,7 +80,7 @@ public class TeacherViewWarningJava extends MainContentView {
 	private WarningJPAManager MA1;
 	private File sourceFile;
 	private FileResource resource;
-	private String timewarning;
+	private String[] timewarning;
 	private String nomCognom;
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em = entman.getEntityManager();
@@ -121,11 +122,7 @@ public class TeacherViewWarningJava extends MainContentView {
 					 * "S'ha de seleccionar almenys un motiu"); }
 					 */
 
-					if (!check()) {
-
-						notif("Omple els camps obligatoris");
-
-					} else {
+					if (check()) {
 
 						if (windowpdf.isAttached()) {
 							getUI().removeWindow(windowpdf);
@@ -140,7 +137,7 @@ public class TeacherViewWarningJava extends MainContentView {
 							e.printStackTrace();
 						}
 
-					}
+					} 
 
 				}
 
@@ -152,6 +149,8 @@ public class TeacherViewWarningJava extends MainContentView {
 							|| amonestacioForm.motiu.getValue() == null || amonestacioForm.motiu2.getValue() == null
 							|| amonestacioForm.circunstancia.getValue() == null || amonestacioForm.grup.getValue() == ""
 							|| amonestacioForm.tutor.getValue() == "") {
+
+						notif("Omple els camps obligatoris");
 
 						return false;
 					} else {
@@ -179,7 +178,7 @@ public class TeacherViewWarningJava extends MainContentView {
 				try {
 					// printPDF(FicheroPdf(),choosePrinter());
 					WarningJPAManager war = new WarningJPAManager();
-					war.introducirParte(returnQuery());
+					war.introducirParte(returnQuery2());
 					notif("Amonestació posada correctament");
 				} catch (DocumentException | IOException | NullPointerException | ParseException e) {
 					// TODO Auto-generated catch block
@@ -299,10 +298,10 @@ public class TeacherViewWarningJava extends MainContentView {
 			}
 		});*/
 
-		 amonestacioForm.comboProf.addValueChangeListener(e ->
-		Notification.show("Value changed:",
-		String.valueOf(e.getProperty().getValue()),
-		 Type.TRAY_NOTIFICATION));
+//		 amonestacioForm.comboProf.addValueChangeListener(e ->
+//		Notification.show("Value changed:",
+//		String.valueOf(e.getProperty().getValue()),
+//		 Type.TRAY_NOTIFICATION));
 
 	}
 
@@ -565,7 +564,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		String nomCognom = amonestacioForm.nom.getValue() + " " + amonestacioForm.cognoms.getValue();
 
 		Embedded c = new Embedded();
-		sourceFile = new File(generatepdf.getPath(nomCognom));
+		sourceFile = new File(timewarning[0]);
 
 		c.setSource(new FileResource(sourceFile));
 		c.setWidth("100%");
@@ -594,7 +593,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		amonestacioForm.circunstancia.clear();
 		amonestacioForm.accio.clear();
 		amonestacioForm.materia.clear();
-		amonestacioForm.baceptar.click();
+		//amonestacioForm.baceptar.click();
 	}
 
 	public String[] returnQuery() throws MalformedURLException, DocumentException, IOException {
@@ -651,7 +650,77 @@ public class TeacherViewWarningJava extends MainContentView {
 		System.out.println("amonestat2:" + amonestat2 + " gravetat: " + gravetat);
 
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
-				altres_motius, motiu2, timewarning,nameTeacher};
+				altres_motius, motiu2,nameTeacher,""};
+
+		System.out.println("TIEMPO: " + timewarning);
+		// DATOS PARA INTRODUCIR EN EL PARTE
+
+		return query;
+	}
+	
+	public String[] returnQuery2() throws MalformedURLException, DocumentException, IOException {
+		// TODO Auto-generated method stub
+		String expulsat = "";
+		
+		 SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+
+
+		// Obtener la id del alumno
+		String name = amonestacioForm.nom.getValue();
+		String surname = amonestacioForm.cognoms.getValue();
+
+		// Obtener campos del formulario
+		String grup = null;
+		String gravetat = null;
+		String motiu = null;
+		String motiu2 = null;
+		String amonestat = null;
+		String tutor = null;
+		String localitzacio = null;
+		String assignatura = null;
+		String altres_motius = null;
+		String amonestat2 = null;
+		String data = null;
+		String time  = null;
+
+		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
+
+//		if(!amonestacioForm.datefield.getValue().toString().equals("")){
+//			System.out.println("valor date: "+ amonestacioForm.datefield.getValue().toString());
+//			timewarning = amonestacioForm.datefield.getValue().toString()+" "+amonestacioForm.time.getValue().toString();
+//		}
+		tutor = MA.getNomTutor(id);
+		try {
+			grup = amonestacioForm.grup.getValue();
+			gravetat = amonestacioForm.caracter.getValue().toString();
+			motiu = amonestacioForm.motiu.getValue().toString();
+			motiu2 = amonestacioForm.motiu2.getValue().toString();
+			amonestat = amonestacioForm.accio.getValue().toString();
+			localitzacio = amonestacioForm.circunstancia.getValue().toString();
+			System.out.println("Nombreprofe: " + nameTeacher);
+			
+			if (amonestat.equals("Amonestat")) {
+				amonestat2 = "true";
+			} else
+				amonestat2 = "false";
+
+			altres_motius = amonestacioForm.amotius.getValue();
+
+		} catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			Notification.show("Els camps obligatoris s'han d'emplenar");
+			e.printStackTrace();
+		}
+		if ((amonestacioForm.materia.getValue().toString()).equals("")) {
+
+			assignatura = null;
+		} else {
+			assignatura = amonestacioForm.materia.getValue().toString();
+		}
+
+
+		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
+				altres_motius, motiu2,timewarning[0], nameTeacher,timewarning[1],timewarning[2]};
 
 		// DATOS PARA INTRODUCIR EN EL PARTE
 
@@ -679,12 +748,6 @@ public class TeacherViewWarningJava extends MainContentView {
 
 	}
 
-	public File FicheroPdf() throws IOException, DocumentException {
-
-		generatePDF generatepdf1 = new generatePDF();
-		File file = new File(generatepdf1.getPath(nomCognom));
-
-		return file;
-	}
+	
 
 }
