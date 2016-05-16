@@ -199,6 +199,7 @@ public class LoginView extends LoginViewDesign implements View {
 		String passwordhash = hbinary.marshal(md.digest(userpassword.getBytes())).toLowerCase();
 		System.out.println("Encriptada: "+ passwordhash);
 
+
 		/*try {
 			SecretKey key = KeyGenerator.getInstance("DES").generateKey();
 			try {
