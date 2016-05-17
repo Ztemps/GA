@@ -34,15 +34,15 @@ public class TrimestralReports {
 	private static List<Group> grupos = null;
 
 	public static void main(String[] args) {
-		calcularPrimerTrimestre();
-		calcularSegundoTrimestre();
-		calcularTercerTrimestre();
-		calcularResumenTrimestre1();
-		calcularResumenTrimestre2();
-		calcularResumenTrimestre3();
-		calcularResumen2Trimestre1();
-		calcularResumen2Trimestre2();
-		calcularResumen2Trimestre3();
+//		calcularPrimerTrimestre();
+//		calcularSegundoTrimestre();
+//		calcularTercerTrimestre();
+//		calcularResumenTrimestre1();
+//		calcularResumenTrimestre2();
+//		calcularResumenTrimestre3();
+//		calcularResumen2Trimestre1();
+//		calcularResumen2Trimestre2();
+//		calcularResumen2Trimestre3();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 	}
 
 	public static void calcularPrimerTrimestre() {
@@ -653,7 +653,7 @@ public class TrimestralReports {
 		return expulsions1;
 	}
 
-	public static void calcularResumenTrimestre1() {
+	public static void calcularResumenTrimestre1(File f) {
 		FileWriter fileWriter = null;
 
 		Date diaIniciTrimestre1;

@@ -17,8 +17,8 @@ import com.example.Pdf.generatePDF;
 import com.example.Templates.MainView;
 import com.example.view.AdminView.CSV.AdminViewCSVUploadJava;
 import com.example.view.AdminView.Charts.AdminViewCharts;
-import com.example.view.AdminView.Forms.AdminViewFormsJava;
 import com.example.view.AdminView.Group.AdminViewGroupJava;
+import com.example.view.AdminView.Reports.AdminViewReportsJava;
 import com.example.view.AdminView.Settings.AdminViewSettings;
 import com.example.view.AdminView.Settings.AdminViewSettingsJava;
 import com.example.view.AdminView.Students.AdminViewStudentJava;
@@ -59,7 +59,7 @@ public class AdminView extends MainView implements View {
 	private static AdminViewCSVUploadJava ViewCSV;
 	private static TeacherOwnWarningsJava ViewTeachersWarnings;
 	private static AdminViewCharts ViewCharts;
-	private static AdminViewFormsJava ViewForms;
+	private static AdminViewReportsJava ViewForms;
 	private static AdminViewSettingsJava ViewSettings;
 	private UserJPAManager ma;
 	private static AdminViewTutorJava Viewtutors;
@@ -124,7 +124,7 @@ public class AdminView extends MainView implements View {
 		ViewTeachersWarnings = new TeacherOwnWarningsJava();
 		Viewtutors = new AdminViewTutorJava();
 		ViewCharts = new AdminViewCharts();
-		ViewForms = new AdminViewFormsJava();
+		ViewForms = new AdminViewReportsJava();
 		ViewSettings = new AdminViewSettingsJava();
 
 		content.removeAllComponents();
@@ -262,7 +262,7 @@ public class AdminView extends MainView implements View {
 		charts.addClickListener(e -> ViewCharts());
 		
 		//FORMS
-		informes.addClickListener(e -> ViewForms());
+		informes.addClickListener(e -> ViewReports());
 
 		// CONFIGURACIO
 		configuracio.addClickListener(e -> viewConfiguracio());
@@ -509,7 +509,7 @@ public class AdminView extends MainView implements View {
 
 	}
 	
-	private static void ViewForms() {
+	private static void ViewReports() {
 		
 		ViewStudents.setVisible(false);
 		ViewGrupos.setVisible(false);
