@@ -67,44 +67,28 @@ background: rgba(255, 255, 255, 0.8);
 
 }
 
-.dataInit{
+.settings{
 position: relative;
     left: 30px;
 
 }
 
-.emailTutors{
-position: relative;
-    left: 30px;
-}
 
-.emailPares{
 
-position: relative;
-    left: 30px;
-
-}
-.whatsPares{
-
-position: relative;
-    left: 30px;
-   }
-
-.dataInit{
-position: relative;
-    left: 30px;
-}
-
-.dataFi{
-position: relative;
-    left: 30px;
-}
 .v-verticallayout-csvstudent{
 
 border-radius:18px;
 background-color: rgba(255, 255, 255, 0.3);
 background: rgba(255, 255, 255, 0.8);
 } 
+
+
+.v-slot .v-slot-settingBackgroundTeacher{
+	border-radius:18px;
+	background-color: rgba(255, 255, 255, 0.3);
+	background: rgba(255, 255, 255, 0.8);
+}
+
 .ga.v-app, .ga.v-app-loading{
 
 background: url(../images/puig.png);
@@ -116,6 +100,8 @@ gestioamonestacions .v-panel {
 background:transparent;
 border-radius:15px;
 }
+
+
 
 .gestioamonestacions .v-textfield{
 

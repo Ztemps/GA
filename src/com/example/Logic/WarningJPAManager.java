@@ -19,7 +19,9 @@ import com.example.Entities.Teacher;
 import com.example.Entities.Tutor;
 import com.example.Entities.User;
 import com.example.Entities.Warning;
+import com.example.Pdf.generatePDF;
 import com.example.SendMail.sendMail;
+import com.example.SendTelegram.SendTelegram;
 import com.example.ga.GaUI;
 import com.itextpdf.text.DocumentException;
 
@@ -32,6 +34,7 @@ public class WarningJPAManager  {
 	boolean gravetat = false;
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em = entman.getEntityManager();
+	private SendTelegram sendTel = new SendTelegram();
 
 	public void introducirParte(String[] query) throws MalformedURLException, DocumentException, IOException, ParseException {
 
@@ -77,9 +80,10 @@ public class WarningJPAManager  {
 		// ARREGLO PARA QUE NO SE REPITAN LOS PARTES
 		date = new Date();
 		
-//		String path =  path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + query[12].substring(11, 16) + ")("+al.getNom() + " " + al.getCognoms()
-//		+ ").pdf";
-		
+
+//		String path =  (path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio("
+//				+ "" + query[12].substring(0, 5) + ")"
+//						+ "("+al.getNom().concat(" "+al.getCognoms())+").pdf").replaceFirst(" ", "").replaceAll(" ", "_");
 		sendMail mail;
 		
 //		if(al.getEmail().length() > 5 || al.getEmail() != null)
@@ -89,7 +93,13 @@ public class WarningJPAManager  {
 		
 		addWarning(new Warning(user.getId(), dateFormat.parse(fecha), query[2], al.getId(), query[3], query[4],
 				query[5], tutor, amonestat2, expulsat, "15/16", querycon, query[10]));
-		
+
+		//COMENTADLO HASTA QUE TENGAIS TELEGRAM EN VUESTRO PC
+//		sendTel = new SendTelegram();
+		//Tienen que ser contactos que existan en vuestra contact_list
+//		String contacteProba = "Gerard_Paulino";
+//		sendTel.sendmsg(contacteProba);
+//		sendTel.sendFile(contacteProba,path);
 	}
 	
 

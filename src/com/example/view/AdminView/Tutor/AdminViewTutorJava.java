@@ -28,7 +28,7 @@ public class AdminViewTutorJava extends MainContentView {
 
 	private EntityManagerUtil etm;
 	private Grid grid;
-	private JDBCConnectionPool jdbccp = new JDBCConnectionPool();
+	private JDBCConnectionPool jdbccp;
 	private SQLContainer tutors;
 
 	public AdminViewTutorJava() {
@@ -103,8 +103,9 @@ public class AdminViewTutorJava extends MainContentView {
 					jdbccp.GetConnection()));
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
 		}
-
+		
 		grid = new Grid("", tutors);
 		grid.setSizeFull();
 		grid.setColumnReorderingAllowed(true);

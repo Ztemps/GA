@@ -999,7 +999,7 @@
  */
 
 .v-vaadin-version:after {
-	content: "7.6.4";
+	content: "7.6.5";
 }
 
 .v-widget {
@@ -1036,7 +1036,6 @@
 	-moz-user-select: text;
 	-ms-user-select: text;
 	user-select: text;
-	
 }
 
 .v-app input::-ms-clear {
@@ -1115,6 +1114,7 @@
 }
 
 .v-caption {
+	display: inline-block;
 	white-space: nowrap;
 	line-height: 1.55;
 }
@@ -2264,8 +2264,6 @@ div.v-layout.v-horizontal.v-widget {
 	-webkit-box-shadow: 0 0 0 2px rgba(25, 125, 225, 0.5);
 	box-shadow: 0 0 0 2px rgba(25, 125, 225, 0.5);
 }
-
-
 
 .ga .v-button-danger:active:after {
 	background-color: rgba(146, 12, 2, 0.2);
@@ -11407,19 +11405,6 @@ div.v-layout.v-horizontal.v-widget {
 	user-select: text;
 }
 
-
-.ga .v-label-title {
-	-webkit-user-select: text;
-	-moz-user-select: text;
-	-ms-user-select: text;
-	user-select: text;
-	color: white; 
-	text-align:center;
-    font-weight: bold;
-}
-
-
-
 .ga .v-label-undef-w {
 	white-space: nowrap;
 }
@@ -12541,7 +12526,7 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .ga .valo-menu-subtitle {
-	color: #1362b1;
+	color: #868686;
 	margin: 7px 0 7px 19px;
 	border-bottom: 1px solid #666666;
 }
@@ -12560,29 +12545,11 @@ div.v-layout.v-horizontal.v-widget {
 	padding: 0 37px 0 19px;
 	cursor: pointer;
 	position: relative;
-	color:white;
 	overflow: hidden;
 	text-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
 	-webkit-transition: background-color 300ms, color 60ms;
 	-moz-transition: background-color 300ms, color 60ms;
 	transition: background-color 300ms, color 60ms;
-}
-
-.ga .valo-menu-item-title{
-	
-	outline: none;
-	color: #197de1;
-    font-weight: bold;
-	cursor: pointer;
-	position: relative;
-	font-size:larger;
-	overflow: hidden;
-	text-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
-	-webkit-transition: background-color 300ms, color 60ms;
-	-moz-transition: background-color 300ms, color 60ms;
-	transition: background-color 300ms, color 60ms;
-	
-	
 }
 
 .ga .valo-menu-item [class*="caption"] {
@@ -12969,10 +12936,7 @@ div.v-layout.v-horizontal.v-widget {
 .bloq {
 	box-shadow: 10px 10px 5px red;
 }
-.v-csslayout{
-	text-align:center;
-	
-}
+
 .v-csslayout .v-icon {
 	color: #197de1;
 }
@@ -13015,37 +12979,18 @@ div.v-layout.v-horizontal.v-widget {
 	background: rgba(255, 255, 255, 0.8);
 }
 
-.dataInit {
-	position: relative;
-	left: 30px;
-}
-
-.emailTutors {
-	position: relative;
-	left: 30px;
-}
-
-.emailPares {
-	position: relative;
-	left: 30px;
-}
-
-.whatsPares {
-	position: relative;
-	left: 30px;
-}
-
-.dataInit {
-	position: relative;
-	left: 30px;
-}
-
-.dataFi {
+.settings {
 	position: relative;
 	left: 30px;
 }
 
 .v-verticallayout-csvstudent {
+	border-radius: 18px;
+	background-color: rgba(255, 255, 255, 0.3);
+	background: rgba(255, 255, 255, 0.8);
+}
+
+.v-slot .v-slot-settingBackgroundTeacher {
 	border-radius: 18px;
 	background-color: rgba(255, 255, 255, 0.3);
 	background: rgba(255, 255, 255, 0.8);
@@ -13103,7 +13048,4 @@ gestioamonestacions .v-window-contents {
 
 .v-table {
 	border-radius: 10px;
-}
-
-
 }

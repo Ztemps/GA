@@ -25,7 +25,6 @@ import com.vaadin.ui.Upload.SucceededListener;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class AdminViewCSVUploadJava extends MainContentView {
-	private static final long serialVersionUID = -4292553844521293140L;
 
 	private FileReciverStudents receiver = new FileReciverStudents();
 	private FileReciverTeachers receiver2 = new FileReciverTeachers();

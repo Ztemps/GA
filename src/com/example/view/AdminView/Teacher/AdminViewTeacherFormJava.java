@@ -2,11 +2,16 @@ package com.example.view.AdminView.Teacher;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
+
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -62,10 +67,21 @@ public class AdminViewTeacherFormJava extends AdminViewTeacherForm {
 	}
 
 	public void insertDocent(Teacher teacher) {
-
+		
+		MessageDigest md = null;
+		try {
+			 md = MessageDigest.getInstance("SHA-1");
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		HexBinaryAdapter hbinary = new HexBinaryAdapter();
+		
 		MA = new TeachersJPAManager();
 		MA2 = new UserJPAManager();
-
+		
+		String passwordhash = hbinary.marshal(md.digest(password.getBytes())).toLowerCase();
+		System.out.println("Encriptada: "+ passwordhash);
 
 		String group;
 		String[] aux;
@@ -85,7 +101,7 @@ public class AdminViewTeacherFormJava extends AdminViewTeacherForm {
 			MA2.addTutor(new Tutor(id, group));
 			rol = "Tutor";
 		}
-		MA2.addUser(new User(id, password, username.toLowerCase(), rol));
+		MA2.addUser(new User(id, passwordhash, username.toLowerCase(), rol));
 		MA.closeTransaction();
 		MA2.closeTransaction();
 	}

@@ -48,15 +48,15 @@ public class AdminViewSettingsJava extends MainContentView {
 		vHorizontalMain.addComponent(adminsettings);
 		vHorizontalMain.setComponentAlignment(adminsettings, Alignment.MIDDLE_CENTER);
 
-		adminsettings.checkEmailTutors.addStyleName("emailTutors");
-		adminsettings.checkEmailPares.addStyleName("emailPares");
-		adminsettings.checkWhatsPares.addStyleName("whatsPares");
-		adminsettings.dataIniciCurs.addStyleName("dataInit");
-		adminsettings.dataFinalCurs.addStyleName("dataFi");
-		adminsettings.dataFinaltrimestre1.addStyleName("dataFi");
-		adminsettings.dataFinaltrimestre2.addStyleName("dataFi");
-		adminsettings.dataInicitrimestre2.addStyleName("dataFi");
-		adminsettings.dataInicitrimestre3.addStyleName("dataFi");
+		adminsettings.checkEmailTutors.addStyleName("settings");
+		adminsettings.checkEmailPares.addStyleName("settings");
+		adminsettings.checkWhatsPares.addStyleName("settings");
+		adminsettings.dataIniciCurs.addStyleName("settings");
+		adminsettings.dataFinalCurs.addStyleName("settings");
+		adminsettings.dataFinaltrimestre1.addStyleName("settings");
+		adminsettings.dataFinaltrimestre2.addStyleName("settings");
+		adminsettings.dataInicitrimestre2.addStyleName("settings");
+		adminsettings.dataInicitrimestre3.addStyleName("settings");
 
 		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
