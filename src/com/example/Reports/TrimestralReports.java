@@ -671,7 +671,7 @@ public class TrimestralReports {
 		return expulsions1;
 	}
 
-	public static void calcularResumenTrimestre1(File f) {
+	public static void calcularResumenTrimestre1() {
 		FileWriter fileWriter = null;
 
 		Date diaIniciTrimestre1;
