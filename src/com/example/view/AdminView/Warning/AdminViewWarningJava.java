@@ -200,7 +200,7 @@ public class AdminViewWarningJava extends MainContentView {
 					window.close();
 					windowpdf.close();
 					//SENDTELEGRAM
-//					sendTel = new SendTelegram();
+					sendTel = new SendTelegram();
 //					String contacteProba = "Dani_Perez";
 //					System.out.println(timewarning[0]);
 //					sendTel.sendWarning(contacteProba, timewarning[0]);
