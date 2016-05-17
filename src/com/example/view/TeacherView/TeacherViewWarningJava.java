@@ -245,7 +245,6 @@ public class TeacherViewWarningJava extends MainContentView {
 		clearTxt.addClickListener(e -> {
 
 			txtSearch.clear();
-			getUI().getNavigator().navigateTo(AdminView.NAME);
 
 		});
 		clearTxt.setIcon(FontAwesome.TIMES);
