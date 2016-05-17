@@ -75,19 +75,17 @@ public class AdminViewWarningJava extends MainContentView {
 	private WarningJPAManager MA1;
 	private File sourceFile;
 	private FileResource resource;
-	private String [] timewarning;
+	private String[] timewarning;
 	private String nomCognom;
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em = entman.getEntityManager();
 	private JDBCConnectionPool jdbccp;
 	private String nameTeacher;
-
 	private SendTelegram sendTel = new SendTelegram();
 	private generatePDF genPDF = new generatePDF();
-	
-	File currDir = new File(".");
-	String path2 = currDir.getCanonicalPath();
-	
+	private File currDir = new File(".");
+	private String path2 = currDir.getCanonicalPath();
+
 	public AdminViewWarningJava() throws MalformedURLException, DocumentException, IOException {
 
 		GridProperties();
@@ -96,15 +94,15 @@ public class AdminViewWarningJava extends MainContentView {
 		buttonsSettings();
 		WindowPdfProperties();
 		PopulateComboBoxProf();
-		
+
 		amonestacioForm.datefield.addValueChangeListener(new ValueChangeListener() {
-			
+
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				// TODO Auto-generated method stub
-				
+
 				System.out.println(event.getProperty().getValue());
-				
+
 			}
 		});
 
@@ -137,6 +135,7 @@ public class AdminViewWarningJava extends MainContentView {
 
 						if (windowpdf.isAttached()) {
 							getUI().removeWindow(windowpdf);
+
 						}
 
 						UI.getCurrent().addWindow(windowpdf);
@@ -160,9 +159,8 @@ public class AdminViewWarningJava extends MainContentView {
 							|| amonestacioForm.motiu.getValue() == null || amonestacioForm.motiu2.getValue() == null
 							|| amonestacioForm.circunstancia.getValue() == null || amonestacioForm.grup.getValue() == ""
 							|| amonestacioForm.tutor.getValue() == "") {
-						
-						notif("Omple els camps obligatoris");
 
+						notif("Omple els camps obligatoris");
 
 						return false;
 					} else {
@@ -199,14 +197,13 @@ public class AdminViewWarningJava extends MainContentView {
 				} finally {
 					window.close();
 					windowpdf.close();
-					//SENDTELEGRAM
-					sendTel = new SendTelegram();
-//					String contacteProba = "Dani_Perez";
-//					System.out.println(timewarning[0]);
+					// SENDTELEGRAM
+//					sendTel = new SendTelegram();
+//					String contacteProba = "Gerard_Paulino";
 //					sendTel.sendWarning(contacteProba, timewarning[0]);
+
 				}
 
-				
 			}
 
 		});
@@ -304,6 +301,7 @@ public class AdminViewWarningJava extends MainContentView {
 		notif.show(Page.getCurrent());
 		notif.setDelayMsec(500);
 		notif.setPosition(Position.TOP_CENTER);
+
 	}
 
 	private TextField filterTextProperties() {
@@ -522,16 +520,17 @@ public class AdminViewWarningJava extends MainContentView {
 		generatePDF generatepdf = new generatePDF();
 		timewarning = generatepdf.generate(returnQuery());
 
-		String nomCognom = (amonestacioForm.nom.getValue().concat(" "+amonestacioForm.cognoms.getValue())).replaceFirst(" ", "").replaceAll(" ", "_");
+		String nomCognom = (amonestacioForm.nom.getValue().concat(" " + amonestacioForm.cognoms.getValue()))
+				.replaceFirst(" ", "").replaceAll(" ", "_");
 
-//		String nomCognom = amonestacioForm.nom.getValue();
-		
-		System.out.println("adminViewWarning: "+nomCognom);
+		// String nomCognom = amonestacioForm.nom.getValue();
+
+		System.out.println("adminViewWarning: " + nomCognom);
 
 		Embedded c = new Embedded();
 		sourceFile = new File(timewarning[0]);
 
-		System.out.println("source file: "+ sourceFile);
+		System.out.println("source file: " + sourceFile);
 		c.setSource(new FileResource(sourceFile));
 		c.setWidth("100%");
 		c.setHeight("600px");
@@ -564,9 +563,8 @@ public class AdminViewWarningJava extends MainContentView {
 	public String[] returnQuery() throws MalformedURLException, DocumentException, IOException {
 		// TODO Auto-generated method stub
 		String expulsat = "";
-		
-		 SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
 
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
 
 		// Obtener la id del alumno
 		String name = amonestacioForm.nom.getValue();
@@ -584,14 +582,16 @@ public class AdminViewWarningJava extends MainContentView {
 		String altres_motius = null;
 		String amonestat2 = null;
 		String data = null;
-		String time  = null;
+		String time = null;
 
 		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 
-//		if(!amonestacioForm.datefield.getValue().toString().equals("")){
-//			System.out.println("valor date: "+ amonestacioForm.datefield.getValue().toString());
-//			timewarning = amonestacioForm.datefield.getValue().toString()+" "+amonestacioForm.time.getValue().toString();
-//		}
+		// if(!amonestacioForm.datefield.getValue().toString().equals("")){
+		// System.out.println("valor date: "+
+		// amonestacioForm.datefield.getValue().toString());
+		// timewarning = amonestacioForm.datefield.getValue().toString()+"
+		// "+amonestacioForm.time.getValue().toString();
+		// }
 		tutor = MA.getNomTutor(id);
 		try {
 			data = amonestacioForm.datefield.getValue().toString();
@@ -603,7 +603,7 @@ public class AdminViewWarningJava extends MainContentView {
 			amonestat = amonestacioForm.accio.getValue().toString();
 			localitzacio = amonestacioForm.circunstancia.getValue().toString();
 			System.out.println("Nombreprofe: " + nameTeacher);
-			
+
 			if (amonestat.equals("Amonestat")) {
 				amonestat2 = "true";
 			} else
@@ -623,9 +623,8 @@ public class AdminViewWarningJava extends MainContentView {
 			assignatura = amonestacioForm.materia.getValue().toString();
 		}
 
-
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
-				altres_motius, motiu2, nameTeacher,data,time};
+				altres_motius, motiu2, nameTeacher, data, time };
 
 		// DATOS PARA INTRODUCIR EN EL PARTE
 
@@ -635,9 +634,8 @@ public class AdminViewWarningJava extends MainContentView {
 	public String[] returnQuery2() throws MalformedURLException, DocumentException, IOException {
 		// TODO Auto-generated method stub
 		String expulsat = "";
-		
-		 SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
 
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
 
 		// Obtener la id del alumno
 		String name = amonestacioForm.nom.getValue();
@@ -655,14 +653,16 @@ public class AdminViewWarningJava extends MainContentView {
 		String altres_motius = null;
 		String amonestat2 = null;
 		String data = null;
-		String time  = null;
+		String time = null;
 
 		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 
-//		if(!amonestacioForm.datefield.getValue().toString().equals("")){
-//			System.out.println("valor date: "+ amonestacioForm.datefield.getValue().toString());
-//			timewarning = amonestacioForm.datefield.getValue().toString()+" "+amonestacioForm.time.getValue().toString();
-//		}
+		// if(!amonestacioForm.datefield.getValue().toString().equals("")){
+		// System.out.println("valor date: "+
+		// amonestacioForm.datefield.getValue().toString());
+		// timewarning = amonestacioForm.datefield.getValue().toString()+"
+		// "+amonestacioForm.time.getValue().toString();
+		// }
 		tutor = MA.getNomTutor(id);
 		try {
 			data = amonestacioForm.datefield.getValue().toString();
@@ -674,7 +674,7 @@ public class AdminViewWarningJava extends MainContentView {
 			amonestat = amonestacioForm.accio.getValue().toString();
 			localitzacio = amonestacioForm.circunstancia.getValue().toString();
 			System.out.println("Nombreprofe: " + nameTeacher);
-			
+
 			if (amonestat.equals("Amonestat")) {
 				amonestat2 = "true";
 			} else
@@ -694,16 +694,14 @@ public class AdminViewWarningJava extends MainContentView {
 			assignatura = amonestacioForm.materia.getValue().toString();
 		}
 
-
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
-				altres_motius, motiu2,timewarning[0], nameTeacher,timewarning[1],timewarning[2]};
+				altres_motius, motiu2, timewarning[0], nameTeacher, timewarning[1], timewarning[2] };
 
 		// DATOS PARA INTRODUCIR EN EL PARTE
 
 		return query;
 	}
 
-	
 	private void WindowPdfProperties() throws MalformedURLException, DocumentException, IOException {
 		windowpdf.setHeight("95%");
 		windowpdf.setWidth("95%");
@@ -724,7 +722,6 @@ public class AdminViewWarningJava extends MainContentView {
 		grid.deselectAll();
 
 	}
-
 
 	private void PopulateComboBoxProf() {
 

@@ -9,7 +9,6 @@
  * 
  * @group lists
  */
-
 /**
  * Cross-browser opacity.
  *
@@ -1119,9 +1118,13 @@
 	line-height: 1.55;
 }
 
-.v-captiontext {
+.v-csslayout-valo-menuitems .v-captiontext {
 	display: inline-block;
 	line-height: inherit;
+	font-weight:bold;
+	color:white;
+	font-size:16px;
+    font-style: italic;
 }
 
 div.v-layout.v-horizontal.v-widget {
@@ -11124,6 +11127,13 @@ div.v-layout.v-horizontal.v-widget {
 	white-space: nowrap;
 }
 
+.v-verticallayout .v-layout .v-vertical .v-widget .whiteBackground .v-verticallayout-whiteBackground .v-has-width{
+	width: 100%;
+    border: 4px solid gray;
+    border-radius: 10px;
+    padding: 10px;
+}
+
 .gatheme .v-calendar-time {
 	text-align: right;
 	padding-right: 9px;
@@ -11308,6 +11318,15 @@ div.v-layout.v-horizontal.v-widget {
 	background-color: #c8eaf4;
 	background-color: rgba(200, 234, 244, 0.8);
 	color: #00ace0;
+}
+
+.marginTitle{
+	margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.v-slot .v-slot-csvstudent .v-align-center .v-align-middle{
+	margin-bottom: 20px;
 }
 
 .gatheme .v-calendar-week-wrapper .v-calendar-event {
@@ -12555,9 +12574,13 @@ div.v-layout.v-horizontal.v-widget {
 	transition: background-color 300ms, color 60ms;
 }
 
+.gatheme .valo-menu-item.selected {
+	background-color:red;
+}
+
 .gatheme .valo-menu-item:active{
 	
-	color:red;
+	background-color:#197de1;
 	
 }
 
@@ -12578,11 +12601,20 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .gatheme .valo-menu-item.selected {
-	background: #434343;
+	background: red;
 }
 
 .gatheme .valo-menu-item.selected .v-icon {
 	color: #197de1;
+}
+
+.gatheme .valo-menu-item .v-widget .v-has-width.selected{
+	
+	background:green;
+}
+
+.gatheme .valo-menu-item:focus, .gatheme.valo-menu-item:hover, .gatheme .valo-menu-item.selected {
+	color: green;
 }
 
 .gatheme .valo-menu-item.selected [class*="badge"] {
@@ -12594,6 +12626,16 @@ div.v-layout.v-horizontal.v-widget {
 
 .gatheme .valo-menu-item:focus, .gatheme .valo-menu-item:hover, .gatheme .valo-menu-item.selected {
 	color: white;
+	background-color:#595959;
+	
+
+}
+
+.gatheme .valo-menu-item:active, .gatheme .valo-menu-item:active, .gatheme .valo-menu-item.selected {
+	color: white;
+	background-color:red;
+	
+
 }
 
 .gatheme .valo-menu-item span.v-icon {
@@ -12607,6 +12649,8 @@ div.v-layout.v-horizontal.v-widget {
 .gatheme .valo-menu-item span.v-icon  + span {
 	margin-left: 0;
 }
+
+
 
 .gatheme .valo-menu-item [class*="badge"] {
 	background-color: #585858;
@@ -12952,6 +12996,7 @@ div.v-layout.v-horizontal.v-widget {
 	color: #197de1;
 }
 
+
 .gatheme .v-formlayout {
 	text-align: center;
 }
@@ -13021,9 +13066,10 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .gatheme .v-verticallayout-csvstudent {
-	border-radius: 18px;
 	background-color: rgba(255, 255, 255, 0.3);
 	background: rgba(255, 255, 255, 0.8);
+	padding:10px;
+	border: 4px solid #d4d4d4;
 }
 
 .gatheme .ga.v-app-loading {
@@ -13041,7 +13087,17 @@ div.v-layout.v-horizontal.v-widget {
 	border-radius: 18px;
 	background-color: rgba(255, 255, 255, 0.3);
 	background: rgba(255, 255, 255, 0.8);
+	width: 100%;
+	border: 4px solid gray;
+    border-radius: 1px;
+    padding-bottom: 30px;
 }
+
+
+.v-slot .v-slot-csvstudent .v-align-center .v-align-middle{
+	margin-bottom: 20px;
+}
+
 
 .gatheme gestioamonestacions .v-panel {
 	background: transparent;

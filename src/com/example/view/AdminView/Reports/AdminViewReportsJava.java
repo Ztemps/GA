@@ -68,12 +68,16 @@ public class AdminViewReportsJava extends MainContentView {
 		// INFORMES TRIMESTRALS
 
 		csv.mainTrimestral.addStyleName("whiteBackground");
+		csv.mainTrimestral.setWidth("100%");
+		csv.mainTotal.addStyleName("whiteBackground");
 		csv.txtUpTrimestral.addStyleName("settings");
 		csv.txtUpTrimestral.setValue("Carrega d'Informes Trimestrals");
+		csv.txtUpTrimestral.addStyleName("marginTitle");
 		csv.hTrimestral.addStyleName("csvstudent");
 		csv.hTrimestral.removeAllComponents();
 
 		// Add buttons to layout
+		csv.hTrimestral.addStyleName("buttonsLayout");
 		csv.hTrimestral.addComponent(generateReportTrimestre1);
 		csv.hTrimestral.addComponent(generateReportTrimestre2);
 		csv.hTrimestral.addComponent(generateReportTrimestre3);
@@ -124,8 +128,8 @@ public class AdminViewReportsJava extends MainContentView {
 	}
 
 	private StreamResource getTrimestral2Zip() {
-		// TODO Auto-generated method stub
-		StreamResource.StreamSource source = new StreamResource.StreamSource() {
+		// TODO Auto-generated method stub	
+	        StreamResource.StreamSource source = new StreamResource.StreamSource() {
 
 			public InputStream getStream() {
 				// return your file/bytearray as an InputStream
@@ -140,6 +144,7 @@ public class AdminViewReportsJava extends MainContentView {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+
 
 				return targetStream;
 

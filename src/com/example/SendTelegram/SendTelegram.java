@@ -25,13 +25,13 @@ public class SendTelegram {
 	
 	public void sendWarning(String contactName,String sourceToFile) {
 		
-//		String msg = "Atenció:_El_seu_fill/a_ha_sigut_amonestat_a_l'Institut_Puig_Castellar.__"
-//				+ "L'hi_adjuntem_un_fitxer_PDF_amb_l'amonestació,_on_podrá_veure_els_motius_mes_detalladament.___"
-//				+ "Gracies__" + "Att.Institut_Puig_Castellar_____"
-//				+ "Avís:Aquest_es_un_missatge_auto-generat,_siusplau_no_intenti_posarse_en_contacte_amb_aquest_telefón._____"
-//				+ "Developed_by:_GA_4_estudiantes_y_1_gato";
+		String msg = "Atenció:_El_seu_fill/a_ha_sigut_amonestat_a_l'Institut_Puig_Castellar.__"
+				+ "L'hi_adjuntem_un_fitxer_PDF_amb_l'amonestació,_on_podrá_veure_els_motius_mes_detalladament.___"
+				+ "Gracies__" + "Att.Institut_Puig_Castellar_____"
+				+ "Avís:Aquest_es_un_missatge_auto-generat,_siusplau_no_intenti_posarse_en_contacte_amb_aquest_telefón._____"
+				+ "Developed_by:_GA";
 		
-		String msg = "pruebas";
+//		String msg = "pruebas";
 		
 		System.out.println("SendTelegram"+sourceToFile);
 

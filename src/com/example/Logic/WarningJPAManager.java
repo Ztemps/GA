@@ -83,8 +83,8 @@ public class WarningJPAManager  {
 
 		sendMail mail;
 		
-//		if(al.getEmail().length() > 5 || al.getEmail() != null)
-//			mail = new sendMail(al.getEmail(),"El seu fill "+query[0]+" "+query[1]+" a sigut amonestat ",query[12]);
+		if(al.getEmail().length() > 5)
+			mail = new sendMail(al.getEmail(),"El seu fill "+query[0]+" "+query[1]+" a sigut amonestat ",query[12]);
 
 		String fecha = query[14]+" "+query[15];
 		
