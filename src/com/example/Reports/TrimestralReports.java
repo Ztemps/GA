@@ -1743,9 +1743,10 @@ public class TrimestralReports {
 		String path = currDir.getCanonicalPath();
 		
 		
-		
-		File f = new File(path + "/git/ga2/Settings/settings.txt");
+	
 
+		File f = new File(path2 + "/WebContent/Settings/settings.txt");
+		
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if (br.readLine() == null) {
 			System.out.println("No Hay fecha en el documento settings");
