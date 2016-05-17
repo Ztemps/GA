@@ -12615,11 +12615,11 @@ div.v-layout.v-horizontal.v-widget {
 
 }
 
+.gatheme .valo-menu-item.selected .v-icon {
+    color: #197de1;
+}
 .gatheme .valo-menu-item:active, .gatheme .valo-menu-item:active, .gatheme .valo-menu-item.selected {
 	color: white;
-	background-color:red;
-	
-
 }
 
 .gatheme .valo-menu-item span.v-icon {
