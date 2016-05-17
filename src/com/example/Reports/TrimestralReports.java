@@ -664,7 +664,7 @@ public class TrimestralReports {
 		for (int j = 0; j < idList.size(); j++) {
 			query = new ReportQuerys();
 			expulsions1.add(query.getExpulsionCurs(Integer.parseInt(idList.get(j).toString()), semana1, semana2));
-			query.closeTransaction();
+			//query.closeTransaction();
 
 		}
 
