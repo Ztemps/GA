@@ -1413,6 +1413,7 @@ div.v-layout.v-horizontal.v-widget {
 
 .v-colorpicker-grid {
 	height: 319px;
+	
 }
 
 .v-colorpicker-popup .colorselect td {
@@ -4176,6 +4177,7 @@ div.v-layout.v-horizontal.v-widget {
 
 .gatheme .v-grid {
 	position: relative;
+	
 }
 
 .gatheme .v-grid-scroller {
@@ -4235,6 +4237,14 @@ div.v-layout.v-horizontal.v-widget {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
+
+.gatheme .v-grid-border {
+	border: 4px solid gray;
+    border-radius: 10px;
+}
+    
+
+
 
 .gatheme .v-grid-header, .gatheme .v-grid-body, .gatheme .v-grid-footer {
 	position: absolute;
@@ -13137,7 +13147,12 @@ div.v-layout.v-horizontal.v-widget {
 	font-weight: bold;
 	text-align: center;
 	font-size: 17px;
+	
 }
+
+
+
+
 
 .gatheme .loginview {
 	background-color: rgba(255, 255, 255, 0.3);
