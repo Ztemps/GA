@@ -198,9 +198,9 @@ public class AdminViewWarningJava extends MainContentView {
 					window.close();
 					windowpdf.close();
 					// SENDTELEGRAM
-					sendTel = new SendTelegram();
-					String contacteProba = "Gerard_Paulino";
-					sendTel.sendWarning(contacteProba, timewarning[0]);
+//					sendTel = new SendTelegram();
+//					String contacteProba = "Gerard_Paulino";
+//					sendTel.sendWarning(contacteProba, timewarning[0]);
 
 				}
 
