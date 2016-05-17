@@ -120,8 +120,13 @@ public class FinalReports {
 			}
 
 			try {
+				File f = new File ("/tmp/total");
+				if (!f.exists()){
+					f.mkdirs();
+				}
+				
 				fileWriter = new FileWriter(
-						"/home/katano/Escritorio/csv/total/grups/alumnes" + grupos.get(x).getId() + ".xls");
+						"/tmp/total/alumnes" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
 				query.closeTransaction();
@@ -315,8 +320,11 @@ public class FinalReports {
 		try {
 
 			dates = readFile();
-
-			fileWriter = new FileWriter("/home/katano/Escritorio/csv/total/resumen.xls");
+			File f = new File ("/tmp/total");
+			if (!f.exists()){
+				f.mkdirs();
+			}
+			fileWriter = new FileWriter("/tmp/total/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			query.closeTransaction();
@@ -602,7 +610,7 @@ public class FinalReports {
 			e1.printStackTrace();
 		}
 
-		File f = new File("/home/katano/Escritorio/settings.txt");
+		File f = new File(path2 + "/git/ga2/Settings/settings.txt");
 
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if (br.readLine() == null) {
