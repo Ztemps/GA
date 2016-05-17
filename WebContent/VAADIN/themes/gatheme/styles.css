@@ -13022,8 +13022,15 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .gatheme .main-title {
-	font-size: 35px;
+	font-size: 45px;
+	font-weight: bold;}
+	
+.gatheme .upload-title {
+	font-size: 25px;
+	font-weight: bold;	
 }
+	
+	
 
 .gatheme .horizontal-title {
 	margin-bottom: 15px;
@@ -13091,6 +13098,8 @@ div.v-layout.v-horizontal.v-widget {
 	border: 4px solid gray;
     border-radius: 1px;
     padding-bottom: 30px;
+    padding:10px;
+    
 }
 
 

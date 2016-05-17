@@ -62,8 +62,8 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		});
 
 		csv.txtUpStudents.setValue("Carrega de alumnes");
-
-		csv.vStudents.addStyleName("csvstudent");
+		csv.txtUpStudents.addStyleName("upload-title");
+		csv.vStudents.addStyleName("whiteBackground");
 		csv.vStudents.removeAllComponents();
 		csv.vStudents.addComponents(studentlabel, new Image("", resource), uploadStudent);
 
@@ -84,9 +84,11 @@ public class AdminViewCSVUploadJava extends MainContentView {
 			}
 		});
 
-		csv.vTeachers.addStyleName("csvstudent");
+		csv.vTeachers.addStyleName("whiteBackground");
 
 		csv.txtUpTeachers.setValue("Carrega de profesors");
+		csv.txtUpTeachers.addStyleName("upload-title");
+
 		csv.vTeachers.removeAllComponents();
 		csv.vTeachers.addComponents(new Image("", resource), uploadTeacher);
 		csv.vTeachers.setComponentAlignment(uploadTeacher, Alignment.MIDDLE_CENTER);
