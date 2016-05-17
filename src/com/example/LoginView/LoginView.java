@@ -301,8 +301,9 @@ public class LoginView extends LoginViewDesign implements View {
 
 		getUI().getSession().setAttribute("user", username);
 		getUI().getSession().setAttribute("id", usuari.getId());
-		System.out.println(getUI().getSession().getAttribute("id"));
+		getUI().getSession().setAttribute("login", true);
 
+		
 	}
 
 }

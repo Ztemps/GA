@@ -72,35 +72,39 @@ public class AdminView extends MainView implements View {
 	@Override
 	public void enter(ViewChangeEvent event) {
 		
-		try {
-			br = new BufferedReader(new FileReader("userList.txt"));
+//		try {
+//			br = new BufferedReader(new FileReader("userList.txt"));
+//
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		String line = null;
+//		String aux = null;
+//		try {
+//			while ((line = br.readLine()) != null) {
+//				aux = line;
+//				// System.out.println("dentro de admin: "+aux);
+//			}
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		try {
+//			br.close();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		String login = getUI().getSession().getAttribute("login").toString();
 
-		String line = null;
-		String aux = null;
-		try {
-			while ((line = br.readLine()) != null) {
-				aux = line;
-				// System.out.println("dentro de admin: "+aux);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			br.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		 System.out.println("fuera del if: "+login);
 
-		if (aux.equals("false")) {
+		if (getUI().getSession().getAttribute("login") == null) {
 
-			// System.out.println("dentro del if: "+aux);
+			 System.out.println("dentro del if: "+login);
 
 			try {
 				getUI().getNavigator().navigateTo(LoginView.NAME);
@@ -619,10 +623,16 @@ public class AdminView extends MainView implements View {
 	private void setWellcome() {
 		// TODO Auto-generated method stub
 		ma = new UserJPAManager();
-		int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
+		try{
+			int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
+			wellcome.addStyleName("wellcome");
+			wellcome.setCaption("Benvingut " + ma.getNomTutorHeader(id));
+		}catch(NullPointerException e){
+			
+			getUI().getNavigator().navigateTo(LoginView.NAME);
+			
+		}
 		// TODO Auto-generated method stub
 
-		wellcome.addStyleName("wellcome");
-		wellcome.setCaption("Benvingut " + ma.getNomTutorHeader(id));
 	}
 }
