@@ -610,7 +610,7 @@ public class FinalReports {
 			e1.printStackTrace();
 		}
 
-		File f = new File(path2 + "/git/ga2/Settings/settings.txt");
+		File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
 
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if (br.readLine() == null) {

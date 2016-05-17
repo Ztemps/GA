@@ -671,7 +671,7 @@ public class TrimestralReports {
 		return expulsions1;
 	}
 
-	public static void calcularResumenTrimestre1(File f) {
+	public static void calcularResumenTrimestre1() {
 		FileWriter fileWriter = null;
 
 		Date diaIniciTrimestre1;
@@ -1740,12 +1740,11 @@ public class TrimestralReports {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		String path = currDir.getCanonicalPath();
 		
 		
-		
-		File f = new File(path + "/git/ga2/Settings/settings.txt");
+	
 
+		File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if (br.readLine() == null) {
 			System.out.println("No Hay fecha en el documento settings");

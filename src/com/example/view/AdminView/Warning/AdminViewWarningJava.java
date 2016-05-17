@@ -85,6 +85,9 @@ public class AdminViewWarningJava extends MainContentView {
 	private SendTelegram sendTel = new SendTelegram();
 	private generatePDF genPDF = new generatePDF();
 	
+	File currDir = new File(".");
+	String path2 = currDir.getCanonicalPath();
+	
 	public AdminViewWarningJava() throws MalformedURLException, DocumentException, IOException {
 
 		GridProperties();
@@ -189,15 +192,21 @@ public class AdminViewWarningJava extends MainContentView {
 					WarningJPAManager war = new WarningJPAManager();
 					war.introducirParte(returnQuery2());
 					notif("Amonestació posada correctament");
+
 				} catch (DocumentException | IOException | NullPointerException | ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} finally {
 					window.close();
 					windowpdf.close();
-
+					//SENDTELEGRAM
+					sendTel = new SendTelegram();
+//					String contacteProba = "Dani_Perez";
+//					System.out.println(timewarning[0]);
+//					sendTel.sendWarning(contacteProba, timewarning[0]);
 				}
 
+				
 			}
 
 		});
