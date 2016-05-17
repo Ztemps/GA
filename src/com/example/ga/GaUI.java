@@ -23,7 +23,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-@Theme("ga")
+@Theme("gatheme")
 public class GaUI extends UI {
 
 	

@@ -37,6 +37,7 @@ public class AdminViewWarnings extends MainContentView {
 	private Window window = new Window();
 	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
 	private JDBCConnectionPool jdbccp;
+	private SQLContainer AllWarnings;
 
 	public AdminViewWarnings() throws SQLException {
 
@@ -54,10 +55,7 @@ public class AdminViewWarnings extends MainContentView {
 				// TODO Auto-generated method stub
 				try {
 					popupPDF();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (DocumentException e) {
+				} catch (IOException | DocumentException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -105,14 +103,22 @@ public class AdminViewWarnings extends MainContentView {
 		return fecha.substring(11, 16);
 	}
 
-	private Grid gridProperties() throws SQLException {
+	private Grid gridProperties() {
 
 		jdbccp = new JDBCConnectionPool();
 
-		SQLContainer AllWarnings = new SQLContainer(new FreeformQuery("select al.nom, " + "al.cognoms," + " a.grup, "
-				+ "a.motius_selection," + " a.altres_motius," + "a.materia, a.data, " + "a.localitzacio "
-				+ "from amonestacio a, docent d, alumne al " + "where a.docent=d.id and a.alumne=al.id ",
-				jdbccp.GetConnection()));
+		try{
+			AllWarnings = new SQLContainer(new FreeformQuery("select al.nom, " + "al.cognoms," + " a.grup, "
+					+ "a.motius_selection," + " a.altres_motius," + "a.materia, a.data, " + "a.localitzacio "
+					+ "from amonestacio a, docent d, alumne al " + "where a.docent=d.id and a.alumne=al.id ",
+					jdbccp.GetConnection()));
+			
+		}catch(SQLException e){
+			
+			
+		}
+		
+		
 
 		grid = new Grid("", AllWarnings);
 		grid.setSizeFull();
