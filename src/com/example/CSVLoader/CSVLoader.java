@@ -84,6 +84,7 @@ public class CSVLoader {
 			telefons = str.nextToken();
 			grups.add(grup);
 			students.add(new Student(nom,cognoms,null,telefons,naixement,Cursos.ObtenerCursoActual(),grup));
+			
 		}
 		
 		
