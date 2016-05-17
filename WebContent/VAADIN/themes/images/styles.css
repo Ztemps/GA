@@ -12979,37 +12979,18 @@ div.v-layout.v-horizontal.v-widget {
 	background: rgba(255, 255, 255, 0.8);
 }
 
-.dataInit {
-	position: relative;
-	left: 30px;
-}
-
-.emailTutors {
-	position: relative;
-	left: 30px;
-}
-
-.emailPares {
-	position: relative;
-	left: 30px;
-}
-
-.whatsPares {
-	position: relative;
-	left: 30px;
-}
-
-.dataInit {
-	position: relative;
-	left: 30px;
-}
-
-.dataFi {
+.settings {
 	position: relative;
 	left: 30px;
 }
 
 .v-verticallayout-csvstudent {
+	border-radius: 18px;
+	background-color: rgba(255, 255, 255, 0.3);
+	background: rgba(255, 255, 255, 0.8);
+}
+
+.v-slot .v-slot-settingBackgroundTeacher {
 	border-radius: 18px;
 	background-color: rgba(255, 255, 255, 0.3);
 	background: rgba(255, 255, 255, 0.8);

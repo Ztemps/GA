@@ -21,6 +21,7 @@ import com.example.Logic.GroupJPAManager;
 import com.google.gwt.user.client.rpc.core.java.util.Collections;
 import com.vaadin.data.Property.ReadOnlyException;
 import com.vaadin.data.util.converter.Converter.ConversionException;
+import com.vaadin.server.FileResource;
 
 public class TrimestralReports {
 	private static final String COMMA_DELIMITER = ",";
@@ -35,14 +36,14 @@ public class TrimestralReports {
 
 	public static void main(String[] args) {
 		calcularPrimerTrimestre();
-		calcularSegundoTrimestre();
-		calcularTercerTrimestre();
-		calcularResumenTrimestre1();
-		calcularResumenTrimestre2();
-		calcularResumenTrimestre3();
-		calcularResumen2Trimestre1();
-		calcularResumen2Trimestre2();
-		calcularResumen2Trimestre3();
+//		calcularSegundoTrimestre();
+//		calcularTercerTrimestre();
+//		calcularResumenTrimestre1();
+//		calcularResumenTrimestre2();
+//		calcularResumenTrimestre3();
+//		calcularResumen2Trimestre1();
+//		calcularResumen2Trimestre2();
+//		calcularResumen2Trimestre3();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 	}
 
 	public static void calcularPrimerTrimestre() {
@@ -126,8 +127,14 @@ public class TrimestralReports {
 			}
 
 			try {
+				
+				File f = new File ("/tmp/trimestre1");
+				if (!f.exists()){
+					f.mkdirs();
+				}
+				
 				fileWriter = new FileWriter(
-						"/home/katano/Escritorio/csv/trimestre1/alumnes" + grupos.get(x).getId() + ".xls");
+						"/tmp/trimestre1/alumnes" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
 				query.closeTransaction();
@@ -320,8 +327,13 @@ public class TrimestralReports {
 			}
 
 			try {
+				File f = new File ("/tmp/trimestre2");
+				if (!f.exists()){
+					f.mkdirs();
+				}
+				
 				fileWriter = new FileWriter(
-						"/home/katano/Escritorio/csv/trimestre2/alumnes" + grupos.get(x).getId() + ".xls");
+						"/tmp/trimestre2/alumnes" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
 				query.closeTransaction();
@@ -510,8 +522,14 @@ public class TrimestralReports {
 			}
 
 			try {
+				
+				File f = new File ("/tmp/trimestre3");
+				if (!f.exists()){
+					f.mkdirs();
+				}
+				
 				fileWriter = new FileWriter(
-						"/home/katano/Escritorio/csv/trimestre3/alumnes" + grupos.get(x).getId() + ".xls");
+						"/tmp/trimestre3/alumnes" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
 				query.closeTransaction();
@@ -653,7 +671,7 @@ public class TrimestralReports {
 		return expulsions1;
 	}
 
-	public static void calcularResumenTrimestre1() {
+	public static void calcularResumenTrimestre1(File f) {
 		FileWriter fileWriter = null;
 
 		Date diaIniciTrimestre1;
@@ -668,8 +686,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-
-			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre1/resumen.xls");
+			File f2 = new File ("/tmp/trimestre1");
+			if (!f2.exists()){
+				f2.mkdirs();
+			}
+			fileWriter = new FileWriter("/tmp/trimestre1/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			query.closeTransaction();
@@ -836,8 +857,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-
-			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre2/resumen.xls");
+			File f = new File ("/tmp/trimestre2");
+			if (!f.exists()){
+				f.mkdirs();
+			}
+			fileWriter = new FileWriter("/tmp/trimestre2/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			query.closeTransaction();
@@ -1009,8 +1033,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-
-			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre3/resumen.xls");
+			File f = new File ("/tmp/trimestre3");
+			if (!f.exists()){
+				f.mkdirs();
+			}
+			fileWriter = new FileWriter("/tmp/trimestre3/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			query.closeTransaction();
@@ -1185,8 +1212,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-
-			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre1/resumen2.xls");
+			File f = new File ("/tmp/trimestre1");
+			if (!f.exists()){
+				f.mkdirs();
+			}
+			fileWriter = new FileWriter("/tmp/trimestre1/resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			query.closeTransaction();
@@ -1354,8 +1384,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-
-			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre2/resumen2.xls");
+			File f = new File ("/tmp/trimestre2");
+			if (!f.exists()){
+				f.mkdirs();
+			}
+			fileWriter = new FileWriter("/tmp/trimestre2/resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			query.closeTransaction();
@@ -1525,8 +1558,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-
-			fileWriter = new FileWriter("/home/katano/Escritorio/csv/trimestre3/resumen2.xls");
+			File f = new File ("/tmp/trimestre3");
+			if (!f.exists()){
+				f.mkdirs();
+			}
+			fileWriter = new FileWriter("/tmp/trimestre3/resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			query.closeTransaction();
@@ -1704,8 +1740,11 @@ public class TrimestralReports {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-
-		File f = new File("/home/katano/Escritorio/settings.txt");
+		String path = currDir.getCanonicalPath();
+		
+		
+		
+		File f = new File(path + "/git/ga2/Settings/settings.txt");
 
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if (br.readLine() == null) {
