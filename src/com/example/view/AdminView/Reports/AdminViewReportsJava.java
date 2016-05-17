@@ -81,13 +81,13 @@ public class AdminViewReportsJava extends MainContentView {
 	private StreamResource getXLS() {
 		// TODO Auto-generated method stub
 			
-		trimestrasReports.calcularResumenTrimestre1();
 			
 	        StreamResource.StreamSource source = new StreamResource.StreamSource() {
 
 	            public InputStream getStream() {
 	                // return your file/bytearray as an InputStream
-	            	
+	            		trimestrasReports.calcularResumenTrimestre1();
+
 	            	 File zip = new File(ZipFile(new File("/tmp/trimestre1"), "/tmp/trimestre1.zip"));
 	            	 InputStream targetStream = null;
 					try {
