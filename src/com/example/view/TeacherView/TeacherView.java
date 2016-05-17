@@ -31,7 +31,9 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.shared.Position;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -43,6 +45,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -54,12 +57,11 @@ public class TeacherView extends MainView implements View {
 
 	public static final String NAME = "professor";
 
-	
-	TeacherViewWarningJava vistaAmonestacion ;
+	TeacherViewWarningJava vistaAmonestacion;
 	TeacherOwnWarningsJava vistaOwn;
 	TeacherConfigView vistaConfig;
 	UserJPAManager ma;
-	
+
 	public TeacherView() throws MalformedURLException, DocumentException, IOException, SQLException {
 
 		// Side menu button options
@@ -68,24 +70,19 @@ public class TeacherView extends MainView implements View {
 		vistaConfig = new TeacherConfigView();
 		Items();
 		vistaConfig.setVisible(false);
-		
+
 		content.addComponent(vistaAmonestacion);
 		content.addComponent(vistaOwn);
 		content.addComponent(vistaConfig);
 
-		
-		
-		
-
-		warning.addClickListener(e -> Amonestacions() );
-		mevesAmonestacions.addClickListener(e -> MevesAmonestacions() );
-		configuracio.addClickListener(e-> Config());
-
+		warning.addClickListener(e -> Amonestacions());
+		mevesAmonestacions.addClickListener(e -> MevesAmonestacions());
+		configuracio.addClickListener(e -> Config());
 
 	}
 
 	private void Items() throws IOException {
-		
+
 		setWellcome();
 		setLogo();
 		students.setVisible(false);
@@ -106,40 +103,38 @@ public class TeacherView extends MainView implements View {
 		groupsTutor.setVisible(false);
 		vistaOwn.setVisible(false);
 		warning.focus();
-		
+
 		logout.addClickListener(e -> logoutActions());
 
 	}
-	
-	public void Config(){
+
+	public void Config() {
 		vistaAmonestacion.setVisible(false);
 		vistaOwn.setVisible(false);
 		vistaConfig.setVisible(true);
-	
+
 	}
-	
-	public void MevesAmonestacions(){
+
+	public void MevesAmonestacions() {
 		vistaAmonestacion.setVisible(false);
 		vistaConfig.setVisible(false);
 		vistaOwn.setVisible(true);
-		
+
 	}
-	
-	public void Amonestacions(){
+
+	public void Amonestacions() {
 		vistaOwn.setVisible(false);
 		vistaConfig.setVisible(false);
 		vistaAmonestacion.setVisible(true);
-		
+
 	}
-	
-	
 
 	private void setWellcome() {
 		// TODO Auto-generated method stub
 		ma = new UserJPAManager();
 		int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
 		// TODO Auto-generated method stub
-		wellcome.setCaption("Benvingut "+ma.getNomTutorHeader(id));
+		wellcome.setCaption("Benvingut " + ma.getNomTutorHeader(id));
 	}
 
 	public void logoutActions() {
@@ -150,15 +145,15 @@ public class TeacherView extends MainView implements View {
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
-//		if((getSession().getAttribute("user")) == null){
-//
-//			getUI().getNavigator().navigateTo(LoginView.NAME);//
-//
-//		} else {
-//
-//			getUI().getNavigator().navigateTo(ProfessorView.NAME);//
-//
-//		}
+		// if((getSession().getAttribute("user")) == null){
+		//
+		// getUI().getNavigator().navigateTo(LoginView.NAME);//
+		//
+		// } else {
+		//
+		// getUI().getNavigator().navigateTo(ProfessorView.NAME);//
+		//
+		// }
 
 	}
 
@@ -196,8 +191,7 @@ public class TeacherView extends MainView implements View {
 				// TODO Auto-generated method stub
 
 				win.close();
-				getUI().getNavigator().navigateTo(LoginView.NAME);
-
+				logout();
 			}
 		});
 
@@ -208,6 +202,26 @@ public class TeacherView extends MainView implements View {
 		win.setContent(content);
 
 		return win;
+
+	}
+
+	public void notif(String mensaje) {
+
+		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
+																												// HTML
+
+		// Customize it
+		notif.show(Page.getCurrent());
+		notif.setDelayMsec(500);
+		notif.setPosition(Position.TOP_CENTER);
+	}
+	public void logout() {
+
+		getUI().getNavigator().navigateTo(LoginView.NAME);
+		getUI().getCurrent().getSession().setAttribute("id", null);
+		getUI().getCurrent().getSession().setAttribute("user", null);
+		getUI().getCurrent().getSession().close();
+		notif("Sessió tancada correctament!");
 
 	}
 

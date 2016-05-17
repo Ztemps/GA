@@ -27,11 +27,14 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
+import com.vaadin.shared.Position;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
@@ -213,8 +216,7 @@ public class TutorView extends MainView implements View {
 				// TODO Auto-generated method stub
 
 				win.close();
-				getUI().getNavigator().navigateTo(LoginView.NAME);
-
+				logout();
 			}
 		});
 
@@ -226,6 +228,25 @@ public class TutorView extends MainView implements View {
 
 		return win;
 
+	}
+	public void logout() {
+
+		getUI().getNavigator().navigateTo(LoginView.NAME);
+		getUI().getCurrent().getSession().setAttribute("id", null);
+		getUI().getCurrent().getSession().setAttribute("user", null);
+		getUI().getCurrent().getSession().close();
+		notif("Sessió tancada correctament!");
+
+	}
+	public void notif(String mensaje) {
+
+		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
+																												// HTML
+
+		// Customize it
+		notif.show(Page.getCurrent());
+		notif.setDelayMsec(500);
+		notif.setPosition(Position.TOP_CENTER);
 	}
 	
 	private void setLogo() throws IOException {
