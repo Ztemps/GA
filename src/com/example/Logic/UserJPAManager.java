@@ -37,7 +37,7 @@ public class UserJPAManager {
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em;
 
-	public UserJPAManager(){
+	public UserJPAManager() {
 		em = entman.getEntityManager();
 	}
 
@@ -47,18 +47,15 @@ public class UserJPAManager {
 		em.persist(user);
 		em.getTransaction().commit();
 	}
-	
 
 	public void updateUser(Integer id, String password) {
 		em.getTransaction().begin();
-		User user = (User) em.find(User.class, id );
+		User user = (User) em.find(User.class, id);
 		user.setPassword(password);
 		em.merge(user);
 		em.getTransaction().commit();
-		
-	}
 
-	
+	}
 
 	public void addWarning(Warning amonestacio) {
 
@@ -106,8 +103,6 @@ public class UserJPAManager {
 		return list_users;
 
 	}
-
-	
 
 	// ITERATOR LIST USERS
 
@@ -195,10 +190,6 @@ public class UserJPAManager {
 		return tutor.getDocent();
 	}
 
-	
-
-	
-
 	public String getNomTutor(int id) {
 
 		Query query = em.createNativeQuery("SELECT * FROM docent where id = #id", Teacher.class);
@@ -230,19 +221,22 @@ public class UserJPAManager {
 
 	public String currentTeacher() {
 
-		return getNomTutor(
-				Integer.parseInt(String.valueOf(GaUI.getCurrent().getSession().getAttribute("id"))));
+		return getNomTutor(Integer.parseInt(String.valueOf(GaUI.getCurrent().getSession().getAttribute("id"))));
 
 	}
-	
+
 	public String currentTeacherName() {
+		int id = 0;
+		try {
+			id = Integer.parseInt(String.valueOf(GaUI.getCurrent().getSession().getAttribute("id")));
+		} catch (NullPointerException | NumberFormatException e) {
 
-		return getNomTutorHeader(
-				Integer.parseInt(String.valueOf(GaUI.getCurrent().getSession().getAttribute("id"))));
+			return null;
+		}
+
+		return getNomTutorHeader(id);
 
 	}
-
-	
 
 	public void addStudent(Student al) {
 		// TODO Auto-generated method stub

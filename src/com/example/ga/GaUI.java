@@ -21,7 +21,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-
+import com.example.view.Error;
 @SuppressWarnings("serial")
 @Theme("gatheme")
 public class GaUI extends UI {
@@ -52,7 +52,10 @@ public class GaUI extends UI {
 
 		new Navigator(this, this);
 		setTheme("ga");
+		
 		getNavigator().addView(LoginView.NAME, LoginView.class);//
+		getNavigator().addView(Error.NAME, Error.class);//
+
 		getNavigator().addView(TemplateView.NAME, TemplateView.class);//
 		getNavigator().addView(TeacherView.NAME, TeacherView.class);//
 		getNavigator().addView(AdminView.NAME, AdminView.class);//

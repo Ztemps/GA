@@ -30,6 +30,7 @@ import com.example.view.AdminView.Warning.AdminWarning;
 import com.example.view.AdminView.Warnings.AdminViewWarnings;
 import com.example.view.TeacherView.TeacherOwnWarningsJava;
 import com.example.view.TeacherView.TeacherViewWarningJava;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.itextpdf.text.DocumentException;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.navigator.View;
@@ -67,106 +68,82 @@ public class AdminView extends MainView implements View {
 	private UserJPAManager ma;
 	private static AdminViewTutorJava Viewtutors;
 	private BufferedReader br = null;
-	
+	private boolean login = false;
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		
-//		try {
-//			br = new BufferedReader(new FileReader("userList.txt"));
-//
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		String line = null;
-//		String aux = null;
-//		try {
-//			while ((line = br.readLine()) != null) {
-//				aux = line;
-//				// System.out.println("dentro de admin: "+aux);
-//			}
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		try {
-//			br.close();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 
-		String login = getUI().getSession().getAttribute("login").toString();
+		if (getUI().getCurrent().getSession().getAttribute("login") == null) {
+			getUI().getPage().setLocation("http://localhost:8082/GA");
 
-		 System.out.println("fuera del if: "+login);
-
-		if (getUI().getSession().getAttribute("login") == null) {
-
-			 System.out.println("dentro del if: "+login);
-
-			try {
-				getUI().getNavigator().navigateTo(LoginView.NAME);
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
+		}else{
+			
+			login = true;
 		}
 
 	}
 
 	public AdminView() throws IOException, DocumentException, SQLException {
+
+		if(login){
+			
+			content.addStyleName("contenido");
+
+			loadView();
+
+			ViewGrupos = new AdminViewGroupJava();
+			ViewStudents = new AdminViewStudentJava();
+			ViewDocents = new AdminViewTeacherJava();
+			ViewWarning = new AdminViewWarningJava();
+			ViewUsers = new AdminViewUser();
+			ViewListWarnings = new AdminViewWarnings();
+			ViewCSV = new AdminViewCSVUploadJava();
+			ViewTeachersWarnings = new TeacherOwnWarningsJava();
+			Viewtutors = new AdminViewTutorJava();
+			ViewCharts = new AdminViewCharts();
+			ViewForms = new AdminViewReportsJava();
+			ViewSettings = new AdminViewSettingsJava();
+
+			content.removeAllComponents();
+			content.addComponents(ViewGrupos);
+			content.addComponents(ViewStudents);
+			content.addComponent(ViewDocents);
+			content.addComponent(ViewWarning);
+			content.addComponent(ViewUsers);
+			content.addComponent(ViewListWarnings);
+			content.addComponent(ViewCSV);
+			content.addComponent(ViewTeachersWarnings);
+			content.addComponent(Viewtutors);
+			content.addComponent(ViewCharts);
+			content.addComponent(ViewForms);
+			content.addComponent(ViewSettings);
+
+			warning.focus();
+			ViewDocents.setVisible(false);
+			ViewStudents.setVisible(false);
+			ViewCharts.setVisible(false);
+			ViewForms.setVisible(false);
+			ViewGrupos.setVisible(false);
+			ViewUsers.setVisible(false);
+			ViewListWarnings.setVisible(false);
+			ViewCSV.setVisible(false);
+			ViewTeachersWarnings.setVisible(false);
+			mevesAmonestacions.setVisible(false);
+			groupsTutor.setVisible(false);
+			Viewtutors.setVisible(false);
+			ViewSettings.setVisible(false);
+
+			sep.addClickListener(e -> subMenuWarning());
+			sep3.addClickListener(e -> subMenuGeneral());
+			sep4.addClickListener(e -> subMenuGeneral2());
+			sep5.setDisableOnClick(true);	
+			
+			
+		}else{
+			
+	
+		}
 		
-		content.addStyleName("contenido");
-		
-		loadView();
-
-		ViewGrupos = new AdminViewGroupJava();
-		ViewStudents = new AdminViewStudentJava();
-		ViewDocents = new AdminViewTeacherJava();
-		ViewWarning = new AdminViewWarningJava();
-		ViewUsers = new AdminViewUser();
-		ViewListWarnings = new AdminViewWarnings();
-		ViewCSV = new AdminViewCSVUploadJava();
-		ViewTeachersWarnings = new TeacherOwnWarningsJava();
-		Viewtutors = new AdminViewTutorJava();
-		ViewCharts = new AdminViewCharts();
-		ViewForms = new AdminViewReportsJava();
-		ViewSettings = new AdminViewSettingsJava();
-
-		content.removeAllComponents();
-		content.addComponents(ViewGrupos);
-		content.addComponents(ViewStudents);
-		content.addComponent(ViewDocents);
-		content.addComponent(ViewWarning);
-		content.addComponent(ViewUsers);
-		content.addComponent(ViewListWarnings);
-		content.addComponent(ViewCSV);
-		content.addComponent(ViewTeachersWarnings);
-		content.addComponent(Viewtutors);
-		content.addComponent(ViewCharts);
-		content.addComponent(ViewForms);
-		content.addComponent(ViewSettings);
-
-		warning.focus();
-		ViewDocents.setVisible(false);
-		ViewStudents.setVisible(false);
-		ViewCharts.setVisible(false);
-		ViewForms.setVisible(false);
-		ViewGrupos.setVisible(false);
-		ViewUsers.setVisible(false);
-		ViewListWarnings.setVisible(false);
-		ViewCSV.setVisible(false);
-		ViewTeachersWarnings.setVisible(false);
-		mevesAmonestacions.setVisible(false);
-		groupsTutor.setVisible(false);
-		Viewtutors.setVisible(false);
-		ViewSettings.setVisible(false);
-
-		sep.addClickListener(e -> subMenuWarning());
-		sep3.addClickListener(e -> subMenuGeneral());
-		sep4.addClickListener(e -> subMenuGeneral2());
-		sep5.setDisableOnClick(true);
 
 	}
 
@@ -235,7 +212,7 @@ public class AdminView extends MainView implements View {
 		informes.setVisible(true);
 		usuaris.setVisible(true);
 		charts.setVisible(true);
-		setWellcome();
+		// setWellcome();
 		setLogo();
 
 		// AMONESTAR
@@ -267,8 +244,8 @@ public class AdminView extends MainView implements View {
 
 		// CHARTS
 		charts.addClickListener(e -> ViewCharts());
-		
-		//FORMS
+
+		// FORMS
 		informes.addClickListener(e -> ViewReports());
 
 		// CONFIGURACIO
@@ -278,8 +255,6 @@ public class AdminView extends MainView implements View {
 		logout.addClickListener(e -> logoutActions());
 
 	} // end loadView
-
-	
 
 	private void setLogo() throws IOException {
 		// TODO Auto-generated method stub
@@ -351,7 +326,6 @@ public class AdminView extends MainView implements View {
 		ViewSettings.setVisible(false);
 		ViewForms.setVisible(false);
 
-
 	}
 
 	private void ViewTeachersWarnings() {
@@ -370,7 +344,6 @@ public class AdminView extends MainView implements View {
 		ViewTeachersWarnings.setVisible(true);
 		ViewSettings.setVisible(false);
 		ViewForms.setVisible(false);
-
 
 	}
 
@@ -392,7 +365,6 @@ public class AdminView extends MainView implements View {
 		ViewSettings.setVisible(false);
 		ViewForms.setVisible(false);
 
-
 	}
 
 	private void viewUsers() {
@@ -413,13 +385,12 @@ public class AdminView extends MainView implements View {
 		ViewSettings.setVisible(false);
 		ViewForms.setVisible(false);
 
-
 	}
 
 	private void viewWarning() {
 		// TODO Auto-generated method stub
 
-		//ViewWarning.clear();
+		// ViewWarning.clear();
 		ViewWarning.setVisible(true);
 		ViewGrupos.setVisible(false);
 		ViewDocents.setVisible(false);
@@ -432,7 +403,6 @@ public class AdminView extends MainView implements View {
 		ViewCharts.setVisible(false);
 		ViewSettings.setVisible(false);
 		ViewForms.setVisible(false);
-
 
 	}
 
@@ -452,7 +422,6 @@ public class AdminView extends MainView implements View {
 		ViewCharts.setVisible(false);
 		ViewSettings.setVisible(false);
 		ViewForms.setVisible(false);
-
 
 	}
 
@@ -474,7 +443,6 @@ public class AdminView extends MainView implements View {
 		ViewSettings.setVisible(false);
 		ViewForms.setVisible(false);
 
-
 	}
 
 	private void viewStudents() {
@@ -494,7 +462,6 @@ public class AdminView extends MainView implements View {
 		ViewSettings.setVisible(false);
 		ViewForms.setVisible(false);
 
-
 	}
 
 	public static void viewCsv() {
@@ -513,11 +480,10 @@ public class AdminView extends MainView implements View {
 		ViewSettings.setVisible(false);
 		ViewForms.setVisible(false);
 
-
 	}
-	
+
 	private static void ViewReports() {
-		
+
 		ViewStudents.setVisible(false);
 		ViewGrupos.setVisible(false);
 		ViewDocents.setVisible(false);
@@ -531,7 +497,6 @@ public class AdminView extends MainView implements View {
 		ViewSettings.setVisible(false);
 		ViewForms.setVisible(true);
 
-		
 	}
 
 	public void logoutActions() {
@@ -597,18 +562,17 @@ public class AdminView extends MainView implements View {
 		return win;
 
 	}
-	
-	public void logout(){
-		
+
+	public void logout() {
+
 		getUI().getNavigator().navigateTo(LoginView.NAME);
-		getUI().getCurrent().getSession().setAttribute("id",null);
-		getUI().getCurrent().getSession().setAttribute("user",null);
+		getUI().getCurrent().getSession().setAttribute("id", null);
+		getUI().getCurrent().getSession().setAttribute("user", null);
 		getUI().getCurrent().getSession().close();
 		notif("Sessió tancada correctament!");
 
 	}
 
-	
 	public void notif(String mensaje) {
 
 		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
@@ -623,15 +587,21 @@ public class AdminView extends MainView implements View {
 	private void setWellcome() {
 		// TODO Auto-generated method stub
 		ma = new UserJPAManager();
-		try{
-			int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
-			wellcome.addStyleName("wellcome");
-			wellcome.setCaption("Benvingut " + ma.getNomTutorHeader(id));
-		}catch(NullPointerException e){
-			
-			getUI().getNavigator().navigateTo(LoginView.NAME);
-			
-		}
+
+		//
+		// if(getUI().getCurrent().getSession().getAttribute("id").toString() ==
+		// null){
+		//
+		// getUI().getCurrent().getSession().close();
+		// //getUI().getUI().getNavigator().navigateTo(lOGIN);
+		//
+		// }else{
+
+		int id2 = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
+		wellcome.addStyleName("wellcome");
+		wellcome.setCaption("Benvingut " + ma.getNomTutorHeader(id2));
+
+		// }
 		// TODO Auto-generated method stub
 
 	}
