@@ -67,6 +67,9 @@ public class AdminViewCharts extends MainContentView {
 	FinalReports finalReports;
 
 	public AdminViewCharts() throws ReadOnlyException, ConversionException, IOException {
+		
+		
+		
 		buttonsSettings();
 		panel = PanelProp();
 		vertical = VerticalProp();	
