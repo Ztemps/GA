@@ -746,9 +746,9 @@ public class AdminViewWarningJava extends MainContentView {
 		subjects.add("Tecnologia");
 
 		
+		
 		amonestacioForm.comboSubject.setFilteringMode(FilteringMode.CONTAINS);
 		amonestacioForm.comboSubject.setImmediate(true);
-		
 		
 		amonestacioForm.comboSubject.setNullSelectionAllowed(true);
 		amonestacioForm.comboSubject.setDescription(
