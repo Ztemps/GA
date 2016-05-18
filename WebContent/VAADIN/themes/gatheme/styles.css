@@ -3007,7 +3007,7 @@ div.v-layout.v-horizontal.v-widget {
 	-webkit-transition: color 140ms;
 	-moz-transition: color 140ms;
 	transition: color 140ms;
-	position: absolute;
+	position: relative;
 	width: 37px;
 	text-align: center;
 	top: 50%;
