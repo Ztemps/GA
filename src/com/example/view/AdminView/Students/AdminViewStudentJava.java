@@ -353,6 +353,8 @@ public class AdminViewStudentJava extends MainContentView {
 		bRegister.setVisible(false);
 		bAdd.setEnabled(true);
 		clearTxt.setVisible(false);
+		alumneformEdit.curs.setVisible(false);
+		alumneformAdd.curs.setVisible(false);
 
 	}
 
