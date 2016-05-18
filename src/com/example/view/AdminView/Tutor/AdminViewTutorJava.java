@@ -75,6 +75,7 @@ public class AdminViewTutorJava extends MainContentView {
 		bRegister.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonEdit.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		bDelete.setEnabled(false);
+		bDelete.setVisible(false);
 		buttonEdit.setEnabled(false);
 		bRegister.setVisible(false);
 		clearTxt.setVisible(false);
@@ -104,7 +105,7 @@ public class AdminViewTutorJava extends MainContentView {
 
 			@Override
 			public void select(SelectionEvent event) {
-				bDelete.setVisible(true);
+				bDelete.setVisible(false);
 				buttonEdit.setVisible(true);
 			}
 		});
@@ -116,7 +117,7 @@ public class AdminViewTutorJava extends MainContentView {
 			public void select(SelectionEvent event) {
 				bAdd.setEnabled(true);
 				buttonEdit.setEnabled(true);
-				bDelete.setEnabled(true);
+				bDelete.setEnabled(false);
 
 			}
 		});

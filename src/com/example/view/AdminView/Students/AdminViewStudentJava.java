@@ -170,17 +170,16 @@ public class AdminViewStudentJava extends MainContentView {
 		Object curs = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("curs");
 		Object grup = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("grup");
 
-		String fecha =ConverterDates.converterDate2(data.toString());
+		String fecha = ConverterDates.converterDate2(data.toString());
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		Date date=null;
+		Date date = null;
 		try {
 			date = formatter.parse(fecha);
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		
+
 		alumneformEdit.fecha.setValue(date);
 
 		alumneformEdit.nom.setValue(name.toString());
@@ -316,8 +315,6 @@ public class AdminViewStudentJava extends MainContentView {
 		return txtSearch;
 	}
 
-	
-
 	private void clearEditForm() {
 		alumneformEdit.nom.clear();
 		alumneformEdit.cognom.clear();
@@ -349,6 +346,7 @@ public class AdminViewStudentJava extends MainContentView {
 		bRegister.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonEdit.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		bDelete.setEnabled(false);
+		bDelete.setVisible(false);
 		buttonEdit.setEnabled(false);
 		bRegister.setVisible(false);
 		bAdd.setEnabled(true);
@@ -370,16 +368,15 @@ public class AdminViewStudentJava extends MainContentView {
 		// grid.addRow(new ThemeResource("no_user.png"));
 
 		// grid.setIcon(new ThemeResource("no_user.png"));
-	
 
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void select(SelectionEvent event) {
-				//bAdd.setEnabled(true);
+				// bAdd.setEnabled(true);
 				buttonEdit.setEnabled(true);
-				bDelete.setEnabled(true);
+				bDelete.setEnabled(false);
 
 			}
 		});

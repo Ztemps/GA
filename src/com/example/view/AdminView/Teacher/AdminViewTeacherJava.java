@@ -320,6 +320,7 @@ public class AdminViewTeacherJava extends MainContentView {
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);
 		bRegister.setVisible(false);
+		bDelete.setVisible(false);
 		bAdd.setEnabled(true);
 		clearTxt.setVisible(false);
 
@@ -343,7 +344,8 @@ public class AdminViewTeacherJava extends MainContentView {
 				// TODO Auto-generated method stub
 				bAdd.setEnabled(true);
 				buttonEdit.setEnabled(true);
-				bDelete.setEnabled(true);
+				bDelete.setEnabled(false);
+				
 
 			}
 		});
