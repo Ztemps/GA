@@ -1,9 +1,12 @@
 package com.example.view.AdminView.Students;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.EntityManager;
 
+import com.example.Dates.ConverterDates;
 import com.example.Entities.Group;
 import com.example.Entities.Student;
 import com.example.Logic.Cursos;
@@ -168,15 +171,18 @@ public class AdminViewStudentJava extends MainContentView {
 		Object curs = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("curs");
 		Object grup = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("grup");
 
-		// SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-		// Date Fecha=null;
-		// try {
-		// Fecha = formatter.parse(data.toString());
-		// } catch (ParseException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		// alumneformEdit.fecha.setValue(Fecha);
+		String fecha =ConverterDates.converterDate2(data.toString());
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		Date date=null;
+		try {
+			date = formatter.parse(fecha);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		alumneformEdit.fecha.setValue(date);
 
 		alumneformEdit.nom.setValue(name.toString());
 		alumneformEdit.cognom.setValue(surname.toString());
