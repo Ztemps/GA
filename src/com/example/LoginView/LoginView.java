@@ -199,40 +199,6 @@ public class LoginView extends LoginViewDesign implements View {
 		String passwordhash = hbinary.marshal(md.digest(userpassword.getBytes())).toLowerCase();
 		System.out.println("Encriptada: "+ passwordhash);
 
-
-		/*try {
-			SecretKey key = KeyGenerator.getInstance("DES").generateKey();
-			try {
-				EncryptDecryptStringWithDES.ecipher = Cipher.getInstance("DES");
-				EncryptDecryptStringWithDES.ecipher.init(Cipher.ENCRYPT_MODE, key);
-			} catch (NoSuchPaddingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvalidKeyException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		 String encrypted = EncryptDecryptStringWithDES.encrypt(userpassword);
-		 
-		 System.out.println("PAAAASSSSS" +encrypted );*/
-		
-		/*
-		 * MANERA DE HACERLO!!
-		 * 
-		 * SecretKey key = KeyGenerator.getInstance("DES").generateKey();
-			byte[] encoded = key.getEncoded();
-			// save this somewhere
-		 * SAVE BYTE IN FILE FileUtils.writeByteArrayToFile(new File("pathname"), myByteArray)*/
-		
-		/*PARA RECUPERARLA
-		 * 
-		 * byte[] encoded = // load it again
-			SecretKey key = new SecretKeySpec(encoded, "DES");*/
 		try {
 			// Mientras el resultset tenga resultados, cogemos los valores y
 			// creamos un usuari con los valores de la consulta para

@@ -75,9 +75,8 @@ public class AdminView extends MainView implements View {
 		if (getUI().getCurrent().getSession().getAttribute("login") == null) {
 			
 			getUI().getSession().setAttribute("user", "");
-			getUI().getSession().setAttribute("id", "");
-			
-			getUI().getPage().setLocation("http://localhost:8082/GA");
+			getUI().getSession().setAttribute("id", "");	
+			getUI().getPage().setLocation("/GA");
 			
 		}else{
 			
