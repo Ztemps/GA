@@ -40,15 +40,16 @@ public class AdminViewSettingsJava extends MainContentView {
 	}
 
 	private void ButtonSettings() {
-
+		
 		txtTitle.addStyleName("main-title");
 		txtTitle.setValue("Configuració");
 		adminsettings = new AdminViewSettings();
 		adminsettings.setVisible(true);
 		vHorizontalMain.addComponent(adminsettings);
 		vHorizontalMain.setComponentAlignment(adminsettings, Alignment.MIDDLE_CENTER);
-
-		adminsettings.checkEmailTutors.addStyleName("settings");
+		adminsettings.setStyleName("whiteBackground");
+		//adminsettings.checkEmailTutors.addStyleName("settings");
+		adminsettings.checkEmailTutors.setVisible(false);
 		adminsettings.checkEmailPares.addStyleName("settings");
 		adminsettings.checkWhatsPares.addStyleName("settings");
 		adminsettings.dataIniciCurs.addStyleName("settings");
@@ -57,7 +58,7 @@ public class AdminViewSettingsJava extends MainContentView {
 		adminsettings.dataFinaltrimestre2.addStyleName("settings");
 		adminsettings.dataInicitrimestre2.addStyleName("settings");
 		adminsettings.dataInicitrimestre3.addStyleName("settings");
-
+		
 		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
 		bAdd.setVisible(true);
