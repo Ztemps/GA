@@ -198,9 +198,9 @@ public class AdminViewWarningJava extends MainContentView {
 					window.close();
 					windowpdf.close();
 					// SENDTELEGRAM
-//					sendTel = new SendTelegram();
-//					String contacteProba = "Gerard_Paulino";
-//					sendTel.sendWarning(contacteProba, timewarning[0]);
+					sendTel = new SendTelegram();
+					String contacteProba = "Gerard_Paulino";
+					sendTel.sendWarning(contacteProba, timewarning[0]);
 
 				}
 
@@ -271,7 +271,7 @@ public class AdminViewWarningJava extends MainContentView {
 
 	private void buttonsSettings() {
 		// TODO Auto-generated method stub
-
+		
 		bAdd.setStyleName(ValoTheme.BUTTON_ICON_ALIGN_RIGHT);
 		bAdd.setIcon(FontAwesome.INFO);
 		horizontalTitle.addStyleName("horizontal-title");
@@ -289,7 +289,7 @@ public class AdminViewWarningJava extends MainContentView {
 		buttonEdit.setVisible(false);
 		bRegister.setVisible(false);
 		bAdd.setEnabled(false);
-
+		clearTxt.setVisible(false);
 	}
 
 	public void notif(String mensaje) {
@@ -306,7 +306,7 @@ public class AdminViewWarningJava extends MainContentView {
 
 	private TextField filterTextProperties() {
 		// TODO Auto-generated method stub
-		txtSearch.setInputPrompt("Filtra alumno por nombre");
+		txtSearch.setInputPrompt("Filtra per cognom");
 		txtSearch.addTextChangeListener(new TextChangeListener() {
 
 			/**
