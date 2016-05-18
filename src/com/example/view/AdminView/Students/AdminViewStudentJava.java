@@ -66,7 +66,6 @@ public class AdminViewStudentJava extends MainContentView {
 		WindowPropertiesEditStudent();
 		PopulateNativeSelect();
 		Listeners();
-		ClearText();
 		vHorizontalMain.addComponent(GridProperties());
 
 	}
@@ -317,18 +316,7 @@ public class AdminViewStudentJava extends MainContentView {
 		return txtSearch;
 	}
 
-	private void ClearText() {
-
-		clearTxt.setDescription("Limpiar contenido actual...");
-		clearTxt.setIcon(FontAwesome.TIMES);
-		clearTxt.addClickListener(e -> {
-			txtSearch.clear();
-
-		});
-
-		clearTxt.setIcon(FontAwesome.TIMES);
-
-	}
+	
 
 	private void clearEditForm() {
 		alumneformEdit.nom.clear();
@@ -364,6 +352,7 @@ public class AdminViewStudentJava extends MainContentView {
 		buttonEdit.setEnabled(false);
 		bRegister.setVisible(false);
 		bAdd.setEnabled(true);
+		clearTxt.setVisible(false);
 
 	}
 
