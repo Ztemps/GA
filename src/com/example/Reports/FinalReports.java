@@ -590,7 +590,7 @@ public class FinalReports {
 		return expulsions1;
 	}
 
-	private static ArrayList<Date> readFile() throws ReadOnlyException, ConversionException, IOException {
+	public static ArrayList<Date> readFile() throws ReadOnlyException, ConversionException, IOException {
 		FileReader reader;
 		String path2 = null;
 		File currDir = new File(".");

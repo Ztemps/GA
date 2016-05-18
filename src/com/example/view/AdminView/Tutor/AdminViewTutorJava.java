@@ -35,7 +35,6 @@ public class AdminViewTutorJava extends MainContentView {
 
 		buttonsSettings();
 		filterTextProperties();
-		ClearText();
 		vHorizontalMain.addComponent(GridProperties());
 
 	}
@@ -64,18 +63,6 @@ public class AdminViewTutorJava extends MainContentView {
 		return txtSearch;
 	}
 
-	private void ClearText() {
-
-		clearTxt.setDescription("Limpiar contenido actual...");
-		clearTxt.setIcon(FontAwesome.TIMES);
-		clearTxt.addClickListener(e -> {
-			txtSearch.clear();
-
-		});
-
-		clearTxt.setIcon(FontAwesome.TIMES);
-
-	}
 
 	private void buttonsSettings() {
 
@@ -90,6 +77,8 @@ public class AdminViewTutorJava extends MainContentView {
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);
 		bRegister.setVisible(false);
+		clearTxt.setVisible(false);
+
 
 	}
 

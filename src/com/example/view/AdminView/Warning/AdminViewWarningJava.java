@@ -292,6 +292,7 @@ public class AdminViewWarningJava extends MainContentView {
 		bRegister.setVisible(false);
 		bAdd.setEnabled(false);
 		clearTxt.setVisible(false);
+		
 	}
 
 	public void notif(String mensaje) {

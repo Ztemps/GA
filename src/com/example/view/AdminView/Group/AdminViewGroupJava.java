@@ -70,7 +70,7 @@ public class AdminViewGroupJava extends MainContentView {
 		WindowPropertiesEditGroup();
 		WindowPropertiesAddGroup();
 		Listeners();
-		ClearText();
+
 		filterTextProperties();
 
 		vHorizontalMain.addComponent(GridProperties());
@@ -286,18 +286,7 @@ public class AdminViewGroupJava extends MainContentView {
 		return txtSearch;
 	}
 
-	private void ClearText() {
-
-		clearTxt.setDescription("Limpiar contenido actual...");
-		clearTxt.setIcon(FontAwesome.TIMES);
-		clearTxt.addClickListener(e -> {
-			txtSearch.clear();
-
-		});
-
-		clearTxt.setIcon(FontAwesome.TIMES);
-
-	}
+	
 
 	private void clearEditForm() {
 		grupFormEdit.txtGrup.clear();
@@ -328,6 +317,7 @@ public class AdminViewGroupJava extends MainContentView {
 		buttonEdit.setEnabled(false);
 		bRegister.setVisible(false);
 		bAdd.setEnabled(true);
+		clearTxt.setVisible(false);
 
 	}
 

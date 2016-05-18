@@ -68,12 +68,6 @@ public class AdminViewUser extends MainContentView {
 
 			}
 		});
-		clearTxt.setDescription("Limpiar contenido actual...");
-		clearTxt.addClickListener(e -> {
-			txtSearch.clear();
-
-		});
-		clearTxt.setIcon(FontAwesome.TIMES);
 
 		buttonEdit.addClickListener(new ClickListener() {
 
@@ -263,6 +257,7 @@ public class AdminViewUser extends MainContentView {
 		buttonEdit.setEnabled(false);
 		bRegister.setVisible(false);
 		bAdd.setEnabled(true);
+		clearTxt.setVisible(false);
 
 		bAdd.setCaption("Donar d'alta");
 		bDelete.setCaption("Donar de baixa");

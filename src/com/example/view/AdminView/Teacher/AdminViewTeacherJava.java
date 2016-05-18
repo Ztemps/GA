@@ -65,7 +65,6 @@ public class AdminViewTeacherJava extends MainContentView {
 		WindowPropertiesAddTeacher();
 		WindowPropertiesEditTeacher();
 		listeners();
-		ClearText();
 		PopulateNativeSelect();
 		vHorizontalMain.addComponent(GridProperties());
 
@@ -321,6 +320,8 @@ public class AdminViewTeacherJava extends MainContentView {
 		buttonEdit.setEnabled(false);
 		bRegister.setVisible(false);
 		bAdd.setEnabled(true);
+		clearTxt.setVisible(false);
+
 	}
 
 	public Grid GridProperties() {
@@ -390,18 +391,6 @@ public class AdminViewTeacherJava extends MainContentView {
 
 	}
 
-	private void ClearText() {
-
-		clearTxt.setDescription("Limpiar contenido actual...");
-		clearTxt.setIcon(FontAwesome.TIMES);
-		clearTxt.addClickListener(e -> {
-			txtSearch.clear();
-
-		});
-
-		clearTxt.setIcon(FontAwesome.TIMES);
-
-	}
 
 	private void PopulateNativeSelect() {
 
