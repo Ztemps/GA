@@ -271,7 +271,7 @@ public class AdminViewWarningJava extends MainContentView {
 
 	private void buttonsSettings() {
 		// TODO Auto-generated method stub
-
+		
 		bAdd.setStyleName(ValoTheme.BUTTON_ICON_ALIGN_RIGHT);
 		bAdd.setIcon(FontAwesome.INFO);
 		horizontalTitle.addStyleName("horizontal-title");
