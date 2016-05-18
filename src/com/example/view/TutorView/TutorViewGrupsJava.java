@@ -60,6 +60,7 @@ public class TutorViewGrupsJava extends MainContentView {
 
 	private Query query = null;
 
+	
 	public TutorViewGrupsJava() {
 		// TODO Auto-generated constructor stub
 
@@ -237,10 +238,17 @@ public class TutorViewGrupsJava extends MainContentView {
 	public Grid gridProperties() {
 
 		students = JPAContainerFactory.make(Student.class, em);
+		int id=0;
+		String grupTutor="";
+		try{
+			id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
+			grupTutor = MA.getGroupTutor(id);
+		}catch(NullPointerException e){
+			
+		}
+		
 
-		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 
-		String grupTutor = MA.getGroupTutor(id);
 
 		Filter filter = new Compare.Equal("grup", grupTutor);
 		students.addContainerFilter(filter);

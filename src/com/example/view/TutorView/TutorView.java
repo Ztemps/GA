@@ -28,6 +28,7 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
+import com.vaadin.server.VaadinService;
 import com.vaadin.shared.Position;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
@@ -55,7 +56,6 @@ public class TutorView extends MainView implements View {
 
 	public TutorView() throws MalformedURLException, DocumentException, IOException, SQLException {
 
-		setWellcome();
 		setLogo();
 		// Side menu button options
 		vistaAmonestacion = new TeacherViewWarningJava();
@@ -130,23 +130,33 @@ public class TutorView extends MainView implements View {
 		// TODO Auto-generated method stub
 		ma = new UserJPAManager();
 
-		int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
-		wellcome.setCaption("Benvingut " + ma.getNomTutorHeader(id));
+		try {
+
+			int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
+			wellcome.setCaption("Benvingut " + ma.getNomTutorHeader(id));
+
+		} catch (NullPointerException e) {
+
+		}
 
 	}
 
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
-		// if((getSession().getAttribute("user")) == null){
-		//
-		// getUI().getNavigator().navigateTo(LoginView.NAME);//
-		//
-		// } else {
-		//
-		// getUI().getNavigator().navigateTo(ProfessorView.NAME);//
-		//
-		// }
+
+		// en caso de no haberse logeado anteriormente se mandara a la vista
+		// principal(login)
+		if (getUI().getCurrent().getSession().getAttribute("login") == null) {
+			// getUI().getSession().setAttribute("user", "");
+			getUI().getSession().setAttribute("id", 0);
+			getUI().getPage().setLocation("http://localhost:8082/GA");
+			VaadinService.getCurrentRequest().getWrappedSession().invalidate();
+
+		} else {
+
+			setWellcome();
+		}
 
 	}
 
@@ -229,6 +239,7 @@ public class TutorView extends MainView implements View {
 		return win;
 
 	}
+
 	public void logout() {
 
 		getUI().getNavigator().navigateTo(LoginView.NAME);
@@ -238,6 +249,7 @@ public class TutorView extends MainView implements View {
 		notif("Sessió tancada correctament!");
 
 	}
+
 	public void notif(String mensaje) {
 
 		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
@@ -248,7 +260,7 @@ public class TutorView extends MainView implements View {
 		notif.setDelayMsec(500);
 		notif.setPosition(Position.TOP_CENTER);
 	}
-	
+
 	private void setLogo() throws IOException {
 		// TODO Auto-generated method stub
 		File currDir = new File(".");

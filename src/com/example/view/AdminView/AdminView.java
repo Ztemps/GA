@@ -68,24 +68,27 @@ public class AdminView extends MainView implements View {
 	private UserJPAManager ma;
 	private static AdminViewTutorJava Viewtutors;
 	private BufferedReader br = null;
-	private boolean login = false;
 
 	@Override
 	public void enter(ViewChangeEvent event) {
 
 		if (getUI().getCurrent().getSession().getAttribute("login") == null) {
+			
+			getUI().getSession().setAttribute("user", "");
+			getUI().getSession().setAttribute("id", "");
+			
 			getUI().getPage().setLocation("http://localhost:8082/GA");
-
+			
 		}else{
 			
-			login = true;
+			setWellcome();
 		}
 
 	}
 
 	public AdminView() throws IOException, DocumentException, SQLException {
 
-		if(login){
+	
 			
 			content.addStyleName("contenido");
 
@@ -139,10 +142,6 @@ public class AdminView extends MainView implements View {
 			sep5.setDisableOnClick(true);	
 			
 			
-		}else{
-			
-	
-		}
 		
 
 	}
@@ -588,21 +587,10 @@ public class AdminView extends MainView implements View {
 		// TODO Auto-generated method stub
 		ma = new UserJPAManager();
 
-		//
-		// if(getUI().getCurrent().getSession().getAttribute("id").toString() ==
-		// null){
-		//
-		// getUI().getCurrent().getSession().close();
-		// //getUI().getUI().getNavigator().navigateTo(lOGIN);
-		//
-		// }else{
-
 		int id2 = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
 		wellcome.addStyleName("wellcome");
 		wellcome.setCaption("Benvingut " + ma.getNomTutorHeader(id2));
 
-		// }
-		// TODO Auto-generated method stub
 
 	}
 }

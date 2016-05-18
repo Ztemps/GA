@@ -32,6 +32,7 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
+import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.Position;
 import com.vaadin.ui.Alignment;
@@ -55,7 +56,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 public class TeacherView extends MainView implements View {
 
-	public static final String NAME = "professor";
+	public static final String NAME = "Professor";
 
 	TeacherViewWarningJava vistaAmonestacion;
 	TeacherOwnWarningsJava vistaOwn;
@@ -83,7 +84,6 @@ public class TeacherView extends MainView implements View {
 
 	private void Items() throws IOException {
 
-		setWellcome();
 		setLogo();
 		students.setVisible(false);
 		teachers.setVisible(false);
@@ -132,9 +132,15 @@ public class TeacherView extends MainView implements View {
 	private void setWellcome() {
 		// TODO Auto-generated method stub
 		ma = new UserJPAManager();
-		int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
-		// TODO Auto-generated method stub
-		wellcome.setCaption("Benvingut " + ma.getNomTutorHeader(id));
+		try{
+			int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
+			// TODO Auto-generated method stub
+			wellcome.setCaption("Benvingut " + ma.getNomTutorHeader(id));
+			
+		}catch(NullPointerException e){
+			
+		}
+		
 	}
 
 	public void logoutActions() {
@@ -145,16 +151,16 @@ public class TeacherView extends MainView implements View {
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
-		// if((getSession().getAttribute("user")) == null){
-		//
-		// getUI().getNavigator().navigateTo(LoginView.NAME);//
-		//
-		// } else {
-		//
-		// getUI().getNavigator().navigateTo(ProfessorView.NAME);//
-		//
-		// }
+		// en caso de no haberse logeado anteriormente se mandara a la vista principal(login)
 
+		if (getUI().getCurrent().getSession().getAttribute("login") == null) {
+			getUI().getSession().setAttribute("id", 0);
+			getUI().getPage().setLocation("http://localhost:8082/GA");
+			VaadinService.getCurrentRequest().getWrappedSession().invalidate();
+		}else{
+			
+			setWellcome();
+		}
 	}
 
 	public Window DeleteSubWindows() {
