@@ -1,9 +1,12 @@
 package com.example.view.AdminView.Teacher;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NonUniqueResultException;
+
+import org.postgresql.util.PSQLException;
 
 import com.example.Entities.Group;
 import com.example.Entities.Student;
@@ -93,21 +96,41 @@ public class AdminViewTeacherJava extends MainContentView {
 			@Override
 			public void buttonClick(ClickEvent event) {
 
-				addTeacher();
+				try {
+					addTeacher();
+				} catch (PSQLException e) {
+					// TODO Auto-generated catch block
+					notif("El correo ja existeix");
+				}
 			}
 
 		});
 	}
 
-	private void addTeacher() {
+	private void addTeacher() throws PSQLException {
 		professorAddForm.aceptarButton.addClickListener(new ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
 
-				try {
+				Teacher teacher = getTeacherAdd();
+				MA = new TeachersJPAManager();
 
-					Teacher teacher = getTeacherAdd();
+				List<Teacher> lista = MA.getNoms();
+				MA.closeTransaction();
+
+				boolean noexiste = true;
+				System.out.println("tamaño: "+lista.size());
+				for (int i = 0; i < lista.size(); i++) {
+					System.out.println(lista.get(i).toString());
+					if (lista.get(i).getEmail().equals(teacher.getEmail())) {
+						notif("El correo ja esta en us");
+						noexiste = false;
+					}
+				}
+
+				if (noexiste) {
+
 					professorAddForm.insertDocent(teacher);
 					reloadGrid();
 					windowAdd.close();
@@ -121,11 +144,6 @@ public class AdminViewTeacherJava extends MainContentView {
 					clearAddForm();
 
 					notif("Professor creat correctament");
-
-				} catch (NullPointerException e) {
-
-					Notification.show("Omple els camps obligatoris", Notification.TYPE_ERROR_MESSAGE);
-
 				}
 
 			}
@@ -165,31 +183,23 @@ public class AdminViewTeacherJava extends MainContentView {
 		professorEditForm.cognoms.setValue(cognoms.toString());
 		professorEditForm.email.setValue(email.toString());
 
-
 		professorEditForm.aceptarButton.addClickListener(new ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				try {
 
-					MA = new TeachersJPAManager();
-					Teacher teacher = getTeacherEdit();
-					MA.updateTeacher(teacher);
-					MA.closeTransaction();
-					reloadGrid();
-					int fila = Integer.parseInt(id.toString());
-					windowEdit.close();
-					SingleSelectionModel m = (SingleSelectionModel) grid.getSelectionModel();
-					m.select(fila);
-					grid.scrollTo(fila);
-					clearEditForm();
-					notif("Professor editat correctament");
-
-				} catch (NullPointerException e) {
-
-					Notification.show("Omple els camps obligatoris", Notification.TYPE_ERROR_MESSAGE);
-
-				}
+				MA = new TeachersJPAManager();
+				Teacher teacher = getTeacherEdit();
+				MA.updateTeacher(teacher);
+				MA.closeTransaction();
+				reloadGrid();
+				int fila = Integer.parseInt(id.toString());
+				windowEdit.close();
+				SingleSelectionModel m = (SingleSelectionModel) grid.getSelectionModel();
+				m.select(fila);
+				grid.scrollTo(fila);
+				clearEditForm();
+				notif("Professor editat correctament");
 
 			}
 
@@ -227,11 +237,20 @@ public class AdminViewTeacherJava extends MainContentView {
 
 	private Teacher getTeacherAdd() {
 
-		String nom = professorAddForm.nom.getValue().toString();
-		String cognom = professorAddForm.cognoms.getValue().toString();
-		String email = professorAddForm.email.getValue().toString();
+		Teacher tc = null;
+		if (professorAddForm.nom.getValue().toString() == "" || professorAddForm.cognoms.getValue().toString() == ""
+				|| professorAddForm.email.getValue().toString() == "") {
 
-		Teacher tc = new Teacher(nom, cognom, email);
+			notif("Omple els camps obligatoris");
+
+		} else {
+
+			String nom = professorAddForm.nom.getValue().toString();
+			String cognom = professorAddForm.cognoms.getValue().toString();
+			String email = professorAddForm.email.getValue().toString();
+			tc = new Teacher(nom, cognom, email);
+
+		}
 
 		return tc;
 	}
