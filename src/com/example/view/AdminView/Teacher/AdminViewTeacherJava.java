@@ -284,6 +284,7 @@ public class AdminViewTeacherJava extends MainContentView {
 				// Set new filter for the "Name" column
 				filter = new SimpleStringFilter("cognoms", event.getText(), true, false);
 				f.addContainerFilter(filter);
+				
 			}
 		});
 		return txtSearch;
