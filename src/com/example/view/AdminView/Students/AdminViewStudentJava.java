@@ -293,7 +293,7 @@ public class AdminViewStudentJava extends MainContentView {
 	}
 
 	private TextField filterTextProperties() {
-		txtSearch.setInputPrompt("Filtra cognom alumne");
+		txtSearch.setInputPrompt("Filtra per cognom");
 		txtSearch.addTextChangeListener(new TextChangeListener() {
 
 			SimpleStringFilter filter = null;

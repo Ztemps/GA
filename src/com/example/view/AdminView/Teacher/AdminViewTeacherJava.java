@@ -266,7 +266,7 @@ public class AdminViewTeacherJava extends MainContentView {
 
 	private TextField filterTextProperties() {
 		// TODO Auto-generated method stub
-		txtSearch.setInputPrompt("Filtra docent cognom");
+		txtSearch.setInputPrompt("Filtra per cognom");
 		txtSearch.addTextChangeListener(new TextChangeListener() {
 
 			SimpleStringFilter filter = null;
