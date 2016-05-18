@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -103,6 +104,7 @@ public class AdminViewWarningJava extends MainContentView {
 		buttonsSettings();
 		WindowPdfProperties();
 		PopulateComboBoxProf();
+		PopulateComboBoxSubjects();
 
 		amonestacioForm.datefield.addValueChangeListener(new ValueChangeListener() {
 
@@ -596,7 +598,7 @@ public class AdminViewWarningJava extends MainContentView {
 		// TODO Auto-generated method stub
 		amonestacioForm.nom.setRequired(true);
 		amonestacioForm.cognoms.setRequired(true);
-		amonestacioForm.materia.setRequired(false);
+		amonestacioForm.comboSubject.setRequired(false);
 		amonestacioForm.circunstancia.setRequired(true);
 		amonestacioForm.tutor.setRequired(true);
 		amonestacioForm.grup.setRequired(true);
@@ -606,7 +608,7 @@ public class AdminViewWarningJava extends MainContentView {
 
 		amonestacioForm.nom.setRequiredError("El camp nom és obligatori");
 		amonestacioForm.cognoms.setRequiredError("El camp cognoms és obligatori");
-		amonestacioForm.materia.setRequiredError("El camp materia és obligatori");
+		amonestacioForm.comboSubject.setRequiredError("El camp materia és obligatori");
 		amonestacioForm.circunstancia.setRequiredError("El camp circunstancia és obligatori");
 		amonestacioForm.tutor.setRequiredError("El camp tutor és obligatori");
 		amonestacioForm.grup.setRequiredError("El camp grup és obligatori");
@@ -659,7 +661,7 @@ public class AdminViewWarningJava extends MainContentView {
 		amonestacioForm.motiu2.clear();
 		amonestacioForm.circunstancia.clear();
 		amonestacioForm.accio.clear();
-		amonestacioForm.materia.clear();
+		amonestacioForm.comboSubject.clear();
 	}
 
 	public String[] returnQuery() throws MalformedURLException, DocumentException, IOException {
@@ -718,11 +720,11 @@ public class AdminViewWarningJava extends MainContentView {
 			Notification.show("Els camps obligatoris s'han d'emplenar");
 			e.printStackTrace();
 		}
-		if ((amonestacioForm.materia.getValue().toString()).equals("")) {
+		if ((amonestacioForm.comboSubject.getValue().toString()).equals("")) {
 
 			assignatura = null;
 		} else {
-			assignatura = amonestacioForm.materia.getValue().toString();
+			assignatura = amonestacioForm.comboSubject.getValue().toString();
 		}
 
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
@@ -789,11 +791,11 @@ public class AdminViewWarningJava extends MainContentView {
 			Notification.show("Els camps obligatoris s'han d'emplenar");
 			e.printStackTrace();
 		}
-		if ((amonestacioForm.materia.getValue().toString()).equals("")) {
+		if ((amonestacioForm.comboSubject.getValue().toString()).equals("")) {
 
 			assignatura = null;
 		} else {
-			assignatura = amonestacioForm.materia.getValue().toString();
+			assignatura = amonestacioForm.comboSubject.getValue().toString();
 		}
 
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
@@ -825,6 +827,42 @@ public class AdminViewWarningJava extends MainContentView {
 
 	}
 
+	private void PopulateComboBoxSubjects(){
+		
+		List subjects = new ArrayList<>();
+		
+		subjects.add("Biologia");
+		subjects.add("Castellà");
+		subjects.add("Català");
+		subjects.add("Economia");
+		subjects.add("Educaciò Fisica");
+		subjects.add("Filosofia");
+		subjects.add("Física i química");
+		subjects.add("Geologia");
+		subjects.add("História");
+		subjects.add("Informatica");
+		subjects.add("Matemàtiques");
+		subjects.add("Música");
+		subjects.add("Religió");
+		subjects.add("Tecnologia");
+
+		
+		
+		amonestacioForm.comboSubject.setFilteringMode(FilteringMode.CONTAINS);
+		amonestacioForm.comboSubject.setImmediate(true);
+		
+		amonestacioForm.comboSubject.setNullSelectionAllowed(true);
+		amonestacioForm.comboSubject.setDescription(
+				"Llista de materies que s'imparteixen al col·legi.");
+
+		amonestacioForm.comboSubject.removeAllItems();
+
+		for (int i = 0; i < subjects.size(); i++) {
+
+			amonestacioForm.comboSubject.addItem(subjects.get(i));
+		}
+		
+	}
 	private void PopulateComboBoxProf() {
 
 		TeachersJPAManager ma = new TeachersJPAManager();

@@ -256,7 +256,8 @@ public class AdminViewUser extends MainContentView {
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);
 		bRegister.setVisible(false);
-		bAdd.setEnabled(true);
+		bAdd.setEnabled(false);
+		bAdd.setVisible(false);
 		clearTxt.setVisible(false);
 
 		bAdd.setCaption("Donar d'alta");
