@@ -619,7 +619,7 @@ public class AdminViewWarningJava extends MainContentView {
 			Notification.show("Els camps obligatoris s'han d'emplenar");
 			e.printStackTrace();
 		}
-		if ((amonestacioForm.comboSubject.getValue().toString()).equals("")) {
+		if ((String.valueOf(amonestacioForm.comboSubject.getValue()).equals( "null"))) {
 
 			assignatura = null;
 		} else {
