@@ -42,6 +42,7 @@ import com.vaadin.shared.Position;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -507,8 +508,8 @@ public class AdminView extends MainView implements View {
 
 		Window win = new Window(" Tancar sessió");
 
-		win.setWidth("300");
-		win.setHeight("150");
+		win.setWidth("25%");
+		win.setHeight("15%");
 		win.setIcon(FontAwesome.CLOSE);
 		win.setDraggable(false);
 		win.setClosable(false);
@@ -518,7 +519,10 @@ public class AdminView extends MainView implements View {
 
 		Label question = new Label(" Estas segur?");
 		Button yes = new Button("Sí");
+		yes.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		Button no = new Button("No");
+		no.addStyleName(ValoTheme.BUTTON_DANGER);
+
 
 		no.addClickListener(new ClickListener() {
 

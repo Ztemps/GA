@@ -94,27 +94,6 @@ public class AdminViewWarnings extends MainContentView {
 
 	}
 
-	private void FilterGridSurName() {
-
-		cell = filterRow.getCell("cognoms");
-		// Have an input field to use for filter
-		filterField = new TextField();
-		filterField.setSizeFull();
-		filterField.setInputPrompt("Filtra per cognoms");
-		// Update filter When the filter input is changed
-		filterField.addTextChangeListener(change -> {
-			// Can't modify filters so need to replace
-			AllWarnings.removeContainerFilters(filterRow);
-
-			System.out.println(change.getText());
-			// (Re)create the filter if necessary
-			if (!change.getText().isEmpty())
-				
-				AllWarnings.addContainerFilter(new SimpleStringFilter("cognoms", change.getText(), true, false));
-
-		});
-		cell.setComponent(filterField);
-	}
 
 	private String getItemNomCognomSelected() {
 
@@ -170,8 +149,7 @@ public class AdminViewWarnings extends MainContentView {
 
 			}
 		});
-		filterRow = grid.appendHeaderRow();
-		FilterGridSurName();
+		
 		return grid;
 	}
 

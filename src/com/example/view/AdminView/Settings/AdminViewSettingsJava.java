@@ -18,6 +18,7 @@ import com.vaadin.data.Property.ReadOnlyException;
 import com.vaadin.data.util.converter.Converter.ConversionException;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.DateField;
+import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
@@ -63,6 +64,7 @@ public class AdminViewSettingsJava extends MainContentView {
 		clearTxt.setVisible(false);
 		bAdd.setVisible(true);
 		bAdd.setCaption("Desar configuració");
+		bAdd.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		bDelete.setVisible(false);
 		buttonEdit.setVisible(false);
 		bRegister.setVisible(false);
