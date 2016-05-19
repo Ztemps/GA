@@ -311,14 +311,16 @@ public class AdminViewWarningJava extends MainContentView {
 		    // Update filter When the filter input is changed
 		    filterField.addTextChangeListener(change -> {
 		        // Can't modify filters so need to replace
-		        alumnes.removeContainerFilters(filterRow);
+		        alumnes.removeContainerFilters(AL_NOM);
 
 		        // (Re)create the filter if necessary
 		        if (! change.getText().isEmpty())
 		        	alumnes.addContainerFilter(
 		                new SimpleStringFilter(AL_NOM,
 		                    change.getText(), true, false));
+		      
 		    });
+		    
 		    cell.setComponent(filterField);
 		}
 		
@@ -332,13 +334,15 @@ public class AdminViewWarningJava extends MainContentView {
 	    // Update filter When the filter input is changed
 	    filterField.addTextChangeListener(change -> {
 	        // Can't modify filters so need to replace
-	        alumnes.removeContainerFilters(filterRow);
+	        alumnes.removeContainerFilters(AL_COGNOMS);
 
 	        // (Re)create the filter if necessary
 	        if (! change.getText().isEmpty())
 	        	alumnes.addContainerFilter(
 	                new SimpleStringFilter(AL_COGNOMS,
 	                    change.getText(), true, false));
+	        
+	  
 	    });
 	    cell.setComponent(filterField);
 	}
@@ -353,13 +357,17 @@ public class AdminViewWarningJava extends MainContentView {
 	    // Update filter When the filter input is changed
 	    filterField.addTextChangeListener(change -> {
 	        // Can't modify filters so need to replace
-	        alumnes.removeContainerFilters(filterRow);
+	        alumnes.removeContainerFilters(AL_CURS);
 
 	        // (Re)create the filter if necessary
 	        if (! change.getText().isEmpty())
 	        	alumnes.addContainerFilter(
 	                new SimpleStringFilter(AL_CURS,
 	                    change.getText(), true, false));
+	        
+	       /* if ( change.getText().isEmpty())
+	        	 alumnes.removeContainerFilters(AL_COGNOMS);*/
+	        
 	    });
 	    cell.setComponent(filterField);
 	}
@@ -374,7 +382,7 @@ public class AdminViewWarningJava extends MainContentView {
 	    // Update filter When the filter input is changed
 	    filterField.addTextChangeListener(change -> {
 	        // Can't modify filters so need to replace
-	        alumnes.removeContainerFilters(filterRow);
+	        alumnes.removeContainerFilters(AL_GRUP);
 
 	        // (Re)create the filter if necessary
 	        if (! change.getText().isEmpty())
