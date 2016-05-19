@@ -118,11 +118,13 @@ public class AdminViewWarnings extends MainContentView {
 
 	private String getItemNomCognomSelected() {
 
-		Object name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom").getValue();
-		Object surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms")
-				.getValue();
+		String name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom").getValue().toString();
+		String surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms")
+				.getValue().toString();
 
-		return name.toString() + surname.toString();
+		String nomCognom = (name.concat(" "+surname)).replaceFirst(" ", "").replaceAll(" ", "_");
+
+		return nomCognom;
 
 	}
 
@@ -151,7 +153,10 @@ public class AdminViewWarnings extends MainContentView {
 		grid = new Grid("", AllWarnings);
 		grid.setSizeFull();
 		grid.setColumns("nom", "cognoms", "grup", "materia", "data", "localitzacio");
-		grid.setContainerDataSource(AllWarnings);
+		if(AllWarnings!=null){
+			grid.setContainerDataSource(AllWarnings);
+
+		}
 		grid.setColumnReorderingAllowed(true);
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addSelectionListener(new SelectionListener() {

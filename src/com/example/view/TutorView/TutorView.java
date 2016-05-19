@@ -56,6 +56,7 @@ public class TutorView extends MainView implements View {
 
 	public TutorView() throws MalformedURLException, DocumentException, IOException, SQLException {
 
+		content.addStyleName("contenido");
 		setLogo();
 		// Side menu button options
 		vistaAmonestacion = new TeacherViewWarningJava();
@@ -133,7 +134,7 @@ public class TutorView extends MainView implements View {
 		try {
 
 			int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
-			wellcome.setCaption("Benvingut " + ma.getNomTutorHeader(id));
+			wellcome.setCaption("Benvingut/uda " + ma.getNomTutorHeader(id));
 
 		} catch (NullPointerException e) {
 

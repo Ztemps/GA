@@ -7,6 +7,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.postgresql.util.PSQLException;
+
 import com.example.Entities.Group;
 import com.example.Entities.Warning;
 import com.example.Logic.EntityManagerUtil;
@@ -66,7 +68,7 @@ public class AdminViewCharts extends MainContentView {
 	VerticalLayout vertical;
 	FinalReports finalReports;
 
-	public AdminViewCharts() throws ReadOnlyException, ConversionException, IOException {
+	public AdminViewCharts() throws ReadOnlyException, ConversionException, IOException, PSQLException {
 		
 		
 		
@@ -84,7 +86,7 @@ public class AdminViewCharts extends MainContentView {
 		//vHorizontalMain.addComponent(WarningPerTime("2016-05-08", "2016-05-08"));
 	}
 	
-	private VerticalLayout VerticalProp() throws ReadOnlyException, ConversionException, IOException{
+	private VerticalLayout VerticalProp() throws ReadOnlyException, ConversionException, IOException, PSQLException{
 		
 		vertical = new VerticalLayout();
 		vertical.setSpacing(true);
@@ -453,7 +455,7 @@ public class AdminViewCharts extends MainContentView {
 	}
 	
 	
-	public Chart WarningsPerTrim() throws ReadOnlyException, ConversionException, IOException {
+	public Chart WarningsPerTrim() throws ReadOnlyException, ConversionException, IOException,PSQLException {
 		
 		ArrayList<Date> dates = Dates();
 		

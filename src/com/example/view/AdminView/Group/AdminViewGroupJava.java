@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
+
+import org.postgresql.util.PSQLException;
 
 import com.example.Entities.Group;
 import com.example.Entities.Student;
@@ -61,7 +64,7 @@ public class AdminViewGroupJava extends MainContentView {
 	private EntityManagerUtil entman;
 	private EntityManager em;
 
-	public AdminViewGroupJava() {
+	public AdminViewGroupJava()  throws PersistenceException, PSQLException{
 		entman = new EntityManagerUtil();
 		em = entman.getEntityManager();
 		// TODO Auto-generated constructor stub

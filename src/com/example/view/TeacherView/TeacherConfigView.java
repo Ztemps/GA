@@ -31,6 +31,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -144,7 +145,11 @@ public class TeacherConfigView extends MainContentView {
 		acceptNewPass.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		acceptNewPass.setClickShortcut(KeyCode.ENTER);
 		acceptNewPass.addStyleName("settings");
-	}
+		oldPass.addStyleName("xyz");
+
+		JavaScript.getCurrent().execute(
+			    "document.getElementsByClassName('xyz')[0].setAttribute('autocomplete', 'off')");
+		}
 
 	public void ClearFields() {
 		oldPass.clear();

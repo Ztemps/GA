@@ -588,7 +588,7 @@ public class AdminView extends MainView implements View {
 
 		int id2 = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
 		wellcome.addStyleName("wellcome");
-		wellcome.setCaption("Benvingut " + ma.getNomTutorHeader(id2));
+		wellcome.setCaption("Benvingut/uda " + ma.getNomTutorHeader(id2));
 
 
 	}

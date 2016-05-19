@@ -13108,6 +13108,18 @@ div.v-layout.v-horizontal.v-widget {
     
 }
 
+.settingBackgroundTeacher{
+	
+	border-radius: 18px;
+	background-color: rgba(255, 255, 255, 0.3);
+	background: rgba(255, 255, 255, 0.8);
+	width: 100%;
+	border: 4px solid #d4d4d4;
+    border-radius: 1px;
+    padding-bottom: 30px;
+    padding:10px;
+}
+
 
 .v-slot .v-slot-csvstudent .v-align-center .v-align-middle{
 	margin-bottom: 20px;

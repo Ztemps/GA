@@ -52,7 +52,6 @@ public class TeacherOwnWarningsJava extends MainContentView {
 
 		buttonsSettings();
 		b.setCaption("PRUEBA");
-		gridProperties();
 		WindowProperties();
 		
 		
@@ -159,15 +158,15 @@ public class TeacherOwnWarningsJava extends MainContentView {
 	
 	private String getItemNomCognomSelected() {
 
-		Object name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom").getValue();
-		Object surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms").getValue();
-		nomCognoms = name.toString()+surname.toString();
-		System.out.println(nomCognoms);
-				
-		return nomCognoms;
+		String name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom").getValue().toString();
+		String surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms")
+				.getValue().toString();
+
+		String nomCognom = (name.concat(" "+surname)).replaceFirst(" ", "").replaceAll(" ", "_");
+
+		return nomCognom;
 
 	}
-	
 	private String getDateSelected(){
 		
 		Object data = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("data").getValue();

@@ -118,14 +118,7 @@ public class CSVLoader {
 		}
 
 		jpa.closeTransaction();
-
-		Notification notif = new Notification("ATENCIÓ:", "<br>Dades Carregades<br/>",
-				Notification.Type.HUMANIZED_MESSAGE, true); // Contains HTML
-
-		// Customize it
-		notif.show(Page.getCurrent());
-		notif.setDelayMsec(700);
-		notif.setPosition(Position.TOP_CENTER);
+		notif("Dades carregades correctament");
 
 	}
 
@@ -174,14 +167,19 @@ public class CSVLoader {
 		}
 		jpa2.closeTransaction();
 
-		Notification notif = new Notification("ATENCIÓ:", "<br>Dades Carregades<br/>",
-				Notification.Type.HUMANIZED_MESSAGE, true); // Contains HTML
-
-		// Customize it
-		notif.show(Page.getCurrent());
-		notif.setDelayMsec(20000);
-		notif.setPosition(Position.TOP_CENTER);
+		notif("Dades carregades correctament");
 
 	}
 
+
+	public static void notif(String mensaje) {
+
+		Notification notif = new Notification(mensaje, null, Notification.Type.HUMANIZED_MESSAGE, true); // Contains
+																												// HTML
+
+		// Customize it
+		notif.show(Page.getCurrent());
+		notif.setDelayMsec(500);
+		notif.setPosition(Position.TOP_CENTER);
+	}
 }
