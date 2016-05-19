@@ -527,7 +527,7 @@ public class generatePDF extends WarningJPAManager {
 		return cell;
 	}
 
-	public String getPath2(String fecha,String nomCognom) throws IOException {
+	public String getPath2(String nomCognom,String fecha) throws IOException {
 		File currDir = new File(".");
 		String path2 = currDir.getCanonicalPath();
 
