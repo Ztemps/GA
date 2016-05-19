@@ -82,14 +82,6 @@ public class AdminViewGroupJava extends MainContentView {
 	}
 
 	private void Listeners() {
-		buttonEdit.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-
-				editGroup();
-
-			}
-		});
 		bRegister.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -168,61 +160,6 @@ public class AdminViewGroupJava extends MainContentView {
 
 	}
 
-	private void editGroup() {
-		grupFormEdit.txtGrup.setEnabled(false);
-		UI.getCurrent().addWindow(windowEdit);
-		windowEdit.setCaption("Editar grup");
-
-		Object id = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
-		Object numAlumnes = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("max_alumnes");
-
-		grupFormEdit.txtGrup.setValue(id.toString());
-		grupFormEdit.txtMaxAl.setValue(numAlumnes.toString());
-
-		grupFormEdit.aceptarButton.addClickListener(new ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				try {
-
-					MA = new GroupJPAManager();
-					Group grup = getGroupEdit();
-					MA.updateGroup(grup);
-					MA.closeTransaction();
-					reloadGrid();
-					String fila = id.toString();
-					windowEdit.close();
-					SingleSelectionModel m = (SingleSelectionModel) grid.getSelectionModel();
-					m.select(fila);
-					grid.scrollTo(fila);
-					clearEditForm();
-
-					notif("Grup modificat correctament");
-
-				} catch (NullPointerException e) {
-
-					notif("Omple els camps obligatoris");
-
-				}
-
-			}
-
-		});
-
-		grupFormEdit.cancelarButton.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				windowEdit.close();
-			}
-		});
-
-		if (windowEdit.isAttached()) {
-
-			getUI().removeWindow(windowEdit);
-		}
-		UI.getCurrent().addWindow(windowEdit);
-
-	}
 
 	private void deleteGroup() {
 		MA = new GroupJPAManager();
@@ -315,9 +252,10 @@ public class AdminViewGroupJava extends MainContentView {
 		bAdd.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		bRegister.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonEdit.addStyleName(ValoTheme.BUTTON_PRIMARY);
-
+		bDelete.setVisible(false);
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);
+		buttonEdit.setVisible(false);
 		bRegister.setVisible(false);
 		bAdd.setEnabled(true);
 		clearTxt.setVisible(false);

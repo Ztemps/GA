@@ -34,17 +34,6 @@ public class TrimestralReports {
 	public static GroupJPAManager jpa;
 	private static List<Group> grupos = null;
 
-	public static void main(String[] args) {
-		calcularPrimerTrimestre();
-//		calcularSegundoTrimestre();
-//		calcularTercerTrimestre();
-//		calcularResumenTrimestre1();
-//		calcularResumenTrimestre2();
-//		calcularResumenTrimestre3();
-//		calcularResumen2Trimestre1();
-//		calcularResumen2Trimestre2();
-//		calcularResumen2Trimestre3();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-	}
 
 	public static void calcularPrimerTrimestre() {
 		// CALCULO DE FECHAS
