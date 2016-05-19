@@ -34,34 +34,10 @@ public class AdminViewTutorJava extends MainContentView {
 	public AdminViewTutorJava() {
 
 		buttonsSettings();
-		filterTextProperties();
 		vHorizontalMain.addComponent(GridProperties());
 
 	}
 
-	private TextField filterTextProperties() {
-		txtSearch.setInputPrompt("Filtra per grup");
-		txtSearch.addTextChangeListener(new TextChangeListener() {
-
-			SimpleStringFilter filter = null;
-
-			@Override
-			public void textChange(TextChangeEvent event) {
-				// TODO Auto-generated method stub
-
-				Filterable f = (Filterable) grid.getContainerDataSource();
-
-				// Remove old filter
-				if (filter != null)
-					f.removeContainerFilter(filter);
-
-				// Set new filter for the "Name" column
-				filter = new SimpleStringFilter("grup", event.getText(), true, false);
-				f.addContainerFilter(filter);
-			}
-		});
-		return txtSearch;
-	}
 
 
 	private void buttonsSettings() {
@@ -79,8 +55,8 @@ public class AdminViewTutorJava extends MainContentView {
 		buttonEdit.setEnabled(false);
 		bRegister.setVisible(false);
 		clearTxt.setVisible(false);
-
-
+		txtSearch.setVisible(false);
+		buttonEdit.setVisible(false);
 	}
 
 	public Grid GridProperties() {
@@ -111,16 +87,7 @@ public class AdminViewTutorJava extends MainContentView {
 		});
 
 		grid.setSelectionMode(SelectionMode.SINGLE);
-		grid.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void select(SelectionEvent event) {
-				bAdd.setEnabled(true);
-				buttonEdit.setEnabled(true);
-				bDelete.setEnabled(false);
-
-			}
-		});
+	
 
 		return grid;
 	}

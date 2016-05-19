@@ -33,9 +33,9 @@ public class AdminViewCSVUploadJava extends MainContentView {
 	private File file;
 	private Upload uploadStudent;
 	private Upload uploadTeacher;
-	private Label studentlabel = new Label(
-			"Selecciona un fitxer amb extensió .\"csv\" en que els seus camps estiguin separats per"
-					+ " comes. \n El fitxer ha de tenir les següents columnes en el següent ordre: id de l'alumne, cognoms, nom, grup, date de naixement, pais, nacionalitat i telefons");
+//	private Label studentlabel = new Label(
+//			"Selecciona un fitxer amb extensió .\"csv\" en que els seus camps estiguin separats per"
+//					+ " comes. \n El fitxer ha de tenir les següents columnes en el següent ordre: id de l'alumne, cognoms, nom, grup, date de naixement, pais, nacionalitat i telefons");
 
 	public AdminViewCSVUploadJava() throws IOException {
 		csv = new AdminCSVUpload();
@@ -66,7 +66,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		csv.txtUpStudents.addStyleName("upload-title");
 		csv.vStudents.addStyleName("whiteBackground");
 		csv.vStudents.removeAllComponents();
-		csv.vStudents.addComponents(studentlabel, new Image("", resource), uploadStudent);
+		csv.vStudents.addComponents( new Image("", resource), uploadStudent);
 
 		csv.vStudents.setComponentAlignment(uploadStudent, Alignment.MIDDLE_CENTER);
 
