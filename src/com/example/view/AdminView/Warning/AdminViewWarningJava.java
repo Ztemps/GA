@@ -447,26 +447,7 @@ public class AdminViewWarningJava extends MainContentView {
 	    cell.setComponent(filterField);
 	}
 	
-	
-	private void FilterGridSurName() {
 
-		cell = filterRow.getCell(AL_COGNOMS);
-		// Have an input field to use for filter
-		filterField = new TextField();
-		filterField.setSizeFull();
-		filterField.setInputPrompt("Filtra per cognoms");
-		// Update filter When the filter input is changed
-		filterField.addTextChangeListener(change -> {
-			// Can't modify filters so need to replace
-			alumnes.removeContainerFilters(filterRow);
-
-			// (Re)create the filter if necessary
-			if (!change.getText().isEmpty())
-				alumnes.addContainerFilter(new SimpleStringFilter(AL_COGNOMS, change.getText(), true, false));
-		});
-		cell.setComponent(filterField);
-
-	}
 
 
 	private void FilterGridGrup() {
