@@ -17,12 +17,14 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.Upload.ChangeEvent;
 import com.vaadin.ui.Upload.ChangeListener;
 import com.vaadin.ui.Upload.Receiver;
 import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Upload.SucceededListener;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class AdminViewCSVUploadJava extends MainContentView {
@@ -33,6 +35,8 @@ public class AdminViewCSVUploadJava extends MainContentView {
 	private File file;
 	private Upload uploadStudent;
 	private Upload uploadTeacher;
+	private Window window;
+	
 //	private Label studentlabel = new Label(
 //			"Selecciona un fitxer amb extensió .\"csv\" en que els seus camps estiguin separats per"
 //					+ " comes. \n El fitxer ha de tenir les següents columnes en el següent ordre: id de l'alumne, cognoms, nom, grup, date de naixement, pais, nacionalitat i telefons");
@@ -43,6 +47,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		uploadStudent = new Upload("", receiver);
 		
 		buttonsSettings();
+		WindowProperties();
 		File currDir = new File(".");
 		String path = currDir.getCanonicalPath();
 		FileResource resource = new FileResource(
@@ -93,9 +98,31 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		csv.vTeachers.removeAllComponents();
 		csv.vTeachers.addComponents(new Image("", resource), uploadTeacher);
 		csv.vTeachers.setComponentAlignment(uploadTeacher, Alignment.MIDDLE_CENTER);
+		
+		csv.bHelp.addClickListener(e -> ViewHelp());
 
 	}
 
+	private void ViewHelp() {
+		// TODO Auto-generated method stub
+		window.setCaption("Ajuda - Com carregar els CSV's");
+		UI.getCurrent().addWindow(window);
+		window.setVisible(true);
+
+	}
+
+	private void WindowProperties() {
+
+		window = new Window();
+		window.setHeight("95%");
+		window.setWidth("95%");
+		window.setDraggable(false);
+		window.setModal(true);
+		window.setVisible(false);
+		window.setCaption("Visualització de l'amonestació");
+		window.center();
+		
+	}
 	private void buttonsSettings() {
 		// TODO Auto-generated method stub
 		vHorizontalMain.addComponent(csv);
@@ -109,10 +136,12 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		horizontalTitle.addStyleName("horizontal-title");
 		txtTitle.addStyleName("main-title");
 		txtTitle.setValue("Carrega de CSV");
-
+		csv.bHelp.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 		// AdminViewCarregarCSVJava upload = new AdminViewCarregarCSVJava();
 
 	}
+	
+	
 
 	public class FileReciverStudents implements Receiver, SucceededListener {
 		CSVLoader csvloader = new CSVLoader();
