@@ -1,39 +1,24 @@
 package com.example.view.AdminView.Reports;
 
 import java.io.File;
-import org.zeroturnaround.zip.ZipUtil;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import com.example.CSVLoader.CSVLoader;
+
+import com.example.Reports.FinalReports;
 import com.example.Reports.TrimestralReports;
 import com.example.Templates.MainContentView;
-import com.example.view.AdminView.AdminView;
-import com.example.view.AdminView.CSV.AdminViewCSVUploadJava.FileReciverStudents;
-import com.example.view.AdminView.CSV.AdminViewCSVUploadJava.FileReciverTeachers;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Page;
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Upload;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Upload.Receiver;
-import com.vaadin.ui.Upload.SucceededEvent;
-import com.vaadin.ui.Upload.SucceededListener;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class AdminViewReportsJava extends MainContentView {
@@ -42,18 +27,21 @@ public class AdminViewReportsJava extends MainContentView {
 	Button generateReportTrimestre1;
 	Button generateReportTrimestre2;
 	Button generateReportTrimestre3;
-
+	Button generateReportTotal;
 
 	StreamResource sr = getTrimestral1Zip();
 	StreamResource sr2 = getTrimestral2Zip();
 	StreamResource sr3 = getTrimestral3Zip();
+	StreamResource sr4 = getTrimestral4Zip();
+
 
 	FileDownloader fileDownloader = new FileDownloader(sr);
 	FileDownloader fileDownloader2 = new FileDownloader(sr2);
 	FileDownloader fileDownloader3 = new FileDownloader(sr3);
+	FileDownloader fileDownloader4 = new FileDownloader(sr4);
 
 	TrimestralReports trimestrasReports;
-
+	FinalReports finalreports;
 	/*
 	 * private FileReciverTrimestre2 receiver2 = new FileReciverTrimestre2();
 	 * private FileReciverTrimestre3 receiver3 = new FileReciverTrimestre3();
@@ -63,6 +51,8 @@ public class AdminViewReportsJava extends MainContentView {
 	public AdminViewReportsJava() {
 		csv = new AdminReportCSVUpload();
 		trimestrasReports = new TrimestralReports();
+		finalreports = new FinalReports();
+		
 		buttonsSettings();
 
 		// INFORMES TRIMESTRALS
@@ -70,10 +60,8 @@ public class AdminViewReportsJava extends MainContentView {
 		csv.mainTrimestral.addStyleName("whiteBackground");
 		csv.mainTrimestral.setWidth("100%");
 		csv.mainTotal.addStyleName("whiteBackground");
-		csv.txtUpTrimestral.addStyleName("settings");
 		csv.txtUpTrimestral.setValue("Carrega d'Informes Trimestrals");
 		csv.txtUpTrimestral.addStyleName("marginTitle");
-		csv.hTrimestral.addStyleName("csvstudent");
 		csv.hTrimestral.removeAllComponents();
 
 		// Add buttons to layout
@@ -81,7 +69,7 @@ public class AdminViewReportsJava extends MainContentView {
 		csv.hTrimestral.addComponent(generateReportTrimestre1);
 		csv.hTrimestral.addComponent(generateReportTrimestre2);
 		csv.hTrimestral.addComponent(generateReportTrimestre3);
-		
+		csv.hTotal.addComponent(generateReportTotal);
 		
 
 		// csv.horizontalTrimestral.setComponentAlignment(uploadStudent,
@@ -89,7 +77,10 @@ public class AdminViewReportsJava extends MainContentView {
 
 		// INFORMES ANUALS
 		csv.txtUpTotal.setValue("Carrega d'Informes Anuals");
-		csv.hTotal.addStyleName("csvstudent");
+		csv.txtUpTotal.addStyleName("marginTitle");
+
+		csv.hTotal.addStyleName("buttonsLayout");
+		
 		// csv.hTotal.removeAllComponents();
 		// csv.hTotal.addComponents(uploadtrimestre1);
 
@@ -98,8 +89,38 @@ public class AdminViewReportsJava extends MainContentView {
 		fileDownloader.extend(generateReportTrimestre1);
 		fileDownloader2.extend(generateReportTrimestre2);
 		fileDownloader3.extend(generateReportTrimestre3);
+		fileDownloader4.extend(generateReportTotal);
 	}
 
+	private StreamResource getTrimestral4Zip() {
+		// TODO Auto-generated method stub
+		StreamResource.StreamSource source = new StreamResource.StreamSource() {
+
+			public InputStream getStream() {
+				// return your file/bytearray as an InputStream
+				finalreports.calcularResumenTotal();
+				finalreports.calcularTotalporAlumnos();
+				
+				File zip = new File(ZipFiles("totalcurs.zip", "/tmp/total"
+						+ ""));
+				InputStream targetStream = null;
+				try {
+					targetStream = new FileInputStream(zip);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				return targetStream;
+
+			}
+		};
+		StreamResource resource = new StreamResource(source, getFileName4());
+		return resource;
+		
+	}
+	
+	
 	private StreamResource getTrimestral3Zip() {
 		// TODO Auto-generated method stub
 		StreamResource.StreamSource source = new StreamResource.StreamSource() {
@@ -122,7 +143,7 @@ public class AdminViewReportsJava extends MainContentView {
 
 			}
 		};
-		StreamResource resource = new StreamResource(source, getFileName());
+		StreamResource resource = new StreamResource(source, getFileName3());
 		return resource;
 		
 	}
@@ -150,7 +171,7 @@ public class AdminViewReportsJava extends MainContentView {
 
 			}
 		};
-		StreamResource resource = new StreamResource(source, getFileName());
+		StreamResource resource = new StreamResource(source, getFileName2());
 		return resource;
 	}
 
@@ -176,14 +197,39 @@ public class AdminViewReportsJava extends MainContentView {
 
 			}
 		};
-		StreamResource resource = new StreamResource(source, getFileName());
+		StreamResource resource = new StreamResource(source, getFileName1());
 		return resource;
 	}
 
-	private String getFileName() {
+	private String getFileName1() {
 		// TODO Auto-generated method stub
 
 		String suggestedSaveFile = "Informe1erTrimestre.zip";
+
+		return suggestedSaveFile;
+	}
+	
+	private String getFileName2() {
+		// TODO Auto-generated method stub
+
+		String suggestedSaveFile = "Informe2erTrimestre.zip";
+
+		return suggestedSaveFile;
+	}
+	
+	private String getFileName3() {
+		// TODO Auto-generated method stub
+
+		String suggestedSaveFile = "Informe3erTrimestre.zip";
+
+		return suggestedSaveFile;
+	}
+	
+	
+	private String getFileName4() {
+		// TODO Auto-generated method stub
+
+		String suggestedSaveFile = "InformeTotalCurs.zip";
 
 		return suggestedSaveFile;
 	}
@@ -205,6 +251,11 @@ public class AdminViewReportsJava extends MainContentView {
 		generateReportTrimestre3 = new Button("Genera informe 3er trimestre", FontAwesome.CLOUD_DOWNLOAD);
 		generateReportTrimestre3.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		generateReportTrimestre3.addStyleName("settings");
+		
+		// Button trimestral 3 reports
+		generateReportTotal = new Button("Genera informe total del curs", FontAwesome.CLOUD_DOWNLOAD);
+		generateReportTotal.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		generateReportTotal.addStyleName("settings");
 		
 
 		vHorizontalMain.addComponent(csv);

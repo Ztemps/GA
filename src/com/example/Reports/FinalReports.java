@@ -32,11 +32,6 @@ public class FinalReports {
 	public static GroupJPAManager jpa;
 	private static List<Group> grupos = null;
 
-	public static void main(String[] args) {
-
-		calcularTotalporAlumnos();
-		calcularResumenTotal();
-	}
 
 	public static void calcularTotalporAlumnos() {
 		// CALCULO DE FECHAS
@@ -126,7 +121,7 @@ public class FinalReports {
 				}
 				
 				fileWriter = new FileWriter(
-						"/tmp/total/alumnes" + grupos.get(x).getId() + ".xls");
+						"/tmp/total/" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
 				query.closeTransaction();
@@ -320,7 +315,7 @@ public class FinalReports {
 		try {
 
 			dates = readFile();
-			File f = new File ("/tmp/total");
+			File f = new File ("/tmp/total/");
 			if (!f.exists()){
 				f.mkdirs();
 			}
