@@ -62,7 +62,7 @@ public class AdminViewSettingsJava extends MainContentView {
 		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
 		bAdd.setVisible(true);
-		bAdd.setCaption("Desar configuraió");
+		bAdd.setCaption("Desar configuració");
 		bDelete.setVisible(false);
 		buttonEdit.setVisible(false);
 		bRegister.setVisible(false);
@@ -145,7 +145,7 @@ public class AdminViewSettingsJava extends MainContentView {
 
 	
 
-	private void readFile() throws ReadOnlyException, ConversionException, IOException {
+	public void readFile() throws ReadOnlyException, ConversionException, IOException {
 		FileReader reader;
 		String path2 = null;
 		File currDir = new File(".");

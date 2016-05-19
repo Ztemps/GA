@@ -1,13 +1,16 @@
 package com.example.Logic;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException; 
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -27,7 +30,7 @@ import com.itextpdf.text.DocumentException;
 
 import java_cup.parse_action;
 
-public class WarningJPAManager  {
+public class WarningJPAManager {
 	boolean amonestat2 = false;
 	private User user;
 	boolean expulsat = false;
@@ -36,18 +39,19 @@ public class WarningJPAManager  {
 	private EntityManager em = entman.getEntityManager();
 	private SendTelegram sendTel = new SendTelegram();
 
-	public void introducirParte(String[] query) throws MalformedURLException, DocumentException, IOException, ParseException {
+	public void introducirParte(String[] query)
+			throws MalformedURLException, DocumentException, IOException, ParseException {
 
 		File currDir = new File(".");
 		String path2 = currDir.getCanonicalPath();
-		
+
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		// get current date time with Date()
-		Date date ;
-				
+		Date date;
+
 		try {
 			if (query[7].equals("true")) {
-				System.out.println("query7" +query[7]);
+				System.out.println("query7" + query[7]);
 				amonestat2 = true;
 				expulsat = false;
 			} else {
@@ -56,7 +60,7 @@ public class WarningJPAManager  {
 			}
 
 		} catch (NullPointerException e) {
-			
+
 		}
 
 		String queryCon = query[9].concat(query[11]).trim().replace("][", ", ");
@@ -79,33 +83,94 @@ public class WarningJPAManager  {
 		// tutor, amonestat, expulsat,motiu, altres_motius };
 		// ARREGLO PARA QUE NO SE REPITAN LOS PARTES
 		date = new Date();
-		
 
-		sendMail mail;
-		
-//		if(al.getEmail().length() > 5)
-//			mail = new sendMail(al.getEmail(),"El seu fill "+query[0]+" "+query[1]+" a sigut amonestat ",query[12]);
+		FileReader reader;
+		String linea = null;
+		boolean checkTutor = false;
+		boolean checkPares = false;
+		boolean checkTelegram = false;
 
-		String fecha = query[14]+" "+query[15];
-		
-		//TueMay_17_16:51:00_CEST_2016
-		
+		try {
+			path2 = currDir.getCanonicalPath();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
+
+		try {
+			if (!f.exists()) {
+				f.createNewFile();
+			}
+
+			BufferedReader br = new BufferedReader(new FileReader(f));
+			if (br.readLine() == null) {
+
+			} else {
+
+				reader = new FileReader(f);
+				BufferedReader flux = new BufferedReader(reader);
+
+				while ((linea = flux.readLine()) != null) {
+					StringTokenizer st = new StringTokenizer(linea, ",");
+					while (st.hasMoreTokens()) {
+
+						String aux1 = st.nextToken();
+						String aux2 = st.nextToken();
+						String aux3 = st.nextToken();
+						String aux4 = st.nextToken();
+						String aux5 = st.nextToken();
+						String aux6 = st.nextToken();
+
+						if (st.nextToken().equals("true")) {
+							checkTutor = true;
+						} else {
+							checkTutor = false;
+						}
+
+						if (st.nextToken().equals("true")) {
+							checkPares = true;
+							sendMail mail;
+						} else {
+							checkPares = false;
+						}
+
+						if (st.nextToken().equals("true")) {
+							checkTelegram = true;
+						} else {
+							checkTelegram = false;
+
+						}
+
+					}
+				}
+
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// if(al.getEmail().length() > 5)
+		// mail = new sendMail(al.getEmail(),"El seu fill "+query[0]+"
+		// "+query[1]+" a sigut amonestat ",query[12]);
+
+		String fecha = query[14] + " " + query[15];
+
+		// TueMay_17_16:51:00_CEST_2016
+
 		addWarning(new Warning(user.getId(), dateFormat.parse(fecha), query[2], al.getId(), query[3], query[4],
 				query[5], tutor, amonestat2, expulsat, "15/16", querycon, query[10]));
 
-
 	}
-	
 
-
-	
 	public User getIdCurrentDocent(String currentUser) {
 
 		Query query = em.createNativeQuery("SELECT id_docent FROM usuari where usuari  LIKE #currentUser", User.class);
 		query.setParameter("currentUser", currentUser);
 		//
 		User user = (User) query.getSingleResult();
-
 
 		// EntityManagerUtil.close();
 
@@ -121,8 +186,6 @@ public class WarningJPAManager  {
 
 		return tutor.getDocent();
 	}
-	
-
 
 	public void addWarning(Warning amonestacio) {
 
@@ -140,7 +203,7 @@ public class WarningJPAManager  {
 		return data;
 
 	}
-	
+
 	public Student ObtenerAlumno(String name, String surname) {
 
 		Query query = em.createNativeQuery("SELECT id FROM alumne where nom LIKE #name AND cognoms LIKE #surname",
@@ -154,7 +217,7 @@ public class WarningJPAManager  {
 		return alumne;
 
 	}
-	
+
 	public String currentUser() {
 
 		return String.valueOf(GaUI.getCurrent().getSession().getAttribute("user"));
