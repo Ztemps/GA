@@ -40,7 +40,7 @@ public class AdminViewReportsJava extends MainContentView {
 	FileDownloader fileDownloader3 = new FileDownloader(sr3);
 	FileDownloader fileDownloader4 = new FileDownloader(sr4);
 
-	TrimestralReports trimestrasReports;
+	TrimestralReports trimestralReports;
 	FinalReports finalreports;
 	/*
 	 * private FileReciverTrimestre2 receiver2 = new FileReciverTrimestre2();
@@ -50,7 +50,7 @@ public class AdminViewReportsJava extends MainContentView {
 
 	public AdminViewReportsJava() {
 		csv = new AdminReportCSVUpload();
-		trimestrasReports = new TrimestralReports();
+		trimestralReports = new TrimestralReports();
 		finalreports = new FinalReports();
 		
 		buttonsSettings();
@@ -98,8 +98,34 @@ public class AdminViewReportsJava extends MainContentView {
 
 			public InputStream getStream() {
 				// return your file/bytearray as an InputStream
-				finalreports.calcularResumenTotal();
-				finalreports.calcularTotalporAlumnos();
+				
+				Thread t1 = new Thread(){
+					public void run(){
+						finalreports.calcularResumenTotal();
+
+					}
+				};
+				
+				Thread t2 = new Thread(){
+					public void run(){
+						finalreports.calcularTotalporAlumnos();
+
+					}
+				};
+				
+				
+				t1.start();
+				t2.start();
+				try {
+					t1.join();
+					t2.join();
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				
+				finalreports.closeAllConnections();
+				
+				
 				
 				File zip = new File(ZipFiles("totalcurs.zip", "/tmp/total"
 						+ ""));
@@ -127,9 +153,42 @@ public class AdminViewReportsJava extends MainContentView {
 
 			public InputStream getStream() {
 				// return your file/bytearray as an InputStream
-				trimestrasReports.calcularResumenTrimestre3();
-				trimestrasReports.calcularTercerTrimestre();
-				trimestrasReports.calcularResumen2Trimestre3();
+				
+				Thread t1 = new Thread(){
+					public void run(){
+						trimestralReports.calcularResumenTrimestre3();
+
+					}
+				};
+				
+				Thread t2 = new Thread(){
+					public void run(){
+						trimestralReports.calcularTercerTrimestre();
+
+					}
+				};
+				
+				Thread t3 = new Thread(){
+					public void run(){
+						trimestralReports.calcularResumen2Trimestre3();
+
+					}
+				};
+				t1.start();
+				t2.start();
+				t3.start();
+				try {
+					t1.join();
+					t2.join();
+					t3.join();
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				trimestralReports.closeAllConnections();
+				
+				
 				File zip = new File(ZipFiles("trimestre3.zip", "/tmp/trimestre3"));
 				InputStream targetStream = null;
 				try {
@@ -154,9 +213,42 @@ public class AdminViewReportsJava extends MainContentView {
 
 			public InputStream getStream() {
 				// return your file/bytearray as an InputStream
-				trimestrasReports.calcularResumenTrimestre2();
-				trimestrasReports.calcularSegundoTrimestre();
-				trimestrasReports.calcularResumen2Trimestre2();
+				
+				Thread t1 = new Thread(){
+					public void run(){
+						trimestralReports.calcularResumenTrimestre2();
+
+					}
+				};
+				
+				Thread t2 = new Thread(){
+					public void run(){
+						trimestralReports.calcularSegundoTrimestre();
+
+					}
+				};
+				
+				Thread t3 = new Thread(){
+					public void run(){
+						trimestralReports.calcularResumen2Trimestre2();
+
+					}
+				};
+				t1.start();
+				t2.start();
+				t3.start();
+				try {
+					t1.join();
+					t2.join();
+					t3.join();
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				trimestralReports.closeAllConnections();
+				
+				
 				File zip = new File(ZipFiles("trimestre2.zip", "/tmp/trimestre2"));
 				InputStream targetStream = null;
 				try {
@@ -181,9 +273,40 @@ public class AdminViewReportsJava extends MainContentView {
 
 			public InputStream getStream() {
 				// return your file/bytearray as an InputStream
-				trimestrasReports.calcularResumenTrimestre1();
-				trimestrasReports.calcularPrimerTrimestre();
-				trimestrasReports.calcularResumen2Trimestre1();
+				Thread t1 = new Thread(){
+					public void run(){
+						trimestralReports.calcularResumenTrimestre1();
+
+					}
+				};
+				
+				Thread t2 = new Thread(){
+					public void run(){
+						trimestralReports.calcularPrimerTrimestre();
+
+					}
+				};
+				
+				Thread t3 = new Thread(){
+					public void run(){
+						trimestralReports.calcularResumen2Trimestre1();
+
+					}
+				};
+				
+				t1.start();
+				t2.start();
+				t3.start();
+				try {
+					t1.join();
+					t2.join();
+					t3.join();
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				trimestralReports.closeAllConnections();
 				File zip = new File(ZipFiles("trimestre1.zip", "/tmp/trimestre1"));
 				InputStream targetStream = null;
 				try {
