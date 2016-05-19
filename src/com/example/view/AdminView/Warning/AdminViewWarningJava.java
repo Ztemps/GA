@@ -54,6 +54,8 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Grid.HeaderCell;
+import com.vaadin.ui.Grid.HeaderRow;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
@@ -86,6 +88,13 @@ public class AdminViewWarningJava extends MainContentView {
 	private generatePDF genPDF = new generatePDF();
 	private File currDir = new File(".");
 	private String path2 = currDir.getCanonicalPath();
+	HeaderRow filterRow;
+	TextField filterField;
+	HeaderCell cell;
+	private static final String AL_NOM = "nom";
+	private static final String AL_COGNOMS = "cognoms";
+	private static final String AL_CURS = "curs";
+	private static final String AL_GRUP = "grup";
 
 	public AdminViewWarningJava() throws MalformedURLException, DocumentException, IOException {
 
@@ -329,11 +338,97 @@ public class AdminViewWarningJava extends MainContentView {
 					f.removeContainerFilter(filter);
 
 				// Set new filter for the "Name" column
-				filter = new SimpleStringFilter("cognoms", event.getText(), true, false);
+				filter = new SimpleStringFilter(AL_COGNOMS, event.getText(), true, false);
 				f.addContainerFilter(filter);
 			}
 		});
 		return txtSearch;
+	}
+	
+	
+	
+	private void FilterGridName(){
+		
+		    cell = filterRow.getCell(AL_NOM);   
+		    // Have an input field to use for filter
+		    filterField = new TextField();
+		    filterField.setSizeFull();
+		    filterField.setInputPrompt("Filtra per nom");
+		    // Update filter When the filter input is changed
+		    filterField.addTextChangeListener(change -> {
+		        // Can't modify filters so need to replace
+		        alumnes.removeContainerFilters(filterRow);
+
+		        // (Re)create the filter if necessary
+		        if (! change.getText().isEmpty())
+		        	alumnes.addContainerFilter(
+		                new SimpleStringFilter(AL_NOM,
+		                    change.getText(), true, false));
+		    });
+		    cell.setComponent(filterField);
+		}
+		
+	private void FilterGridSurName(){
+		
+	    cell = filterRow.getCell(AL_COGNOMS);   
+	    // Have an input field to use for filter
+	    filterField = new TextField();
+	    filterField.setSizeFull();
+	    filterField.setInputPrompt("Filtra per cognoms");
+	    // Update filter When the filter input is changed
+	    filterField.addTextChangeListener(change -> {
+	        // Can't modify filters so need to replace
+	        alumnes.removeContainerFilters(filterRow);
+
+	        // (Re)create the filter if necessary
+	        if (! change.getText().isEmpty())
+	        	alumnes.addContainerFilter(
+	                new SimpleStringFilter(AL_COGNOMS,
+	                    change.getText(), true, false));
+	    });
+	    cell.setComponent(filterField);
+	}
+	
+	private void FilterGridCurs(){
+		
+	    cell = filterRow.getCell(AL_CURS);   
+	    // Have an input field to use for filter
+	    filterField = new TextField();
+	    filterField.setSizeFull();
+	    filterField.setInputPrompt("Filtra per curs");
+	    // Update filter When the filter input is changed
+	    filterField.addTextChangeListener(change -> {
+	        // Can't modify filters so need to replace
+	        alumnes.removeContainerFilters(filterRow);
+
+	        // (Re)create the filter if necessary
+	        if (! change.getText().isEmpty())
+	        	alumnes.addContainerFilter(
+	                new SimpleStringFilter(AL_CURS,
+	                    change.getText(), true, false));
+	    });
+	    cell.setComponent(filterField);
+	}
+	
+	private void FilterGridGrup(){
+		
+	    cell = filterRow.getCell(AL_GRUP);   
+	    // Have an input field to use for filter
+	    filterField = new TextField();
+	    filterField.setSizeFull();
+	    filterField.setInputPrompt("Filtra per grup");
+	    // Update filter When the filter input is changed
+	    filterField.addTextChangeListener(change -> {
+	        // Can't modify filters so need to replace
+	        alumnes.removeContainerFilters(filterRow);
+
+	        // (Re)create the filter if necessary
+	        if (! change.getText().isEmpty())
+	        	alumnes.addContainerFilter(
+	                new SimpleStringFilter(AL_GRUP,
+	                    change.getText(), true, false));
+	    });
+	    cell.setComponent(filterField);
 	}
 
 	private Grid GridProperties() {
@@ -344,8 +439,10 @@ public class AdminViewWarningJava extends MainContentView {
 		grid.setSizeFull();
 		grid.setContainerDataSource(alumnes);
 		grid.setColumnReorderingAllowed(true);
-		grid.setColumns("nom", "cognoms", "curs", "grup");
-
+		grid.setColumns(AL_NOM, AL_COGNOMS,AL_CURS,AL_GRUP);
+		
+		//grid.appendHeaderRow();
+		
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addItemClickListener(new ItemClickListener() {
 
@@ -382,7 +479,11 @@ public class AdminViewWarningJava extends MainContentView {
 
 			}
 		});
-
+		filterRow = grid.appendHeaderRow();
+		FilterGridName();
+		FilterGridSurName();
+		FilterGridCurs();
+		FilterGridGrup();
 		return grid;
 
 	}
