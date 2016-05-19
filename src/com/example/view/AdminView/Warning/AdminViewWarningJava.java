@@ -785,11 +785,15 @@ public class AdminViewWarningJava extends MainContentView {
 		
 		List subjects = new ArrayList<>();
 		
-		subjects.add("Biologia");
+		subjects.add("Biologia i geologia");
 		subjects.add("Castellà");
 		subjects.add("Català");
+		subjects.add("Ciències de la naturalesa");
 		subjects.add("Economia");
 		subjects.add("Educaciò Fisica");
+		subjects.add("Educaciò per la ciutadania");
+		subjects.add("Educació visual i plàstica");
+		subjects.add("Llatí");
 		subjects.add("Filosofia");
 		subjects.add("Física i química");
 		subjects.add("Geologia");
@@ -799,9 +803,8 @@ public class AdminViewWarningJava extends MainContentView {
 		subjects.add("Música");
 		subjects.add("Religió");
 		subjects.add("Tecnologia");
-
 		
-		
+	
 		amonestacioForm.comboSubject.setFilteringMode(FilteringMode.CONTAINS);
 		amonestacioForm.comboSubject.setImmediate(true);
 		
