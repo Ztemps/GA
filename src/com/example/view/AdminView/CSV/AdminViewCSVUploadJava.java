@@ -9,11 +9,14 @@ import java.sql.SQLException;
 import java.text.ParseException;
 
 import com.example.CSVLoader.CSVLoader;
+import com.example.Pdf.generatePDF;
 import com.example.Templates.MainContentView;
 import com.example.view.AdminView.AdminView;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
+import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -25,6 +28,8 @@ import com.vaadin.ui.Upload.Receiver;
 import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Upload.SucceededListener;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class AdminViewCSVUploadJava extends MainContentView {
@@ -35,17 +40,23 @@ public class AdminViewCSVUploadJava extends MainContentView {
 	private File file;
 	private Upload uploadStudent;
 	private Upload uploadTeacher;
+	private File sourceFile;
 	private Window window;
-	
-//	private Label studentlabel = new Label(
-//			"Selecciona un fitxer amb extensió .\"csv\" en que els seus camps estiguin separats per"
-//					+ " comes. \n El fitxer ha de tenir les següents columnes en el següent ordre: id de l'alumne, cognoms, nom, grup, date de naixement, pais, nacionalitat i telefons");
+	private AdminCSVHelper help;
+
+	// private Label studentlabel = new Label(
+	// "Selecciona un fitxer amb extensió .\"csv\" en que els seus camps
+	// estiguin separats per"
+	// + " comes. \n El fitxer ha de tenir les següents columnes en el següent
+	// ordre: id de l'alumne, cognoms, nom, grup, date de naixement, pais,
+	// nacionalitat i telefons");
 
 	public AdminViewCSVUploadJava() throws IOException {
+		help = new AdminCSVHelper();
 		csv = new AdminCSVUpload();
 		uploadTeacher = new Upload("", receiver2);
 		uploadStudent = new Upload("", receiver);
-		
+
 		buttonsSettings();
 		WindowProperties();
 		File currDir = new File(".");
@@ -71,7 +82,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		csv.txtUpStudents.addStyleName("upload-title");
 		csv.vStudents.addStyleName("whiteBackground");
 		csv.vStudents.removeAllComponents();
-		csv.vStudents.addComponents( new Image("", resource), uploadStudent);
+		csv.vStudents.addComponents(new Image("", resource), uploadStudent);
 
 		csv.vStudents.setComponentAlignment(uploadStudent, Alignment.MIDDLE_CENTER);
 
@@ -81,7 +92,6 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		uploadTeacher.setStyleName(ValoTheme.BUTTON_PRIMARY);
 
 		uploadTeacher.addChangeListener(new ChangeListener() {
-
 			@Override
 			public void filenameChanged(ChangeEvent event) {
 
@@ -91,22 +101,56 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		});
 
 		csv.vTeachers.addStyleName("whiteBackground");
-
 		csv.txtUpTeachers.setValue("Carrega de profesors");
 		csv.txtUpTeachers.addStyleName("upload-title");
-
 		csv.vTeachers.removeAllComponents();
 		csv.vTeachers.addComponents(new Image("", resource), uploadTeacher);
 		csv.vTeachers.setComponentAlignment(uploadTeacher, Alignment.MIDDLE_CENTER);
-		
-		csv.bHelp.addClickListener(e -> ViewHelp());
+		csv.bHelp.addClickListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+
+				try {
+					ViewHelp();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 
 	}
 
-	private void ViewHelp() {
-		// TODO Auto-generated method stub
-		window.setCaption("Ajuda - Com carregar els CSV's");
+	private void ViewHelp() throws IOException {
+
+		// File currDir = new File(".");
+		// String path = currDir.getCanonicalPath();
+		// // TODO Auto-generated method stub
+		// window.setCaption("Ajuda - Com carregar els CSV's");
+		//
+		// Embedded c = new Embedded();
+		// sourceFile = new File(path +
+		// "/git/ga2/WebContent/VAADIN/themes/images/csvAlumnes.png");
+		// c.setSource(new FileResource(sourceFile));
+		// c.setType(Embedded.TYPE_BROWSER);
+
+		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+
+		// Image as a file resource
+		FileResource resource = new FileResource(new File(basepath + "/VAADIN/themes/images/csvAlumnes.png"));
+
+		// Show the image in the application
+		Image image = new Image("", resource);
+		help.txtDescription.setCaption("Selecciona un fitxer amb extensió .\"csv\""
+				+ " en que els seus camps estiguin separats per" + " comes. \n "
+						+ "El fitxer ha de tenir les següents columnes en el següent ordre: id de l'alumne, cognoms, nom, grup, date de naixement, pais,nacionalitat i telefons com l'imatge");
+		help.vImage.removeAllComponents();
+		help.vImage.addComponent(image);
+		window.setContent(help);
 		UI.getCurrent().addWindow(window);
+
 		window.setVisible(true);
 
 	}
@@ -121,8 +165,9 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		window.setVisible(false);
 		window.setCaption("Visualització de l'amonestació");
 		window.center();
-		
+
 	}
+
 	private void buttonsSettings() {
 		// TODO Auto-generated method stub
 		vHorizontalMain.addComponent(csv);
@@ -136,12 +181,10 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		horizontalTitle.addStyleName("horizontal-title");
 		txtTitle.addStyleName("main-title");
 		txtTitle.setValue("Carrega de CSV");
-		csv.bHelp.addStyleName(ValoTheme.BUTTON_FRIENDLY);
+		csv.bHelp.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		// AdminViewCarregarCSVJava upload = new AdminViewCarregarCSVJava();
 
 	}
-	
-	
 
 	public class FileReciverStudents implements Receiver, SucceededListener {
 		CSVLoader csvloader = new CSVLoader();
