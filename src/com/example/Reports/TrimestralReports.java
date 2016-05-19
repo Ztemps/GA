@@ -27,7 +27,6 @@ public class TrimestralReports {
 	private static final String COMMA_DELIMITER = ",";
 	private static final String NEW_LINE_SEPARATOR = "\n";
 	static public ReportQuerys query;
-	public Query queryDate = null;
 	static ArrayList<Date> dates = new ArrayList<Date>();
 	// CSV file header
 	private static final String FILE_HEADER = "ALUMNE,A,E";
@@ -80,7 +79,7 @@ public class TrimestralReports {
 			query = new ReportQuerys();
 			List ids = query.getIdAlumnes(grupos.get(x).getId());
 
-			query.closeTransaction();
+		//	query.closeTransaction();
 
 			List idList = new ArrayList<>();
 
@@ -93,7 +92,7 @@ public class TrimestralReports {
 			// FOR NOMS
 			query = new ReportQuerys();
 			List noms = query.getNomAlumnes(grupos.get(x).getId());
-			query.closeTransaction();
+		//	query.closeTransaction();
 
 			List nomsList = new ArrayList<>();
 
@@ -106,7 +105,7 @@ public class TrimestralReports {
 
 			query = new ReportQuerys();
 			List cognoms = query.getCognomsAlumnes(grupos.get(x).getId());
-			query.closeTransaction();
+			//query.closeTransaction();
 
 			List cognomsList = new ArrayList<>();
 
@@ -126,7 +125,7 @@ public class TrimestralReports {
 						"/tmp/trimestre1/alumnes" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
-				query.closeTransaction();
+			//	query.closeTransaction();
 
 				fileWriter.append("1r Trimestre   Curs: " + dateCurs);
 				fileWriter.append(COMMA_DELIMITER);
@@ -280,7 +279,7 @@ public class TrimestralReports {
 			query = new ReportQuerys();
 			List ids = query.getIdAlumnes(grupos.get(x).getId());
 
-			query.closeTransaction();
+		//	query.closeTransaction();
 
 			List idList = new ArrayList<>();
 
@@ -293,7 +292,7 @@ public class TrimestralReports {
 			// FOR NOMS
 			query = new ReportQuerys();
 			List noms = query.getNomAlumnes(grupos.get(x).getId());
-			query.closeTransaction();
+			//query.closeTransaction();
 
 			List nomsList = new ArrayList<>();
 
@@ -306,7 +305,7 @@ public class TrimestralReports {
 
 			query = new ReportQuerys();
 			List cognoms = query.getCognomsAlumnes(grupos.get(x).getId());
-			query.closeTransaction();
+		//	query.closeTransaction();
 
 			List cognomsList = new ArrayList<>();
 
@@ -325,7 +324,7 @@ public class TrimestralReports {
 						"/tmp/trimestre2/alumnes" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
-				query.closeTransaction();
+				//query.closeTransaction();
 
 				fileWriter.append("2r Trimestre   Curs: " + dateCurs);
 				fileWriter.append(COMMA_DELIMITER);
@@ -475,7 +474,7 @@ public class TrimestralReports {
 			query = new ReportQuerys();
 			List ids = query.getIdAlumnes(grupos.get(x).getId());
 
-			query.closeTransaction();
+		//	query.closeTransaction();
 
 			List idList = new ArrayList<>();
 
@@ -488,7 +487,7 @@ public class TrimestralReports {
 			// FOR NOMS
 			query = new ReportQuerys();
 			List noms = query.getNomAlumnes(grupos.get(x).getId());
-			query.closeTransaction();
+		//	query.closeTransaction();
 
 			List nomsList = new ArrayList<>();
 
@@ -501,7 +500,7 @@ public class TrimestralReports {
 
 			query = new ReportQuerys();
 			List cognoms = query.getCognomsAlumnes(grupos.get(x).getId());
-			query.closeTransaction();
+			//query.closeTransaction();
 
 			List cognomsList = new ArrayList<>();
 
@@ -521,7 +520,7 @@ public class TrimestralReports {
 						"/tmp/trimestre3/alumnes" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
-				query.closeTransaction();
+				//query.closeTransaction();
 
 				fileWriter.append("3r Trimestre   Curs: " + dateCurs);
 				fileWriter.append(COMMA_DELIMITER);
@@ -635,7 +634,7 @@ public class TrimestralReports {
 		for (int j = 0; j < idList.size(); j++) {
 			query = new ReportQuerys();
 			amonestacions1.add(query.getWarningCurs(Integer.parseInt(idList.get(j).toString()), semana1, semana2));
-			query.closeTransaction();
+			//query.closeTransaction();
 
 		}
 
@@ -682,12 +681,12 @@ public class TrimestralReports {
 			fileWriter = new FileWriter("/tmp/trimestre1/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
-			query.closeTransaction();
+		//	query.closeTransaction();
 
 			jpa = new GroupJPAManager();
 			grupos = new ArrayList<>();
 			grupos = jpa.getGroups();
-			jpa.closeTransaction();
+		//	jpa.closeTransaction();
 
 			diaIniciTrimestre1 = dates.get(0);
 			diaIniciCal = Calendar.getInstance();
@@ -751,7 +750,7 @@ public class TrimestralReports {
 				query = new ReportQuerys();
 				List ids = query.getIdAlumnes(grupos.get(i).getId());
 
-				query.closeTransaction();
+			//	query.closeTransaction();
 
 				List idList = new ArrayList<>();
 
@@ -853,12 +852,12 @@ public class TrimestralReports {
 			fileWriter = new FileWriter("/tmp/trimestre2/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
-			query.closeTransaction();
+		//	query.closeTransaction();
 
 			jpa = new GroupJPAManager();
 			grupos = new ArrayList<>();
 			grupos = jpa.getGroups();
-			jpa.closeTransaction();
+		//	jpa.closeTransaction();
 
 			
 			diaIniciTrimestre2 = dates.get(2);
@@ -926,7 +925,7 @@ public class TrimestralReports {
 				query = new ReportQuerys();
 				List ids = query.getIdAlumnes(grupos.get(i).getId());
 
-				query.closeTransaction();
+			//	query.closeTransaction();
 
 				List idList = new ArrayList<>();
 
@@ -1029,12 +1028,12 @@ public class TrimestralReports {
 			fileWriter = new FileWriter("/tmp/trimestre3/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
-			query.closeTransaction();
+		//	query.closeTransaction();
 
 			jpa = new GroupJPAManager();
 			grupos = new ArrayList<>();
 			grupos = jpa.getGroups();
-			jpa.closeTransaction();
+			//jpa.closeTransaction();
 
 			
 			
@@ -1102,7 +1101,7 @@ public class TrimestralReports {
 				query = new ReportQuerys();
 				List ids = query.getIdAlumnes(grupos.get(i).getId());
 
-				query.closeTransaction();
+		//		query.closeTransaction();
 
 				List idList = new ArrayList<>();
 
@@ -1208,12 +1207,12 @@ public class TrimestralReports {
 			fileWriter = new FileWriter("/tmp/trimestre1/resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
-			query.closeTransaction();
+			//query.closeTransaction();
 
 			jpa = new GroupJPAManager();
 			grupos = new ArrayList<>();
 			grupos = jpa.getGroups();
-			jpa.closeTransaction();
+			//jpa.closeTransaction();
 
 			diaIniciTrimestre1 = dates.get(0);
 			diaIniciCal = Calendar.getInstance();
@@ -1266,7 +1265,7 @@ public class TrimestralReports {
 				query = new ReportQuerys();
 				List ids = query.getIdAlumnes(grupos.get(i).getId());
 
-				query.closeTransaction();
+				//query.closeTransaction();
 
 				List idList = new ArrayList<>();
 
@@ -1380,12 +1379,12 @@ public class TrimestralReports {
 			fileWriter = new FileWriter("/tmp/trimestre2/resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
-			query.closeTransaction();
+		//	query.closeTransaction();
 
 			jpa = new GroupJPAManager();
 			grupos = new ArrayList<>();
 			grupos = jpa.getGroups();
-			jpa.closeTransaction();
+		//	jpa.closeTransaction();
 
 			diaIniciTrimestre2 = dates.get(2);
 			diaIniciCal = Calendar.getInstance();
@@ -1438,7 +1437,7 @@ public class TrimestralReports {
 				query = new ReportQuerys();
 				List ids = query.getIdAlumnes(grupos.get(i).getId());
 
-				query.closeTransaction();
+				//query.closeTransaction();
 
 				List idList = new ArrayList<>();
 
@@ -1554,12 +1553,12 @@ public class TrimestralReports {
 			fileWriter = new FileWriter("/tmp/trimestre3/resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
-			query.closeTransaction();
+			//query.closeTransaction();
 
 			jpa = new GroupJPAManager();
 			grupos = new ArrayList<>();
 			grupos = jpa.getGroups();
-			jpa.closeTransaction();
+		//	jpa.closeTransaction();
 
 			
 			
@@ -1615,7 +1614,7 @@ public class TrimestralReports {
 				query = new ReportQuerys();
 				List ids = query.getIdAlumnes(grupos.get(i).getId());
 
-				query.closeTransaction();
+			//	query.closeTransaction();
 
 				List idList = new ArrayList<>();
 
@@ -1778,4 +1777,8 @@ public class TrimestralReports {
 		return fechas;
 	}
 
+	public static void closeAllConnections()  {
+		query.closeTransaction();
+		jpa.closeTransaction();
+	}
 }

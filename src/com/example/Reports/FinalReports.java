@@ -25,7 +25,6 @@ public class FinalReports {
 	private static final String COMMA_DELIMITER = ",";
 	private static final String NEW_LINE_SEPARATOR = "\n";
 	static public ReportQuerys query;
-	public Query queryDate = null;
 	static ArrayList<Date> dates = new ArrayList<Date>();
 	// CSV file header
 	private static final String FILE_HEADER = "ALUMNE,A,E";
@@ -79,7 +78,7 @@ public class FinalReports {
 			query = new ReportQuerys();
 			List ids = query.getIdAlumnes(grupos.get(x).getId());
 
-			query.closeTransaction();
+		//	query.closeTransaction();
 
 			List idList = new ArrayList<>();
 
@@ -92,7 +91,7 @@ public class FinalReports {
 			// FOR NOMS
 			query = new ReportQuerys();
 			List noms = query.getNomAlumnes(grupos.get(x).getId());
-			query.closeTransaction();
+			//query.closeTransaction();
 
 			List nomsList = new ArrayList<>();
 
@@ -105,7 +104,7 @@ public class FinalReports {
 
 			query = new ReportQuerys();
 			List cognoms = query.getCognomsAlumnes(grupos.get(x).getId());
-			query.closeTransaction();
+		//query.closeTransaction();
 
 			List cognomsList = new ArrayList<>();
 
@@ -124,7 +123,7 @@ public class FinalReports {
 						"/tmp/total/" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
-				query.closeTransaction();
+			//	query.closeTransaction();
 
 				fileWriter.append("TOTAL  Curs: " + dateCurs);
 				fileWriter.append(COMMA_DELIMITER);
@@ -322,12 +321,12 @@ public class FinalReports {
 			fileWriter = new FileWriter("/tmp/total/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
-			query.closeTransaction();
+		//	query.closeTransaction();
 
 			jpa = new GroupJPAManager();
 			grupos = new ArrayList<>();
 			grupos = jpa.getGroups();
-			jpa.closeTransaction();
+		//	jpa.closeTransaction();
 
 			
 			
@@ -403,7 +402,7 @@ public class FinalReports {
 				query = new ReportQuerys();
 				List ids = query.getIdAlumnes(grupos.get(i).getId());
 
-				query.closeTransaction();
+			//	query.closeTransaction();
 
 				List idList = new ArrayList<>();
 
@@ -531,7 +530,6 @@ public class FinalReports {
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -560,7 +558,7 @@ public class FinalReports {
 		for (int j = 0; j < idList.size(); j++) {
 			query = new ReportQuerys();
 			amonestacions1.add(query.getWarningCurs(Integer.parseInt(idList.get(j).toString()), semana1, semana2));
-			query.closeTransaction();
+			//query.closeTransaction();
 
 		}
 
@@ -578,7 +576,7 @@ public class FinalReports {
 		for (int j = 0; j < idList.size(); j++) {
 			query = new ReportQuerys();
 			expulsions1.add(query.getExpulsionCurs(Integer.parseInt(idList.get(j).toString()), semana1, semana2));
-			query.closeTransaction();
+		//	query.closeTransaction();
 
 		}
 
@@ -650,5 +648,8 @@ public class FinalReports {
 		}
 		return fechas;
 	}
-
+	public static void closeAllConnections()  {
+		query.closeTransaction();
+		jpa.closeTransaction();
+	}
 }
