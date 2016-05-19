@@ -75,8 +75,6 @@ public class AdminViewSettingsJava extends MainContentView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				System.out.println("FUNSIONA!");
-
 				writeFile();
 
 			}

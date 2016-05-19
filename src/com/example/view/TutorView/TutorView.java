@@ -17,6 +17,7 @@ import com.example.view.AdminView.AdminView;
 import com.example.view.AdminView.Group.AdminViewGroupJava;
 import com.example.view.AdminView.Students.AdminViewStudentJava;
 import com.example.view.AdminView.Teacher.AdminViewTeacherJava;
+import com.example.view.TeacherView.TeacherConfigView;
 import com.example.view.TeacherView.TeacherViewWarningJava;
 import com.itextpdf.text.DocumentException;
 import com.vaadin.addon.jpacontainer.JPAContainer;
@@ -48,6 +49,7 @@ public class TutorView extends MainView implements View {
 	private TeacherViewWarningJava vistaAmonestacion;
 	private JPAContainer<Student> alumnes;
 	private Grid grid;
+	private TeacherConfigView vistaConfig;
 	private UserJPAManager ma;
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em = entman.getEntityManager();
@@ -61,11 +63,14 @@ public class TutorView extends MainView implements View {
 		// Side menu button options
 		vistaAmonestacion = new TeacherViewWarningJava();
 		TutorViewGrups = new TutorViewGrupsJava();
+		vistaConfig = new TeacherConfigView();
 		tutorownwarning = new TutorOwnWarningsJava();
 		// false para que no aparezca junto con las amonestaciones nada mas
 		// entrar
 		TutorViewGrups.setVisible(false);
 		tutorownwarning.setVisible(false);
+		vistaConfig.setVisible(false);
+
 
 		students.setVisible(false);
 		teachers.setVisible(false);
@@ -76,20 +81,23 @@ public class TutorView extends MainView implements View {
 		amonestacions.setVisible(false);
 		mevesAmonestacions.setVisible(true);
 		warning.focus();
-		warning.addClickListener(e -> viewWarnings());
 		charts.setVisible(false);
 		informes.setVisible(false);
 		cargarCSV.setVisible(false);
 		ficurs.setVisible(false);
-		logout.addClickListener(e -> logoutActions());
 		content.setMargin(false);
 		content.setSpacing(true);
 		sep5.setVisible(false);
 		sep4.setVisible(false);
 		sep3.setVisible(false);
+		
+		warning.addClickListener(e -> viewWarnings());
 		mevesAmonestacions.addClickListener(e -> ownWarnings());
+		configuracio.addClickListener(e -> Config());
+		logout.addClickListener(e -> logoutActions());
 
-		content.addComponents(vistaAmonestacion, TutorViewGrups, tutorownwarning);
+		content.removeAllComponents();
+		content.addComponents(vistaAmonestacion, TutorViewGrups, tutorownwarning,vistaConfig);
 
 		groupsTutor.addClickListener(new ClickListener() {
 
@@ -104,12 +112,23 @@ public class TutorView extends MainView implements View {
 
 	}
 
+	
+	public void Config() {
+		vistaConfig.setVisible(true);
+		TutorViewGrups.setVisible(false);
+		vistaAmonestacion.setVisible(false);
+		tutorownwarning.setVisible(false);
+		
+
+	}
 	private void viewWarnings() {
 		// TODO Auto-generated method stub
 
 		TutorViewGrups.setVisible(false);
 		vistaAmonestacion.setVisible(true);
 		tutorownwarning.setVisible(false);
+		vistaConfig.setVisible(false);
+
 
 	}
 
@@ -119,6 +138,8 @@ public class TutorView extends MainView implements View {
 		TutorViewGrups.setVisible(false);
 		vistaAmonestacion.setVisible(false);
 		tutorownwarning.setVisible(true);
+		vistaConfig.setVisible(false);
+
 	}
 
 	public void logoutActions() {
