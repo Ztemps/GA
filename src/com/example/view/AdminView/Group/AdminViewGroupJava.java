@@ -247,7 +247,7 @@ public class AdminViewGroupJava extends MainContentView {
 		txtTitle.addStyleName("main-title");
 		clearTxt.setIcon(FontAwesome.TIMES);
 
-		txtTitle.setValue("Gestió de Grups");
+		txtTitle.setValue("Llista de Grups");
 		bDelete.addStyleName(ValoTheme.BUTTON_DANGER);
 		bAdd.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		bRegister.addStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -259,6 +259,7 @@ public class AdminViewGroupJava extends MainContentView {
 		bRegister.setVisible(false);
 		bAdd.setEnabled(true);
 		clearTxt.setVisible(false);
+		txtSearch.setVisible(false);
 
 	}
 
@@ -270,7 +271,7 @@ public class AdminViewGroupJava extends MainContentView {
 		grid.setSizeFull();
 		grid.setContainerDataSource(grupos);
 		grid.setColumnReorderingAllowed(true);
-		grid.setColumns("id", "max_alumnes");
+		grid.setColumns("id");
 
 		// vGrid = new Grid("", grupos);
 		grid.setSizeFull();
