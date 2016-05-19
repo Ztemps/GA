@@ -17,6 +17,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.InlineDateField;
 import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
@@ -43,6 +44,10 @@ public class GaUI extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 
+		
+		InlineDateField datePicker = new InlineDateField();
+		datePicker.setLocale( java.util.Locale.getDefault() );
+		
 		getPage().setTitle("Gestió d'Amonestacions El Puig Castellar");
 		
 		addStyleName(ValoTheme.UI_WITH_MENU);
@@ -64,6 +69,7 @@ public class GaUI extends UI {
 
 		getUI().getConnectorTracker().cleanConnectorMap();
 		getUI().getNavigator().navigateTo(LoginView.NAME);
+		
 //		
 		
 			
