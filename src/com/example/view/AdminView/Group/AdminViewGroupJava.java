@@ -58,10 +58,12 @@ public class AdminViewGroupJava extends MainContentView {
 	private Window windowAdd = new Window();
 	private Window windowEdit = new Window();
 	private GroupJPAManager MA;
-	private EntityManagerUtil entman = new EntityManagerUtil();
-	private EntityManager em = entman.getEntityManager();
+	private EntityManagerUtil entman;
+	private EntityManager em;
 
 	public AdminViewGroupJava() {
+		entman = new EntityManagerUtil();
+		em = entman.getEntityManager();
 		// TODO Auto-generated constructor stub
 		grupFormAdd = new AdminViewGroupForm();
 		grupFormAdd = new AdminViewGroupForm();
@@ -286,8 +288,6 @@ public class AdminViewGroupJava extends MainContentView {
 		return txtSearch;
 	}
 
-	
-
 	private void clearEditForm() {
 		grupFormEdit.txtGrup.clear();
 		grupFormEdit.txtMaxAl.clear();
@@ -322,8 +322,7 @@ public class AdminViewGroupJava extends MainContentView {
 	}
 
 	public Grid GridProperties() {
-		
-		
+
 		grupos = JPAContainerFactory.make(Group.class, em);
 		grid = new Grid("", grupos);
 

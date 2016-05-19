@@ -3,12 +3,17 @@ package com.example.view.AdminView.Warnings;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
+import org.postgresql.util.PSQLException;
+
+import com.example.Entities.Warning;
 import com.example.Logic.JDBCConnectionPool;
 import com.example.Pdf.generatePDF;
 import com.example.Templates.ConfirmWarningPDF;
 import com.example.Templates.MainContentView;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.log.SysoCounter;
 import com.vaadin.data.Container.Filterable;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
@@ -25,6 +30,8 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Grid.HeaderCell;
+import com.vaadin.ui.Grid.HeaderRow;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -38,6 +45,9 @@ public class AdminViewWarnings extends MainContentView {
 	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
 	private JDBCConnectionPool jdbccp;
 	private SQLContainer AllWarnings;
+	private HeaderRow filterRow;
+	private TextField filterField;
+	private HeaderCell cell;
 
 	public AdminViewWarnings() throws SQLException {
 
@@ -45,7 +55,6 @@ public class AdminViewWarnings extends MainContentView {
 		filterTextProperties();
 		WindowProperties();
 		buttonsAction();
-		gridProperties();
 
 		bAdd.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -85,13 +94,35 @@ public class AdminViewWarnings extends MainContentView {
 
 	}
 
+	private void FilterGridSurName() {
+
+		cell = filterRow.getCell("cognoms");
+		// Have an input field to use for filter
+		filterField = new TextField();
+		filterField.setSizeFull();
+		filterField.setInputPrompt("Filtra per cognoms");
+		// Update filter When the filter input is changed
+		filterField.addTextChangeListener(change -> {
+			// Can't modify filters so need to replace
+			AllWarnings.removeContainerFilters(filterRow);
+
+			System.out.println(change.getText());
+			// (Re)create the filter if necessary
+			if (!change.getText().isEmpty())
+				
+				AllWarnings.addContainerFilter(new SimpleStringFilter("cognoms", change.getText(), true, false));
+
+		});
+		cell.setComponent(filterField);
+	}
+
 	private String getItemNomCognomSelected() {
 
 		Object name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom").getValue();
 		Object surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms")
 				.getValue();
 
-		return name.toString()+ surname.toString();
+		return name.toString() + surname.toString();
 
 	}
 
@@ -103,25 +134,23 @@ public class AdminViewWarnings extends MainContentView {
 		return fecha.substring(11, 16);
 	}
 
-	private Grid gridProperties() {
+	private Grid gridProperties() throws PSQLException {
 
 		jdbccp = new JDBCConnectionPool();
 
-		try{
-			AllWarnings = new SQLContainer(new FreeformQuery("select al.nom, " + "al.cognoms," + " a.grup, "
-					+ "a.motius_selection," + " a.altres_motius," + "a.materia, a.data, " + "a.localitzacio "
-					+ "from amonestacio a, docent d, alumne al " + "where a.docent=d.id and a.alumne=al.id ",
+		try {
+			AllWarnings = new SQLContainer(new FreeformQuery(
+					"select al.nom, " + "al.cognoms," + " a.grup, " + "a.materia, a.data, " + "a.localitzacio "
+							+ "from amonestacio a, docent d, alumne al " + "where a.docent=d.id and a.alumne=al.id ",
 					jdbccp.GetConnection()));
-			
-		}catch(SQLException e){
-			
-			
+
+		} catch (SQLException e) {
+
 		}
-		
-		
 
 		grid = new Grid("", AllWarnings);
 		grid.setSizeFull();
+		grid.setColumns("nom", "cognoms", "grup", "materia", "data", "localitzacio");
 		grid.setContainerDataSource(AllWarnings);
 		grid.setColumnReorderingAllowed(true);
 		grid.setSelectionMode(SelectionMode.SINGLE);
@@ -136,7 +165,8 @@ public class AdminViewWarnings extends MainContentView {
 
 			}
 		});
-
+		filterRow = grid.appendHeaderRow();
+		FilterGridSurName();
 		return grid;
 	}
 
@@ -172,7 +202,7 @@ public class AdminViewWarnings extends MainContentView {
 					f.removeContainerFilter(filter);
 
 				// Set new filter for the "Name" column
-				filter = new SimpleStringFilter("motiu", event.getText(), true, false);
+				filter = new SimpleStringFilter("cognoms", event.getText(), true, false);
 				f.addContainerFilter(filter);
 			}
 
@@ -195,7 +225,6 @@ public class AdminViewWarnings extends MainContentView {
 		bAdd.setEnabled(false);
 		bAdd.setCaption("Veure Detalls");
 		clearTxt.setVisible(false);
-
 
 	}
 

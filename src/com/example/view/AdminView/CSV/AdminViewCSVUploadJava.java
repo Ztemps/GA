@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
 
@@ -230,7 +231,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		public void uploadSucceeded(SucceededEvent event) {
 			try {
 				csvloader.loaderTeachers(file);
-			} catch (IOException | SQLException | ParseException e) {
+			} catch (IOException | SQLException | ParseException | NoSuchAlgorithmException e) {
 				new Notification("El fitxer no está estructurat com ha de ser", Notification.Type.ERROR_MESSAGE)
 						.show(Page.getCurrent());
 			}

@@ -197,7 +197,6 @@ public class LoginView extends LoginViewDesign implements View {
 		
 		// cifrar clave con SHA-1
 		String passwordhash = hbinary.marshal(md.digest(userpassword.getBytes())).toLowerCase();
-		System.out.println("Encriptada: "+ passwordhash);
 
 		try {
 			// Mientras el resultset tenga resultados, cogemos los valores y
@@ -235,7 +234,7 @@ public class LoginView extends LoginViewDesign implements View {
 					setAttributeSession(username);
 					getUI().getNavigator().navigateTo(TutorView.NAME);
 
-				}else if(usuari.getRol().equals("Profesor")) {
+				}else if(usuari.getRol().equals("Professor")) {
 					// Si el usuario y el nombre coinciden y su rol es
 					// tutor, se abre la vista del tutor
 					setAttributeSession(username);

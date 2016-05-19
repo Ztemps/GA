@@ -99,23 +99,12 @@ public class AdminViewWarningJava extends MainContentView {
 	public AdminViewWarningJava() throws MalformedURLException, DocumentException, IOException {
 
 		GridProperties();
-		filterTextProperties();
 		WindowProperties();
 		buttonsSettings();
 		WindowPdfProperties();
 		PopulateComboBoxProf();
 		PopulateComboBoxSubjects();
 
-		amonestacioForm.datefield.addValueChangeListener(new ValueChangeListener() {
-
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				// TODO Auto-generated method stub
-
-				System.out.println(event.getProperty().getValue());
-
-			}
-		});
 
 		amonestacioForm.comboProf.addValueChangeListener(new ValueChangeListener() {
 
@@ -267,15 +256,6 @@ public class AdminViewWarningJava extends MainContentView {
 
 			}
 		});
-		clearTxt.setDescription("Limpiar contenido actual...");
-		clearTxt.addClickListener(e -> {
-
-			txtSearch.clear();
-			getUI().getNavigator().navigateTo(AdminView.NAME);
-
-		});
-		clearTxt.setIcon(FontAwesome.TIMES);
-
 		vHorizontalMain.addComponent(GridProperties());
 
 	}
@@ -300,6 +280,7 @@ public class AdminViewWarningJava extends MainContentView {
 		buttonEdit.setVisible(false);
 		bRegister.setVisible(false);
 		bAdd.setEnabled(false);
+		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
 		
 	}
@@ -316,34 +297,7 @@ public class AdminViewWarningJava extends MainContentView {
 
 	}
 
-	private TextField filterTextProperties() {
-		// TODO Auto-generated method stub
-		txtSearch.setInputPrompt("Filtra per cognom");
-		txtSearch.addTextChangeListener(new TextChangeListener() {
 
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-			SimpleStringFilter filter = null;
-
-			@Override
-			public void textChange(TextChangeEvent event) {
-				// TODO Auto-generated method stub
-
-				Filterable f = (Filterable) grid.getContainerDataSource();
-
-				// Remove old filter
-				if (filter != null)
-					f.removeContainerFilter(filter);
-
-				// Set new filter for the "Name" column
-				filter = new SimpleStringFilter(AL_COGNOMS, event.getText(), true, false);
-				f.addContainerFilter(filter);
-			}
-		});
-		return txtSearch;
-	}
 	
 	
 	
