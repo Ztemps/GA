@@ -1,6 +1,8 @@
 package com.example.view.AdminView.Warning;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.ParseException;
@@ -8,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.persistence.EntityManager;
 
@@ -23,6 +26,7 @@ import com.example.SendTelegram.SendTelegram;
 import com.example.Templates.ConfirmWarningPDF;
 import com.example.Templates.MainContentView;
 import com.example.view.AdminView.AdminView;
+import com.example.view.AdminView.Settings.AdminViewSettingsJava;
 import com.example.view.TeacherView.WarningTeacher;
 import com.itextpdf.text.DocumentException;
 import com.vaadin.addon.jpacontainer.JPAContainer;
@@ -104,7 +108,6 @@ public class AdminViewWarningJava extends MainContentView {
 		WindowPdfProperties();
 		PopulateComboBoxProf();
 		PopulateComboBoxSubjects();
-
 
 		amonestacioForm.comboProf.addValueChangeListener(new ValueChangeListener() {
 
@@ -198,9 +201,81 @@ public class AdminViewWarningJava extends MainContentView {
 					window.close();
 					windowpdf.close();
 					// SENDTELEGRAM
-					sendTel = new SendTelegram();
-					String contacteProba = "Gerard_Paulino";
-					sendTel.sendWarning(contacteProba, timewarning[0]);
+
+					FileReader reader;
+					String path2 = null;
+					File currDir = new File(".");
+					String linea = null;
+					boolean checkTutor = false;
+					boolean checkPares = false;
+					boolean checkTelegram = false;
+
+					try {
+						path2 = currDir.getCanonicalPath();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+					File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
+
+					try {
+						if (!f.exists()) {
+							f.createNewFile();
+						}
+
+						BufferedReader br = new BufferedReader(new FileReader(f));
+						if (br.readLine() == null) {
+
+						} else {
+
+							reader = new FileReader(f);
+							BufferedReader flux = new BufferedReader(reader);
+
+							while ((linea = flux.readLine()) != null) {
+								StringTokenizer st = new StringTokenizer(linea, ",");
+								while (st.hasMoreTokens()) {
+
+									String aux1 = st.nextToken();
+									String aux2 = st.nextToken();
+									String aux3 = st.nextToken();
+									String aux4 = st.nextToken();
+									String aux5 = st.nextToken();
+									String aux6 = st.nextToken();
+
+									if (st.nextToken().equals("true")) {
+										checkTutor = true;
+									} else {
+										checkTutor = false;
+									}
+
+									if (st.nextToken().equals("true")) {
+										checkPares = true;
+									} else {
+										checkPares = false;
+									}
+
+									if (st.nextToken().equals("true")) {
+										checkTelegram = true;
+										sendTel = new SendTelegram();
+										String contacteProba = "Gerard_Paulino";
+										sendTel.sendWarning(contacteProba, timewarning[0]);
+
+									} else {
+										checkTelegram = false;
+
+									}
+
+								}
+							}
+
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+
 
 				}
 
@@ -262,7 +337,7 @@ public class AdminViewWarningJava extends MainContentView {
 
 	private void buttonsSettings() {
 		// TODO Auto-generated method stub
-		
+
 		bAdd.setStyleName(ValoTheme.BUTTON_ICON_ALIGN_RIGHT);
 		bAdd.setIcon(FontAwesome.INFO);
 		horizontalTitle.addStyleName("horizontal-title");
@@ -282,7 +357,7 @@ public class AdminViewWarningJava extends MainContentView {
 		bAdd.setEnabled(false);
 		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
-		
+
 	}
 
 	public void notif(String mensaje) {
@@ -299,8 +374,6 @@ public class AdminViewWarningJava extends MainContentView {
 
 
 	
-	
-	
 	private void FilterGridName(){
 		
 		    cell = filterRow.getCell(AL_NOM);   
@@ -312,7 +385,7 @@ public class AdminViewWarningJava extends MainContentView {
 		    filterField.addTextChangeListener(change -> {
 		        // Can't modify filters so need to replace
 		        alumnes.removeContainerFilters(AL_NOM);
-
+		        
 		        // (Re)create the filter if necessary
 		        if (! change.getText().isEmpty())
 		        	alumnes.addContainerFilter(
@@ -345,7 +418,9 @@ public class AdminViewWarningJava extends MainContentView {
 	  
 	    });
 	    cell.setComponent(filterField);
+
 	}
+
 	
 	private void FilterGridCurs(){
 		
@@ -372,25 +447,45 @@ public class AdminViewWarningJava extends MainContentView {
 	    cell.setComponent(filterField);
 	}
 	
-	private void FilterGridGrup(){
-		
-	    cell = filterRow.getCell(AL_GRUP);   
-	    // Have an input field to use for filter
-	    filterField = new TextField();
-	    filterField.setSizeFull();
-	    filterField.setInputPrompt("Filtra per grup");
-	    // Update filter When the filter input is changed
-	    filterField.addTextChangeListener(change -> {
-	        // Can't modify filters so need to replace
-	        alumnes.removeContainerFilters(AL_GRUP);
+	
+	private void FilterGridSurName() {
 
-	        // (Re)create the filter if necessary
-	        if (! change.getText().isEmpty())
-	        	alumnes.addContainerFilter(
-	                new SimpleStringFilter(AL_GRUP,
-	                    change.getText(), true, false));
-	    });
-	    cell.setComponent(filterField);
+		cell = filterRow.getCell(AL_COGNOMS);
+		// Have an input field to use for filter
+		filterField = new TextField();
+		filterField.setSizeFull();
+		filterField.setInputPrompt("Filtra per cognoms");
+		// Update filter When the filter input is changed
+		filterField.addTextChangeListener(change -> {
+			// Can't modify filters so need to replace
+			alumnes.removeContainerFilters(filterRow);
+
+			// (Re)create the filter if necessary
+			if (!change.getText().isEmpty())
+				alumnes.addContainerFilter(new SimpleStringFilter(AL_COGNOMS, change.getText(), true, false));
+		});
+		cell.setComponent(filterField);
+
+	}
+
+
+	private void FilterGridGrup() {
+
+		cell = filterRow.getCell(AL_GRUP);
+		// Have an input field to use for filter
+		filterField = new TextField();
+		filterField.setSizeFull();
+		filterField.setInputPrompt("Filtra per grup");
+		// Update filter When the filter input is changed
+		filterField.addTextChangeListener(change -> {
+			// Can't modify filters so need to replace
+			alumnes.removeContainerFilters(AL_GRUP);
+
+			// (Re)create the filter if necessary
+			if (!change.getText().isEmpty())
+				alumnes.addContainerFilter(new SimpleStringFilter(AL_GRUP, change.getText(), true, false));
+		});
+		cell.setComponent(filterField);
 	}
 
 	private Grid GridProperties() {
@@ -401,10 +496,10 @@ public class AdminViewWarningJava extends MainContentView {
 		grid.setSizeFull();
 		grid.setContainerDataSource(alumnes);
 		grid.setColumnReorderingAllowed(true);
-		grid.setColumns(AL_NOM, AL_COGNOMS,AL_CURS,AL_GRUP);
-		
-		//grid.appendHeaderRow();
-		
+		grid.setColumns(AL_NOM, AL_COGNOMS, AL_CURS, AL_GRUP);
+
+		// grid.appendHeaderRow();
+
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addItemClickListener(new ItemClickListener() {
 
@@ -682,7 +777,7 @@ public class AdminViewWarningJava extends MainContentView {
 			Notification.show("Els camps obligatoris s'han d'emplenar");
 			e.printStackTrace();
 		}
-		if ((String.valueOf(amonestacioForm.comboSubject.getValue()).equals( "null"))) {
+		if ((String.valueOf(amonestacioForm.comboSubject.getValue()).equals("null"))) {
 
 			assignatura = null;
 		} else {
@@ -789,10 +884,10 @@ public class AdminViewWarningJava extends MainContentView {
 
 	}
 
-	private void PopulateComboBoxSubjects(){
-		
+	private void PopulateComboBoxSubjects() {
+
 		List subjects = new ArrayList<>();
-		
+
 		subjects.add("Biologia i geologia");
 		subjects.add("Castellà");
 		subjects.add("Català");
@@ -811,14 +906,12 @@ public class AdminViewWarningJava extends MainContentView {
 		subjects.add("Música");
 		subjects.add("Religió");
 		subjects.add("Tecnologia");
-		
-	
+
 		amonestacioForm.comboSubject.setFilteringMode(FilteringMode.CONTAINS);
 		amonestacioForm.comboSubject.setImmediate(true);
-		
+
 		amonestacioForm.comboSubject.setNullSelectionAllowed(true);
-		amonestacioForm.comboSubject.setDescription(
-				"Llista de materies que s'imparteixen al col·legi.");
+		amonestacioForm.comboSubject.setDescription("Llista de materies que s'imparteixen al col·legi.");
 
 		amonestacioForm.comboSubject.removeAllItems();
 
@@ -826,8 +919,9 @@ public class AdminViewWarningJava extends MainContentView {
 
 			amonestacioForm.comboSubject.addItem(subjects.get(i));
 		}
-		
+
 	}
+
 	private void PopulateComboBoxProf() {
 
 		TeachersJPAManager ma = new TeachersJPAManager();
