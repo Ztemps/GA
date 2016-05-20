@@ -83,7 +83,7 @@ public class generatePDF extends WarningJPAManager {
 		img.setAbsolutePosition(45, 770);
 		img.scaleToFit(25, 25);
 
-		String nomCognom = (query[0].concat(" "+query[1])).replaceFirst(" ", "").replaceAll(" ", "_");
+		String nomCognom = (query[0].concat(" " + query[1])).replaceFirst(" ", "").replaceAll(" ", "_");
 		String user = jpa.currentUser();
 
 		String path = path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + horaparte.substring(0, 5) + ")("
@@ -527,7 +527,7 @@ public class generatePDF extends WarningJPAManager {
 		return cell;
 	}
 
-	public String getPath2(String nomCognom,String fecha) throws IOException {
+	public String getPath2(String nomCognom, String fecha) throws IOException {
 		File currDir = new File(".");
 		String path2 = currDir.getCanonicalPath();
 
