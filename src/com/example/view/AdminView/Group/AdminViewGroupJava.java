@@ -64,7 +64,7 @@ public class AdminViewGroupJava extends MainContentView {
 	private EntityManagerUtil entman;
 	private EntityManager em;
 
-	public AdminViewGroupJava()  throws PersistenceException, PSQLException{
+	public AdminViewGroupJava() throws PersistenceException, PSQLException {
 		entman = new EntityManagerUtil();
 		em = entman.getEntityManager();
 		// TODO Auto-generated constructor stub
@@ -117,27 +117,38 @@ public class AdminViewGroupJava extends MainContentView {
 
 					MA = new GroupJPAManager();
 
-					MA = new GroupJPAManager();
-					Group grup = getGroupAdd();
-					MA.updateGroup(grup);
-					MA.closeTransaction();
-					reloadGrid();
-					windowAdd.close();
-					SingleSelectionModel m = (SingleSelectionModel) grid.getSelectionModel();
+					String grupValue = grupFormAdd.txtGrup.getValue().toString();
 
-					int Fila = (grid.getContainerDataSource().getItemIds().size()) - 1;
+					if (!grupValue.contains("ESO ") || grupValue.toString().length() > 6) {
 
-					Object id = grid.getContainerDataSource().getIdByIndex(Fila);
-					m.select(id);
-					grid.scrollTo(id);
-					clearAddForm();
+						notif("Format incorrecte. Exemple (ESO 1A)");
 
-					notif("Grup creat correctament");
+					} else {
+						
+						Group grup = getGroupAdd();
+						MA.updateGroup(grup);
+						MA.closeTransaction();
+						reloadGrid();
+						windowAdd.close();
+						SingleSelectionModel m = (SingleSelectionModel) grid.getSelectionModel();
+
+						int Fila = (grid.getContainerDataSource().getItemIds().size()) - 1;
+
+						Object id = grid.getContainerDataSource().getIdByIndex(Fila);
+						System.out.println("Fila: " + Fila);
+						System.out.println("Grup: " + id);
+
+						m.select(id);
+						grid.scrollTo(id);
+						clearAddForm();
+
+						notif("Grup creat correctament");
+
+					}
 
 				} catch (NullPointerException e) {
 
 					notif("Omple els camps obligatoris");
-
 				}
 
 			}
@@ -160,7 +171,6 @@ public class AdminViewGroupJava extends MainContentView {
 
 	}
 
-
 	private void deleteGroup() {
 		MA = new GroupJPAManager();
 
@@ -173,12 +183,13 @@ public class AdminViewGroupJava extends MainContentView {
 		MA.closeTransaction();
 
 		notif("Grup esborrat correctament");
+
 	}
 
 	private Group getGroupAdd() {
 
-		String id = grupFormAdd.txtGrup.getValue().toString();
-		int numAlumnes = Integer.parseInt(grupFormAdd.txtMaxAl.getValue().toString());
+		String id = grupFormAdd.txtGrup.getValue().toString().toUpperCase();
+		int numAlumnes = 35;
 
 		Group gr = new Group(id, numAlumnes);
 
@@ -304,6 +315,7 @@ public class AdminViewGroupJava extends MainContentView {
 		windowAdd.setModal(true);
 		windowAdd.center();
 		windowAdd.setDraggable(false);
+		grupFormAdd.txtMaxAl.setVisible(false);
 		windowAdd.setContent(grupFormAdd);
 	}
 
