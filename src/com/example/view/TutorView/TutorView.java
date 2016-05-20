@@ -42,6 +42,7 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.themes.ValoTheme;
 
 public class TutorView extends MainView implements View {
 	public static final String NAME = "Tutor";
@@ -218,8 +219,8 @@ public class TutorView extends MainView implements View {
 
 		Window win = new Window(" Tancar sessió");
 
-		win.setWidth("300");
-		win.setHeight("150");
+		win.setWidth("25%");
+		win.setHeight("15%");
 		win.setIcon(FontAwesome.CLOSE);
 		win.setDraggable(false);
 		win.setClosable(false);
@@ -229,7 +230,9 @@ public class TutorView extends MainView implements View {
 
 		Label question = new Label(" Estas segur?");
 		Button yes = new Button("Sí");
+		yes.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		Button no = new Button("No");
+		no.addStyleName(ValoTheme.BUTTON_DANGER);
 
 		no.addClickListener(new ClickListener() {
 

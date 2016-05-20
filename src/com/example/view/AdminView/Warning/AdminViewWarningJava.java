@@ -422,7 +422,7 @@ public class AdminViewWarningJava extends MainContentView {
 	}
 
 	
-	private void FilterGridCurs(){
+	/*private void FilterGridCurs(){
 		
 	    cell = filterRow.getCell(AL_CURS);   
 	    // Have an input field to use for filter
@@ -439,13 +439,11 @@ public class AdminViewWarningJava extends MainContentView {
 	        	alumnes.addContainerFilter(
 	                new SimpleStringFilter(AL_CURS,
 	                    change.getText(), true, false));
-	        
-	       /* if ( change.getText().isEmpty())
-	        	 alumnes.removeContainerFilters(AL_COGNOMS);*/
+	  
 	        
 	    });
 	    cell.setComponent(filterField);
-	}
+	}*/
 	
 
 
@@ -477,7 +475,7 @@ public class AdminViewWarningJava extends MainContentView {
 		grid.setSizeFull();
 		grid.setContainerDataSource(alumnes);
 		grid.setColumnReorderingAllowed(true);
-		grid.setColumns(AL_NOM, AL_COGNOMS, AL_CURS, AL_GRUP);
+		grid.setColumns(AL_NOM, AL_COGNOMS, AL_GRUP);
 
 		// grid.appendHeaderRow();
 
@@ -520,7 +518,7 @@ public class AdminViewWarningJava extends MainContentView {
 		filterRow = grid.appendHeaderRow();
 		FilterGridName();
 		FilterGridSurName();
-		FilterGridCurs();
+		//FilterGridCurs();
 		FilterGridGrup();
 		return grid;
 
