@@ -121,7 +121,7 @@ public class AdminViewGroupJava extends MainContentView {
 										
 					if (grupValue.length() >6) {
 
-						notif("Format incorrecte. Exemple(ESO 1A)");
+						notif("Format incorrecte. Exemple (ESO 1A)");
 						
 					}else{
 						
