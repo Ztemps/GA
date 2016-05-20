@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import org.eclipse.persistence.internal.oxm.mappings.Login;
@@ -15,6 +16,7 @@ import com.example.Logic.UserJPAManager;
 import com.example.LoginView.LoginView;
 import com.example.Pdf.generatePDF;
 import com.example.Templates.MainView;
+import com.example.Templates.ResponsiveMenu;
 import com.example.view.AdminView.CSV.AdminViewCSVUploadJava;
 import com.example.view.AdminView.Charts.AdminViewCharts;
 import com.example.view.AdminView.Group.AdminViewGroupJava;
@@ -42,6 +44,8 @@ import com.vaadin.shared.Position;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
@@ -69,6 +73,9 @@ public class AdminView extends MainView implements View {
 	private UserJPAManager ma;
 	private static AdminViewTutorJava Viewtutors;
 	private BufferedReader br = null;
+    com.vaadin.ui.Notification notif;
+    CssLayout menuContent = new CssLayout();
+
 
 	@Override
 	public void enter(ViewChangeEvent event) {
@@ -88,12 +95,13 @@ public class AdminView extends MainView implements View {
 
 	public AdminView() throws IOException, DocumentException, SQLException {
 
-	
+			
 			
 			content.addStyleName("contenido");
 
 			loadView();
-
+			
+			
 			ViewGrupos = new AdminViewGroupJava();
 			ViewStudents = new AdminViewStudentJava();
 			ViewDocents = new AdminViewTeacherJava();
@@ -141,10 +149,38 @@ public class AdminView extends MainView implements View {
 			sep4.addClickListener(e -> subMenuGeneral2());
 			sep5.setDisableOnClick(true);	
 			
-			
-		
+			menuToggle.addClickListener(new ClickListener(){
+	            @Override
+	            public void buttonClick(final ClickEvent event) {
+	            	
+	                if (getStyleName().contains("valo-menu-visible")) {
+	                    removeStyleName("valo-menu-visible");
+	                    notif.show("Botón responsive");
+	                    
+	                    
+	                } else {
+	                    addStyleName("valo-menu-visible");
+	                    notif.show("Botonaco");
+	                    buildContent();
+	                }
+	            }
+	        });
 
 	}
+	
+	 private void buildContent() {
+	        menuContent = new CssLayout();
+	        menuContent.addStyleName("sidebar");
+	        menuContent.addStyleName(ValoTheme.MENU_PART);
+	        menuContent.addStyleName("no-vertical-drag-hints");
+	        menuContent.addStyleName("no-horizontal-drag-hints");
+	        menuContent.setWidth(null);
+	        menuContent.setHeight("100%");
+	        
+
+	    }
+
+
 
 	private void subMenuGeneral2() {
 		// TODO Auto-generated method stub

@@ -1,86 +1,86 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
  <head>
-  <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src&quot;,&quot;THEME&quot;:&quot;ga&quot;}">
+  <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src&quot;,&quot;THEME&quot;:&quot;gatheme&quot;}">
  </head> 
  <body> 
-  <vaadin-horizontal-layout style-name="valo-menu-responsive" responsive id="responsive-application-template" size-full> 
+  <vaadin-horizontal-layout style-name="valo-menu-responsive" responsive="true" id="responsive-application-template" size-full="true"> 
    <vaadin-css-layout style-name="valo-menu"> 
     <vaadin-css-layout style-name="valo-menu-part"> 
-     <vaadin-horizontal-layout style-name="valo-menu-title" width-full _id="menuTitle"> 
-      <vaadin-label size-auto _id="menuTitleLabel" :middle :expand>
+     <vaadin-horizontal-layout style-name="valo-menu-title" width-full="true" _id="menuTitle"> 
+      <vaadin-label size-auto="true" _id="menuTitleLabel" :middle="" :expand="">
         Gestió 
        <strong>d'Amonestacions</strong> 
       </vaadin-label> 
      </vaadin-horizontal-layout> 
-     <vaadin-button icon="fonticon://FontAwesome/f03a" style-name="primary small valo-menu-toggle" plain-text _id="menuToggle">
+     <vaadin-button icon="fonticon://FontAwesome/f03a" style-name="primary small valo-menu-toggle" responsive="true" immediate="true" plain-text="" _id="menuToggle">
        Menu 
      </vaadin-button> 
-     <vaadin-css-layout style-name="valo-menuitems" responsive _id="menuItems"> 
-      <vaadin-vertical-layout spacing size-full _id="vImage"></vaadin-vertical-layout> 
-      <vaadin-label caption="Benvingut Usuari" responsive _id="wellcome"></vaadin-label> 
-      <vaadin-button primary-style-name="valo-menu-item" style-name="valo-menu-subtitle" responsive _id="sep"> 
+     <vaadin-css-layout style-name="valo-menuitems" responsive="true" _id="menuItems"> 
+      <vaadin-vertical-layout spacing="true" size-full="true" _id="vImage"></vaadin-vertical-layout> 
+      <vaadin-label caption="Benvingut Usuari" responsive="true" _id="wellcome"></vaadin-label> 
+      <vaadin-button primary-style-name="valo-menu-item" style-name="valo-menu-subtitle" responsive="true" _id="sep"> 
        <strong>Eines</strong> 
       </vaadin-button> 
-      <vaadin-button icon="fonticon://FontAwesome/f00d" description="Permet introduïr amonestacions." primary-style-name="valo-menu-item" responsive width-full plain-text _id="warning">
+      <vaadin-button icon="fonticon://FontAwesome/f00d" description="Permet introduïr amonestacions." primary-style-name="valo-menu-item" responsive="true" width-full="true" plain-text="" _id="warning">
         Amonestar 
       </vaadin-button> 
-      <vaadin-button icon="fonticon://FontAwesome/f0c0" description="Consulta l'estat de les amonestacions del grup tutel·lat." primary-style-name="valo-menu-item" responsive _id="groupsTutor">
+      <vaadin-button icon="fonticon://FontAwesome/f0c0" description="Consulta l'estat de les amonestacions del grup tutel·lat." primary-style-name="valo-menu-item" responsive="true" _id="groupsTutor">
         Els meus grups 
       </vaadin-button> 
-      <vaadin-button icon="fonticon://FontAwesome/f1da" description="Llistat de les meves amonestacions." primary-style-name="valo-menu-item" responsive _id="mevesAmonestacions">
+      <vaadin-button icon="fonticon://FontAwesome/f1da" description="Llistat de les meves amonestacions." primary-style-name="valo-menu-item" responsive="true" _id="mevesAmonestacions">
         Les meves amonestacions 
       </vaadin-button> 
-      <vaadin-button primary-style-name="valo-menu-item" style-name="valo-menu-subtitle" responsive _id="sep3"> 
+      <vaadin-button primary-style-name="valo-menu-item" style-name="valo-menu-subtitle" responsive="true" _id="sep3"> 
        <strong>Gestions</strong> 
       </vaadin-button> 
-      <vaadin-button icon="fonticon://FontAwesome/f19d" description="Totalitat dels alumnes del centre." primary-style-name="valo-menu-item" responsive _id="students">
+      <vaadin-button icon="fonticon://FontAwesome/f19d" description="Totalitat dels alumnes del centre." primary-style-name="valo-menu-item" responsive="true" _id="students">
         Alumnes 
       </vaadin-button> 
-      <vaadin-button icon="fonticon://FontAwesome/f0f0" description="Tutors dels grups." primary-style-name="valo-menu-item" responsive _id="tutors">
+      <vaadin-button icon="fonticon://FontAwesome/f0f0" description="Tutors dels grups." primary-style-name="valo-menu-item" responsive="true" _id="tutors">
         Tutors 
       </vaadin-button> 
-      <vaadin-button icon="fonticon://FontAwesome/f007" description="Totalitat dels professors del centre." primary-style-name="valo-menu-item" responsive _id="teachers">
+      <vaadin-button icon="fonticon://FontAwesome/f007" description="Totalitat dels professors del centre." primary-style-name="valo-menu-item" responsive="true" _id="teachers">
         Professors 
        <!--<span class="valo-menu-badge">7</span> --> 
       </vaadin-button> 
-      <vaadin-button icon="fonticon://FontAwesome/f0c0" description="Totalitat dels grups del centre." primary-style-name="valo-menu-item" responsive _id="groups">
+      <vaadin-button icon="fonticon://FontAwesome/f0c0" description="Totalitat dels grups del centre." primary-style-name="valo-menu-item" responsive="true" _id="groups">
         Grups 
       </vaadin-button> 
-      <vaadin-button icon="fonticon://FontAwesome/f03a" description="Usuaris de l'app." primary-style-name="valo-menu-item" responsive plain-text _id="usuaris">
+      <vaadin-button icon="fonticon://FontAwesome/f03a" description="Usuaris de l'app." primary-style-name="valo-menu-item" responsive="true" plain-text="" _id="usuaris">
         Usuaris 
       </vaadin-button> 
-      <vaadin-button primary-style-name="valo-menu-item" style-name="valo-menu-subtitle" responsive _id="sep4"> 
+      <vaadin-button primary-style-name="valo-menu-item" style-name="valo-menu-subtitle" responsive="true" _id="sep4"> 
        <strong>General</strong> 
       </vaadin-button> 
-      <vaadin-button icon="fonticon://FontAwesome/f091" description="Llistat d'amonestacions." primary-style-name="valo-menu-item" responsive _id="amonestacions">
+      <vaadin-button icon="fonticon://FontAwesome/f091" description="Llistat d'amonestacions." primary-style-name="valo-menu-item" responsive="true" _id="amonestacions">
         Amonestacions 
       </vaadin-button> 
-      <vaadin-button icon="fonticon://FontAwesome/f080" description="Gràfics estadístics de les amonestacions.	" primary-style-name="valo-menu-item" responsive plain-text _id="charts">
+      <vaadin-button icon="fonticon://FontAwesome/f080" description="Gràfics estadístics de les amonestacions.	" primary-style-name="valo-menu-item" responsive="true" plain-text="" _id="charts">
         Gràfiques 
       </vaadin-button> 
-      <vaadin-button icon="fonticon://FontAwesome/f08d" description="Informes detallats de les amonestacions." primary-style-name="valo-menu-item" responsive plain-text _id="informes">
+      <vaadin-button icon="fonticon://FontAwesome/f08d" description="Informes detallats de les amonestacions." primary-style-name="valo-menu-item" responsive="true" plain-text="" _id="informes">
         Informes 
       </vaadin-button> 
-      <vaadin-button icon="fonticon://FontAwesome/f093" description="Introducció dels alumnes del nou curs." primary-style-name="valo-menu-item" responsive plain-text _id="cargarCSV">
+      <vaadin-button icon="fonticon://FontAwesome/f093" description="Introducció dels alumnes del nou curs." primary-style-name="valo-menu-item" responsive="true" plain-text="" _id="cargarCSV">
         Càrregar CSV 
       </vaadin-button> 
-      <vaadin-button icon="fonticon://FontAwesome/f1cd" description="Configuració de l'aplicació." primary-style-name="valo-menu-item" responsive plain-text _id="configuracio">
+      <vaadin-button icon="fonticon://FontAwesome/f1cd" description="Configuració de l'aplicació." primary-style-name="valo-menu-item" responsive="true" plain-text="" _id="configuracio">
         Configuració 
       </vaadin-button> 
-      <vaadin-button primary-style-name="valo-menu-item" style-name="valo-menu-subtitle" responsive _id="sep5"> 
+      <vaadin-button primary-style-name="valo-menu-item" style-name="valo-menu-subtitle" responsive="true" _id="sep5"> 
        <strong>Finalitzar</strong> 
       </vaadin-button> 
-      <vaadin-button icon="fonticon://FontAwesome/f11e" description="Moure dades a l'arxiu històric al finalitzar el curs escolar." primary-style-name="valo-menu-item" responsive plain-text _id="ficurs">
+      <vaadin-button icon="fonticon://FontAwesome/f11e" description="Moure dades a l'arxiu històric al finalitzar el curs escolar." primary-style-name="valo-menu-item" responsive="true" plain-text="" _id="ficurs">
         Finalitzar curs 
       </vaadin-button> 
-      <vaadin-button icon="fonticon://FontAwesome/f08b" description="Adèu!" primary-style-name="valo-menu-item" responsive plain-text _id="logout">
+      <vaadin-button icon="fonticon://FontAwesome/f08b" description="Adèu!" primary-style-name="valo-menu-item" responsive="true" plain-text="" _id="logout">
         Sortir 
       </vaadin-button> 
      </vaadin-css-layout> 
     </vaadin-css-layout> 
    </vaadin-css-layout> 
-   <vaadin-vertical-layout spacing size-full margin _id="content" :expand></vaadin-vertical-layout> 
+   <vaadin-vertical-layout spacing="true" size-full="true" margin="true" _id="content" :expand=""></vaadin-vertical-layout> 
   </vaadin-horizontal-layout>  
  </body>
 </html>
