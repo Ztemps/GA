@@ -116,14 +116,14 @@ public class AdminViewGroupJava extends MainContentView {
 				try {
 
 					MA = new GroupJPAManager();
-					
+
 					String grupValue = grupFormAdd.txtGrup.getValue().toString();
-										
-					if (grupValue.length() >6) {
+
+					if (!grupValue.contains("ESO") || grupValue.toString().length() > 6) {
 
 						notif("Format incorrecte. Exemple (ESO 1A)");
-						
-					}else{
+
+					} else {
 						
 						Group grup = getGroupAdd();
 						MA.updateGroup(grup);
@@ -143,13 +143,12 @@ public class AdminViewGroupJava extends MainContentView {
 						clearAddForm();
 
 						notif("Grup creat correctament");
-						
+
 					}
 
 				} catch (NullPointerException e) {
 
 					notif("Omple els camps obligatoris");
-
 				}
 
 			}
@@ -189,8 +188,8 @@ public class AdminViewGroupJava extends MainContentView {
 
 	private Group getGroupAdd() {
 
-		String id = grupFormAdd.txtGrup.getValue().toString();
-		int numAlumnes = Integer.parseInt(grupFormAdd.txtMaxAl.getValue().toString());
+		String id = grupFormAdd.txtGrup.getValue().toString().toUpperCase();
+		int numAlumnes = 35;
 
 		Group gr = new Group(id, numAlumnes);
 
@@ -316,6 +315,7 @@ public class AdminViewGroupJava extends MainContentView {
 		windowAdd.setModal(true);
 		windowAdd.center();
 		windowAdd.setDraggable(false);
+		grupFormAdd.txtMaxAl.setVisible(false);
 		windowAdd.setContent(grupFormAdd);
 	}
 
