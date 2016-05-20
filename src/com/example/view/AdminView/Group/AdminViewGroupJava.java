@@ -119,7 +119,7 @@ public class AdminViewGroupJava extends MainContentView {
 
 					String grupValue = grupFormAdd.txtGrup.getValue().toString();
 
-					if (!grupValue.contains("ESO") || grupValue.toString().length() > 6) {
+					if (!grupValue.contains("ESO ") || grupValue.toString().length() > 6) {
 
 						notif("Format incorrecte. Exemple (ESO 1A)");
 
