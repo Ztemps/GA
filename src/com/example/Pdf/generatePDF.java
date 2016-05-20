@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasasdo@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
+ *******************************************************************************/
 package com.example.Pdf;
 
 import java.io.File;
@@ -83,7 +94,7 @@ public class generatePDF extends WarningJPAManager {
 		img.setAbsolutePosition(45, 770);
 		img.scaleToFit(25, 25);
 
-		String nomCognom = (query[0].concat(" "+query[1])).replaceFirst(" ", "").replaceAll(" ", "_");
+		String nomCognom = (query[0].concat(" " + query[1])).replaceFirst(" ", "").replaceAll(" ", "_");
 		String user = jpa.currentUser();
 
 		String path = path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + horaparte.substring(0, 5) + ")("
@@ -527,7 +538,7 @@ public class generatePDF extends WarningJPAManager {
 		return cell;
 	}
 
-	public String getPath2(String nomCognom,String fecha) throws IOException {
+	public String getPath2(String nomCognom, String fecha) throws IOException {
 		File currDir = new File(".");
 		String path2 = currDir.getCanonicalPath();
 
