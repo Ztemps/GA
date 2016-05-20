@@ -173,6 +173,7 @@ public class AdminViewGroupJava extends MainContentView {
 		MA.closeTransaction();
 
 		notif("Grup esborrat correctament");
+		
 	}
 
 	private Group getGroupAdd() {
