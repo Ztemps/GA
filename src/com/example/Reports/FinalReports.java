@@ -35,15 +35,23 @@ import com.vaadin.data.util.converter.Converter.ConversionException;
 public class FinalReports {
 	private static final String COMMA_DELIMITER = ",";
 	private static final String NEW_LINE_SEPARATOR = "\n";
-	static public ReportQuerys query;
-	static ArrayList<Date> dates = new ArrayList<Date>();
-	// CSV file header
 	private static final String FILE_HEADER = "ALUMNE,A,E";
-	public static GroupJPAManager jpa;
-	private static List<Group> grupos = null;
 
+	private ReportQuerys query;
+	private ArrayList<Date> dates;
+	private GroupJPAManager jpa;
+	private List<Group> grupos;
 
-	public static void calcularTotalporAlumnos() {
+	/**
+	 * 
+	 */
+	public FinalReports() {
+		// TODO Auto-generated constructor stub
+		dates = new ArrayList<Date>();
+
+	}
+
+	public void calcularTotalporAlumnos() {
 		// CALCULO DE FECHAS
 		// VARIABLE A COJER
 		try {
@@ -64,10 +72,10 @@ public class FinalReports {
 
 		long diff;
 		long numSetmanes;
-		int totalAmonest=0;
-		int totalExpuls=0;
+		int totalAmonest = 0;
+		int totalExpuls = 0;
 		FileWriter fileWriter = null;
-		int total=0;
+		int total = 0;
 		jpa = new GroupJPAManager();
 		grupos = new ArrayList<>();
 		grupos = jpa.getGroups();
@@ -89,20 +97,20 @@ public class FinalReports {
 			query = new ReportQuerys();
 			List ids = query.getIdAlumnes(grupos.get(x).getId());
 
-		//	query.closeTransaction();
+			// query.closeTransaction();
 
 			List idList = new ArrayList<>();
 
 			for (int i = 0; i < ids.size(); i++) {
 				idList.add(ids.get(i));
 
-			//	System.out.println(ids.get(i));
+				// System.out.println(ids.get(i));
 			}
 
 			// FOR NOMS
 			query = new ReportQuerys();
 			List noms = query.getNomAlumnes(grupos.get(x).getId());
-			//query.closeTransaction();
+			// query.closeTransaction();
 
 			List nomsList = new ArrayList<>();
 
@@ -115,7 +123,7 @@ public class FinalReports {
 
 			query = new ReportQuerys();
 			List cognoms = query.getCognomsAlumnes(grupos.get(x).getId());
-		//query.closeTransaction();
+			// query.closeTransaction();
 
 			List cognomsList = new ArrayList<>();
 
@@ -125,16 +133,15 @@ public class FinalReports {
 			}
 
 			try {
-				File f = new File ("/tmp/total");
-				if (!f.exists()){
+				File f = new File("/tmp/total");
+				if (!f.exists()) {
 					f.mkdirs();
 				}
-				
-				fileWriter = new FileWriter(
-						"/tmp/total/" + grupos.get(x).getId() + ".xls");
+
+				fileWriter = new FileWriter("/tmp/total/" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
-			//	query.closeTransaction();
+				// query.closeTransaction();
 
 				fileWriter.append("TOTAL  Curs: " + dateCurs);
 				fileWriter.append(COMMA_DELIMITER);
@@ -183,88 +190,81 @@ public class FinalReports {
 
 				// ADD STUDENTS
 				for (int i = 0; i < nomsList.size(); i++) {
-					totalExpuls=0;
-					totalAmonest=0;
-
+					totalExpuls = 0;
+					totalAmonest = 0;
 
 					fileWriter.append(nomsList.get(i).toString() + " " + cognomsList.get(i).toString());
 					fileWriter.append(COMMA_DELIMITER);
 					// ADD STUDENTS
 					for (int trim = 0; trim < 3; trim++) {
-						if (trim==0){
+						if (trim == 0) {
 							diaIniciTrimestre = dates.get(0);
 							diaFinalTrimestre = dates.get(1);
 						}
-						
-						else if (trim==1){
+
+						else if (trim == 1) {
 							diaIniciTrimestre = dates.get(2);
 							diaFinalTrimestre = dates.get(3);
 						}
-						
-						else if (trim==2){
+
+						else if (trim == 2) {
 							diaIniciTrimestre = dates.get(4);
 							diaFinalTrimestre = dates.get(5);
 						}
-						
 
-					calculoAmonest = new ArrayList<>();
-					calculoExpuls = new ArrayList<>();
+						calculoAmonest = new ArrayList<>();
+						calculoExpuls = new ArrayList<>();
 
-					// Debería de pasarle solo el id del alumnno
-					calculoAmonest = calcularAmonestadosPorSemana(idList, diaIniciTrimestre, diaFinalTrimestre);
-					calculoExpuls = calcularExpulsadosPorSemana(idList, diaIniciTrimestre, diaFinalTrimestre);
+						// Debería de pasarle solo el id del alumnno
+						calculoAmonest = calcularAmonestadosPorSemana(idList, diaIniciTrimestre, diaFinalTrimestre);
+						calculoExpuls = calcularExpulsadosPorSemana(idList, diaIniciTrimestre, diaFinalTrimestre);
 
-					/*for (int n=0; n<calculoAmonest.size(); n++){
-						totalAmonest=totalAmonest+Integer.parseInt(calculoAmonest.get(n).toString());
+						/*
+						 * for (int n=0; n<calculoAmonest.size(); n++){
+						 * totalAmonest=totalAmonest+Integer.parseInt(
+						 * calculoAmonest.get(n).toString()); }
+						 * 
+						 * for (int n=0; n<calculoExpuls.size(); n++){
+						 * totalExpuls=totalExpuls+Integer.parseInt(
+						 * calculoExpuls.get(n).toString()); }
+						 */
+
+						if (calculoAmonest.get(i).toString().equals("0")) {
+							fileWriter.append("");
+
+						} else {
+							fileWriter.append(calculoAmonest.get(i).toString());
+
+						}
+						fileWriter.append(COMMA_DELIMITER);
+
+						if (calculoExpuls.get(i).toString().equals("0")) {
+							fileWriter.append("");
+
+						} else {
+							fileWriter.append(calculoExpuls.get(i).toString());
+
+						}
+						fileWriter.append(COMMA_DELIMITER);
+
+						totalExpuls = totalExpuls + Integer.parseInt(calculoAmonest.get(i).toString());
+						totalAmonest = totalAmonest + Integer.parseInt(calculoExpuls.get(i).toString());
+
 					}
-					
-					for (int n=0; n<calculoExpuls.size(); n++){
-						totalExpuls=totalExpuls+Integer.parseInt(calculoExpuls.get(n).toString());
-					}*/
-					
-					
-					
-					if (calculoAmonest.get(i).toString().equals("0")) {
-						fileWriter.append("");
 
-					} else {
-						fileWriter.append(calculoAmonest.get(i).toString());
+					total = totalExpuls + totalAmonest;
 
-					}
-					fileWriter.append(COMMA_DELIMITER);
-
-					if (calculoExpuls.get(i).toString().equals("0")) {
-						fileWriter.append("");
-
-					} else {
-						fileWriter.append(calculoExpuls.get(i).toString());
-
-					}
-					fileWriter.append(COMMA_DELIMITER);
-
-					totalExpuls=totalExpuls+Integer.parseInt(calculoAmonest.get(i).toString());
-					totalAmonest=totalAmonest+Integer.parseInt(calculoExpuls.get(i).toString());
-					
-					
-					
-					
-					
-				}
-					
-					total=totalExpuls+totalAmonest;
-					
-					
-					if (totalExpuls==0) {
+					if (totalExpuls == 0) {
 						fileWriter.append("");
 
 					} else {
 						fileWriter.append(String.valueOf(totalExpuls));
 
 					}
-					
+
 					fileWriter.append(COMMA_DELIMITER);
 
-					if (totalAmonest==0) {
+					if (totalAmonest == 0) {
 						fileWriter.append("");
 
 					} else {
@@ -273,20 +273,16 @@ public class FinalReports {
 					}
 					fileWriter.append(COMMA_DELIMITER);
 
-					if (total==0) {
+					if (total == 0) {
 						fileWriter.append("");
 
 					} else {
 						fileWriter.append(String.valueOf(total));
 
 					}
-					
+
 					fileWriter.append(NEW_LINE_SEPARATOR);
 
-					
-					
-					
-					
 				}
 
 			} catch (IOException e) {
@@ -302,9 +298,8 @@ public class FinalReports {
 
 		}
 	}
-	
-	
-	public static void calcularResumenTotal() {
+
+	public void calcularResumenTotal() {
 		FileWriter fileWriter = null;
 
 		Date diaIniciTrimestre;
@@ -314,34 +309,30 @@ public class FinalReports {
 		Date diaFinalTrimestre;
 		long diff;
 		long numSetmanes;
-		int totalAmonest=0;
-		int totalExpuls=0;
-		int total=0;
-		int totalAcumulat=0;
-		int totalAcumulatAmon=0;
-		int totalAcumulatExpul=0;
-
+		int totalAmonest = 0;
+		int totalExpuls = 0;
+		int total = 0;
+		int totalAcumulat = 0;
+		int totalAcumulatAmon = 0;
+		int totalAcumulatExpul = 0;
 
 		try {
 
 			dates = readFile();
-			File f = new File ("/tmp/total/");
-			if (!f.exists()){
+			File f = new File("/tmp/total/");
+			if (!f.exists()) {
 				f.mkdirs();
 			}
 			fileWriter = new FileWriter("/tmp/total/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
-		//	query.closeTransaction();
+			// query.closeTransaction();
 
 			jpa = new GroupJPAManager();
 			grupos = new ArrayList<>();
 			grupos = jpa.getGroups();
-		//	jpa.closeTransaction();
+			// jpa.closeTransaction();
 
-			
-			
-			
 			diaIniciTrimestre = dates.get(0);
 			diaIniciCal = Calendar.getInstance();
 			diaIniciCal.setTime(diaIniciTrimestre);
@@ -352,19 +343,16 @@ public class FinalReports {
 
 			diff = diaFinalTrimestre.getTime() - diaIniciTrimestre.getTime();
 			numSetmanes = (diff / (24 * 60 * 60 * 1000)) / 7;
-			
-			
+
 			fileWriter.append("TOTAL   Curs: " + dateCurs);
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append(NEW_LINE_SEPARATOR);
 
 			// Headers
-			
 
 			// CONSULTA
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append(COMMA_DELIMITER);
-
 
 			fileWriter.append("1r Trimestre");
 			fileWriter.append(COMMA_DELIMITER);
@@ -384,15 +372,12 @@ public class FinalReports {
 			fileWriter.append("ACUMULAT");
 			fileWriter.append(COMMA_DELIMITER);
 
-
-			
 			fileWriter.append(NEW_LINE_SEPARATOR);
 			fileWriter.append("GRUP");
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append("Nº ALUMNES");
 			fileWriter.append(COMMA_DELIMITER);
 
-			
 			for (int i = 0; i < 4; i++) {
 				fileWriter.append("A");
 				fileWriter.append(COMMA_DELIMITER);
@@ -413,7 +398,7 @@ public class FinalReports {
 				query = new ReportQuerys();
 				List ids = query.getIdAlumnes(grupos.get(i).getId());
 
-			//	query.closeTransaction();
+				// query.closeTransaction();
 
 				List idList = new ArrayList<>();
 
@@ -425,56 +410,49 @@ public class FinalReports {
 				fileWriter.append(String.valueOf(idList.size()));
 				fileWriter.append(COMMA_DELIMITER);
 
-				
-				
 				/////////////////////////////
-					
-				
 
-				totalAcumulat=0;
-				totalAcumulatAmon=0;
-				totalAcumulatExpul=0;				
-					for (int trim = 0; trim < 3; trim++) {
-						
-						totalAmonest=0;
-						totalExpuls=0;
-						total=0;
-						calculoExpuls = new ArrayList<>();
-						calculoAmonest = new ArrayList<>();
-						if (trim==0){
-							diaIniciTrimestre = dates.get(0);
-							diaFinalTrimestre = dates.get(1);
-						}
-						
-						else if (trim==1){
-							diaIniciTrimestre = dates.get(2);
-							diaFinalTrimestre = dates.get(3);
-						}
-						
-						else if (trim==2){
-							diaIniciTrimestre = dates.get(4);
-							diaFinalTrimestre = dates.get(5);
-						}
-						
-					
+				totalAcumulat = 0;
+				totalAcumulatAmon = 0;
+				totalAcumulatExpul = 0;
+				for (int trim = 0; trim < 3; trim++) {
+
+					totalAmonest = 0;
+					totalExpuls = 0;
+					total = 0;
+					calculoExpuls = new ArrayList<>();
+					calculoAmonest = new ArrayList<>();
+					if (trim == 0) {
+						diaIniciTrimestre = dates.get(0);
+						diaFinalTrimestre = dates.get(1);
+					}
+
+					else if (trim == 1) {
+						diaIniciTrimestre = dates.get(2);
+						diaFinalTrimestre = dates.get(3);
+					}
+
+					else if (trim == 2) {
+						diaIniciTrimestre = dates.get(4);
+						diaFinalTrimestre = dates.get(5);
+					}
+
 					calculoAmonest = calcularAmonestadosPorSemana(idList, diaIniciTrimestre, diaFinalTrimestre);
 					calculoExpuls = calcularExpulsadosPorSemana(idList, diaIniciTrimestre, diaFinalTrimestre);
-					
-					for (int n=0; n<calculoAmonest.size(); n++){
-						totalAmonest=totalAmonest+Integer.parseInt(calculoAmonest.get(n).toString());
+
+					for (int n = 0; n < calculoAmonest.size(); n++) {
+						totalAmonest = totalAmonest + Integer.parseInt(calculoAmonest.get(n).toString());
 					}
-					
-					for (int n=0; n<calculoExpuls.size(); n++){
-						totalExpuls=totalExpuls+Integer.parseInt(calculoExpuls.get(n).toString());
+
+					for (int n = 0; n < calculoExpuls.size(); n++) {
+						totalExpuls = totalExpuls + Integer.parseInt(calculoExpuls.get(n).toString());
 					}
-					
-					total=totalExpuls+totalAmonest;
-					totalAcumulatAmon=totalAcumulatAmon+totalAmonest;
-					totalAcumulatExpul=totalAcumulatExpul+totalExpuls;	
-					
-					
-					
-					if (totalAmonest==0) {
+
+					total = totalExpuls + totalAmonest;
+					totalAcumulatAmon = totalAcumulatAmon + totalAmonest;
+					totalAcumulatExpul = totalAcumulatExpul + totalExpuls;
+
+					if (totalAmonest == 0) {
 						fileWriter.append("");
 
 					} else {
@@ -483,7 +461,7 @@ public class FinalReports {
 					}
 					fileWriter.append(COMMA_DELIMITER);
 
-					if (totalExpuls==0) {
+					if (totalExpuls == 0) {
 						fileWriter.append("");
 
 					} else {
@@ -491,8 +469,8 @@ public class FinalReports {
 
 					}
 					fileWriter.append(COMMA_DELIMITER);
-					
-					if (total==0) {
+
+					if (total == 0) {
 						fileWriter.append("");
 
 					} else {
@@ -500,44 +478,40 @@ public class FinalReports {
 
 					}
 					fileWriter.append(COMMA_DELIMITER);
-				
-				////////////////////////////////////
-					}
-					totalAcumulat=totalAcumulatAmon+totalAcumulatExpul;
 
-					if (totalAcumulatAmon==0) {
-						fileWriter.append("");
+					////////////////////////////////////
+				}
+				totalAcumulat = totalAcumulatAmon + totalAcumulatExpul;
 
-					} else {
-						fileWriter.append(String.valueOf(totalAcumulatAmon));
+				if (totalAcumulatAmon == 0) {
+					fileWriter.append("");
 
-					}
-					fileWriter.append(COMMA_DELIMITER);
+				} else {
+					fileWriter.append(String.valueOf(totalAcumulatAmon));
 
-					if (totalAcumulatExpul==0) {
-						fileWriter.append("");
+				}
+				fileWriter.append(COMMA_DELIMITER);
 
-					} else {
-						fileWriter.append(String.valueOf(totalAcumulatExpul));
+				if (totalAcumulatExpul == 0) {
+					fileWriter.append("");
 
-					}
-					
-					fileWriter.append(COMMA_DELIMITER);
+				} else {
+					fileWriter.append(String.valueOf(totalAcumulatExpul));
 
-					if (totalAcumulat==0) {
-						fileWriter.append("");
+				}
 
-					} else {
-						fileWriter.append(String.valueOf(totalAcumulat));
+				fileWriter.append(COMMA_DELIMITER);
 
-					}
-					
-					
+				if (totalAcumulat == 0) {
+					fileWriter.append("");
 
-					
-					
+				} else {
+					fileWriter.append(String.valueOf(totalAcumulat));
+
+				}
+
 				fileWriter.append(NEW_LINE_SEPARATOR);
-				
+
 			}
 
 		} catch (IOException e) {
@@ -548,19 +522,13 @@ public class FinalReports {
 			fileWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			
+
 		}
 		System.out.println("FINAL resumen finalitzat");
 
 	}
-	
-	
-	
-	
-	
-	
 
-	private static List calcularAmonestadosPorSemana(List idList, Date semana1, Date semana2) {
+	private List calcularAmonestadosPorSemana(List idList, Date semana1, Date semana2) {
 
 		List amonestacions1;
 
@@ -569,7 +537,7 @@ public class FinalReports {
 		for (int j = 0; j < idList.size(); j++) {
 			query = new ReportQuerys();
 			amonestacions1.add(query.getWarningCurs(Integer.parseInt(idList.get(j).toString()), semana1, semana2));
-			//query.closeTransaction();
+			// query.closeTransaction();
 
 		}
 
@@ -577,7 +545,7 @@ public class FinalReports {
 
 	}
 
-	private static List calcularExpulsadosPorSemana(List idList, Date semana1, Date semana2) {
+	private List calcularExpulsadosPorSemana(List idList, Date semana1, Date semana2) {
 
 		List expulsions1;
 		List expulsionsList1 = null;
@@ -587,14 +555,14 @@ public class FinalReports {
 		for (int j = 0; j < idList.size(); j++) {
 			query = new ReportQuerys();
 			expulsions1.add(query.getExpulsionCurs(Integer.parseInt(idList.get(j).toString()), semana1, semana2));
-		//	query.closeTransaction();
+			// query.closeTransaction();
 
 		}
 
 		return expulsions1;
 	}
 
-	public static ArrayList<Date> readFile() throws ReadOnlyException, ConversionException, IOException {
+	public ArrayList<Date> readFile() throws ReadOnlyException, ConversionException, IOException {
 		FileReader reader;
 		String path2 = null;
 		File currDir = new File(".");
@@ -659,7 +627,8 @@ public class FinalReports {
 		}
 		return fechas;
 	}
-	public static void closeAllConnections()  {
+
+	public void closeAllConnections() {
 		query.closeTransaction();
 		jpa.closeTransaction();
 	}

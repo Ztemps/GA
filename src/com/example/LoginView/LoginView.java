@@ -66,7 +66,7 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.Reindeer;
 import com.vaadin.ui.themes.ValoTheme;
 
-@Title("Login - Plataforma Gestión de Alumnos")
+@Title("Login - Plataforma Gestió d'Amonestacions")
 
 public class LoginView extends LoginViewDesign implements View {
 
@@ -141,16 +141,9 @@ public class LoginView extends LoginViewDesign implements View {
 
 	}
 
-	// public void keyReleased( KeyEvent e ) {
-	// loginButton.setEnabled(
-	// user.getValue().length() != 0 && password.getValue().length() !=0
-	// );
-	// }
-
 	public void notif(String mensaje) {
 
-		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
-																												// HTML
+		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true);
 
 		// Customize it
 		notif.show(Page.getCurrent());
@@ -160,8 +153,6 @@ public class LoginView extends LoginViewDesign implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// focus the username field when user arrives to the login view
-
 		FileWriter fw;
 		try {
 			fw = new FileWriter("userList.txt");
@@ -175,7 +166,6 @@ public class LoginView extends LoginViewDesign implements View {
 		}
 
 		txtUsername.focus();
-		// notif.show("Benvingut");
 
 	}
 
