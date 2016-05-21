@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasasdo@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
+ *******************************************************************************/
 package com.example.Logic;
 
 import java.sql.Timestamp;
@@ -17,18 +28,19 @@ import com.example.ga.GaUI;
 
 public class TutorJPAManager {
 
-	User user;
+	private User user;
 	private List<User> list_users;
 	private List<Group> list_grups;
 	boolean amonestat2 = false;
 	boolean expulsat = false;
 	boolean gravetat = false;
 
-	private EntityManagerUtil entman = new EntityManagerUtil();
+	private EntityManagerUtil entman;
 	private EntityManager em;
 
 	public TutorJPAManager() {
 		// TODO Auto-generated constructor stub
+		entman = new EntityManagerUtil();
 		em = entman.getEntityManager();
 	}
 
@@ -78,11 +90,5 @@ public class TutorJPAManager {
 		em.close();
 
 	}
-
-	/**
-	 * for (Iterator<User> iterator = list_users.iterator();
-	 * iterator.hasNext();) { // // User usuario = (User) iterator.next(); //
-	 * System.out.println(usuario.toString()); // }
-	 **/
 
 }

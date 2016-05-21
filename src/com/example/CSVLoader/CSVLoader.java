@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * 
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasasdo@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
+ * 
+ *******************************************************************************/
 package com.example.CSVLoader;
 
 import java.io.BufferedReader;
@@ -28,7 +41,7 @@ import com.example.Entities.Student;
 import com.example.Entities.Teacher;
 import com.example.Entities.Tutor;
 import com.example.Entities.User;
-import com.example.Logic.Cursos;
+import com.example.Logic.CurrentCourse;
 import com.example.Logic.GroupJPAManager;
 import com.example.Logic.StudentsJPAManager;
 import com.example.Logic.TeachersJPAManager;
@@ -41,142 +54,137 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Notification;
 
 public class CSVLoader {
-	static int option;
-	static int id;
-	static String cognoms, nom, grup, pais, nacionalitat, telefons;
-	static String nom2, cognoms2, email, contrasenya, usuari, tutoritza;
-	static java.sql.Date naixement;
-	static StudentsJPAManager jpa;
-	static UserJPAManager jpa2;
-	static TutorJPAManager JPATutor;
-	static TeachersJPAManager jpa3;
-	static GroupJPAManager jpaGroups;
-	static MessageDigest md ;
-	static HexBinaryAdapter hbinary ;
 
-	public CSVLoader()  {
-		
-		jpa = new StudentsJPAManager();
-		jpa2 = new UserJPAManager();
-		jpa3 = new TeachersJPAManager();
-		jpaGroups = new GroupJPAManager();
-		JPATutor = new TutorJPAManager();
+	private final static String FORMAT = "ISO-8859-3";
+	private final static String DATEFORMAT = "dd/MM/yyyy";
+	private final static String ALGORITHM = "SHA-1";
+	private final static String ROLTUTOR = "Tutor";
+	private final static String ROLPROFESSOR = "Professor";
+	private final static String NOTIF = "Dades carregades correctament";
+	
+	private int id;
+	private String surname, name, group, country, nacionality, phone;
+	private String email, password, user, tutoring;
+	private Date born, date;
+	private StudentsJPAManager studentsJPA;
+	private UserJPAManager userJPA;
+	private TutorJPAManager tutorJPA;
+	private TeachersJPAManager teachersJPA;
+	private GroupJPAManager groupsJPA;
+	private MessageDigest messageDigest;
+	private HexBinaryAdapter hBinaryAdapter;
+	private BufferedReader bReader;
+	private DateFormat dateFormat;
+	private ArrayList<String> lGroups;
+	private ArrayList<Student> lStudents;
+	private Set<String> linkedHashSet;
+	private String line = "";
+	private String passwordHash;
+	private CurrentCourse course;
+	
+	public CSVLoader() {
+
+		course = new CurrentCourse();
+		studentsJPA = new StudentsJPAManager();
+		userJPA = new UserJPAManager();
+		teachersJPA = new TeachersJPAManager();
+		groupsJPA = new GroupJPAManager();
+		tutorJPA = new TutorJPAManager();
 	}
 
-	public static void loaderStudents(File file) throws IOException, SQLException, ParseException {
+	public void loadStudents(File file) throws IOException, SQLException, ParseException {
 
-		BufferedReader br = new BufferedReader(
-				new InputStreamReader(new FileInputStream(file.getAbsolutePath()), "ISO-8859-3"));
-		DateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
-		Date date;
+		bReader = new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsolutePath()), FORMAT));
+		dateFormat = new SimpleDateFormat(DATEFORMAT);
 
-		// Skip de la primera linea
-		br.skip(br.readLine().indexOf(""));
+		// Skip first line
+		bReader.skip(bReader.readLine().indexOf(""));
 
-		ArrayList<String> grups = new ArrayList<>();
-		ArrayList<Student> students = new ArrayList<Student>();
+		lGroups = new ArrayList<String>();
+		lStudents = new ArrayList<Student>();
 
 		String linea = "";
 
-		// Image iconUser = new Image("/home/javi/Escritorio/no_user.png");
-
-		while ((linea = br.readLine()) != null) {
+		while ((linea = bReader.readLine()) != null) {
 
 			StringTokenizer str = new StringTokenizer(linea, ",\"\"");
 
-			// Image imageurl= new Image("/home/javi/Escritorio/no_user.png");
 			id = Integer.parseInt(str.nextToken());
-			cognoms = str.nextToken();
-			nom = str.nextToken();
-			grup = str.nextToken();
-			date = dateformat.parse(str.nextToken());
-			naixement = new java.sql.Date(date.getTime());
-			pais = str.nextToken();
-			nacionalitat = str.nextToken();
-			telefons = str.nextToken();
-			grups.add(grup);
-			students.add(new Student(nom, cognoms, null, telefons, naixement, Cursos.ObtenerCursoActual(), grup));
+			surname = str.nextToken();
+			name = str.nextToken();
+			group = str.nextToken();
+			date = dateFormat.parse(str.nextToken());
+			born = new java.sql.Date(date.getTime());
+			country = str.nextToken();
+			nacionality = str.nextToken();
+			phone = str.nextToken();
+			lGroups.add(group);
+
+			// Value null is a email of parents
+			lStudents.add(new Student(name, surname, null, phone, born, course.currentCourse(), group));
 
 		}
 
-		Set<String> linkedHashSet = new LinkedHashSet<String>();
-		linkedHashSet.addAll(grups);
-		grups.clear();
-		grups.addAll(linkedHashSet);
+		linkedHashSet = new LinkedHashSet<String>();
+		linkedHashSet.addAll(lGroups);
+		lGroups.clear();
+		lGroups.addAll(linkedHashSet);
 
-		for (int i = 0; i < grups.size(); i++) {
-			System.out.println(grups.get(i));
-			jpaGroups.addGroup(new Group(grups.get(i)));
-
+		// Add all groups in database
+		for (int i = 0; i < lGroups.size(); i++) {
+			groupsJPA.addGroup(new Group(lGroups.get(i)));
 		}
-		jpaGroups.closeTransaction();
-		System.out.println("====================== ALUMNES ========================");
-		for (int i = 0; i < students.size(); i++) {
-			System.out.println(students.get(i).toString());
-			jpa.addStudent(students.get(i));
+		groupsJPA.closeTransaction();
 
+		// Add all students in databaseF
+		for (int i = 0; i < lStudents.size(); i++) {
+			studentsJPA.addStudent(lStudents.get(i));
 		}
+		studentsJPA.closeTransaction();
 
-		jpa.closeTransaction();
-		notif("Dades carregades correctament");
+		bReader.close();
+		// Notification is loaded everything correctly
+		notif(NOTIF);
 
 	}
 
-	public static void loaderTeachers(File file) throws IOException, SQLException, ParseException, NoSuchAlgorithmException {
+	public void loadTeachers(File file) throws IOException, SQLException, ParseException, NoSuchAlgorithmException {
 
-		md =  MessageDigest.getInstance("SHA-1");
-		hbinary = new HexBinaryAdapter();
-		
-		BufferedReader br = new BufferedReader(
-				new InputStreamReader(new FileInputStream(file.getAbsolutePath()), "ISO-8859-3"));
+		messageDigest = MessageDigest.getInstance(ALGORITHM);
+		hBinaryAdapter = new HexBinaryAdapter();
 
-		br.skip(br.readLine().indexOf(""));
-		String linea = "";
-		String passwordhash;
+		bReader = new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsolutePath()), FORMAT));
 
-		while ((linea = br.readLine()) != null) {
+		while ((line = bReader.readLine()) != null) {
 
-			StringTokenizer str = new StringTokenizer(linea, ",");
+			StringTokenizer str = new StringTokenizer(line, ",");
 
-			nom2 = str.nextToken();
-			cognoms2 = str.nextToken();
+			name = str.nextToken();
+			surname = str.nextToken();
 			email = str.nextToken();
-			usuari = str.nextToken();
-			contrasenya = str.nextToken();
-			tutoritza = str.nextToken();
-			
-			
-			jpa2.addDocent(new Teacher(nom2, cognoms2, email));
+			user = str.nextToken();
+			password = str.nextToken();
+			tutoring = str.nextToken();
 
-			passwordhash = hbinary.marshal(md.digest(contrasenya.getBytes())).toLowerCase();
-			
-			if (!tutoritza.equals("null")) {
-				JPATutor.addTutor(new Tutor(jpa3.getIdDocent(email), tutoritza));
-				jpa2.addUser(new User(jpa3.getIdDocent(email), passwordhash, usuari, "Tutor"));
+			userJPA.addDocent(new Teacher(name, surname, email));
 
-			}else{
-				
-				jpa2.addUser(new User(jpa3.getIdDocent(email), passwordhash, usuari, "Professor"));
+			passwordHash = hBinaryAdapter.marshal(messageDigest.digest(password.getBytes())).toLowerCase();
 
-				
-			}
-			
-			
-
+			if (!tutoring.equals("null")) {
+				tutorJPA.addTutor(new Tutor(teachersJPA.getIdDocent(email), tutoring));
+				userJPA.addUser(new User(teachersJPA.getIdDocent(email), passwordHash, user, ROLTUTOR));
+			} else 
+				userJPA.addUser(new User(teachersJPA.getIdDocent(email), passwordHash, user, ROLPROFESSOR));
 
 		}
-		jpa2.closeTransaction();
-
+		userJPA.closeTransaction();
+		bReader.close();
 		notif("Dades carregades correctament");
 
 	}
-
 
 	public static void notif(String mensaje) {
-
 		Notification notif = new Notification(mensaje, null, Notification.Type.HUMANIZED_MESSAGE, true); // Contains
-																												// HTML
-
 		// Customize it
 		notif.show(Page.getCurrent());
 		notif.setDelayMsec(500);

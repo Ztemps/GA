@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasasdo@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
+ *******************************************************************************/
 package com.example.Logic;
 
 import java.util.List;
@@ -12,9 +23,18 @@ import com.example.Entities.Tutor;
 
 public class GroupJPAManager {
 	private Group group;
-	private EntityManagerUtil entman = new EntityManagerUtil();
-	private EntityManager em = entman.getEntityManager();
+	private EntityManagerUtil entman;
+	private EntityManager em;
 	private List<Group> listGroups;
+
+	/**
+	 * 
+	 */
+	public GroupJPAManager() {
+		// TODO Auto-generated constructor stub
+		entman = new EntityManagerUtil();
+		em = entman.getEntityManager();
+	}
 
 	public void addGroup(Group grup) {
 
@@ -36,7 +56,7 @@ public class GroupJPAManager {
 		em.remove(grup);
 		em.getTransaction().commit();
 	}
-	
+
 	public List listGrups() {
 
 		Query query = null;
@@ -44,29 +64,21 @@ public class GroupJPAManager {
 
 			// lista los grupos con el nombre de su tutor
 			em.getTransaction().begin();
-			// list_grups = em.createQuery("SELECT g.id,d.nom FROM grup g, tutor
-			// t,docent d WHERE g.id = t.grup and t.docent =
-			// d.id").getResultList();
 
 			query = em.createNativeQuery(
 
 					"SELECT g.id,d.nom FROM Grup g, Tutor t,Docent d WHERE g.id = t.grup and t.docent = d.id");
 
-			// System.out.println("objecto:"+ query.getSingleResult());
 			em.getTransaction().commit();
-			// return list_grups;
 
 		} catch (Exception e) {
 			em.getTransaction().rollback();
 		}
-		// return list_grups;
 		return query.getResultList();
 	}
-	
-	
-public List<Group> getGroups(){
-		
-		
+
+	public List<Group> getGroups() {
+
 		try {
 
 			em.getTransaction().begin();
@@ -78,22 +90,16 @@ public List<Group> getGroups(){
 		} catch (Exception e) {
 			em.getTransaction().rollback();
 		}
-	
+
 		return listGroups;
 
-
 	}
-	
-	
-	
+
 	public String getGroupTutor(int docent) {
 
 		Query query = em.createNativeQuery("SELECT docent,grup FROM tutor WHERE docent = #docent", Tutor.class);
 
 		query.setParameter("docent", docent);
-		//
-		// Tutor tutor = (Tutor) query.getSingleResult();
-
 		List results = query.getResultList();
 		Tutor tutor = null;
 		for (int i = 0; i < results.size(); i++) {
@@ -102,8 +108,6 @@ public List<Group> getGroups(){
 
 		return tutor.getGrup();
 	}
-	
-	
 
 	public void closeTransaction() {
 

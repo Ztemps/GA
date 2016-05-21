@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasasdo@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
+ *******************************************************************************/
 package com.example.view.AdminView.Settings;
 
 import java.io.BufferedReader;
@@ -24,7 +35,8 @@ import com.vaadin.ui.Button.ClickListener;
 
 public class AdminViewSettingsJava extends MainContentView {
 
-	private static AdminViewSettings adminsettings;
+	private AdminViewSettings adminsettings;
+	private ConverterDates datas;
 
 	public AdminViewSettingsJava() {
 		ButtonSettings();
@@ -93,28 +105,30 @@ public class AdminViewSettingsJava extends MainContentView {
 		String datafintrimestre2buena = null;
 		String fechaIniciTrimestre3buena=null;
 		String fechaIniciTrimestre2buena=null;
+		
+		datas = new ConverterDates();
 		File currDir = new File(".");
 		String path2;
 		try {
 
 			Date datainicitrimestre1 = adminsettings.dataIniciCurs.getValue();
-			datainicitrimestre1buena = ConverterDates.converterDate(datainicitrimestre1);
+			datainicitrimestre1buena = datas.converterDate(datainicitrimestre1);
 
 			Date datafinaltrimestre3 = adminsettings.dataFinalCurs.getValue();
-			datafinaltrimestre3buena = ConverterDates.converterDate(datafinaltrimestre3);
+			datafinaltrimestre3buena = datas.converterDate(datafinaltrimestre3);
 			
 			Date datafintrimestre1 = adminsettings.dataFinaltrimestre1.getValue();
-			datafintrimestre1buena = ConverterDates.converterDate(datafintrimestre1);
+			datafintrimestre1buena = datas.converterDate(datafintrimestre1);
 
 			Date datafintrimestre2 = adminsettings.dataFinaltrimestre2.getValue();
-			datafintrimestre2buena = ConverterDates.converterDate(datafintrimestre2);
+			datafintrimestre2buena = datas.converterDate(datafintrimestre2);
 			
 			Date fechaIniciTrimestre3 = adminsettings.dataInicitrimestre3.getValue();
-			fechaIniciTrimestre3buena = ConverterDates.converterDate(fechaIniciTrimestre3);
+			fechaIniciTrimestre3buena = datas.converterDate(fechaIniciTrimestre3);
 			
 			
 			Date fechaIniciTrimestre2 = adminsettings.dataInicitrimestre2.getValue();
-			fechaIniciTrimestre2buena = ConverterDates.converterDate(fechaIniciTrimestre2);
+			fechaIniciTrimestre2buena = datas.converterDate(fechaIniciTrimestre2);
 			
 			
 			boolean checkTutor = adminsettings.checkEmailTutors.getValue();

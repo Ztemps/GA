@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasasdo@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
+ *******************************************************************************/
 package com.example.view.TutorView;
 
 import java.io.File; 
@@ -113,6 +124,11 @@ public class TutorViewGrupsJava extends MainContentView {
 
 		UI.getCurrent().addWindow(windowDetails);
 
+		
+		tutorviewdetailsform.dateStudent.setReadOnly(false);
+		tutorviewdetailsform.lastnameStudent.setReadOnly(false);
+		tutorviewdetailsform.nameStudent.setReadOnly(false);
+
 		Object id = mygrid.getContainerDataSource().getItem(mygrid.getSelectedRow()).getItemProperty("id");
 		Object name = mygrid.getContainerDataSource().getItem(mygrid.getSelectedRow()).getItemProperty("nom");
 		Object surname = mygrid.getContainerDataSource().getItem(mygrid.getSelectedRow()).getItemProperty("cognoms");
@@ -136,16 +152,14 @@ public class TutorViewGrupsJava extends MainContentView {
 
 		em.getTransaction().commit();
 
-		File f1 = new File("/home/katano/Descargas/fotico.jpg");
-		FileResource resource = new FileResource(f1);
-		tutorviewdetailsform.imageStudent.setSource(resource);
+		
 		tutorviewdetailsform.nameStudent.setValue(name.toString());
-		tutorviewdetailsform.nameStudent.setReadOnly(true);
 		tutorviewdetailsform.lastnameStudent.setValue(surname.toString());
-		tutorviewdetailsform.lastnameStudent.setReadOnly(true);
 		tutorviewdetailsform.dateStudent.setValue(data.toString());
 		tutorviewdetailsform.dateStudent.setReadOnly(true);
-		
+		tutorviewdetailsform.lastnameStudent.setReadOnly(true);
+		tutorviewdetailsform.nameStudent.setReadOnly(true);
+
 		
 		
 		if (email.toString() == null) {
@@ -247,8 +261,6 @@ public class TutorViewGrupsJava extends MainContentView {
 			
 		}
 		
-
-
 
 		Filter filter = new Compare.Equal("grup", grupTutor);
 		students.addContainerFilter(filter);

@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasasdo@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
+ *******************************************************************************/
 package com.example.LoginView;
 
 import java.awt.Toolkit;
@@ -22,7 +33,6 @@ import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
 import org.eclipse.jetty.security.authentication.SessionAuthentication;
 
-import com.example.Encrypter.EncryptDecryptStringWithDES;
 import com.example.Entities.User;
 import com.example.view.AdminView.AdminView;
 import com.example.view.TeacherView.TeacherView;
@@ -56,7 +66,7 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.Reindeer;
 import com.vaadin.ui.themes.ValoTheme;
 
-@Title("Login - Plataforma Gestión de Alumnos")
+@Title("Login - Plataforma Gestió d'Amonestacions")
 
 public class LoginView extends LoginViewDesign implements View {
 
@@ -131,16 +141,9 @@ public class LoginView extends LoginViewDesign implements View {
 
 	}
 
-	// public void keyReleased( KeyEvent e ) {
-	// loginButton.setEnabled(
-	// user.getValue().length() != 0 && password.getValue().length() !=0
-	// );
-	// }
-
 	public void notif(String mensaje) {
 
-		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
-																												// HTML
+		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true);
 
 		// Customize it
 		notif.show(Page.getCurrent());
@@ -150,8 +153,6 @@ public class LoginView extends LoginViewDesign implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// focus the username field when user arrives to the login view
-
 		FileWriter fw;
 		try {
 			fw = new FileWriter("userList.txt");
@@ -165,7 +166,6 @@ public class LoginView extends LoginViewDesign implements View {
 		}
 
 		txtUsername.focus();
-		// notif.show("Benvingut");
 
 	}
 

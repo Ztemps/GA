@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasasdo@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
+ *******************************************************************************/
 package com.example.view.AdminView.Students;
 
 import java.text.ParseException;
@@ -9,7 +20,7 @@ import javax.persistence.EntityManager;
 import com.example.Dates.ConverterDates;
 import com.example.Entities.Group;
 import com.example.Entities.Student;
-import com.example.Logic.Cursos;
+import com.example.Logic.CurrentCourse;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.StudentsJPAManager;
 import com.example.Templates.AdminAddStudentForm;
@@ -44,6 +55,7 @@ public class AdminViewStudentJava extends MainContentView {
 	 */
 	private static final long serialVersionUID = -8408971161693178388L;
 
+	private ConverterDates datas;
 	private Grid grid = new Grid();
 	private StudentsJPAManager MA;
 	private Window windowAdd = new Window();
@@ -54,12 +66,13 @@ public class AdminViewStudentJava extends MainContentView {
 	private AdminAddStudentForm alumneformEdit;
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em = entman.getEntityManager();
+	private CurrentCourse course;
 
 	public AdminViewStudentJava() {
 
 		alumneformEdit = new AdminAddStudentForm();
 		alumneformAdd = new AdminAddStudentForm();
-
+		course = new CurrentCourse();
 		buttonsSettings();
 		filterTextProperties();
 		WindowPropertiesAddStudent();
@@ -158,6 +171,8 @@ public class AdminViewStudentJava extends MainContentView {
 	private void editStudent() {
 		PopulateNativeSelect();
 
+		datas = new ConverterDates();
+		
 		UI.getCurrent().addWindow(windowEdit);
 		windowEdit.setCaption("Editar alumne");
 
@@ -170,7 +185,7 @@ public class AdminViewStudentJava extends MainContentView {
 		Object curs = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("curs");
 		Object grup = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("grup");
 
-		String fecha = ConverterDates.converterDate2(data.toString());
+		String fecha = datas.converterDate2(data.toString());
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		Date date = null;
 		try {
@@ -266,7 +281,7 @@ public class AdminViewStudentJava extends MainContentView {
 
 		String nom = alumneformAdd.nom.getValue().toString();
 		String cognom = alumneformAdd.cognom.getValue().toString();
-		String curs = Cursos.ObtenerCursoActual();
+		String curs = course.currentCourse();
 		Date fecha = alumneformAdd.fecha.getValue();
 		String email = alumneformAdd.emails.getValue().toString();
 		String telf = alumneformAdd.teléfons.getValue().toString();
@@ -281,7 +296,7 @@ public class AdminViewStudentJava extends MainContentView {
 		Object id = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
 		String nom = alumneformEdit.nom.getValue().toString();
 		String cognom = alumneformEdit.cognom.getValue().toString();
-		String curs = Cursos.ObtenerCursoActual();
+		String curs = course.currentCourse();
 		Date fecha = alumneformEdit.fecha.getValue();
 		String email = alumneformEdit.emails.getValue().toString();
 		String telf = alumneformEdit.teléfons.getValue().toString();

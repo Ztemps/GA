@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasasdo@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
+ *******************************************************************************/
 package com.example.view.TutorView;
 
 import java.io.File;
@@ -34,7 +45,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import sun.text.normalizer.UBiDiProps;
 
 public class TutorOwnWarningsJava extends MainContentView {
-	
+
 	private File sourceFile;
 	private String nomCognoms;
 	private String fecha;
@@ -54,8 +65,7 @@ public class TutorOwnWarningsJava extends MainContentView {
 		b.setCaption("PRUEBA");
 		gridProperties();
 		WindowProperties();
-		
-		
+
 		bRegister.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -71,7 +81,6 @@ public class TutorOwnWarningsJava extends MainContentView {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 
 			}
 		});
@@ -121,7 +130,7 @@ public class TutorOwnWarningsJava extends MainContentView {
 		// TODO Auto-generated method stub
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);
-		 grid.deselectAll();
+		grid.deselectAll();
 	}
 
 	private void buttonsSettings() {
@@ -138,7 +147,6 @@ public class TutorOwnWarningsJava extends MainContentView {
 		bRegister.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
-	
 
 		// AdminViewCarregarCSVJava upload = new AdminViewCarregarCSVJava();
 
@@ -155,30 +163,32 @@ public class TutorOwnWarningsJava extends MainContentView {
 		window.center();
 
 	}
-	
+
 	private String getItemNomCognomSelected() {
 
-		Object name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom").getValue();
-		Object surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms").getValue();
-		nomCognoms = name.toString()+" "+surname.toString();
-		
-				
-		return nomCognoms;
+		String name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom").getValue()
+				.toString();
+		String surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms")
+				.getValue().toString();
+
+		String nomCognom = (name.concat(" " + surname)).replaceFirst(" ", "").replaceAll(" ", "_");
+
+		return nomCognom;
 
 	}
-	
-	private String getDateSelected(){
-		
+
+	private String getDateSelected() {
+
 		Object data = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("data").getValue();
 		fecha = data.toString();
-		hora = fecha.substring(11,16);
-	
+		hora = fecha.substring(11, 16);
+
 		return hora;
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public void popupPDF() throws IOException, DocumentException {
-	
+
 		generatePDF generatepdf = new generatePDF();
 		Embedded c = new Embedded();
 		sourceFile = new File(generatepdf.getPath2(getItemNomCognomSelected(), getDateSelected()));
@@ -192,14 +202,14 @@ public class TutorOwnWarningsJava extends MainContentView {
 		pdf.hbuttons.setVisible(false);
 		window.setContent(pdf);
 		UI.getCurrent().addWindow(window);
-		
+
 		window.setVisible(true);
 
 	}
 
 	public void reloadGrid() {
 		vHorizontalMain.removeAllComponents();
-		vHorizontalMain.addComponent(gridProperties());		
+		vHorizontalMain.addComponent(gridProperties());
 	}
 
 	/*

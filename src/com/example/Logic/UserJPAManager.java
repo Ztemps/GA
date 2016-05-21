@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasasdo@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
+ *******************************************************************************/
 package com.example.Logic;
 
 import java.io.IOException;
@@ -34,15 +45,15 @@ public class UserJPAManager {
 	boolean expulsat = false;
 	boolean gravetat = false;
 
-	private EntityManagerUtil entman = new EntityManagerUtil();
+	private EntityManagerUtil entman;
 	private EntityManager em;
 
 	public UserJPAManager() {
+		entman = new EntityManagerUtil();
 		em = entman.getEntityManager();
 	}
 
 	public void addUser(User user) {
-		// EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		em.persist(user);
 		em.getTransaction().commit();
@@ -58,35 +69,12 @@ public class UserJPAManager {
 	}
 
 	public void addWarning(Warning amonestacio) {
-
-		// if(em.isOpen()){
-		// em.close();
-		// }else{
 		em.getTransaction().begin();
 		em.persist(amonestacio);
 		em.getTransaction().commit();
-		// }
 	};
 
-	// public List<Doctor> listDoctors() {
-	//
-	// try {
-	//
-	//// em.getTransaction().begin();
-	//// list_doctors = em.createQuery("Select e From Doctor
-	// e").getResultList();
-	////
-	//// em.getTransaction().commit();
-	//// return list_doctors;
-	//
-	// } catch (Exception e) {
-	// em.getTransaction().rollback();
-	// }
-	//
-	// //return list_doctors;
-	// }
 
-	/* Method to READ all Autors */
 	public List<User> listUsers() {
 
 		try {
@@ -274,10 +262,5 @@ public class UserJPAManager {
 		em.getTransaction().commit();
 	};
 
-	/**
-	 * for (Iterator<User> iterator = list_users.iterator();
-	 * iterator.hasNext();) { // // User usuario = (User) iterator.next(); //
-	 * System.out.println(usuario.toString()); // }
-	 **/
 
 }

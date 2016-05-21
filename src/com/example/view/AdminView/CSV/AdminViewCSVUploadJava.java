@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasasdo@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
+ *******************************************************************************/
 package com.example.view.AdminView.CSV;
 
 import java.io.File;
@@ -241,7 +252,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 			try {
 
 				if (file.exists()) {
-					csvloader.loaderStudents(file);
+					csvloader.loadStudents(file);
 				}
 
 			} catch (IOException | SQLException | ParseException e) {
@@ -302,7 +313,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		@Override
 		public void uploadSucceeded(SucceededEvent event) {
 			try {
-				csvloader.loaderTeachers(file);
+				csvloader.loadTeachers(file);
 			} catch (IOException | SQLException | ParseException | NoSuchAlgorithmException e) {
 				new Notification("El fitxer no está estructurat com ha de ser", Notification.Type.ERROR_MESSAGE)
 						.show(Page.getCurrent());

@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * 
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasasdo@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
+ * 
+ *******************************************************************************/
 package com.example.ga;
 
 import java.io.IOException;
@@ -23,77 +36,44 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.example.view.Error;
+
 @SuppressWarnings("serial")
 @Theme("gatheme")
 public class GaUI extends UI {
-
-	
-	//@VaadinServletConfiguration(productionMode = true, ui = GaUI.class, widgetset = "com.example.WarningManagement.widgetset.GestioamonestacionsWidgetset")
-	public static class Servlet extends VaadinServlet  {
+	private static final String TITLE = "Gestió d'Amonestacions El Puig Castellar";
+	private InlineDateField datePicker;
+	public static class Servlet extends VaadinServlet {
 		@Override
-	    protected void servletInitialized()
-	            throws ServletException {
-	        super.servletInitialized();
+		protected void servletInitialized() throws ServletException {
+			super.servletInitialized();
 
-	    }
-		
-		
+		}
 
 	}
 
 	@Override
 	protected void init(VaadinRequest request) {
 
+		datePicker = new InlineDateField();
 		
-		InlineDateField datePicker = new InlineDateField();
-		datePicker.setLocale( java.util.Locale.getDefault() );
-		
-		getPage().setTitle("Gestió d'Amonestacions El Puig Castellar");
-		
+		datePicker.setLocale(java.util.Locale.getDefault());
+		getPage().setTitle(TITLE);
 		addStyleName(ValoTheme.UI_WITH_MENU);
-		
-		String name = VaadinServlet.getCurrent().getServletName();
-		System.out.println(name);
 
 		new Navigator(this, this);
 		setTheme("ga");
-		
+
 		getNavigator().addView(LoginView.NAME, LoginView.class);//
 		getNavigator().addView(Error.NAME, Error.class);//
 
 		getNavigator().addView(TemplateView.NAME, TemplateView.class);//
 		getNavigator().addView(TeacherView.NAME, TeacherView.class);//
 		getNavigator().addView(AdminView.NAME, AdminView.class);//
-		getNavigator().addView(TutorView.NAME, TutorView.class );
-		//Falta implementar la vista de tutor
+		getNavigator().addView(TutorView.NAME, TutorView.class);
 
 		getUI().getConnectorTracker().cleanConnectorMap();
 		getUI().getNavigator().navigateTo(LoginView.NAME);
-		
-//		
-		
-			
-		//	getSession().setAttribute("user", username)
 
-		
-		
-	
-		// Defino la vista principal que se mostrara nada mas carge la app
-
-//		MainView main = new MainView();
-//		setContent(main);
-//
-//		HorizontalLayout hl = new HorizontalLayout();
-//		hl.setSpacing(true);
-//
-//		grid.setColumns("firstName", "lastName", "email");
-//		main.addComponent(hl);
-//		hl.addComponent(grid);
-//		hl.addComponent(grid2);
-//
-//		main.setExpandRatio(hl, 20);
 	}
-
-
 
 }
