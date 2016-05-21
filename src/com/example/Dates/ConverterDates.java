@@ -1,4 +1,5 @@
 /*******************************************************************************
+ * 
  * Gestió d'Amonestacions v1.0
  *
  * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
@@ -8,228 +9,204 @@
  * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
  * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
  * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
+ * 
  *******************************************************************************/
+
 package com.example.Dates;
 
 import java.util.Date;
 
 public class ConverterDates {
-	
-	
-	
-	public static String converterDate(Date datainici) {
-		String fechaFinal = null;
-		String month = null;
-		//System.out.println("DAta sin cambiar: "+datainici.toLocaleString());
-		String datainicial = datainici.toLocaleString();
 
-		String[] fecha = datainicial.substring(0, 11).split("-");
+	private String month;
+	private String initialDate;
+	private String[] date;
+	private String lastMonth;
+	public String converterDate(Date initialDate) {
 
-		month=getMonth(fecha[1]);
-
-		fechaFinal = fecha[0] + "-" + month + "-" + fecha[2];
-
-		//System.out.println(fechaFinal);
-
-		return fechaFinal;
-
-	}
-	
-	
-	
-	
-	
-	public static String converterDate2(String datainici) {
-		String fechaFinal = null;
-		String month = null;
-		//System.out.println("DAta sin cambiar: "+datainici.toLocaleString());
-
-		String[] fecha = datainici.substring(0, datainici.length()).split(" ");
-		month=getMonth(fecha[1]);
+		this.initialDate = initialDate.toLocaleString();
+		date = this.initialDate.substring(0, 11).split("-");
+		month = getMonth(date[1]);
 		
+		return date[0] + "-" + month + "-" + date[2];
 
-		//System.out.println(fechaFinal);
-		fechaFinal = fecha[2] + "-" + month + "-" + fecha[5];
-
-		return fechaFinal;
 	}
-	
-	
-	public static String getMonth(String month) {
-		String monthFinal=null;
-	
+
+	public  String converterDate2(String initialDate) {
+
+		date = initialDate.substring(0, initialDate.length()).split(" ");
+		month = getMonth(date[1]);
+		
+		return date[2] + "-" + month + "-" + date[5];
+	}
+
+	public  String getMonth(String month) {
+
 		switch (month) {
-		//English format
+		// English format
 		case "jan":
-			monthFinal = "01";
+			lastMonth = "01";
 			break;
 		case "feb":
-			monthFinal = "02";
+			lastMonth = "02";
 
 			break;
 		case "mar":
-			monthFinal = "03";
+			lastMonth = "03";
 
 			break;
 		case "apr":
-			monthFinal = "04";
+			lastMonth = "04";
 
 			break;
 		case "may":
-			monthFinal = "05";
+			lastMonth = "05";
 
 			break;
 		case "jun":
-			monthFinal = "06";
+			lastMonth = "06";
 
 			break;
 		case "jul":
-			monthFinal = "07";
+			lastMonth = "07";
 
 			break;
 		case "aug":
-			monthFinal = "08";
+			lastMonth = "08";
 
 			break;
 		case "sep":
-			monthFinal = "09";
+			lastMonth = "09";
 
 			break;
 		case "oct":
-			monthFinal = "10";
+			lastMonth = "10";
 
 			break;
 		case "nov":
-			monthFinal = "11";
+			lastMonth = "11";
 
 			break;
 		case "dec":
-			monthFinal = "12";
+			lastMonth = "12";
 
 			break;
-			
-			
-			//Catalan and Spanish format
-			
+
+		// Catalan and Spanish format
+
 		case "ene":
-			monthFinal = "01";
+			lastMonth = "01";
 			break;
-			
+
 		case "gen":
-			monthFinal = "01";
+			lastMonth = "01";
 			break;
 
 		case "abr":
-			monthFinal = "04";
+			lastMonth = "04";
 
 			break;
 		case "mai":
-			monthFinal = "05";
+			lastMonth = "05";
 
 			break;
-			
 
 		case "ago":
-			monthFinal = "08";
-
-			break;	
-		
-		case "dic":
-			monthFinal = "12";
+			lastMonth = "08";
 
 			break;
-			
-			
-		////////////// MAYUS DATES	
-			
-			//English format
-			case "Jan":
-				monthFinal = "01";
-				break;
-			case "Feb":
-				monthFinal = "02";
 
-				break;
-			case "Mar":
-				monthFinal = "03";
+		case "dic":
+			lastMonth = "12";
 
-				break;
-			case "Apr":
-				monthFinal = "04";
+			break;
 
-				break;
-			case "May":
-				monthFinal = "05";
+		////////////// MAYUS DATES
 
-				break;
-			case "Jun":
-				monthFinal = "06";
+		// English format
+		case "Jan":
+			lastMonth = "01";
+			break;
+		case "Feb":
+			lastMonth = "02";
 
-				break;
-			case "Jul":
-				monthFinal = "07";
+			break;
+		case "Mar":
+			lastMonth = "03";
 
-				break;
-			case "Aug":
-				monthFinal = "08";
+			break;
+		case "Apr":
+			lastMonth = "04";
 
-				break;
-			case "Sep":
-				monthFinal = "09";
+			break;
+		case "May":
+			lastMonth = "05";
 
-				break;
-			case "Oct":
-				monthFinal = "10";
+			break;
+		case "Jun":
+			lastMonth = "06";
 
-				break;
-			case "Nov":
-				monthFinal = "11";
+			break;
+		case "Jul":
+			lastMonth = "07";
 
-				break;
-			case "Dec":
-				monthFinal = "12";
+			break;
+		case "Aug":
+			lastMonth = "08";
 
-				break;
-				
-				
-				//Catalan and Spanish format
-				
-			case "Ene":
-				monthFinal = "01";
-				break;
-				
-			case "Gen":
-				monthFinal = "01";
-				break;
+			break;
+		case "Sep":
+			lastMonth = "09";
 
-			case "Abr":
-				monthFinal = "04";
+			break;
+		case "Oct":
+			lastMonth = "10";
 
-				break;
-			case "Mai":
-				monthFinal = "05";
+			break;
+		case "Nov":
+			lastMonth = "11";
 
-				break;
-				
+			break;
+		case "Dec":
+			lastMonth = "12";
 
-			case "Ago":
-				monthFinal = "08";
+			break;
 
-				break;	
-			
-			case "Dic":
-				monthFinal = "12";
+		// Catalan and Spanish format
 
-				break;
+		case "Ene":
+			lastMonth = "01";
+			break;
+
+		case "Gen":
+			lastMonth = "01";
+			break;
+
+		case "Abr":
+			lastMonth = "04";
+
+			break;
+		case "Mai":
+			lastMonth = "05";
+
+			break;
+
+		case "Ago":
+			lastMonth = "08";
+
+			break;
+
+		case "Dic":
+			lastMonth = "12";
+
+			break;
 
 		default:
-			System.out.println("error mes:  " + month);
+			System.out.println("Error month:  " + month);
 			break;
 		}
 
-		
-		
-		return monthFinal;
+		return lastMonth;
 	}
-		
+
 }

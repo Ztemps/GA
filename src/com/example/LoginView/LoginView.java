@@ -33,7 +33,6 @@ import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
 import org.eclipse.jetty.security.authentication.SessionAuthentication;
 
-import com.example.Encrypter.EncryptDecryptStringWithDES;
 import com.example.Entities.User;
 import com.example.view.AdminView.AdminView;
 import com.example.view.TeacherView.TeacherView;

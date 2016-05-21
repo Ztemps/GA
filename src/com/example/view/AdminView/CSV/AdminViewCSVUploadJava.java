@@ -252,7 +252,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 			try {
 
 				if (file.exists()) {
-					csvloader.loaderStudents(file);
+					csvloader.loadStudents(file);
 				}
 
 			} catch (IOException | SQLException | ParseException e) {
@@ -313,7 +313,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		@Override
 		public void uploadSucceeded(SucceededEvent event) {
 			try {
-				csvloader.loaderTeachers(file);
+				csvloader.loadTeachers(file);
 			} catch (IOException | SQLException | ParseException | NoSuchAlgorithmException e) {
 				new Notification("El fitxer no está estructurat com ha de ser", Notification.Type.ERROR_MESSAGE)
 						.show(Page.getCurrent());

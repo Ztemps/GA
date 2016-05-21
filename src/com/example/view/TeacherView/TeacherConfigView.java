@@ -25,8 +25,6 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
-
-import com.example.Encrypter.EncryptDecryptStringWithDES;
 import com.example.Entities.User;
 import com.example.Logic.UserJPAManager;
 import com.example.Templates.MainContentView;
@@ -55,12 +53,10 @@ public class TeacherConfigView extends MainContentView {
 	private Label titlepass = new Label("CANVI DE PASSWORD");
 	private User usuari;
 	private VerticalLayout vl = new VerticalLayout();
-	EncryptDecryptStringWithDES des;
 	UserJPAManager MA;
 
 	public TeacherConfigView() {
 
-		
 		HideTemplateComponents();
 		ButtonProperties();
 		OldPassTextFieldProperties();
@@ -69,8 +65,6 @@ public class TeacherConfigView extends MainContentView {
 		titlepass.addStyleName("settings");
 		vHorizontalMain.addComponent(vl);
 		vHorizontalMain.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
-		
-
 
 		acceptOldPass.addClickListener(new ClickListener() {
 
@@ -152,15 +146,15 @@ public class TeacherConfigView extends MainContentView {
 		acceptOldPass.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		acceptOldPass.setClickShortcut(KeyCode.ENTER);
 		acceptOldPass.addStyleName("settings");
-		
+
 		acceptNewPass.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		acceptNewPass.setClickShortcut(KeyCode.ENTER);
 		acceptNewPass.addStyleName("settings");
 		oldPass.addStyleName("xyz");
 
-		JavaScript.getCurrent().execute(
-			    "document.getElementsByClassName('xyz')[0].setAttribute('autocomplete', 'off')");
-		}
+		JavaScript.getCurrent()
+				.execute("document.getElementsByClassName('xyz')[0].setAttribute('autocomplete', 'off')");
+	}
 
 	public void ClearFields() {
 		oldPass.clear();

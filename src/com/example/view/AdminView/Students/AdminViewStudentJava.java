@@ -55,6 +55,7 @@ public class AdminViewStudentJava extends MainContentView {
 	 */
 	private static final long serialVersionUID = -8408971161693178388L;
 
+	private ConverterDates datas;
 	private Grid grid = new Grid();
 	private StudentsJPAManager MA;
 	private Window windowAdd = new Window();
@@ -169,6 +170,8 @@ public class AdminViewStudentJava extends MainContentView {
 	private void editStudent() {
 		PopulateNativeSelect();
 
+		datas = new ConverterDates();
+		
 		UI.getCurrent().addWindow(windowEdit);
 		windowEdit.setCaption("Editar alumne");
 
@@ -181,7 +184,7 @@ public class AdminViewStudentJava extends MainContentView {
 		Object curs = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("curs");
 		Object grup = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("grup");
 
-		String fecha = ConverterDates.converterDate2(data.toString());
+		String fecha = datas.converterDate2(data.toString());
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		Date date = null;
 		try {

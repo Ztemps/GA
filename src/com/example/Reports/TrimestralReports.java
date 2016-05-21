@@ -37,15 +37,17 @@ import com.vaadin.server.FileResource;
 public class TrimestralReports {
 	private static final String COMMA_DELIMITER = ",";
 	private static final String NEW_LINE_SEPARATOR = "\n";
-	static public ReportQuerys query;
-	static ArrayList<Date> dates = new ArrayList<Date>();
-	// CSV file header
 	private static final String FILE_HEADER = "ALUMNE,A,E";
-	public static GroupJPAManager jpa;
-	private static List<Group> grupos = null;
 
+	public ReportQuerys query;
+	ArrayList<Date> dates = new ArrayList<Date>();
+	// CSV file header
+	public  GroupJPAManager jpa;
+	private  List<Group> grupos = null;
 
-	public static void calcularPrimerTrimestre() {
+	ConverterDates datas;
+	public void calcularPrimerTrimestre() {
+		datas = new ConverterDates();
 		// CALCULO DE FECHAS
 		// VARIABLE A COJER
 		try {
@@ -90,7 +92,7 @@ public class TrimestralReports {
 			query = new ReportQuerys();
 			List ids = query.getIdAlumnes(grupos.get(x).getId());
 
-		//	query.closeTransaction();
+			// query.closeTransaction();
 
 			List idList = new ArrayList<>();
 
@@ -103,7 +105,7 @@ public class TrimestralReports {
 			// FOR NOMS
 			query = new ReportQuerys();
 			List noms = query.getNomAlumnes(grupos.get(x).getId());
-		//	query.closeTransaction();
+			// query.closeTransaction();
 
 			List nomsList = new ArrayList<>();
 
@@ -116,7 +118,7 @@ public class TrimestralReports {
 
 			query = new ReportQuerys();
 			List cognoms = query.getCognomsAlumnes(grupos.get(x).getId());
-			//query.closeTransaction();
+			// query.closeTransaction();
 
 			List cognomsList = new ArrayList<>();
 
@@ -126,17 +128,16 @@ public class TrimestralReports {
 			}
 
 			try {
-				
-				File f = new File ("/tmp/trimestre1");
-				if (!f.exists()){
+
+				File f = new File("/tmp/trimestre1");
+				if (!f.exists()) {
 					f.mkdirs();
 				}
-				
-				fileWriter = new FileWriter(
-						"/tmp/trimestre1/alumnes" + grupos.get(x).getId() + ".xls");
+
+				fileWriter = new FileWriter("/tmp/trimestre1/alumnes" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
-			//	query.closeTransaction();
+				// query.closeTransaction();
 
 				fileWriter.append("1r Trimestre   Curs: " + dateCurs);
 				fileWriter.append(COMMA_DELIMITER);
@@ -157,7 +158,7 @@ public class TrimestralReports {
 					fileWriter.append(COMMA_DELIMITER);
 
 					Date diaInicial = diaIniciCal.getTime();
-					String fechainicialBuena = ConverterDates.converterDate(diaInicial);
+					String fechainicialBuena = datas.converterDate(diaInicial);
 
 					fileWriter.append(fechainicialBuena);
 					// diaInici=aux;
@@ -245,7 +246,7 @@ public class TrimestralReports {
 		}
 	}
 
-	public static void calcularSegundoTrimestre() {
+	public  void calcularSegundoTrimestre() {
 		// CALCULO DE FECHAS
 		// VARIABLE A COJER
 		try {
@@ -290,7 +291,7 @@ public class TrimestralReports {
 			query = new ReportQuerys();
 			List ids = query.getIdAlumnes(grupos.get(x).getId());
 
-		//	query.closeTransaction();
+			// query.closeTransaction();
 
 			List idList = new ArrayList<>();
 
@@ -303,7 +304,7 @@ public class TrimestralReports {
 			// FOR NOMS
 			query = new ReportQuerys();
 			List noms = query.getNomAlumnes(grupos.get(x).getId());
-			//query.closeTransaction();
+			// query.closeTransaction();
 
 			List nomsList = new ArrayList<>();
 
@@ -316,7 +317,7 @@ public class TrimestralReports {
 
 			query = new ReportQuerys();
 			List cognoms = query.getCognomsAlumnes(grupos.get(x).getId());
-		//	query.closeTransaction();
+			// query.closeTransaction();
 
 			List cognomsList = new ArrayList<>();
 
@@ -326,16 +327,15 @@ public class TrimestralReports {
 			}
 
 			try {
-				File f = new File ("/tmp/trimestre2");
-				if (!f.exists()){
+				File f = new File("/tmp/trimestre2");
+				if (!f.exists()) {
 					f.mkdirs();
 				}
-				
-				fileWriter = new FileWriter(
-						"/tmp/trimestre2/alumnes" + grupos.get(x).getId() + ".xls");
+
+				fileWriter = new FileWriter("/tmp/trimestre2/alumnes" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
-				//query.closeTransaction();
+				// query.closeTransaction();
 
 				fileWriter.append("2r Trimestre   Curs: " + dateCurs);
 				fileWriter.append(COMMA_DELIMITER);
@@ -356,7 +356,7 @@ public class TrimestralReports {
 					fileWriter.append(COMMA_DELIMITER);
 
 					Date diaInicial = diaIniciCal.getTime();
-					String fechainicialBuena = ConverterDates.converterDate(diaInicial);
+					String fechainicialBuena = datas.converterDate(diaInicial);
 
 					fileWriter.append(fechainicialBuena);
 					fileWriter.append(COMMA_DELIMITER);
@@ -440,7 +440,7 @@ public class TrimestralReports {
 		}
 	}
 
-	public static void calcularTercerTrimestre() {
+	public  void calcularTercerTrimestre() {
 		// CALCULO DE FECHAS
 		// VARIABLE A COJER
 		try {
@@ -485,7 +485,7 @@ public class TrimestralReports {
 			query = new ReportQuerys();
 			List ids = query.getIdAlumnes(grupos.get(x).getId());
 
-		//	query.closeTransaction();
+			// query.closeTransaction();
 
 			List idList = new ArrayList<>();
 
@@ -498,7 +498,7 @@ public class TrimestralReports {
 			// FOR NOMS
 			query = new ReportQuerys();
 			List noms = query.getNomAlumnes(grupos.get(x).getId());
-		//	query.closeTransaction();
+			// query.closeTransaction();
 
 			List nomsList = new ArrayList<>();
 
@@ -511,7 +511,7 @@ public class TrimestralReports {
 
 			query = new ReportQuerys();
 			List cognoms = query.getCognomsAlumnes(grupos.get(x).getId());
-			//query.closeTransaction();
+			// query.closeTransaction();
 
 			List cognomsList = new ArrayList<>();
 
@@ -521,17 +521,16 @@ public class TrimestralReports {
 			}
 
 			try {
-				
-				File f = new File ("/tmp/trimestre3");
-				if (!f.exists()){
+
+				File f = new File("/tmp/trimestre3");
+				if (!f.exists()) {
 					f.mkdirs();
 				}
-				
-				fileWriter = new FileWriter(
-						"/tmp/trimestre3/alumnes" + grupos.get(x).getId() + ".xls");
+
+				fileWriter = new FileWriter("/tmp/trimestre3/alumnes" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
-				//query.closeTransaction();
+				// query.closeTransaction();
 
 				fileWriter.append("3r Trimestre   Curs: " + dateCurs);
 				fileWriter.append(COMMA_DELIMITER);
@@ -552,7 +551,7 @@ public class TrimestralReports {
 					fileWriter.append(COMMA_DELIMITER);
 
 					Date diaInicial = diaIniciCal.getTime();
-					String fechainicialBuena = ConverterDates.converterDate(diaInicial);
+					String fechainicialBuena = datas.converterDate(diaInicial);
 
 					fileWriter.append(fechainicialBuena);
 					fileWriter.append(COMMA_DELIMITER);
@@ -636,7 +635,7 @@ public class TrimestralReports {
 		}
 	}
 
-	private static List calcularAmonestadosPorSemana(List idList, Date semana1, Date semana2) {
+	private List calcularAmonestadosPorSemana(List idList, Date semana1, Date semana2) {
 
 		List amonestacions1;
 
@@ -645,7 +644,7 @@ public class TrimestralReports {
 		for (int j = 0; j < idList.size(); j++) {
 			query = new ReportQuerys();
 			amonestacions1.add(query.getWarningCurs(Integer.parseInt(idList.get(j).toString()), semana1, semana2));
-			//query.closeTransaction();
+			// query.closeTransaction();
 
 		}
 
@@ -653,7 +652,7 @@ public class TrimestralReports {
 
 	}
 
-	private static List calcularExpulsadosPorSemana(List idList, Date semana1, Date semana2) {
+	private List calcularExpulsadosPorSemana(List idList, Date semana1, Date semana2) {
 
 		List expulsions1;
 		List expulsionsList1 = null;
@@ -663,14 +662,14 @@ public class TrimestralReports {
 		for (int j = 0; j < idList.size(); j++) {
 			query = new ReportQuerys();
 			expulsions1.add(query.getExpulsionCurs(Integer.parseInt(idList.get(j).toString()), semana1, semana2));
-			//query.closeTransaction();
+			// query.closeTransaction();
 
 		}
 
 		return expulsions1;
 	}
 
-	public static void calcularResumenTrimestre1() {
+	public void calcularResumenTrimestre1() {
 		FileWriter fileWriter = null;
 
 		Date diaIniciTrimestre1;
@@ -680,24 +679,24 @@ public class TrimestralReports {
 		Date diaFinalTrimestre1;
 		long diff;
 		long numSetmanes;
-		int totalAmonest=0;
-		int totalExpuls=0;
+		int totalAmonest = 0;
+		int totalExpuls = 0;
 		try {
 
 			dates = readFile();
-			File f2 = new File ("/tmp/trimestre1");
-			if (!f2.exists()){
+			File f2 = new File("/tmp/trimestre1");
+			if (!f2.exists()) {
 				f2.mkdirs();
 			}
 			fileWriter = new FileWriter("/tmp/trimestre1/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
-		//	query.closeTransaction();
+			// query.closeTransaction();
 
 			jpa = new GroupJPAManager();
 			grupos = new ArrayList<>();
 			grupos = jpa.getGroups();
-		//	jpa.closeTransaction();
+			// jpa.closeTransaction();
 
 			diaIniciTrimestre1 = dates.get(0);
 			diaIniciCal = Calendar.getInstance();
@@ -716,7 +715,6 @@ public class TrimestralReports {
 			fileWriter.append(NEW_LINE_SEPARATOR);
 
 			// Headers
-			
 
 			// CONSULTA
 			fileWriter.append(COMMA_DELIMITER);
@@ -731,7 +729,7 @@ public class TrimestralReports {
 				fileWriter.append(COMMA_DELIMITER);
 
 				Date diaInicial = diaIniciCal.getTime();
-				String fechainicialBuena = ConverterDates.converterDate(diaInicial);
+				String fechainicialBuena = datas.converterDate(diaInicial);
 
 				fileWriter.append(fechainicialBuena);
 				fileWriter.append(COMMA_DELIMITER);
@@ -761,7 +759,7 @@ public class TrimestralReports {
 				query = new ReportQuerys();
 				List ids = query.getIdAlumnes(grupos.get(i).getId());
 
-			//	query.closeTransaction();
+				// query.closeTransaction();
 
 				List idList = new ArrayList<>();
 
@@ -780,31 +778,30 @@ public class TrimestralReports {
 				diaInicisetmanes.add(Calendar.DATE, 7);
 
 				semana2 = diaInicisetmanes.getTime();
-				
+
 				/////////////////////////////
 				for (int l = 0; l < numSetmanes; l++) {
-					totalAmonest=0;
-					totalExpuls=0;
+					totalAmonest = 0;
+					totalExpuls = 0;
 					calculoExpuls = new ArrayList<>();
 					calculoAmonest = new ArrayList<>();
 
 					calculoAmonest = calcularAmonestadosPorSemana(idList, semana1, semana2);
 					calculoExpuls = calcularExpulsadosPorSemana(idList, semana1, semana2);
-					
-					for (int n=0; n<calculoAmonest.size(); n++){
-						totalAmonest=totalAmonest+Integer.parseInt(calculoAmonest.get(n).toString());
+
+					for (int n = 0; n < calculoAmonest.size(); n++) {
+						totalAmonest = totalAmonest + Integer.parseInt(calculoAmonest.get(n).toString());
 					}
-					
-					for (int n=0; n<calculoExpuls.size(); n++){
-						totalExpuls=totalExpuls+Integer.parseInt(calculoExpuls.get(n).toString());
+
+					for (int n = 0; n < calculoExpuls.size(); n++) {
+						totalExpuls = totalExpuls + Integer.parseInt(calculoExpuls.get(n).toString());
 					}
-					
-					
+
 					semana1 = semana2;
 					diaInicisetmanes.add(Calendar.DATE, 7);
 					semana2 = diaInicisetmanes.getTime();
 
-					if (totalAmonest==0) {
+					if (totalAmonest == 0) {
 						fileWriter.append("");
 
 					} else {
@@ -813,7 +810,7 @@ public class TrimestralReports {
 					}
 					fileWriter.append(COMMA_DELIMITER);
 
-					if (totalExpuls==0) {
+					if (totalExpuls == 0) {
 						fileWriter.append("");
 
 					} else {
@@ -840,8 +837,8 @@ public class TrimestralReports {
 		}
 
 	}
-	
-	public static void calcularResumenTrimestre2() {
+
+	public void calcularResumenTrimestre2() {
 		FileWriter fileWriter = null;
 
 		Date diaIniciTrimestre2;
@@ -851,26 +848,25 @@ public class TrimestralReports {
 		Date diaFinalTrimestre2;
 		long diff;
 		long numSetmanes;
-		int totalAmonest=0;
-		int totalExpuls=0;
+		int totalAmonest = 0;
+		int totalExpuls = 0;
 		try {
 
 			dates = readFile();
-			File f = new File ("/tmp/trimestre2");
-			if (!f.exists()){
+			File f = new File("/tmp/trimestre2");
+			if (!f.exists()) {
 				f.mkdirs();
 			}
 			fileWriter = new FileWriter("/tmp/trimestre2/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
-		//	query.closeTransaction();
+			// query.closeTransaction();
 
 			jpa = new GroupJPAManager();
 			grupos = new ArrayList<>();
 			grupos = jpa.getGroups();
-		//	jpa.closeTransaction();
+			// jpa.closeTransaction();
 
-			
 			diaIniciTrimestre2 = dates.get(2);
 			diaIniciCal = Calendar.getInstance();
 			diaIniciCal.setTime(diaIniciTrimestre2);
@@ -881,17 +877,13 @@ public class TrimestralReports {
 
 			diff = diaFinalTrimestre2.getTime() - diaIniciTrimestre2.getTime();
 			numSetmanes = (diff / (24 * 60 * 60 * 1000)) / 7;
-			
-			
-			
-			
+
 			fileWriter.append("1r Trimestre   Curs: " + dateCurs);
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append(NEW_LINE_SEPARATOR);
 			fileWriter.append(NEW_LINE_SEPARATOR);
 
 			// Headers
-			
 
 			// CONSULTA
 			fileWriter.append(COMMA_DELIMITER);
@@ -906,7 +898,7 @@ public class TrimestralReports {
 				fileWriter.append(COMMA_DELIMITER);
 
 				Date diaInicial = diaIniciCal.getTime();
-				String fechainicialBuena = ConverterDates.converterDate(diaInicial);
+				String fechainicialBuena = datas.converterDate(diaInicial);
 
 				fileWriter.append(fechainicialBuena);
 				fileWriter.append(COMMA_DELIMITER);
@@ -936,7 +928,7 @@ public class TrimestralReports {
 				query = new ReportQuerys();
 				List ids = query.getIdAlumnes(grupos.get(i).getId());
 
-			//	query.closeTransaction();
+				// query.closeTransaction();
 
 				List idList = new ArrayList<>();
 
@@ -955,31 +947,30 @@ public class TrimestralReports {
 				diaInicisetmanes.add(Calendar.DATE, 7);
 
 				semana2 = diaInicisetmanes.getTime();
-				
+
 				/////////////////////////////
 				for (int l = 0; l < numSetmanes; l++) {
-					totalAmonest=0;
-					totalExpuls=0;
+					totalAmonest = 0;
+					totalExpuls = 0;
 					calculoExpuls = new ArrayList<>();
 					calculoAmonest = new ArrayList<>();
 
 					calculoAmonest = calcularAmonestadosPorSemana(idList, semana1, semana2);
 					calculoExpuls = calcularExpulsadosPorSemana(idList, semana1, semana2);
-					
-					for (int n=0; n<calculoAmonest.size(); n++){
-						totalAmonest=totalAmonest+Integer.parseInt(calculoAmonest.get(n).toString());
+
+					for (int n = 0; n < calculoAmonest.size(); n++) {
+						totalAmonest = totalAmonest + Integer.parseInt(calculoAmonest.get(n).toString());
 					}
-					
-					for (int n=0; n<calculoExpuls.size(); n++){
-						totalExpuls=totalExpuls+Integer.parseInt(calculoExpuls.get(n).toString());
+
+					for (int n = 0; n < calculoExpuls.size(); n++) {
+						totalExpuls = totalExpuls + Integer.parseInt(calculoExpuls.get(n).toString());
 					}
-					
-					
+
 					semana1 = semana2;
 					diaInicisetmanes.add(Calendar.DATE, 7);
 					semana2 = diaInicisetmanes.getTime();
 
-					if (totalAmonest==0) {
+					if (totalAmonest == 0) {
 						fileWriter.append("");
 
 					} else {
@@ -988,7 +979,7 @@ public class TrimestralReports {
 					}
 					fileWriter.append(COMMA_DELIMITER);
 
-					if (totalExpuls==0) {
+					if (totalExpuls == 0) {
 						fileWriter.append("");
 
 					} else {
@@ -1015,9 +1006,8 @@ public class TrimestralReports {
 		}
 
 	}
-	
-	
-	public static void calcularResumenTrimestre3() {
+
+	public void calcularResumenTrimestre3() {
 		FileWriter fileWriter = null;
 
 		Date diaIniciTrimestre3;
@@ -1027,28 +1017,25 @@ public class TrimestralReports {
 		Date diaFinalTrimestre3;
 		long diff;
 		long numSetmanes;
-		int totalAmonest=0;
-		int totalExpuls=0;
+		int totalAmonest = 0;
+		int totalExpuls = 0;
 		try {
 
 			dates = readFile();
-			File f = new File ("/tmp/trimestre3");
-			if (!f.exists()){
+			File f = new File("/tmp/trimestre3");
+			if (!f.exists()) {
 				f.mkdirs();
 			}
 			fileWriter = new FileWriter("/tmp/trimestre3/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
-		//	query.closeTransaction();
+			// query.closeTransaction();
 
 			jpa = new GroupJPAManager();
 			grupos = new ArrayList<>();
 			grupos = jpa.getGroups();
-			//jpa.closeTransaction();
+			// jpa.closeTransaction();
 
-			
-			
-			
 			diaIniciTrimestre3 = dates.get(4);
 			diaIniciCal = Calendar.getInstance();
 			diaIniciCal.setTime(diaIniciTrimestre3);
@@ -1059,15 +1046,13 @@ public class TrimestralReports {
 
 			diff = diaFinalTrimestre3.getTime() - diaIniciTrimestre3.getTime();
 			numSetmanes = (diff / (24 * 60 * 60 * 1000)) / 7;
-			
-			
+
 			fileWriter.append("1r Trimestre   Curs: " + dateCurs);
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append(NEW_LINE_SEPARATOR);
 			fileWriter.append(NEW_LINE_SEPARATOR);
 
 			// Headers
-			
 
 			// CONSULTA
 			fileWriter.append(COMMA_DELIMITER);
@@ -1082,7 +1067,7 @@ public class TrimestralReports {
 				fileWriter.append(COMMA_DELIMITER);
 
 				Date diaInicial = diaIniciCal.getTime();
-				String fechainicialBuena = ConverterDates.converterDate(diaInicial);
+				String fechainicialBuena = datas.converterDate(diaInicial);
 
 				fileWriter.append(fechainicialBuena);
 				fileWriter.append(COMMA_DELIMITER);
@@ -1112,7 +1097,7 @@ public class TrimestralReports {
 				query = new ReportQuerys();
 				List ids = query.getIdAlumnes(grupos.get(i).getId());
 
-		//		query.closeTransaction();
+				// query.closeTransaction();
 
 				List idList = new ArrayList<>();
 
@@ -1131,31 +1116,30 @@ public class TrimestralReports {
 				diaInicisetmanes.add(Calendar.DATE, 7);
 
 				semana2 = diaInicisetmanes.getTime();
-				
+
 				/////////////////////////////
 				for (int l = 0; l < numSetmanes; l++) {
-					totalAmonest=0;
-					totalExpuls=0;
+					totalAmonest = 0;
+					totalExpuls = 0;
 					calculoExpuls = new ArrayList<>();
 					calculoAmonest = new ArrayList<>();
 
 					calculoAmonest = calcularAmonestadosPorSemana(idList, semana1, semana2);
 					calculoExpuls = calcularExpulsadosPorSemana(idList, semana1, semana2);
-					
-					for (int n=0; n<calculoAmonest.size(); n++){
-						totalAmonest=totalAmonest+Integer.parseInt(calculoAmonest.get(n).toString());
+
+					for (int n = 0; n < calculoAmonest.size(); n++) {
+						totalAmonest = totalAmonest + Integer.parseInt(calculoAmonest.get(n).toString());
 					}
-					
-					for (int n=0; n<calculoExpuls.size(); n++){
-						totalExpuls=totalExpuls+Integer.parseInt(calculoExpuls.get(n).toString());
+
+					for (int n = 0; n < calculoExpuls.size(); n++) {
+						totalExpuls = totalExpuls + Integer.parseInt(calculoExpuls.get(n).toString());
 					}
-					
-					
+
 					semana1 = semana2;
 					diaInicisetmanes.add(Calendar.DATE, 7);
 					semana2 = diaInicisetmanes.getTime();
 
-					if (totalAmonest==0) {
+					if (totalAmonest == 0) {
 						fileWriter.append("");
 
 					} else {
@@ -1164,7 +1148,7 @@ public class TrimestralReports {
 					}
 					fileWriter.append(COMMA_DELIMITER);
 
-					if (totalExpuls==0) {
+					if (totalExpuls == 0) {
 						fileWriter.append("");
 
 					} else {
@@ -1191,8 +1175,8 @@ public class TrimestralReports {
 		}
 
 	}
-	
-	public static void calcularResumen2Trimestre1() {
+
+	public void calcularResumen2Trimestre1() {
 		FileWriter fileWriter = null;
 
 		Date diaIniciTrimestre1;
@@ -1202,28 +1186,27 @@ public class TrimestralReports {
 		Date diaFinalTrimestre1;
 		long diff;
 		long numSetmanes;
-		int totalAmonest=0;
-		int totalExpuls=0;
-		int total=0;
-		float mediaParteAlumnoGrupo=0;
-		
+		int totalAmonest = 0;
+		int totalExpuls = 0;
+		int total = 0;
+		float mediaParteAlumnoGrupo = 0;
 
 		try {
 
 			dates = readFile();
-			File f = new File ("/tmp/trimestre1");
-			if (!f.exists()){
+			File f = new File("/tmp/trimestre1");
+			if (!f.exists()) {
 				f.mkdirs();
 			}
 			fileWriter = new FileWriter("/tmp/trimestre1/resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
-			//query.closeTransaction();
+			// query.closeTransaction();
 
 			jpa = new GroupJPAManager();
 			grupos = new ArrayList<>();
 			grupos = jpa.getGroups();
-			//jpa.closeTransaction();
+			// jpa.closeTransaction();
 
 			diaIniciTrimestre1 = dates.get(0);
 			diaIniciCal = Calendar.getInstance();
@@ -1241,30 +1224,25 @@ public class TrimestralReports {
 			fileWriter.append(NEW_LINE_SEPARATOR);
 
 			// Headers
-			
 
 			// CONSULTA
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append(COMMA_DELIMITER);
 
-	
 			fileWriter.append(NEW_LINE_SEPARATOR);
 			fileWriter.append("GRUP");
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append("Nº ALUMNES");
 
-				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append("A");
-				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append("E");
-				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append("TOTAL");
-				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append("Partes per alumne i grup");
-				fileWriter.append(COMMA_DELIMITER);
-
-				
-			
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("A");
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("E");
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("TOTAL");
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("Partes per alumne i grup");
+			fileWriter.append(COMMA_DELIMITER);
 
 			fileWriter.append(NEW_LINE_SEPARATOR);
 
@@ -1276,7 +1254,7 @@ public class TrimestralReports {
 				query = new ReportQuerys();
 				List ids = query.getIdAlumnes(grupos.get(i).getId());
 
-				//query.closeTransaction();
+				// query.closeTransaction();
 
 				List idList = new ArrayList<>();
 
@@ -1288,31 +1266,31 @@ public class TrimestralReports {
 				fileWriter.append(String.valueOf(idList.size()));
 				fileWriter.append(COMMA_DELIMITER);
 
-				total=0;
-				totalAmonest=0;
-				totalExpuls=0;
-				mediaParteAlumnoGrupo=0;
+				total = 0;
+				totalAmonest = 0;
+				totalExpuls = 0;
+				mediaParteAlumnoGrupo = 0;
 				/////////////////////////////
-					
-					calculoExpuls = new ArrayList<>();
-					calculoAmonest = new ArrayList<>();
 
-					calculoAmonest = calcularAmonestadosPorSemana(idList, diaIniciTrimestre1, diaFinalTrimestre1);
-					calculoExpuls = calcularExpulsadosPorSemana(idList, diaIniciTrimestre1, diaFinalTrimestre1);
-					
-					for (int n=0; n<calculoAmonest.size(); n++){
-						totalAmonest=totalAmonest+Integer.parseInt(calculoAmonest.get(n).toString());
-					}
-					
-					for (int n=0; n<calculoExpuls.size(); n++){
-						totalExpuls=totalExpuls+Integer.parseInt(calculoExpuls.get(n).toString());
-					}
-					
-					total=totalExpuls+totalAmonest;
-					mediaParteAlumnoGrupo=((total/1024.0f)*255)/((idList.size()/1024.0f)*255);
+				calculoExpuls = new ArrayList<>();
+				calculoAmonest = new ArrayList<>();
+
+				calculoAmonest = calcularAmonestadosPorSemana(idList, diaIniciTrimestre1, diaFinalTrimestre1);
+				calculoExpuls = calcularExpulsadosPorSemana(idList, diaIniciTrimestre1, diaFinalTrimestre1);
+
+				for (int n = 0; n < calculoAmonest.size(); n++) {
+					totalAmonest = totalAmonest + Integer.parseInt(calculoAmonest.get(n).toString());
+				}
+
+				for (int n = 0; n < calculoExpuls.size(); n++) {
+					totalExpuls = totalExpuls + Integer.parseInt(calculoExpuls.get(n).toString());
+				}
+
+				total = totalExpuls + totalAmonest;
+				mediaParteAlumnoGrupo = ((total / 1024.0f) * 255) / ((idList.size() / 1024.0f) * 255);
 
 				////////////////////////////////////
-				if (totalAmonest==0) {
+				if (totalAmonest == 0) {
 					fileWriter.append("");
 
 				} else {
@@ -1321,7 +1299,7 @@ public class TrimestralReports {
 				}
 				fileWriter.append(COMMA_DELIMITER);
 
-				if (totalExpuls==0) {
+				if (totalExpuls == 0) {
 					fileWriter.append("");
 
 				} else {
@@ -1329,8 +1307,8 @@ public class TrimestralReports {
 
 				}
 				fileWriter.append(COMMA_DELIMITER);
-				
-				if (total==0) {
+
+				if (total == 0) {
 					fileWriter.append("");
 
 				} else {
@@ -1339,7 +1317,7 @@ public class TrimestralReports {
 				}
 				fileWriter.append(COMMA_DELIMITER);
 
-				if (mediaParteAlumnoGrupo==0) {
+				if (mediaParteAlumnoGrupo == 0) {
 					fileWriter.append("");
 
 				} else {
@@ -1363,8 +1341,8 @@ public class TrimestralReports {
 		}
 
 	}
-	
-	public static void calcularResumen2Trimestre2() {
+
+	public void calcularResumen2Trimestre2() {
 		FileWriter fileWriter = null;
 
 		Date diaIniciTrimestre2;
@@ -1374,28 +1352,27 @@ public class TrimestralReports {
 		Date diaFinalTrimestre2;
 		long diff;
 		long numSetmanes;
-		int totalAmonest=0;
-		int totalExpuls=0;
-		int total=0;
-		float mediaParteAlumnoGrupo=0;
-		
+		int totalAmonest = 0;
+		int totalExpuls = 0;
+		int total = 0;
+		float mediaParteAlumnoGrupo = 0;
 
 		try {
 
 			dates = readFile();
-			File f = new File ("/tmp/trimestre2");
-			if (!f.exists()){
+			File f = new File("/tmp/trimestre2");
+			if (!f.exists()) {
 				f.mkdirs();
 			}
 			fileWriter = new FileWriter("/tmp/trimestre2/resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
-		//	query.closeTransaction();
+			// query.closeTransaction();
 
 			jpa = new GroupJPAManager();
 			grupos = new ArrayList<>();
 			grupos = jpa.getGroups();
-		//	jpa.closeTransaction();
+			// jpa.closeTransaction();
 
 			diaIniciTrimestre2 = dates.get(2);
 			diaIniciCal = Calendar.getInstance();
@@ -1413,30 +1390,25 @@ public class TrimestralReports {
 			fileWriter.append(NEW_LINE_SEPARATOR);
 
 			// Headers
-			
 
 			// CONSULTA
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append(COMMA_DELIMITER);
 
-	
 			fileWriter.append(NEW_LINE_SEPARATOR);
 			fileWriter.append("GRUP");
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append("Nº ALUMNES");
 
-				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append("A");
-				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append("E");
-				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append("TOTAL");
-				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append("Partes per alumne i grup");
-				fileWriter.append(COMMA_DELIMITER);
-
-				
-			
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("A");
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("E");
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("TOTAL");
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("Partes per alumne i grup");
+			fileWriter.append(COMMA_DELIMITER);
 
 			fileWriter.append(NEW_LINE_SEPARATOR);
 
@@ -1448,7 +1420,7 @@ public class TrimestralReports {
 				query = new ReportQuerys();
 				List ids = query.getIdAlumnes(grupos.get(i).getId());
 
-				//query.closeTransaction();
+				// query.closeTransaction();
 
 				List idList = new ArrayList<>();
 
@@ -1460,31 +1432,31 @@ public class TrimestralReports {
 				fileWriter.append(String.valueOf(idList.size()));
 				fileWriter.append(COMMA_DELIMITER);
 
-				total=0;
-				totalAmonest=0;
-				totalExpuls=0;
-				mediaParteAlumnoGrupo=0;
+				total = 0;
+				totalAmonest = 0;
+				totalExpuls = 0;
+				mediaParteAlumnoGrupo = 0;
 				/////////////////////////////
-					
-					calculoExpuls = new ArrayList<>();
-					calculoAmonest = new ArrayList<>();
 
-					calculoAmonest = calcularAmonestadosPorSemana(idList, diaIniciTrimestre2, diaFinalTrimestre2);
-					calculoExpuls = calcularExpulsadosPorSemana(idList, diaIniciTrimestre2, diaFinalTrimestre2);
-					
-					for (int n=0; n<calculoAmonest.size(); n++){
-						totalAmonest=totalAmonest+Integer.parseInt(calculoAmonest.get(n).toString());
-					}
-					
-					for (int n=0; n<calculoExpuls.size(); n++){
-						totalExpuls=totalExpuls+Integer.parseInt(calculoExpuls.get(n).toString());
-					}
-					
-					total=totalExpuls+totalAmonest;
-					mediaParteAlumnoGrupo=((total/1024.0f)*255)/((idList.size()/1024.0f)*255);
+				calculoExpuls = new ArrayList<>();
+				calculoAmonest = new ArrayList<>();
+
+				calculoAmonest = calcularAmonestadosPorSemana(idList, diaIniciTrimestre2, diaFinalTrimestre2);
+				calculoExpuls = calcularExpulsadosPorSemana(idList, diaIniciTrimestre2, diaFinalTrimestre2);
+
+				for (int n = 0; n < calculoAmonest.size(); n++) {
+					totalAmonest = totalAmonest + Integer.parseInt(calculoAmonest.get(n).toString());
+				}
+
+				for (int n = 0; n < calculoExpuls.size(); n++) {
+					totalExpuls = totalExpuls + Integer.parseInt(calculoExpuls.get(n).toString());
+				}
+
+				total = totalExpuls + totalAmonest;
+				mediaParteAlumnoGrupo = ((total / 1024.0f) * 255) / ((idList.size() / 1024.0f) * 255);
 
 				////////////////////////////////////
-				if (totalAmonest==0) {
+				if (totalAmonest == 0) {
 					fileWriter.append("");
 
 				} else {
@@ -1493,7 +1465,7 @@ public class TrimestralReports {
 				}
 				fileWriter.append(COMMA_DELIMITER);
 
-				if (totalExpuls==0) {
+				if (totalExpuls == 0) {
 					fileWriter.append("");
 
 				} else {
@@ -1501,8 +1473,8 @@ public class TrimestralReports {
 
 				}
 				fileWriter.append(COMMA_DELIMITER);
-				
-				if (total==0) {
+
+				if (total == 0) {
 					fileWriter.append("");
 
 				} else {
@@ -1511,7 +1483,7 @@ public class TrimestralReports {
 				}
 				fileWriter.append(COMMA_DELIMITER);
 
-				if (mediaParteAlumnoGrupo==0) {
+				if (mediaParteAlumnoGrupo == 0) {
 					fileWriter.append("");
 
 				} else {
@@ -1535,10 +1507,8 @@ public class TrimestralReports {
 		}
 
 	}
-	
-	
-	
-	public static void calcularResumen2Trimestre3() {
+
+	public void calcularResumen2Trimestre3() {
 		FileWriter fileWriter = null;
 
 		Date diaIniciTrimestre3;
@@ -1548,32 +1518,28 @@ public class TrimestralReports {
 		Date diaFinalTrimestre3;
 		long diff;
 		long numSetmanes;
-		int totalAmonest=0;
-		int totalExpuls=0;
-		int total=0;
-		float mediaParteAlumnoGrupo=0;
-		
+		int totalAmonest = 0;
+		int totalExpuls = 0;
+		int total = 0;
+		float mediaParteAlumnoGrupo = 0;
 
 		try {
 
 			dates = readFile();
-			File f = new File ("/tmp/trimestre3");
-			if (!f.exists()){
+			File f = new File("/tmp/trimestre3");
+			if (!f.exists()) {
 				f.mkdirs();
 			}
 			fileWriter = new FileWriter("/tmp/trimestre3/resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
-			//query.closeTransaction();
+			// query.closeTransaction();
 
 			jpa = new GroupJPAManager();
 			grupos = new ArrayList<>();
 			grupos = jpa.getGroups();
-		//	jpa.closeTransaction();
+			// jpa.closeTransaction();
 
-			
-			
-			
 			diaIniciTrimestre3 = dates.get(4);
 			diaIniciCal = Calendar.getInstance();
 			diaIniciCal.setTime(diaIniciTrimestre3);
@@ -1590,30 +1556,25 @@ public class TrimestralReports {
 			fileWriter.append(NEW_LINE_SEPARATOR);
 
 			// Headers
-			
 
 			// CONSULTA
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append(COMMA_DELIMITER);
 
-	
 			fileWriter.append(NEW_LINE_SEPARATOR);
 			fileWriter.append("GRUP");
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append("Nº ALUMNES");
 
-				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append("A");
-				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append("E");
-				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append("TOTAL");
-				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append("Partes per alumne i grup");
-				fileWriter.append(COMMA_DELIMITER);
-
-				
-			
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("A");
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("E");
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("TOTAL");
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("Partes per alumne i grup");
+			fileWriter.append(COMMA_DELIMITER);
 
 			fileWriter.append(NEW_LINE_SEPARATOR);
 
@@ -1625,7 +1586,7 @@ public class TrimestralReports {
 				query = new ReportQuerys();
 				List ids = query.getIdAlumnes(grupos.get(i).getId());
 
-			//	query.closeTransaction();
+				// query.closeTransaction();
 
 				List idList = new ArrayList<>();
 
@@ -1637,31 +1598,31 @@ public class TrimestralReports {
 				fileWriter.append(String.valueOf(idList.size()));
 				fileWriter.append(COMMA_DELIMITER);
 
-				total=0;
-				totalAmonest=0;
-				totalExpuls=0;
-				mediaParteAlumnoGrupo=0;
+				total = 0;
+				totalAmonest = 0;
+				totalExpuls = 0;
+				mediaParteAlumnoGrupo = 0;
 				/////////////////////////////
-					
-					calculoExpuls = new ArrayList<>();
-					calculoAmonest = new ArrayList<>();
 
-					calculoAmonest = calcularAmonestadosPorSemana(idList, diaIniciTrimestre3, diaFinalTrimestre3);
-					calculoExpuls = calcularExpulsadosPorSemana(idList, diaIniciTrimestre3, diaFinalTrimestre3);
-					
-					for (int n=0; n<calculoAmonest.size(); n++){
-						totalAmonest=totalAmonest+Integer.parseInt(calculoAmonest.get(n).toString());
-					}
-					
-					for (int n=0; n<calculoExpuls.size(); n++){
-						totalExpuls=totalExpuls+Integer.parseInt(calculoExpuls.get(n).toString());
-					}
-					
-					total=totalExpuls+totalAmonest;
-					mediaParteAlumnoGrupo=((total/1024.0f)*255)/((idList.size()/1024.0f)*255);
+				calculoExpuls = new ArrayList<>();
+				calculoAmonest = new ArrayList<>();
+
+				calculoAmonest = calcularAmonestadosPorSemana(idList, diaIniciTrimestre3, diaFinalTrimestre3);
+				calculoExpuls = calcularExpulsadosPorSemana(idList, diaIniciTrimestre3, diaFinalTrimestre3);
+
+				for (int n = 0; n < calculoAmonest.size(); n++) {
+					totalAmonest = totalAmonest + Integer.parseInt(calculoAmonest.get(n).toString());
+				}
+
+				for (int n = 0; n < calculoExpuls.size(); n++) {
+					totalExpuls = totalExpuls + Integer.parseInt(calculoExpuls.get(n).toString());
+				}
+
+				total = totalExpuls + totalAmonest;
+				mediaParteAlumnoGrupo = ((total / 1024.0f) * 255) / ((idList.size() / 1024.0f) * 255);
 
 				////////////////////////////////////
-				if (totalAmonest==0) {
+				if (totalAmonest == 0) {
 					fileWriter.append("");
 
 				} else {
@@ -1670,7 +1631,7 @@ public class TrimestralReports {
 				}
 				fileWriter.append(COMMA_DELIMITER);
 
-				if (totalExpuls==0) {
+				if (totalExpuls == 0) {
 					fileWriter.append("");
 
 				} else {
@@ -1678,8 +1639,8 @@ public class TrimestralReports {
 
 				}
 				fileWriter.append(COMMA_DELIMITER);
-				
-				if (total==0) {
+
+				if (total == 0) {
 					fileWriter.append("");
 
 				} else {
@@ -1688,7 +1649,7 @@ public class TrimestralReports {
 				}
 				fileWriter.append(COMMA_DELIMITER);
 
-				if (mediaParteAlumnoGrupo==0) {
+				if (mediaParteAlumnoGrupo == 0) {
 					fileWriter.append("");
 
 				} else {
@@ -1712,15 +1673,8 @@ public class TrimestralReports {
 		}
 
 	}
-	
-	
-	
-	
-	
-	
-	
 
-	private static ArrayList<Date> readFile() throws ReadOnlyException, ConversionException, IOException {
+	private ArrayList<Date> readFile() throws ReadOnlyException, ConversionException, IOException {
 		FileReader reader;
 		String path2 = null;
 		File currDir = new File(".");
@@ -1739,9 +1693,6 @@ public class TrimestralReports {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		
-		
-	
 
 		File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
 		BufferedReader br = new BufferedReader(new FileReader(f));
@@ -1788,7 +1739,7 @@ public class TrimestralReports {
 		return fechas;
 	}
 
-	public static void closeAllConnections()  {
+	public void closeAllConnections() {
 		query.closeTransaction();
 		jpa.closeTransaction();
 	}
