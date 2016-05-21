@@ -1,4 +1,5 @@
 /*******************************************************************************
+ * 
  * Gestió d'Amonestacions v1.0
  *
  * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
@@ -8,39 +9,40 @@
  * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
  * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
  * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
+ * 
  *******************************************************************************/
 package com.example.Logic;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
-public class Cursos {
+public class CurrentCourse {
 
-	public static String ObtenerCursoActual() {
-		String curso = null;
-		int any;
-		int anyAnterior;
-		int anySeguent;
-		int mes;
-		String fecha;
-		String fecha1;
-		String fechaparseadastring;
-		java.util.Date date = new java.util.Date();
-		Timestamp data = new Timestamp(date.getTime());
-		fechaparseadastring = String.valueOf(data);
-		any = Integer.parseInt(fechaparseadastring.substring(2, 4));
-		mes = Integer.parseInt(fechaparseadastring.substring(5, 7));
-		anyAnterior = any - 1;
-		anySeguent = any + 1;
-		fecha = anyAnterior + "/" + fechaparseadastring.substring(2, 4);
+	private Date date;
+	private String dateParsing;
+	private Timestamp data;
+	int month, year, previousYear, nextYear;
+	private String currentCourse;
+	private String Date;
 
-		if (mes < 9) {
-			curso = anyAnterior + "/" + any;
+	public String currentCourse() {
+		date = new Date();
+		data = new Timestamp(date.getTime());
+		dateParsing = String.valueOf(data);
+		year = Integer.parseInt(dateParsing.substring(2, 4));
+		month = Integer.parseInt(dateParsing.substring(5, 7));
+		previousYear = year - 1;
+		nextYear = year + 1;
+		Date = previousYear + "/" + dateParsing.substring(2, 4);
 
-		} else if (mes >= 9) {
-			curso = any + "/" + anySeguent;
+		if (month < 9) {
+			currentCourse = previousYear + "/" + year;
+
+		} else if (month >= 9) {
+			currentCourse = year + "/" + nextYear;
 		}
 
-		return curso;
+		return currentCourse;
 	}
 
 }

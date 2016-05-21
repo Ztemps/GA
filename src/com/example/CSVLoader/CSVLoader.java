@@ -41,7 +41,7 @@ import com.example.Entities.Student;
 import com.example.Entities.Teacher;
 import com.example.Entities.Tutor;
 import com.example.Entities.User;
-import com.example.Logic.Cursos;
+import com.example.Logic.CurrentCourse;
 import com.example.Logic.GroupJPAManager;
 import com.example.Logic.StudentsJPAManager;
 import com.example.Logic.TeachersJPAManager;
@@ -80,9 +80,11 @@ public class CSVLoader {
 	private Set<String> linkedHashSet;
 	private String line = "";
 	private String passwordHash;
-
+	private CurrentCourse course;
+	
 	public CSVLoader() {
 
+		course = new CurrentCourse();
 		studentsJPA = new StudentsJPAManager();
 		userJPA = new UserJPAManager();
 		teachersJPA = new TeachersJPAManager();
@@ -119,7 +121,7 @@ public class CSVLoader {
 			lGroups.add(group);
 
 			// Value null is a email of parents
-			lStudents.add(new Student(name, surname, null, phone, born, Cursos.ObtenerCursoActual(), group));
+			lStudents.add(new Student(name, surname, null, phone, born, course.currentCourse(), group));
 
 		}
 

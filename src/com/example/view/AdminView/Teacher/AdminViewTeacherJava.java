@@ -22,7 +22,7 @@ import org.postgresql.util.PSQLException;
 import com.example.Entities.Group;
 import com.example.Entities.Student;
 import com.example.Entities.Teacher;
-import com.example.Logic.Cursos;
+import com.example.Logic.CurrentCourse;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.StudentsJPAManager;
 import com.example.Logic.TeachersJPAManager;

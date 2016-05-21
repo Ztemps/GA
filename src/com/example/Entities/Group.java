@@ -1,4 +1,5 @@
 /*******************************************************************************
+ * 
  * Gestió d'Amonestacions v1.0
  *
  * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
@@ -8,6 +9,7 @@
  * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
  * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
  * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
+ * 
  *******************************************************************************/
 package com.example.Entities;
 //
@@ -21,13 +23,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "grup")
 public class Group implements Serializable {
 	@Id
 	private String id;
-	
+
 	private int max_alumnes;
 
 	public Group(String string) {
@@ -35,9 +36,9 @@ public class Group implements Serializable {
 		this.max_alumnes = 35;
 
 	}
-	
+
 	public Group() {
-		
+
 	}
 
 	public Group(String id, int max_alumnes) {
@@ -60,6 +61,11 @@ public class Group implements Serializable {
 
 	public void setMax_alumnes(int max_alumnes) {
 		this.max_alumnes = max_alumnes;
+	}
+
+	@Override
+	public String toString() {
+		return "Group [id=" + id + ", max_alumnes=" + max_alumnes + "]";
 	}
 
 }

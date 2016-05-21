@@ -20,7 +20,7 @@ import javax.persistence.EntityManager;
 import com.example.Dates.ConverterDates;
 import com.example.Entities.Group;
 import com.example.Entities.Student;
-import com.example.Logic.Cursos;
+import com.example.Logic.CurrentCourse;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.StudentsJPAManager;
 import com.example.Templates.AdminAddStudentForm;
@@ -66,12 +66,13 @@ public class AdminViewStudentJava extends MainContentView {
 	private AdminAddStudentForm alumneformEdit;
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em = entman.getEntityManager();
+	private CurrentCourse course;
 
 	public AdminViewStudentJava() {
 
 		alumneformEdit = new AdminAddStudentForm();
 		alumneformAdd = new AdminAddStudentForm();
-
+		course = new CurrentCourse();
 		buttonsSettings();
 		filterTextProperties();
 		WindowPropertiesAddStudent();
@@ -280,7 +281,7 @@ public class AdminViewStudentJava extends MainContentView {
 
 		String nom = alumneformAdd.nom.getValue().toString();
 		String cognom = alumneformAdd.cognom.getValue().toString();
-		String curs = Cursos.ObtenerCursoActual();
+		String curs = course.currentCourse();
 		Date fecha = alumneformAdd.fecha.getValue();
 		String email = alumneformAdd.emails.getValue().toString();
 		String telf = alumneformAdd.teléfons.getValue().toString();
@@ -295,7 +296,7 @@ public class AdminViewStudentJava extends MainContentView {
 		Object id = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
 		String nom = alumneformEdit.nom.getValue().toString();
 		String cognom = alumneformEdit.cognom.getValue().toString();
-		String curs = Cursos.ObtenerCursoActual();
+		String curs = course.currentCourse();
 		Date fecha = alumneformEdit.fecha.getValue();
 		String email = alumneformEdit.emails.getValue().toString();
 		String telf = alumneformEdit.teléfons.getValue().toString();
