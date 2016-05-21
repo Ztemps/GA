@@ -130,7 +130,8 @@ public class AdminViewUser extends MainContentView {
 				m.select(fila);
 				grid.scrollTo(fila);
 				notif("Usuari editat correctament");
-//				clearEditForm();
+				//clearEditForm();
+				
 
 
 			}
