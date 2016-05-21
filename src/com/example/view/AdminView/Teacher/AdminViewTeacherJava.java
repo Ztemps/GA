@@ -99,7 +99,7 @@ public class AdminViewTeacherJava extends MainContentView {
 					addTeacher();
 				} catch (PSQLException e) {
 					// TODO Auto-generated catch block
-					notif("El correo ja existeix");
+					notif("El correu ja existeix");
 				}
 			}
 
