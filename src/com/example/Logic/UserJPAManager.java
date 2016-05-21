@@ -59,11 +59,11 @@ public class UserJPAManager {
 		em.getTransaction().commit();
 	}
 
-	public void updateUser(Integer id, String password) {
+	public void updateUser(User user) {
 		em.getTransaction().begin();
-		User user = (User) em.find(User.class, id);
-		user.setPassword(password);
-		em.merge(user);
+		User usuari = (User) em.find(User.class, user.getId());
+		usuari.setPassword(user.getPassword());
+		em.merge(usuari);
 		em.getTransaction().commit();
 
 	}

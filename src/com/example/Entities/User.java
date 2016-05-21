@@ -61,6 +61,13 @@ public class User implements Serializable {
 		this.username = username;
 		this.rol = rol;
 	}
+	
+	public User(int id, String password) {
+		super();
+		this.id = id;
+		this.password = password;
+	}
+	
 	public int getId() {
 		return id;
 	}

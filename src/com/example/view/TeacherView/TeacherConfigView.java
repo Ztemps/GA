@@ -121,7 +121,7 @@ public class TeacherConfigView extends MainContentView {
 				int id = Integer.parseInt(getUI().getSession().getAttribute("id").toString());
 				System.out.println("ID " + id);
 				System.out.println("NOMEOLVIDES : " + passwordhash);
-				MA.updateUser(id, passwordhash);
+				MA.updateUser(new User(id, passwordhash));
 				MA.closeTransaction();
 				notif("Contraseña nova acceptada. ");
 				ShowNewPassTextField();

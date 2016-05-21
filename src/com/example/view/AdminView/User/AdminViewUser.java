@@ -18,6 +18,7 @@ import com.example.Entities.Teacher;
 import com.example.Entities.User;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.StudentsJPAManager;
+import com.example.Logic.TeachersJPAManager;
 import com.example.Logic.UserJPAManager;
 import com.example.LoginView.LoginView;
 import com.example.Templates.MainContentView;
@@ -46,17 +47,21 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.Grid.SingleSelectionModel;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class AdminViewUser extends MainContentView {
 	private Grid grid;
-	private Window window = new Window();
+	private Window windowEdit = new Window();
+	private AdminViewEditUser userformEdit;
 	private JPAContainer<User> usuaris;
 	private UserJPAManager MA;
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em = entman.getEntityManager();
 
 	public AdminViewUser() {
+
+		userformEdit = new AdminViewEditUser();
 
 		buttonsSettings();
 		filterTextProperties();
@@ -86,29 +91,89 @@ public class AdminViewUser extends MainContentView {
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
 				// getItemSelectedToTeacherForm();
-
+				editUser();
 			}
 
 		});
 		bDelete.addClickListener(e -> deleteUser());
 	}
 
+	private void editUser() {
+
+		getItemSelected();
+		clearEditForm();
+
+		// Object id =
+		// grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
+
+		Object id = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
+		Object user = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("username");
+
+		System.out.println(user);
+
+		userformEdit.txtGrup.setValue(user.toString());
+		userformEdit.aceptarButton.addClickListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+
+				MA = new UserJPAManager();
+				User user = getUserEdit();
+
+				MA.updateUser(new User(user.getId(),user.getPassword()));
+				MA.closeTransaction();
+				reloadGrid();
+				int fila = Integer.parseInt(id.toString());
+				windowEdit.close();
+				SingleSelectionModel m = (SingleSelectionModel) grid.getSelectionModel();
+				m.select(fila);
+				grid.scrollTo(fila);
+				notif("Usuari editat correctament");
+				//clearEditForm();
+				
+
+
+			}
+
+		});
+
+	}
+
+	private void clearEditForm() {
+		// TODO Auto-generated method stub
+
+		userformEdit.txtGrup.clear();
+		userformEdit.txtPassword.clear();
+
+	}
+
+	private User getUserEdit() {
+
+		Object id = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
+		String pass = userformEdit.txtPassword.getValue().toString();
+
+		User usuari = new User(Integer.parseInt(id.toString()), pass);
+
+		return usuari;
+	}
+
 	private void getItemSelected() {
 
-		UI.getCurrent().addWindow(window);
+		UI.getCurrent().addWindow(windowEdit);
 
 	}
 
 	private void WindowProperties() {
 
-		window.setWidth(900.0f, Unit.PIXELS);
-		window.setHeight("45%");
-		window.setWidth("45%");
-		window.setDraggable(false);
-		window.setModal(true);
-		window.setCaption("Donar d'alta a un usuari");
-		window.center();
-
+		windowEdit.setWidth(900.0f, Unit.PIXELS);
+		windowEdit.setHeight("45%");
+		windowEdit.setWidth("45%");
+		windowEdit.setDraggable(false);
+		windowEdit.setModal(true);
+		windowEdit.setCaption("Editar usuari");
+		windowEdit.center();
+		windowEdit.setContent(userformEdit);
 	}
 
 	public Grid GridProperties() {
