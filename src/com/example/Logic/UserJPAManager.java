@@ -45,15 +45,15 @@ public class UserJPAManager {
 	boolean expulsat = false;
 	boolean gravetat = false;
 
-	private EntityManagerUtil entman = new EntityManagerUtil();
+	private EntityManagerUtil entman;
 	private EntityManager em;
 
 	public UserJPAManager() {
+		entman = new EntityManagerUtil();
 		em = entman.getEntityManager();
 	}
 
 	public void addUser(User user) {
-		// EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		em.persist(user);
 		em.getTransaction().commit();
@@ -69,35 +69,12 @@ public class UserJPAManager {
 	}
 
 	public void addWarning(Warning amonestacio) {
-
-		// if(em.isOpen()){
-		// em.close();
-		// }else{
 		em.getTransaction().begin();
 		em.persist(amonestacio);
 		em.getTransaction().commit();
-		// }
 	};
 
-	// public List<Doctor> listDoctors() {
-	//
-	// try {
-	//
-	//// em.getTransaction().begin();
-	//// list_doctors = em.createQuery("Select e From Doctor
-	// e").getResultList();
-	////
-	//// em.getTransaction().commit();
-	//// return list_doctors;
-	//
-	// } catch (Exception e) {
-	// em.getTransaction().rollback();
-	// }
-	//
-	// //return list_doctors;
-	// }
 
-	/* Method to READ all Autors */
 	public List<User> listUsers() {
 
 		try {
@@ -285,10 +262,5 @@ public class UserJPAManager {
 		em.getTransaction().commit();
 	};
 
-	/**
-	 * for (Iterator<User> iterator = list_users.iterator();
-	 * iterator.hasNext();) { // // User usuario = (User) iterator.next(); //
-	 * System.out.println(usuario.toString()); // }
-	 **/
 
 }

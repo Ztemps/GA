@@ -46,9 +46,18 @@ public class WarningJPAManager {
 	private User user;
 	boolean expulsat = false;
 	boolean gravetat = false;
-	private EntityManagerUtil entman = new EntityManagerUtil();
-	private EntityManager em = entman.getEntityManager();
+	private EntityManagerUtil entman;
+	private EntityManager em;
 	private SendTelegram sendTel = new SendTelegram();
+
+	/**
+	 * 
+	 */
+	public WarningJPAManager() {
+		// TODO Auto-generated constructor stub
+		entman = new EntityManagerUtil();
+		em = entman.getEntityManager();
+	}
 
 	public void introducirParte(String[] query)
 			throws MalformedURLException, DocumentException, IOException, ParseException {

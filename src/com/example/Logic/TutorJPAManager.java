@@ -28,18 +28,19 @@ import com.example.ga.GaUI;
 
 public class TutorJPAManager {
 
-	User user;
+	private User user;
 	private List<User> list_users;
 	private List<Group> list_grups;
 	boolean amonestat2 = false;
 	boolean expulsat = false;
 	boolean gravetat = false;
 
-	private EntityManagerUtil entman = new EntityManagerUtil();
+	private EntityManagerUtil entman;
 	private EntityManager em;
 
 	public TutorJPAManager() {
 		// TODO Auto-generated constructor stub
+		entman = new EntityManagerUtil();
 		em = entman.getEntityManager();
 	}
 
@@ -89,11 +90,5 @@ public class TutorJPAManager {
 		em.close();
 
 	}
-
-	/**
-	 * for (Iterator<User> iterator = list_users.iterator();
-	 * iterator.hasNext();) { // // User usuario = (User) iterator.next(); //
-	 * System.out.println(usuario.toString()); // }
-	 **/
 
 }

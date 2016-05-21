@@ -26,24 +26,26 @@ import com.example.Entities.User;
 
 public class TeachersJPAManager {
 
-	private EntityManagerUtil entman = new EntityManagerUtil();
-	private EntityManager em = entman.getEntityManager();
+	private EntityManagerUtil entman;
+	private EntityManager em;
 	private List<Teacher> listTeachers;
 
-	
-	
-	
+	/**
+	 * 
+	 */
+	public TeachersJPAManager() {
+		// TODO Auto-generated constructor stub
+		entman = new EntityManagerUtil();
+		em = entman.getEntityManager();
 
+	}
 
 	public void addTeacher(Teacher teacher) {
 
-
-			em.getTransaction().begin();
-			em.persist(teacher);
-			em.getTransaction().commit();
-		}
-
-
+		em.getTransaction().begin();
+		em.persist(teacher);
+		em.getTransaction().commit();
+	}
 
 	public void updateTeacher(Teacher teacher) {
 
@@ -60,18 +62,11 @@ public class TeachersJPAManager {
 	}
 
 	public int getIdDocent(String email) {
-		// return (Docent) em.createQuery("SELECT c FROM Customer c WHERE c.name
-		// LIKE :email")
-		// .setParameter("email", email)
-		// .getSingleResult();
 
 		Query query = em.createNativeQuery("SELECT id FROM docent where email LIKE #email", Teacher.class);
 		query.setParameter("email", email);
 		Teacher docent = (Teacher) query.getSingleResult();
 
-		// em.getTransaction().commit();
-		// em.close();
-		// em.flush();
 		return docent.getId();
 	}
 

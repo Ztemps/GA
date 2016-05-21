@@ -20,9 +20,19 @@ import com.example.Entities.Student;
 import com.example.Entities.Warning;
 
 public class StudentsJPAManager {
-	private Student alumne; 
-	private EntityManagerUtil entman = new EntityManagerUtil();
-	private EntityManager em = entman.getEntityManager();
+	private Student alumne;
+	private EntityManagerUtil entman;
+	private EntityManager em;
+
+	/**
+	 * 
+	 */
+	public StudentsJPAManager() {
+		// TODO Auto-generated constructor stub
+
+		entman = new EntityManagerUtil();
+		em = entman.getEntityManager();
+	}
 
 	public void addStudent(Student alumne) {
 
@@ -30,22 +40,21 @@ public class StudentsJPAManager {
 		em.persist(alumne);
 		em.getTransaction().commit();
 	};
-	
+
 	public void updateStudent(Student alumne) {
 
 		em.getTransaction().begin();
 		em.merge(alumne);
 		em.getTransaction().commit();
 	}
-	
+
 	public void removeStudent(Student alumne) {
 
 		em.getTransaction().begin();
 		em.remove(alumne);
 		em.getTransaction().commit();
 	}
-	
-	
+
 	public void closeTransaction() {
 
 		em.close();
