@@ -136,7 +136,7 @@ public class AdminViewUser extends MainContentView {
 				getUI().getNavigator().navigateTo(AdminView.NAME);
 
 				notif("Usuari editat correctament");
-
+				
 				}
 
 		});
