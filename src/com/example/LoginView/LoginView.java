@@ -195,6 +195,9 @@ public class LoginView extends LoginViewDesign implements View {
 		String username = this.txtUsername.getValue();
 		String userpassword = this.txtPassword.getValue();
 		
+		System.out.println("LOGIN"+username);
+		System.out.println("LOGIN"+userpassword);
+		
 		// cifrar clave con SHA-1
 		String passwordhash = hbinary.marshal(md.digest(userpassword.getBytes())).toLowerCase();
 

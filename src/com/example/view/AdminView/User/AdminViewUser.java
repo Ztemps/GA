@@ -1,17 +1,10 @@
-/*******************************************************************************
- * Gestió d'Amonestacions v1.0
- *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasasdo@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
- *******************************************************************************/
 package com.example.view.AdminView.User;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import javax.persistence.EntityManager;
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
 import com.example.Entities.Student;
 import com.example.Entities.Teacher;
@@ -22,6 +15,7 @@ import com.example.Logic.TeachersJPAManager;
 import com.example.Logic.UserJPAManager;
 import com.example.LoginView.LoginView;
 import com.example.Templates.MainContentView;
+import com.example.view.AdminView.AdminView;
 import com.example.view.AdminView.CSV.AdminCSVUpload;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
@@ -31,6 +25,7 @@ import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.SelectionEvent.SelectionListener;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.Sizeable.Unit;
@@ -74,7 +69,10 @@ public class AdminViewUser extends MainContentView {
 
 	private void buttonsAction() {
 		// TODO Auto-generated method stub
-
+		
+		userformEdit.aceptarButton.setClickShortcut(KeyCode.ENTER);
+		userformEdit.cancelarButton.setClickShortcut(KeyCode.ENTER);
+		
 		bAdd.addClickListener(new ClickListener() {
 
 			@Override
@@ -100,44 +98,55 @@ public class AdminViewUser extends MainContentView {
 
 	private void editUser() {
 
-		getItemSelected();
-		clearEditForm();
 
-		// Object id =
-		// grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
+		getItemSelected();
 
 		Object id = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
 		Object user = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("username");
 
-		System.out.println(user);
 
 		userformEdit.txtGrup.setValue(user.toString());
+
 		userformEdit.aceptarButton.addClickListener(new ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-
+				
 				MA = new UserJPAManager();
 				User user = getUserEdit();
+				MessageDigest md = null;
+				try {
+					md = MessageDigest.getInstance("SHA-1");
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				HexBinaryAdapter hbinary = new HexBinaryAdapter();
+				String password = userformEdit.txtPassword.getValue();
+				
+				
+				String passwordhash = hbinary.marshal(md.digest(password.getBytes())).toLowerCase();
 
-				MA.updateUser(new User(user.getId(),user.getPassword()));
+				MA.updateUser(new User(user.getId(), passwordhash));
 				MA.closeTransaction();
 				reloadGrid();
-				int fila = Integer.parseInt(id.toString());
 				windowEdit.close();
-				SingleSelectionModel m = (SingleSelectionModel) grid.getSelectionModel();
-				m.select(fila);
-				grid.scrollTo(fila);
+				clearEditForm();	
+				getUI().getNavigator().navigateTo(AdminView.NAME);
+
 				notif("Usuari editat correctament");
-				//clearEditForm();
-				
 
-
-			}
+				}
 
 		});
 
+		userformEdit.cancelarButton.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				windowEdit.close();
+			}
+		});
 	}
 
 	private void clearEditForm() {
@@ -152,7 +161,8 @@ public class AdminViewUser extends MainContentView {
 
 		Object id = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
 		String pass = userformEdit.txtPassword.getValue().toString();
-
+		
+		
 		User usuari = new User(Integer.parseInt(id.toString()), pass);
 
 		return usuari;
@@ -165,7 +175,7 @@ public class AdminViewUser extends MainContentView {
 	}
 
 	private void WindowProperties() {
-
+		
 		windowEdit.setWidth(900.0f, Unit.PIXELS);
 		windowEdit.setHeight("45%");
 		windowEdit.setWidth("45%");
