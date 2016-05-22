@@ -45,7 +45,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import sun.text.normalizer.UBiDiProps;
 
 public class TeacherOwnWarningsJava extends MainContentView {
-	
+
 	private File sourceFile;
 	private String nomCognoms;
 	private String fecha;
@@ -64,8 +64,7 @@ public class TeacherOwnWarningsJava extends MainContentView {
 		buttonsSettings();
 		b.setCaption("PRUEBA");
 		WindowProperties();
-		
-		
+
 		bRegister.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -81,7 +80,6 @@ public class TeacherOwnWarningsJava extends MainContentView {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 
 			}
 		});
@@ -102,17 +100,16 @@ public class TeacherOwnWarningsJava extends MainContentView {
 					jdbccp.GetConnection()));
 			grid = new Grid("", container);
 			grid.setContainerDataSource(container);
+			grid.setSizeFull();
+			grid.setColumnReorderingAllowed(true);
+			grid.setSelectionMode(SelectionMode.SINGLE);
 
-		} catch (SQLException e) {
+		} catch (SQLException | NullPointerException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
 
-	
-		grid.setColumns("nom", "cognoms", "grup", "data");
-		grid.setSizeFull();
-		grid.setColumnReorderingAllowed(true);
-		grid.setSelectionMode(SelectionMode.SINGLE);
+		
 		grid.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -132,7 +129,7 @@ public class TeacherOwnWarningsJava extends MainContentView {
 		// TODO Auto-generated method stub
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);
-		 grid.deselectAll();
+		grid.deselectAll();
 	}
 
 	private void buttonsSettings() {
@@ -149,7 +146,6 @@ public class TeacherOwnWarningsJava extends MainContentView {
 		bRegister.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
-	
 
 		// AdminViewCarregarCSVJava upload = new AdminViewCarregarCSVJava();
 
@@ -166,30 +162,32 @@ public class TeacherOwnWarningsJava extends MainContentView {
 		window.center();
 
 	}
-	
+
 	private String getItemNomCognomSelected() {
 
-		String name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom").getValue().toString();
+		String name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom").getValue()
+				.toString();
 		String surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms")
 				.getValue().toString();
 
-		String nomCognom = (name.concat(" "+surname)).replaceFirst(" ", "").replaceAll(" ", "_");
+		String nomCognom = (name.concat(" " + surname)).replaceFirst(" ", "").replaceAll(" ", "_");
 
 		return nomCognom;
 
 	}
-	private String getDateSelected(){
-		
+
+	private String getDateSelected() {
+
 		Object data = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("data").getValue();
 		fecha = data.toString();
-		hora = fecha.substring(11,16);
-	
+		hora = fecha.substring(11, 16);
+
 		return hora;
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public void popupPDF() throws IOException, DocumentException {
-	
+
 		generatePDF generatepdf = new generatePDF();
 		Embedded c = new Embedded();
 		sourceFile = new File(generatepdf.getPath2(getItemNomCognomSelected(), getDateSelected()));
@@ -203,7 +201,7 @@ public class TeacherOwnWarningsJava extends MainContentView {
 		pdf.hbuttons.setVisible(false);
 		window.setContent(pdf);
 		UI.getCurrent().addWindow(window);
-		
+
 		window.setVisible(true);
 
 	}

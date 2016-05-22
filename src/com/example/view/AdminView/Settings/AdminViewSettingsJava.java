@@ -27,8 +27,11 @@ import com.example.Dates.ConverterDates;
 import com.example.Templates.MainContentView;
 import com.vaadin.data.Property.ReadOnlyException;
 import com.vaadin.data.util.converter.Converter.ConversionException;
+import com.vaadin.server.Page;
+import com.vaadin.shared.Position;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.DateField;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -90,10 +93,24 @@ public class AdminViewSettingsJava extends MainContentView {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				writeFile();
+				notif("Configuració guardada correctament");
 
 			}
 
 		});
+
+	}
+	
+	
+	public void notif(String mensaje) {
+
+		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
+																												// HTML
+
+		// Customize it
+		notif.show(Page.getCurrent());
+		notif.setDelayMsec(500);
+		notif.setPosition(Position.TOP_CENTER);
 
 	}
 

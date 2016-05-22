@@ -74,10 +74,14 @@ public class LoginView extends LoginViewDesign implements View {
 	 * 
 	 */
 	private static final long serialVersionUID = 4731762934864687953L;
+	private static final String TITLE = "Plataforma Gestió d'Amonestacions";
+	private static final String USER = "Plataforma Gestió d'Amonestacions";
+	private static final String FILE = "userList.txt";
+
 	public static final String NAME = "login";
-	private User usuari;
+	private User user;
 	private boolean isAdmin;
-	public boolean conectado;
+	public boolean conected;
 	private boolean login = true;
 	private ArrayList<User> users;
 	private Notification notif;
@@ -122,11 +126,9 @@ public class LoginView extends LoginViewDesign implements View {
 		});
 
 		vMainLogin.setStyleName(Reindeer.LAYOUT_BLUE);
-		// viewLayout.setHeight("100%");
-		// setCompositionRoot(viewLayout);
 		vLogin.addStyleName("loginview");
 		bLogin.addClickListener(new ClickListener() {
-			
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
@@ -155,7 +157,7 @@ public class LoginView extends LoginViewDesign implements View {
 	public void enter(ViewChangeEvent event) {
 		FileWriter fw;
 		try {
-			fw = new FileWriter("userList.txt");
+			fw = new FileWriter(FILE);
 			BufferedWriter br = new BufferedWriter(fw);
 			br.write("false");
 			br.close();
@@ -169,17 +171,12 @@ public class LoginView extends LoginViewDesign implements View {
 
 	}
 
-	
-			
-	
-	
-
 	public void LoginValidator() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 
-		 MessageDigest md = MessageDigest.getInstance("SHA-1"); 
-		 HexBinaryAdapter hbinary = new HexBinaryAdapter();
-		
-		 // Conecxión con la base de datos
+		MessageDigest md = MessageDigest.getInstance("SHA-1");
+		HexBinaryAdapter hbinary = new HexBinaryAdapter();
+
+		// Conecxión con la base de datos
 		String dbURL = "jdbc:postgresql:GAdb";
 		Class.forName("org.postgresql.Driver");
 		Connection conn = null;
@@ -194,7 +191,7 @@ public class LoginView extends LoginViewDesign implements View {
 		// Cogemos los valores de los campos que rellena el usuario
 		String username = this.txtUsername.getValue();
 		String userpassword = this.txtPassword.getValue();
-				
+
 		// cifrar clave con SHA-1
 		String passwordhash = hbinary.marshal(md.digest(userpassword.getBytes())).toLowerCase();
 
@@ -204,24 +201,25 @@ public class LoginView extends LoginViewDesign implements View {
 			// posteriormente
 			// validar el login
 			while (rs.next()) {
-				usuari = new User();
-					usuari.setId(Integer.parseInt(rs.getString(1)));
-					usuari.setPassword(rs.getString(2));
-					usuari.setUsername(rs.getString(3));
-					usuari.setRol(rs.getString(4));
+				user = new User();
+				user.setId(Integer.parseInt(rs.getString(1)));
+				user.setPassword(rs.getString(2));
+				user.setUsername(rs.getString(3));
+				user.setRol(rs.getString(4));
 
 				// Si el usuario y el nombre coinciden y su rol es
 				// administrador, se abre la vista del administrador
-				if (usuari.getUsername().equals(username) && usuari.getPassword().equals(passwordhash)) break;
+				if (user.getUsername().equals(username) && user.getPassword().equals(passwordhash))
+					break;
 				// Si el usuario o contraseña no son validos, se muestra un
 				// mensaje emergente
 			}
-			
-			// comparamos otra vez si el usuario y el nombre son el mismo
-			if (usuari.getUsername().equals(username) && usuari.getPassword().equals(passwordhash)){
-				if (usuari.getRol().equals("Administrador")) {
 
-					FileWriter fw = new FileWriter("userList.txt");
+			// comparamos otra vez si el usuario y el nombre son el mismo
+			if (user.getUsername().equals(username) && user.getPassword().equals(passwordhash)) {
+				if (user.getRol().equals("Administrador")) {
+
+					FileWriter fw = new FileWriter(FILE);
 					BufferedWriter br = new BufferedWriter(fw);
 					br.write("true");
 					br.close();
@@ -229,29 +227,23 @@ public class LoginView extends LoginViewDesign implements View {
 					setAttributeSession(username);
 					getUI().getNavigator().navigateTo(AdminView.NAME);//
 
-				}else if (usuari.getRol().equals("Tutor")) {
+				} else if (user.getRol().equals("Tutor")) {
 
 					setAttributeSession(username);
 					getUI().getNavigator().navigateTo(TutorView.NAME);
 
-				}else if(usuari.getRol().equals("Professor")) {
+				} else if (user.getRol().equals("Professor")) {
 					// Si el usuario y el nombre coinciden y su rol es
 					// tutor, se abre la vista del tutor
 					setAttributeSession(username);
 					getUI().getNavigator().navigateTo(TeacherView.NAME);
 				}
-				
-			}else{
+
+			} else {
 				// si no son el mismo la contraseña o usuario son incorrectos
 				notif("Usuari/Contraseña incorrectes");
 			}
-			
-			
-//			if (!(usuari.getUsername().equals(username) && usuari.getPassword().equals(userpassword))) {
 
-				 // notif("Usuari/Contraseña incorrectes");
-
-		//	}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -265,10 +257,9 @@ public class LoginView extends LoginViewDesign implements View {
 	public void setAttributeSession(String username) {
 
 		getUI().getSession().setAttribute("user", username);
-		getUI().getSession().setAttribute("id", usuari.getId());
+		getUI().getSession().setAttribute("id", user.getId());
 		getUI().getSession().setAttribute("login", "true");
 
-		
 	}
 
 }
