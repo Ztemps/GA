@@ -168,10 +168,16 @@ public class WarningJPAManager {
 		}
 
 		if (checkPares) {
-			if (al.getEmail().contains("@")) {
-				sendMail = new sendMail(al.getEmail(),
-						"El seu fill " + query[0] + " " + query[1] + " a sigut amonestat ", query[12]);
+			try {
+
+				if (al.getEmail().contains("@") || al.getEmail() != null) {
+					sendMail = new sendMail(al.getEmail(),
+							"El seu fill " + query[0] + " " + query[1] + " a sigut amonestat ", query[12]);
+				}
+			} catch (NullPointerException e) {
+
 			}
+
 		}
 
 		String fecha = query[14] + " " + query[15];
@@ -186,7 +192,6 @@ public class WarningJPAManager {
 		query.setParameter("currentUser", currentUser);
 		//
 		User user = (User) query.getSingleResult();
-
 
 		return user;
 	}

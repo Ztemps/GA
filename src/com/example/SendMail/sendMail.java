@@ -28,7 +28,6 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-
 public class sendMail {
 
 	final String senderEmailID = "gestioamonestacions@gmail.com";
@@ -36,7 +35,7 @@ public class sendMail {
 	final String emailSMTPserver = "smtp.gmail.com";
 	final String emailServerPort = "465";
 	final MimeBodyPart messageBodyPart;
-	
+
 	final MimeMultipart multipart;
 	DataSource source;
 	String receiverEmailID = null;
@@ -44,18 +43,18 @@ public class sendMail {
 	String emailBody = null;
 	String filename = null;
 
-	// Constructor send mail 
+	// Constructor send mail
 	public sendMail(String receiverEmailID, String emailSubject, String filename) {
 		this.receiverEmailID = receiverEmailID;
 		this.emailSubject = emailSubject;
 		this.emailBody = emailBody;
 		this.filename = filename;
-		
+
 		messageBodyPart = new MimeBodyPart();
 		multipart = new MimeMultipart();
-		
+
 		try {
-			 source = new FileDataSource(filename);
+			source = new FileDataSource(filename);
 
 			messageBodyPart.setDataHandler(new DataHandler(source));
 			messageBodyPart.setFileName(filename);
@@ -65,7 +64,6 @@ public class sendMail {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 
 		Properties props = new Properties();
 		props.put("mail.smtp.user", senderEmailID);
@@ -89,7 +87,7 @@ public class sendMail {
 			msg.setSubject(emailSubject);
 			msg.setFrom(new InternetAddress(senderEmailID));
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(receiverEmailID));
-			 msg.setContent(multipart);
+			msg.setContent(multipart);
 			Transport.send(msg);
 		} catch (Exception mex) {
 			mex.printStackTrace();
