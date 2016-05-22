@@ -55,13 +55,6 @@ public class AdminViewCSVUploadJava extends MainContentView {
 	private Window window;
 	private AdminCSVHelper help;
 
-	// private Label studentlabel = new Label(
-	// "Selecciona un fitxer amb extensió .\"csv\" en que els seus camps
-	// estiguin separats per"
-	// + " comes. \n El fitxer ha de tenir les següents columnes en el següent
-	// ordre: id de l'alumne, cognoms, nom, grup, date de naixement, pais,
-	// nacionalitat i telefons");
-
 	public AdminViewCSVUploadJava() throws IOException {
 		help = new AdminCSVHelper();
 		csv = new AdminCSVUpload();
@@ -136,27 +129,14 @@ public class AdminViewCSVUploadJava extends MainContentView {
 
 	private void ViewHelp() throws IOException {
 
-		// File currDir = new File(".");
-		// String path = currDir.getCanonicalPath();
-		// // TODO Auto-generated method stub
-		// window.setCaption("Ajuda - Com carregar els CSV's");
-		//
-		// Embedded c = new Embedded();
-		// sourceFile = new File(path +
-		// "/git/ga2/WebContent/VAADIN/themes/images/csvAlumnes.png");
-		// c.setSource(new FileResource(sourceFile));
-		// c.setType(Embedded.TYPE_BROWSER);
-
 		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 
-		// Image as a file resource
 		FileResource resource = new FileResource(new File(basepath + "/VAADIN/themes/images/csvAlumnes.png"));
 
-		// Show the image in the application
 		Image image = new Image("", resource);
 		help.txtDescription.setCaption("Selecciona un fitxer amb extensió .\"csv\""
 				+ " en que els seus camps estiguin separats per" + " comes. \n "
-						+ "El fitxer ha de tenir les següents columnes en el següent ordre: id de l'alumne, cognoms, nom, grup, date de naixement, pais,nacionalitat i telefons com l'imatge");
+				+ "El fitxer ha de tenir les següents columnes en el següent ordre: id de l'alumne, cognoms, nom, grup, date de naixement, pais,nacionalitat i telefons com l'imatge");
 		help.vImage.removeAllComponents();
 		help.vImage.addComponent(image);
 		window.setContent(help);
@@ -180,7 +160,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 	}
 
 	private void buttonsSettings() {
-		// TODO Auto-generated method stub
+
 		vHorizontalMain.addComponent(csv);
 		bAdd.setVisible(false);
 		buttonEdit.setVisible(false);
@@ -193,7 +173,6 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		txtTitle.addStyleName("main-title");
 		txtTitle.setValue("Carrega de CSV");
 		csv.bHelp.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		// AdminViewCarregarCSVJava upload = new AdminViewCarregarCSVJava();
 
 	}
 
@@ -201,7 +180,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		CSVLoader csvloader = new CSVLoader();
 
 		public FileReciverStudents() {
-			// TODO Auto-generated constructor stub
+			
 		}
 
 		@Override
@@ -214,12 +193,10 @@ public class AdminViewCSVUploadJava extends MainContentView {
 			if (extension.equals(".csv")) {
 
 				try {
-					// Open the file for writing.
 					File currDir = new File(".");
 					try {
 						path = currDir.getCanonicalPath();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
@@ -269,12 +246,11 @@ public class AdminViewCSVUploadJava extends MainContentView {
 
 		public FileReciverTeachers() {
 
-			// TODO Auto-generated constructor stub
 		}
 
 		@Override
 		public OutputStream receiveUpload(String filename, String mimeType) {
-			FileOutputStream fos = null; // Stream to write to
+			FileOutputStream fos = null; 
 			String path = null;
 
 			String extension = filename.substring(filename.indexOf("."));
