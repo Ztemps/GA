@@ -31,6 +31,7 @@ import com.example.Entities.Teacher;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.UserJPAManager;
 import com.example.Logic.WarningJPAManager;
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -45,8 +46,11 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class generatePDF extends WarningJPAManager {
 
-	private String timewarning;
-	WarningJPAManager jpa = new WarningJPAManager();
+	private String timeWarning;
+	private WarningJPAManager warningJPA;
+	private UserJPAManager userJPA;
+	private File currentDirectory;
+	private String path2;
 
 	/**
 	 * Main method.
@@ -57,20 +61,23 @@ public class generatePDF extends WarningJPAManager {
 	 * @throws IOException
 	 */
 
-	public generatePDF() {
-
+	public generatePDF() throws IOException {
+		
+		currentDirectory = new File(".");
+		path2 = currentDirectory.getCanonicalPath();
+		warningJPA = new WarningJPAManager();
+		userJPA = new UserJPAManager();
 	}
 
 	public String[] generate(String[] query) throws DocumentException, IOException {
 
-		UserJPAManager MA = new UserJPAManager();
 		// OBTENER ALUMNO
-		Student al = MA.ObtenerAlumno(query[0], query[1]);
+		Student al = userJPA.ObtenerAlumno(query[0], query[1]);
 
 		// OBTENER TUTOR
-		int tutorname = MA.getIdTutor(al.getGrup());
+		int tutorname = userJPA.getIdTutor(al.getGrup());
 		// OBTENER PERSONA QUE REALIZA EL PARTE
-		String nametutor = MA.getNomTutor(tutorname);
+		String nametutor = userJPA.getNomTutor(tutorname);
 
 		java.util.Date date = new java.util.Date();
 		Timestamp data1 = new Timestamp(date.getTime());
@@ -86,16 +93,9 @@ public class generatePDF extends WarningJPAManager {
 		Document document = new Document();
 		Paragraph preface = new Paragraph();
 
-		File currDir = new File(".");
-		String path2 = currDir.getCanonicalPath();
-		Image img = Image.getInstance(String.format(path2 + "/git/ga2/WebContent/PDFContent/icons/logo1.jpg"));
-		img.setWidthPercentage(50);
-		// X - Y
-		img.setAbsolutePosition(45, 770);
-		img.scaleToFit(25, 25);
+		Image img = logoImage();
 
 		String nomCognom = (query[0].concat(" " + query[1])).replaceFirst(" ", "").replaceAll(" ", "_");
-		String user = jpa.currentUser();
 
 		String path = path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + horaparte.substring(0, 5) + ")("
 				+ nomCognom + ").pdf";
@@ -139,14 +139,7 @@ public class generatePDF extends WarningJPAManager {
 		campGrup.setIndentationLeft(255);
 		campGrup.setSpacingBefore(-13);
 
-		// Prueba
-		// if(query[14] != "null"){
-		//
-		// String dataAlumne = query[14];
-		//
-		//
-		// }
-		// CAMP ALUMNE
+
 		String dataAlumne = fechaparte;
 
 		Paragraph data = new Paragraph("DATA: ", CAPS);
@@ -173,12 +166,7 @@ public class generatePDF extends WarningJPAManager {
 		campMateria.setIndentationLeft(75);
 		campMateria.setSpacingBefore(-12);
 
-		// Prueba
-		// if(query[15] != "null" || query[15] != ""){
-		//
-		// timewarning = query[15].substring(11, 16);
-		//
-		// }
+	
 
 		// CAMP ALUMNE
 		Paragraph hora = new Paragraph("HORA: ", CAPS);
@@ -198,22 +186,14 @@ public class generatePDF extends WarningJPAManager {
 		campCirc.setIndentationLeft(430);
 		campCirc.setSpacingBefore(-12);
 
-		//
-		// ma = new UserJPAManager();
-		// int id =
-		// Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
-		// // TODO Auto-generated method stub
-		// wellcome.setValue("Benvingut "+ma.getNomTutor(id));
-
-		// Prueba
-		String nomProfessor = MA.currentTeacher();
+		String nomProfessor = userJPA.currentTeacher();
 
 		if (query[12] != null) {
 			nomProfessor = query[12];
 		}
 
 		if (query[12] == "null") {
-			nomProfessor = MA.currentTeacher();
+			nomProfessor = userJPA.currentTeacher();
 		}
 
 		// CAMP PROFESSOR
@@ -292,24 +272,15 @@ public class generatePDF extends WarningJPAManager {
 
 			}
 			if (marcat) {
-				System.out.println("[X]" + motivos[i].trim());
 				llistaMotius.add("[X]" + motivos[i].trim());
 
 			} else {
 
-				System.out.println("[ ]" + motivos[i].trim());
 				llistaMotius.add("[  ]" + motivos[i].trim());
 
 			}
 		}
 
-		// System.out.println("Lista de motivos");
-		// System.out.println(llistaMotius.get(0));
-		// System.out.println(llistaMotius.get(1));
-		// System.out.println(llistaMotius.get(2));
-		// System.out.println(llistaMotius.get(3));
-		// System.out.println(llistaMotius.get(4));
-		// System.out.println(llistaMotius.get(5));
 
 		if (llistaMotius.contains("[X]Faltar al respecte al professor")) {
 
@@ -511,6 +482,23 @@ public class generatePDF extends WarningJPAManager {
 	}
 
 	/**
+	 * @return
+	 * @throws IOException 
+	 * @throws BadElementException 
+	 */
+	private Image logoImage() throws IOException, BadElementException {
+		// TODO Auto-generated method stub
+		
+		Image img = Image.getInstance(String.format(path2 + "/git/ga2/WebContent/PDFContent/icons/logo1.jpg"));
+		img.setWidthPercentage(50);
+		// X - Y
+		img.setAbsolutePosition(45, 770);
+		img.scaleToFit(25, 25);
+		
+		return img;
+	}
+
+	/**
 	 * Creates a PDF with information about the movies
 	 * 
 	 * @param filename
@@ -539,8 +527,6 @@ public class generatePDF extends WarningJPAManager {
 	}
 
 	public String getPath2(String nomCognom, String fecha) throws IOException {
-		File currDir = new File(".");
-		String path2 = currDir.getCanonicalPath();
 
 		return path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + fecha + ")(" + nomCognom + ").pdf";
 

@@ -68,16 +68,9 @@ public class AdminViewCharts extends MainContentView {
 	private SQLContainer container2;
 	private SQLContainer container3;
 	private JDBCConnectionPool jdbccp ;
-	private GridLayout gl;
-	private HorizontalLayout hl;
-	TextField data1;
-	TextField data2;
-	Button button;
-	VerticalLayout vl;
-	VerticalLayout vl1;
-	Panel panel;
-	VerticalLayout vertical;
-	FinalReports finalReports;
+	private Panel panel;
+	private VerticalLayout vertical;
+	private FinalReports finalReports;
 
 	public AdminViewCharts() throws ReadOnlyException, ConversionException, IOException, PSQLException {
 		

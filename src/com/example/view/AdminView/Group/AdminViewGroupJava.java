@@ -72,16 +72,16 @@ public class AdminViewGroupJava extends MainContentView {
 	private Window windowAdd = new Window();
 	private Window windowEdit = new Window();
 	private GroupJPAManager MA;
-	private EntityManagerUtil entman;
+	private EntityManagerUtil entitymanager;
 	private EntityManager em;
 
 	public AdminViewGroupJava() throws PersistenceException, PSQLException {
-		entman = new EntityManagerUtil();
-		em = entman.getEntityManager();
+		entitymanager = new EntityManagerUtil();
+		em = entitymanager.getEntityManager();
 		// TODO Auto-generated constructor stub
 		grupFormAdd = new AdminViewGroupForm();
 		grupFormAdd = new AdminViewGroupForm();
-		buttonsSettings();
+		GeneralSettings();
 		GridProperties();
 		WindowPropertiesEditGroup();
 		WindowPropertiesAddGroup();
@@ -135,7 +135,7 @@ public class AdminViewGroupJava extends MainContentView {
 						notif("Format incorrecte. Exemple (ESO 1A)");
 
 					} else {
-						
+
 						Group grup = getGroupAdd();
 						MA.updateGroup(grup);
 						MA.closeTransaction();
@@ -234,7 +234,6 @@ public class AdminViewGroupJava extends MainContentView {
 
 			@Override
 			public void textChange(TextChangeEvent event) {
-				// TODO Auto-generated method stub
 
 				Filterable f = (Filterable) grid.getContainerDataSource();
 
@@ -262,13 +261,11 @@ public class AdminViewGroupJava extends MainContentView {
 
 	}
 
-	private void buttonsSettings() {
-		// TODO Auto-generated method stub
+	private void GeneralSettings() {
 
 		horizontalTitle.addStyleName("horizontal-title");
 		txtTitle.addStyleName("main-title");
 		clearTxt.setIcon(FontAwesome.TIMES);
-
 		txtTitle.setValue("Llista de Grups");
 		bDelete.addStyleName(ValoTheme.BUTTON_DANGER);
 		bAdd.addStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -289,25 +286,15 @@ public class AdminViewGroupJava extends MainContentView {
 
 		grupos = JPAContainerFactory.make(Group.class, em);
 		grid = new Grid("", grupos);
-
 		grid.setSizeFull();
 		grid.setContainerDataSource(grupos);
 		grid.setColumnReorderingAllowed(true);
 		grid.setColumns("id");
-
-		// vGrid = new Grid("", grupos);
-		grid.setSizeFull();
-		// vGrid.setContainerDataSource(grupos);
-		grid.setColumnReorderingAllowed(true);
-		// vGrid.setColumns("id", "max_alumnes");
-
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void select(SelectionEvent event) {
-				// TODO Auto-generated method stub
-				// getItemSelectedToAmonestacioForm();
 				bDelete.setEnabled(true);
 				buttonEdit.setEnabled(true);
 
@@ -347,9 +334,7 @@ public class AdminViewGroupJava extends MainContentView {
 	}
 
 	public void clear() {
-		// TODO Auto-generated method stub
 
-		// bAdd.setEnabled(false);
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);
 		grid.deselectAll();
@@ -357,69 +342,18 @@ public class AdminViewGroupJava extends MainContentView {
 	}
 
 	public void reloadGrid() {
+		
 		grid.setVisible(false);
 		grid = new Grid();
 		vHorizontalMain.addComponent(GridProperties());
 
 	}
 
-	/*
-	 * public Window DeleteSubWindows() {
-	 * 
-	 * Window win = new Window(" Borrar grupo");
-	 * 
-	 * win.setWidth("300"); win.setHeight("150");
-	 * win.setIcon(FontAwesome.CLOSE); win.setDraggable(false);
-	 * win.setClosable(false); win.setResizable(false); win.setModal(true);
-	 * win.center();
-	 * 
-	 * // Label text = new Label("Borrar grupo "+ txtGrup.getValue()); // Label
-	 * question = new Label(" Estas seguro?"); Button yes = new Button("Sí");
-	 * Button no = new Button("No");
-	 * 
-	 * no.addClickListener(new ClickListener() {
-	 * 
-	 * @Override public void buttonClick(ClickEvent event) { // TODO
-	 * Auto-generated method stub win.close(); } });
-	 * 
-	 * yes.addClickListener(new ClickListener() {
-	 * 
-	 * @Override public void buttonClick(ClickEvent event) { // TODO
-	 * Auto-generated method stub
-	 * 
-	 * Object id = grid.getContainerDataSource().getItem(grid.getSelectedRow()).
-	 * getItemProperty("id"); Object max_alumnes =
-	 * grid.getContainerDataSource().getItem(grid.getSelectedRow()).
-	 * getItemProperty("max_alumnes");
-	 * 
-	 * String id2 = id.toString(); int maxalumnes =
-	 * Integer.parseInt(max_alumnes.toString());
-	 * 
-	 * 
-	 * Group grup = new Group(id2, maxalumnes);
-	 * 
-	 * MA.deleteGrup(grup);
-	 * 
-	 * win.close(); notif("Grupo borrado Correctamente");
-	 * 
-	 * } });
-	 * 
-	 * HorizontalLayout buttons = new HorizontalLayout(yes, no);
-	 * buttons.setSpacing(true);
-	 * 
-	 * VerticalLayout content = new VerticalLayout(buttons);
-	 * win.setContent(content);
-	 * 
-	 * return win;
-	 * 
-	 * }
-	 */
 
 	public void notif(String mensaje) {
 
 		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
 																												// HTML
-
 		// Customize it
 		notif.show(Page.getCurrent());
 		notif.setDelayMsec(500);

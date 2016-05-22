@@ -66,6 +66,7 @@ public class AdminViewTutorJava extends MainContentView {
 		buttonEdit.setEnabled(false);
 		bRegister.setVisible(false);
 		clearTxt.setVisible(false);
+		bDelete.setVisible(false);
 		txtSearch.setVisible(false);
 		buttonEdit.setVisible(false);
 	}
@@ -88,15 +89,7 @@ public class AdminViewTutorJava extends MainContentView {
 		grid.setColumnReorderingAllowed(true);
 		grid.setColumns("nom", "cognoms", "grup");
 		grid.setSelectionMode(SelectionMode.SINGLE);
-		grid.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void select(SelectionEvent event) {
-				bDelete.setVisible(false);
-				buttonEdit.setVisible(true);
-			}
-		});
-
+	
 		grid.setSelectionMode(SelectionMode.SINGLE);
 	
 

@@ -42,13 +42,20 @@ import com.itextpdf.text.DocumentException;
 import java_cup.parse_action;
 
 public class WarningJPAManager {
+	final static String DATEFORMAT = "yyyy-MM-dd HH:mm";
 	boolean amonestat2 = false;
 	private User user;
 	boolean expulsat = false;
 	boolean gravetat = false;
 	private EntityManagerUtil entman;
 	private EntityManager em;
-	private SendTelegram sendTel = new SendTelegram();
+	private SendTelegram sendTel;
+	private sendMail sendMail;
+
+	DateFormat dateFormat;
+	private boolean checkTutor = false;
+	private boolean checkPares = false;
+	private boolean checkTelegram = false;
 
 	/**
 	 * 
@@ -57,6 +64,7 @@ public class WarningJPAManager {
 		// TODO Auto-generated constructor stub
 		entman = new EntityManagerUtil();
 		em = entman.getEntityManager();
+		sendTel = new SendTelegram();
 	}
 
 	public void introducirParte(String[] query)
@@ -65,8 +73,7 @@ public class WarningJPAManager {
 		File currDir = new File(".");
 		String path2 = currDir.getCanonicalPath();
 
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		// get current date time with Date()
+		dateFormat = new SimpleDateFormat(DATEFORMAT);
 		Date date;
 
 		try {
@@ -94,21 +101,10 @@ public class WarningJPAManager {
 		// OBTENER PERSONA QUE REALIZA EL PARTE
 		user = getIdCurrentDocent(currentUser());
 
-		// INSERT INTO amonestacio VALUES (3,localtimestamp,'ESO
-		// 1A',1,'LLEU','Aula','Mates',3,false,true,'15/16',
-		// 'Comer chicle','aqui otros motivos');
-
-		// String[] query = {name,surname,grup, gravetat,localitzacio,
-		// assignatura,
-		// tutor, amonestat, expulsat,motiu, altres_motius };
-		// ARREGLO PARA QUE NO SE REPITAN LOS PARTES
 		date = new Date();
 
 		FileReader reader;
 		String linea = null;
-		boolean checkTutor = false;
-		boolean checkPares = false;
-		boolean checkTelegram = false;
 
 		try {
 			path2 = currDir.getCanonicalPath();
@@ -151,7 +147,6 @@ public class WarningJPAManager {
 
 						if (st.nextToken().equals("true")) {
 							checkPares = true;
-							sendMail mail;
 						} else {
 							checkPares = false;
 						}
@@ -172,14 +167,20 @@ public class WarningJPAManager {
 			e.printStackTrace();
 		}
 
-		// if(al.getEmail().length() > 5)
-		// mail = new sendMail(al.getEmail(),"El seu fill "+query[0]+"
-		// "+query[1]+" a sigut amonestat ",query[12]);
+		if (checkPares) {
+			try {
+
+				if (al.getEmail().contains("@") || al.getEmail() != null) {
+					sendMail = new sendMail(al.getEmail(),
+							"El seu fill " + query[0] + " " + query[1] + " a sigut amonestat ", query[12]);
+				}
+			} catch (NullPointerException e) {
+
+			}
+
+		}
 
 		String fecha = query[14] + " " + query[15];
-
-		// TueMay_17_16:51:00_CEST_2016
-
 		addWarning(new Warning(user.getId(), dateFormat.parse(fecha), query[2], al.getId(), query[3], query[4],
 				query[5], tutor, amonestat2, expulsat, "15/16", querycon, query[10]));
 
@@ -191,8 +192,6 @@ public class WarningJPAManager {
 		query.setParameter("currentUser", currentUser);
 		//
 		User user = (User) query.getSingleResult();
-
-		// EntityManagerUtil.close();
 
 		return user;
 	}

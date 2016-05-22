@@ -27,8 +27,11 @@ import com.example.Dates.ConverterDates;
 import com.example.Templates.MainContentView;
 import com.vaadin.data.Property.ReadOnlyException;
 import com.vaadin.data.util.converter.Converter.ConversionException;
+import com.vaadin.server.Page;
+import com.vaadin.shared.Position;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.DateField;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -36,42 +39,38 @@ import com.vaadin.ui.Button.ClickListener;
 public class AdminViewSettingsJava extends MainContentView {
 
 	private AdminViewSettings adminsettings;
-	private ConverterDates datas;
+	private ConverterDates dates;
 
 	public AdminViewSettingsJava() {
-		ButtonSettings();
+		GeneralSettings();
 		listeners();
-		
-			try {
-				readFile();
-			} catch (ReadOnlyException | ConversionException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
-	
+
+		try {
+			readFile();
+		} catch (ReadOnlyException | ConversionException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	private void ButtonSettings() {
-		
-		txtTitle.addStyleName("main-title");
-		txtTitle.setValue("Configuració");
-		adminsettings = new AdminViewSettings();
-		adminsettings.setVisible(true);
+	private void GeneralSettings() {
+
 		vHorizontalMain.addComponent(adminsettings);
 		vHorizontalMain.setComponentAlignment(adminsettings, Alignment.MIDDLE_CENTER);
+		adminsettings = new AdminViewSettings();
+		adminsettings.setVisible(true);
 		adminsettings.setStyleName("whiteBackground");
-		//adminsettings.checkEmailTutors.addStyleName("settings");
 		adminsettings.checkEmailTutors.setVisible(false);
-		adminsettings.checkEmailPares.addStyleName("settings");
-		adminsettings.checkWhatsPares.addStyleName("settings");
-		adminsettings.dataIniciCurs.addStyleName("settings");
-		adminsettings.dataFinalCurs.addStyleName("settings");
-		adminsettings.dataFinaltrimestre1.addStyleName("settings");
-		adminsettings.dataFinaltrimestre2.addStyleName("settings");
-		adminsettings.dataInicitrimestre2.addStyleName("settings");
-		adminsettings.dataInicitrimestre3.addStyleName("settings");
-		
+		adminsettings.checkEmailParents.addStyleName("settings");
+		adminsettings.checkWhatsParents.addStyleName("settings");
+		adminsettings.startCoursDate.addStyleName("settings");
+		adminsettings.endCoursDate.addStyleName("settings");
+		adminsettings.trim1EndDate.addStyleName("settings");
+		adminsettings.trim2EndDate.addStyleName("settings");
+		adminsettings.trim2StartDate.addStyleName("settings");
+		adminsettings.trim3Startdate.addStyleName("settings");
+		txtTitle.addStyleName("main-title");
+		txtTitle.setValue("Configuració");
 		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
 		bAdd.setVisible(true);
@@ -90,10 +89,23 @@ public class AdminViewSettingsJava extends MainContentView {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				writeFile();
+				notif("Configuració guardada correctament");
 
 			}
 
 		});
+
+	}
+
+	public void notif(String msg) {
+
+		Notification notif = new Notification(msg, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
+																												// HTML
+
+		// Customize it
+		notif.show(Page.getCurrent());
+		notif.setDelayMsec(500);
+		notif.setPosition(Position.TOP_CENTER);
 
 	}
 
@@ -103,37 +115,35 @@ public class AdminViewSettingsJava extends MainContentView {
 		String datafinaltrimestre3buena = null;
 		String datafintrimestre1buena = null;
 		String datafintrimestre2buena = null;
-		String fechaIniciTrimestre3buena=null;
-		String fechaIniciTrimestre2buena=null;
-		
-		datas = new ConverterDates();
+		String fechaIniciTrimestre3buena = null;
+		String fechaIniciTrimestre2buena = null;
+
+		dates = new ConverterDates();
 		File currDir = new File(".");
 		String path2;
 		try {
 
-			Date datainicitrimestre1 = adminsettings.dataIniciCurs.getValue();
-			datainicitrimestre1buena = datas.converterDate(datainicitrimestre1);
+			Date datainicitrimestre1 = adminsettings.startCoursDate.getValue();
+			datainicitrimestre1buena = dates.converterDate(datainicitrimestre1);
 
-			Date datafinaltrimestre3 = adminsettings.dataFinalCurs.getValue();
-			datafinaltrimestre3buena = datas.converterDate(datafinaltrimestre3);
-			
-			Date datafintrimestre1 = adminsettings.dataFinaltrimestre1.getValue();
-			datafintrimestre1buena = datas.converterDate(datafintrimestre1);
+			Date datafinaltrimestre3 = adminsettings.endCoursDate.getValue();
+			datafinaltrimestre3buena = dates.converterDate(datafinaltrimestre3);
 
-			Date datafintrimestre2 = adminsettings.dataFinaltrimestre2.getValue();
-			datafintrimestre2buena = datas.converterDate(datafintrimestre2);
-			
-			Date fechaIniciTrimestre3 = adminsettings.dataInicitrimestre3.getValue();
-			fechaIniciTrimestre3buena = datas.converterDate(fechaIniciTrimestre3);
-			
-			
-			Date fechaIniciTrimestre2 = adminsettings.dataInicitrimestre2.getValue();
-			fechaIniciTrimestre2buena = datas.converterDate(fechaIniciTrimestre2);
-			
-			
+			Date datafintrimestre1 = adminsettings.trim1EndDate.getValue();
+			datafintrimestre1buena = dates.converterDate(datafintrimestre1);
+
+			Date datafintrimestre2 = adminsettings.trim2EndDate.getValue();
+			datafintrimestre2buena = dates.converterDate(datafintrimestre2);
+
+			Date fechaIniciTrimestre3 = adminsettings.trim3Startdate.getValue();
+			fechaIniciTrimestre3buena = dates.converterDate(fechaIniciTrimestre3);
+
+			Date fechaIniciTrimestre2 = adminsettings.trim2StartDate.getValue();
+			fechaIniciTrimestre2buena = dates.converterDate(fechaIniciTrimestre2);
+
 			boolean checkTutor = adminsettings.checkEmailTutors.getValue();
-			boolean checkPares = adminsettings.checkEmailPares.getValue();
-			boolean checkTelegram = adminsettings.checkWhatsPares.getValue();
+			boolean checkPares = adminsettings.checkEmailParents.getValue();
+			boolean checkTelegram = adminsettings.checkWhatsParents.getValue();
 
 			path2 = currDir.getCanonicalPath();
 			File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
@@ -142,9 +152,9 @@ public class AdminViewSettingsJava extends MainContentView {
 
 			bf.write(datainicitrimestre1buena + ",");
 			bf.write(datafintrimestre1buena + ",");
-			bf.write(fechaIniciTrimestre2buena+",");
+			bf.write(fechaIniciTrimestre2buena + ",");
 			bf.write(datafintrimestre2buena + ",");
-			bf.write(fechaIniciTrimestre3buena+",");
+			bf.write(fechaIniciTrimestre3buena + ",");
 			bf.write(datafinaltrimestre3buena + ",");
 
 			bf.write(Boolean.toString(checkTutor) + ",");
@@ -159,48 +169,40 @@ public class AdminViewSettingsJava extends MainContentView {
 		}
 	}
 
-	
-
 	public void readFile() throws ReadOnlyException, ConversionException, IOException {
 		FileReader reader;
 		String path2 = null;
 		File currDir = new File(".");
 		String linea = null;
-		Date fechaIniciTrimestre1=null;
-		Date fechaFinalTrimestre3=null;
-		Date fechafinaltrimestre1=null;
-		Date fechafinaltrimestre2=null;
-		Date fechaIniciTrimestre3=null;
-		Date fechaIniciTrimestre2=null;
-		boolean checkTutor=false;
-		boolean checkPares=false;
-		boolean checkTelegram=false;
+		Date fechaIniciTrimestre1 = null;
+		Date fechaFinalTrimestre3 = null;
+		Date fechafinaltrimestre1 = null;
+		Date fechafinaltrimestre2 = null;
+		Date fechaIniciTrimestre3 = null;
+		Date fechaIniciTrimestre2 = null;
+		boolean checkTutor = false;
+		boolean checkPares = false;
+		boolean checkTelegram = false;
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		
-	
-			try {
-				path2 = currDir.getCanonicalPath();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 
-			File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
-			
-			if (!f.exists()){
-				f.createNewFile();
-			}
-			
-			BufferedReader br = new BufferedReader(new FileReader(f));     
-			if (br.readLine() == null) {
-				
-			
-			
-			}
-			else{
-				
-			
-			
+		try {
+			path2 = currDir.getCanonicalPath();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
+
+		if (!f.exists()) {
+			f.createNewFile();
+		}
+
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		if (br.readLine() == null) {
+
+		} else {
+
 			reader = new FileReader(f);
 			BufferedReader flux = new BufferedReader(reader);
 
@@ -209,48 +211,52 @@ public class AdminViewSettingsJava extends MainContentView {
 				while (st.hasMoreTokens()) {
 
 					try {
-						
-						fechaIniciTrimestre1 =formatter.parse(st.nextToken());
-						fechafinaltrimestre1 =formatter.parse(st.nextToken());
-						fechaIniciTrimestre2=formatter.parse(st.nextToken());
-						fechafinaltrimestre2 =formatter.parse(st.nextToken());
-						fechaIniciTrimestre3=formatter.parse(st.nextToken());
-						fechaFinalTrimestre3 =formatter.parse(st.nextToken());
 
+						fechaIniciTrimestre1 = formatter.parse(st.nextToken());
+						fechafinaltrimestre1 = formatter.parse(st.nextToken());
+						fechaIniciTrimestre2 = formatter.parse(st.nextToken());
+						fechafinaltrimestre2 = formatter.parse(st.nextToken());
+						fechaIniciTrimestre3 = formatter.parse(st.nextToken());
+						fechaFinalTrimestre3 = formatter.parse(st.nextToken());
 
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
-					
-					if(st.nextToken().equals("true")){ checkTutor=true;}
-					else{checkTutor=false;}
-					
-					if(st.nextToken().equals("true")){ checkPares=true;}
-					else{checkPares=false;}
-					
-					if(st.nextToken().equals("true")){ checkTelegram=true;}
-					else{checkTelegram=false;}
-					
-				
+
+					if (st.nextToken().equals("true")) {
+						checkTutor = true;
+					} else {
+						checkTutor = false;
+					}
+
+					if (st.nextToken().equals("true")) {
+						checkPares = true;
+					} else {
+						checkPares = false;
+					}
+
+					if (st.nextToken().equals("true")) {
+						checkTelegram = true;
+					} else {
+						checkTelegram = false;
+					}
+
 				}
 
 			}
-			
-			adminsettings.dataIniciCurs.setValue(fechaIniciTrimestre1);
-			adminsettings.dataFinalCurs.setValue(fechaFinalTrimestre3);
-			adminsettings.dataFinaltrimestre1.setValue(fechafinaltrimestre1);
-			adminsettings.dataFinaltrimestre2.setValue(fechafinaltrimestre2);
+
+			adminsettings.startCoursDate.setValue(fechaIniciTrimestre1);
+			adminsettings.endCoursDate.setValue(fechaFinalTrimestre3);
+			adminsettings.trim1EndDate.setValue(fechafinaltrimestre1);
+			adminsettings.trim2EndDate.setValue(fechafinaltrimestre2);
 			adminsettings.checkEmailTutors.setValue(checkTutor);
-			adminsettings.checkEmailPares.setValue(checkPares);
-			adminsettings.checkWhatsPares.setValue(checkTelegram);
-			adminsettings.dataInicitrimestre2.setValue(fechaIniciTrimestre2);
-			adminsettings.dataInicitrimestre3.setValue(fechaIniciTrimestre3);
+			adminsettings.checkEmailParents.setValue(checkPares);
+			adminsettings.checkWhatsParents.setValue(checkTelegram);
+			adminsettings.trim2StartDate.setValue(fechaIniciTrimestre2);
+			adminsettings.trim3Startdate.setValue(fechaIniciTrimestre3);
 
-
-		
 		}
 	}
-		
+
 }
