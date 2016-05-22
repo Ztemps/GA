@@ -106,6 +106,7 @@ public class AdminViewUser extends MainContentView {
 
 
 		userformEdit.txtGrup.setValue(user.toString());
+		userformEdit.txtGrup.setReadOnly(true);
 
 		userformEdit.aceptarButton.addClickListener(new ClickListener() {
 
@@ -152,7 +153,6 @@ public class AdminViewUser extends MainContentView {
 	private void clearEditForm() {
 		// TODO Auto-generated method stub
 
-		userformEdit.txtGrup.clear();
 		userformEdit.txtPassword.clear();
 
 	}
