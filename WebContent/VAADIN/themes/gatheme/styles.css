@@ -8071,6 +8071,14 @@ div.v-layout.v-horizontal.v-widget {
 	transition: color 100ms;
 }
 
+.loginTitle{
+	
+font-size:18px;
+color:#197de1;
+font-weight:bold;
+	
+}
+
 :root .gatheme .v-select-optiongroup-large .v-checkbox > input:active ~ label:after {
 	background-color: rgba(125, 125, 125, 0.2);
 }

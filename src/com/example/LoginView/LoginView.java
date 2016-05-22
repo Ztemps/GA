@@ -86,8 +86,8 @@ public class LoginView extends LoginViewDesign implements View {
 	public LoginView() throws ClassNotFoundException, IOException {
 
 		// Creando una etiqueta con un stylo predefinido
-		txtTitle = new Label("<center><p style=\"color:#1156a8\">Plataforma Gestió d'Amonestacions</p><center>",
-				Label.CONTENT_RAW);
+		txtTitle.setValue("Plataforma Gestió d'Amonestacions");
+		txtTitle.addStyleName("loginTitle");
 
 		txtUsername.setCaption("Usuari");
 		txtPassword.setCaption("Contrasenya");
