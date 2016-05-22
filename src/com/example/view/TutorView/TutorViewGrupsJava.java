@@ -124,7 +124,7 @@ public class TutorViewGrupsJava extends MainContentView {
 
 		UI.getCurrent().addWindow(windowDetails);
 
-		
+		tutorviewdetailsform.imageStudent.setVisible(false);
 		tutorviewdetailsform.dateStudent.setReadOnly(false);
 		tutorviewdetailsform.lastnameStudent.setReadOnly(false);
 		tutorviewdetailsform.nameStudent.setReadOnly(false);
@@ -297,13 +297,6 @@ public class TutorViewGrupsJava extends MainContentView {
 		mygrid.setVisible(visible);
 
 	}
-	//
-	// public void clear() {
-	// // TODO Auto-generated method stub
-	//
-	// buttonsSettings();
-	// mygrid.deselectAll();
-	//
-	// }
+
 
 }

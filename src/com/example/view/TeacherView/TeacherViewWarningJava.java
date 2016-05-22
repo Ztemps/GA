@@ -114,6 +114,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		WindowProperties();
 		buttonsSettings();
 		WindowPdfProperties();
+		PopulateComboBoxSubjects();
 		PopulateComboBoxProf();
 
 		amonestacioForm.comboProf.addValueChangeListener(new ValueChangeListener() {
@@ -270,6 +271,44 @@ public class TeacherViewWarningJava extends MainContentView {
 		clearTxt.setIcon(FontAwesome.TIMES);
 
 		vHorizontalMain.addComponent(GridProperties());
+
+	}
+	
+	private void PopulateComboBoxSubjects() {
+
+		List subjects = new ArrayList<>();
+
+		subjects.add("Biologia i geologia");
+		subjects.add("Castellà");
+		subjects.add("Català");
+		subjects.add("Ciències de la naturalesa");
+		subjects.add("Economia");
+		subjects.add("Educaciò Fisica");
+		subjects.add("Educaciò per la ciutadania");
+		subjects.add("Educació visual i plàstica");
+		subjects.add("Llatí");
+		subjects.add("Filosofia");
+		subjects.add("Física i química");
+		subjects.add("Geologia");
+		subjects.add("História");
+		subjects.add("Informatica");
+		subjects.add("Matemàtiques");
+		subjects.add("Música");
+		subjects.add("Religió");
+		subjects.add("Tecnologia");
+
+		amonestacioForm.materia.setFilteringMode(FilteringMode.CONTAINS);
+		amonestacioForm.materia.setImmediate(true);
+
+		amonestacioForm.materia.setNullSelectionAllowed(true);
+		amonestacioForm.materia.setDescription("Llista de materies que s'imparteixen al col·legi.");
+
+		amonestacioForm.materia.removeAllItems();
+
+		for (int i = 0; i < subjects.size(); i++) {
+
+			amonestacioForm.materia.addItem(subjects.get(i));
+		}
 
 	}
 
