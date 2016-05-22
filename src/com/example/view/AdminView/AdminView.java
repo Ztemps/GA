@@ -253,7 +253,7 @@ public class AdminView extends MainView implements View {
 		groups.setVisible(true);
 		logout.setVisible(true);
 		cargarCSV.setVisible(true);
-		ficurs.setVisible(true);
+		ficurs.setVisible(false);
 		configuracio.setVisible(true);
 		informes.setVisible(true);
 		usuaris.setVisible(true);

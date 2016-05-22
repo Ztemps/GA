@@ -65,7 +65,6 @@ public class UserJPAManager {
 		usuari.setPassword(user.getPassword());
 		em.merge(usuari);
 		em.getTransaction().commit();
-
 	}
 
 	public void addWarning(Warning amonestacio) {

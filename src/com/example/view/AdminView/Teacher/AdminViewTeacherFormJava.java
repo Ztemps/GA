@@ -57,7 +57,7 @@ public class AdminViewTeacherFormJava extends AdminViewTeacherForm {
 	private UserJPAManager MA2;
 
 	private String username;
-	private String rol = "Profesor";
+	private String rol = "Professor";
 	private String password = "Nomeolvides1";
 
 	@SuppressWarnings("deprecation")

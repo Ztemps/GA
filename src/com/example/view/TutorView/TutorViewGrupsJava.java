@@ -208,6 +208,10 @@ public class TutorViewGrupsJava extends MainContentView {
 		buttonEdit.addStyleName(ValoTheme.BUTTON_PRIMARY);
 
 		buttonEdit.setCaption("Detalls");
+		
+		txtSearch.setVisible(false);
+		clearTxt.setVisible(false);
+		
 
 		bDelete.setEnabled(false);
 		bDelete.setVisible(false);

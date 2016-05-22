@@ -60,6 +60,8 @@ import com.vaadin.ui.AbstractSelect.NewItemHandler;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.HeaderCell;
+import com.vaadin.ui.Grid.HeaderRow;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
@@ -97,11 +99,18 @@ public class TeacherViewWarningJava extends MainContentView {
 	private EntityManager em = entman.getEntityManager();
 	private JDBCConnectionPool jdbccp;
 	private String nameTeacher;
+	HeaderRow filterRow;
+	TextField filterField;
+	HeaderCell cell;
+	private static final String AL_NOM = "nom";
+	private static final String AL_COGNOMS = "cognoms";
+	private static final String AL_CURS = "curs";
+	private static final String AL_GRUP = "grup";
 
 	public TeacherViewWarningJava() throws MalformedURLException, DocumentException, IOException {
 
 		GridProperties();
-		filterTextProperties();
+		//filterTextProperties();
 		WindowProperties();
 		buttonsSettings();
 		WindowPdfProperties();
@@ -148,7 +157,7 @@ public class TeacherViewWarningJava extends MainContentView {
 							e.printStackTrace();
 						}
 
-					} 
+					}
 
 				}
 
@@ -274,7 +283,8 @@ public class TeacherViewWarningJava extends MainContentView {
 
 		// Disallow null selections
 		amonestacioForm.comboProf.setNullSelectionAllowed(true);
-		amonestacioForm.comboProf.setDescription("El camp vuit, indica l'usuari actual Per passar l'amonestació per un altre professor, indiqui el nom del professor.");
+		amonestacioForm.comboProf.setDescription(
+				"El camp vuit, indica l'usuari actual Per passar l'amonestació per un altre professor, indiqui el nom del professor.");
 
 		// Check if the caption for new item already exists in the list of item
 		// captions before approving it as a new item.
@@ -287,35 +297,27 @@ public class TeacherViewWarningJava extends MainContentView {
 
 		}
 
-		/*amonestacioForm.comboProf.setNewItemHandler(new NewItemHandler() {
-			@Override
-			public void addNewItem(final String newItemCaption) {
-				boolean newItem = true;
-				for (final Object itemId : amonestacioForm.comboProf.getItemIds()) {
-					if (newItemCaption.equalsIgnoreCase(amonestacioForm.comboProf.getItemCaption(itemId))) {
-						newItem = false;
-						break;
-					}
-				}
-				if (newItem) {
-					// Adds new option
-					if (amonestacioForm.comboProf.addItem(newItemCaption) != null) {
-						final Item item = amonestacioForm.comboProf.getItem(newItemCaption);
+		/*
+		 * amonestacioForm.comboProf.setNewItemHandler(new NewItemHandler() {
+		 * 
+		 * @Override public void addNewItem(final String newItemCaption) {
+		 * boolean newItem = true; for (final Object itemId :
+		 * amonestacioForm.comboProf.getItemIds()) { if
+		 * (newItemCaption.equalsIgnoreCase(amonestacioForm.comboProf.
+		 * getItemCaption(itemId))) { newItem = false; break; } } if (newItem) {
+		 * // Adds new option if
+		 * (amonestacioForm.comboProf.addItem(newItemCaption) != null) { final
+		 * Item item = amonestacioForm.comboProf.getItem(newItemCaption);
+		 * 
+		 * amonestacioForm.comboProf.setValue(newItemCaption); } } } });
+		 */
 
-						amonestacioForm.comboProf.setValue(newItemCaption);
-					}
-				}
-			}
-		});*/
-
-//		 amonestacioForm.comboProf.addValueChangeListener(e ->
-//		Notification.show("Value changed:",
-//		String.valueOf(e.getProperty().getValue()),
-//		 Type.TRAY_NOTIFICATION));
+		// amonestacioForm.comboProf.addValueChangeListener(e ->
+		// Notification.show("Value changed:",
+		// String.valueOf(e.getProperty().getValue()),
+		// Type.TRAY_NOTIFICATION));
 
 	}
-
-
 
 	private String mailStudent() {
 
@@ -336,7 +338,10 @@ public class TeacherViewWarningJava extends MainContentView {
 		bAdd.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		bRegister.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonEdit.addStyleName(ValoTheme.BUTTON_PRIMARY);
-
+		
+		txtSearch.setVisible(false);
+		clearTxt.setVisible(false);
+		
 		bDelete.setVisible(false);
 		buttonEdit.setVisible(false);
 		bRegister.setVisible(false);
@@ -355,14 +360,11 @@ public class TeacherViewWarningJava extends MainContentView {
 		notif.setPosition(Position.TOP_CENTER);
 	}
 
-	private TextField filterTextProperties() {
+	/*private TextField filterTextProperties() {
 		// TODO Auto-generated method stub
-		txtSearch.setInputPrompt("Filtra alumno por nombre");
+		txtSearch.setInputPrompt("Filtra per cognom...");
 		txtSearch.addTextChangeListener(new TextChangeListener() {
 
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			SimpleStringFilter filter = null;
 
@@ -382,6 +384,67 @@ public class TeacherViewWarningJava extends MainContentView {
 			}
 		});
 		return txtSearch;
+	}*/
+
+	private void FilterGridName() {
+
+		cell = filterRow.getCell(AL_NOM);
+		// Have an input field to use for filter
+		filterField = new TextField();
+		filterField.setSizeFull();
+		filterField.setInputPrompt("Filtra per nom");
+		// Update filter When the filter input is changed
+		filterField.addTextChangeListener(change -> {
+			// Can't modify filters so need to replace
+			alumnes.removeContainerFilters(AL_NOM);
+
+			// (Re)create the filter if necessary
+			if (!change.getText().isEmpty())
+				alumnes.addContainerFilter(new SimpleStringFilter(AL_NOM, change.getText(), true, false));
+
+		});
+
+		cell.setComponent(filterField);
+	}
+
+	private void FilterGridSurName() {
+
+		cell = filterRow.getCell(AL_COGNOMS);
+		// Have an input field to use for filter
+		filterField = new TextField();
+		filterField.setSizeFull();
+		filterField.setInputPrompt("Filtra per cognoms");
+		// Update filter When the filter input is changed
+		filterField.addTextChangeListener(change -> {
+			// Can't modify filters so need to replace
+			alumnes.removeContainerFilters(AL_COGNOMS);
+
+			// (Re)create the filter if necessary
+			if (!change.getText().isEmpty())
+				alumnes.addContainerFilter(new SimpleStringFilter(AL_COGNOMS, change.getText(), true, false));
+
+		});
+		cell.setComponent(filterField);
+
+	}
+
+	private void FilterGridGrup() {
+
+		cell = filterRow.getCell(AL_GRUP);
+		// Have an input field to use for filter
+		filterField = new TextField();
+		filterField.setSizeFull();
+		filterField.setInputPrompt("Filtra per grup");
+		// Update filter When the filter input is changed
+		filterField.addTextChangeListener(change -> {
+			// Can't modify filters so need to replace
+			alumnes.removeContainerFilters(AL_GRUP);
+
+			// (Re)create the filter if necessary
+			if (!change.getText().isEmpty())
+				alumnes.addContainerFilter(new SimpleStringFilter(AL_GRUP, change.getText(), true, false));
+		});
+		cell.setComponent(filterField);
 	}
 
 	private Grid GridProperties() {
@@ -392,7 +455,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		grid.setSizeFull();
 		grid.setContainerDataSource(alumnes);
 		grid.setColumnReorderingAllowed(true);
-		grid.setColumns("nom", "cognoms", "curs", "grup");
+		grid.setColumns("nom", "cognoms", "grup");
 
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addItemClickListener(new ItemClickListener() {
@@ -430,6 +493,10 @@ public class TeacherViewWarningJava extends MainContentView {
 
 			}
 		});
+		filterRow = grid.appendHeaderRow();
+		FilterGridName();
+		FilterGridSurName();
+		FilterGridGrup();
 
 		return grid;
 
@@ -603,7 +670,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		amonestacioForm.circunstancia.clear();
 		amonestacioForm.accio.clear();
 		amonestacioForm.materia.clear();
-		//amonestacioForm.baceptar.click();
+		// amonestacioForm.baceptar.click();
 	}
 
 	public String[] returnQuery() throws MalformedURLException, DocumentException, IOException {
@@ -660,20 +727,19 @@ public class TeacherViewWarningJava extends MainContentView {
 		System.out.println("amonestat2:" + amonestat2 + " gravetat: " + gravetat);
 
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
-				altres_motius, motiu2,nameTeacher,""};
+				altres_motius, motiu2, nameTeacher, "" };
 
 		System.out.println("TIEMPO: " + timewarning);
 		// DATOS PARA INTRODUCIR EN EL PARTE
 
 		return query;
 	}
-	
+
 	public String[] returnQuery2() throws MalformedURLException, DocumentException, IOException {
 		// TODO Auto-generated method stub
 		String expulsat = "";
-		
-		 SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
 
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
 
 		// Obtener la id del alumno
 		String name = amonestacioForm.nom.getValue();
@@ -691,14 +757,16 @@ public class TeacherViewWarningJava extends MainContentView {
 		String altres_motius = null;
 		String amonestat2 = null;
 		String data = null;
-		String time  = null;
+		String time = null;
 
 		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 
-//		if(!amonestacioForm.datefield.getValue().toString().equals("")){
-//			System.out.println("valor date: "+ amonestacioForm.datefield.getValue().toString());
-//			timewarning = amonestacioForm.datefield.getValue().toString()+" "+amonestacioForm.time.getValue().toString();
-//		}
+		// if(!amonestacioForm.datefield.getValue().toString().equals("")){
+		// System.out.println("valor date: "+
+		// amonestacioForm.datefield.getValue().toString());
+		// timewarning = amonestacioForm.datefield.getValue().toString()+"
+		// "+amonestacioForm.time.getValue().toString();
+		// }
 		tutor = MA.getNomTutor(id);
 		try {
 			grup = amonestacioForm.grup.getValue();
@@ -708,7 +776,7 @@ public class TeacherViewWarningJava extends MainContentView {
 			amonestat = amonestacioForm.accio.getValue().toString();
 			localitzacio = amonestacioForm.circunstancia.getValue().toString();
 			System.out.println("Nombreprofe: " + nameTeacher);
-			
+
 			if (amonestat.equals("Amonestat")) {
 				amonestat2 = "true";
 			} else
@@ -728,9 +796,8 @@ public class TeacherViewWarningJava extends MainContentView {
 			assignatura = amonestacioForm.materia.getValue().toString();
 		}
 
-
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
-				altres_motius, motiu2,timewarning[0], nameTeacher,timewarning[1],timewarning[2]};
+				altres_motius, motiu2, timewarning[0], nameTeacher, timewarning[1], timewarning[2] };
 
 		// DATOS PARA INTRODUCIR EN EL PARTE
 
@@ -757,7 +824,5 @@ public class TeacherViewWarningJava extends MainContentView {
 		grid.deselectAll();
 
 	}
-
-	
 
 }
