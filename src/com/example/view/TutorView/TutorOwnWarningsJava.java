@@ -246,7 +246,7 @@ public class TutorOwnWarningsJava extends MainContentView {
 
 		bAdd.setVisible(false);
 		buttonEdit.setVisible(true);
-		buttonEdit.setCaption("Els meus Grups/Amonestats");
+		buttonEdit.setCaption("Amonestacions dels meus Grups");
 		bDelete.setVisible(false);
 		bRegister.setVisible(true);
 		bRegister.setCaption("Detalls");
