@@ -35,36 +35,31 @@ import com.vaadin.ui.themes.ValoTheme;
 public class AdminViewReportsJava extends MainContentView {
 	private File file;
 	private AdminReportCSVUpload csv;
-	Button generateReportTrimestre1;
-	Button generateReportTrimestre2;
-	Button generateReportTrimestre3;
-	Button generateReportTotal;
+	private Button generateReportTrimestre1;
+	private Button generateReportTrimestre2;
+	private Button generateReportTrimestre3;
+	private Button generateReportTotal;
 
-	StreamResource sr = getTrimestral1Zip();
-	StreamResource sr2 = getTrimestral2Zip();
-	StreamResource sr3 = getTrimestral3Zip();
-	StreamResource sr4 = getTrimestral4Zip();
+	private StreamResource sr = getTrimestral1Zip();
+	private StreamResource sr2 = getTrimestral2Zip();
+	private StreamResource sr3 = getTrimestral3Zip();
+	private StreamResource sr4 = getTrimestral4Zip();
 
 
-	FileDownloader fileDownloader = new FileDownloader(sr);
-	FileDownloader fileDownloader2 = new FileDownloader(sr2);
-	FileDownloader fileDownloader3 = new FileDownloader(sr3);
-	FileDownloader fileDownloader4 = new FileDownloader(sr4);
+	private FileDownloader fileDownloader = new FileDownloader(sr);
+	private FileDownloader fileDownloader2 = new FileDownloader(sr2);
+	private FileDownloader fileDownloader3 = new FileDownloader(sr3);
+	private FileDownloader fileDownloader4 = new FileDownloader(sr4);
 
 	TrimestralReports trimestralReports;
 	FinalReports finalreports;
-	/*
-	 * private FileReciverTrimestre2 receiver2 = new FileReciverTrimestre2();
-	 * private FileReciverTrimestre3 receiver3 = new FileReciverTrimestre3();
-	 * private FileReciverTotal receiver4 = new FileReciverTotal();
-	 */
 
 	public AdminViewReportsJava() {
 		csv = new AdminReportCSVUpload();
 		trimestralReports = new TrimestralReports();
 		finalreports = new FinalReports();
 		
-		buttonsSettings();
+		generalSettings();
 
 		// INFORMES TRIMESTRALS
 
@@ -102,6 +97,11 @@ public class AdminViewReportsJava extends MainContentView {
 		fileDownloader3.extend(generateReportTrimestre3);
 		fileDownloader4.extend(generateReportTotal);
 	}
+
+	/**
+	 * 
+	 */
+
 
 	private StreamResource getTrimestral4Zip() {
 		// TODO Auto-generated method stub
@@ -368,7 +368,7 @@ public class AdminViewReportsJava extends MainContentView {
 		return suggestedSaveFile;
 	}
 
-	private void buttonsSettings() {
+	private void generalSettings() {
 		// TODO Auto-generated method stub
 
 		// Button trimestral 1 reports
@@ -394,6 +394,13 @@ public class AdminViewReportsJava extends MainContentView {
 
 		vHorizontalMain.addComponent(csv);
 		vHorizontalMain.setComponentAlignment(csv, Alignment.TOP_LEFT);
+
+
+		horizontalTitle.addStyleName("horizontal-title");
+		txtTitle.addStyleName("main-title");
+		txtTitle.setValue("Informes");
+		
+		
 		bAdd.setVisible(false);
 		buttonEdit.setVisible(false);
 		bDelete.setVisible(false);
@@ -401,11 +408,6 @@ public class AdminViewReportsJava extends MainContentView {
 		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
 
-		horizontalTitle.addStyleName("horizontal-title");
-		txtTitle.addStyleName("main-title");
-		txtTitle.setValue("Informes");
-
-		// AdminViewCarregarCSVJava upload = new AdminViewCarregarCSVJava();
 
 	}
 

@@ -32,16 +32,15 @@ import com.vaadin.ui.declarative.Design;
 @SuppressWarnings("serial")
 public class AdminViewSettings extends CssLayout {
 	public VerticalLayout vertical;
-	public DateField startCoursDate;
-	public DateField endCoursDate;
-	public DateField trim1EndDate;
-	public DateField trim2EndDate;
-	public DateField trim2StartDate;
-	public DateField trim3Startdate;
-	
-	public CheckBox checkEmailTutors;
-	public CheckBox checkEmailParents;
-	public CheckBox checkWhatsParents;
+	public DateField dataIniciCurs;
+	public DateField dataFinalCurs;
+	public DateField dataFinaltrimestre1;
+	public DateField dataFinaltrimestre2;
+	public DateField dataInicitrimestre2;
+	public DateField dataInicitrimestre3;
+	public CheckBox checkEmailPares;
+	public CheckBox checkWhatsPares;
+ 	public CheckBox checkEmailTutors;
 
 	public AdminViewSettings() {
 		Design.read(this);

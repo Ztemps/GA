@@ -19,7 +19,6 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
 import com.example.LoginView.LoginView;
-import com.example.Templates.TemplateView;
 import com.example.view.AdminView.AdminView;
 import com.example.view.TeacherView.TeacherView;
 import com.example.view.TutorView.TutorView;
@@ -63,8 +62,6 @@ public class GaUI extends UI {
 		setTheme("ga");
 
 		getNavigator().addView(LoginView.NAME, LoginView.class);//
-
-		getNavigator().addView(TemplateView.NAME, TemplateView.class);//
 		getNavigator().addView(TeacherView.NAME, TeacherView.class);//
 		getNavigator().addView(AdminView.NAME, AdminView.class);//
 		getNavigator().addView(TutorView.NAME, TutorView.class);

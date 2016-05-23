@@ -60,25 +60,29 @@ public class AdminViewStudentJava extends MainContentView {
 	private StudentsJPAManager MA;
 	private Window windowAdd = new Window();
 	private Window windowEdit = new Window();
-	private JPAContainer<Student> alumnes;
+	private JPAContainer<Student> students;
 	private JPAContainer<Group> container;
-	private AdminAddStudentForm alumneformAdd;
-	private AdminAddStudentForm alumneformEdit;
-	private EntityManagerUtil entman = new EntityManagerUtil();
-	private EntityManager em = entman.getEntityManager();
+	private AdminAddStudentForm studentsFormAdd;
+	private AdminAddStudentForm studentsFormEdit;
+	private EntityManagerUtil entman;
+	private EntityManager em;
 	private CurrentCourse course;
 
 	public AdminViewStudentJava() {
 
-		alumneformEdit = new AdminAddStudentForm();
-		alumneformAdd = new AdminAddStudentForm();
+		studentsFormEdit = new AdminAddStudentForm();
+		studentsFormAdd = new AdminAddStudentForm();
+		entman = new EntityManagerUtil();
+		em = entman.getEntityManager();
 		course = new CurrentCourse();
-		buttonsSettings();
+
+		generalSettings();
 		filterTextProperties();
 		WindowPropertiesAddStudent();
 		WindowPropertiesEditStudent();
 		PopulateNativeSelect();
 		Listeners();
+
 		vHorizontalMain.addComponent(GridProperties());
 
 	}
@@ -119,7 +123,7 @@ public class AdminViewStudentJava extends MainContentView {
 	private void addStudent() {
 		PopulateNativeSelect();
 
-		alumneformAdd.aceptarButton.addClickListener(new ClickListener() {
+		studentsFormAdd.aceptarButton.addClickListener(new ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -152,7 +156,7 @@ public class AdminViewStudentJava extends MainContentView {
 
 		});
 
-		alumneformAdd.cancelarButton.addClickListener(new ClickListener() {
+		studentsFormAdd.cancelarButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				windowAdd.close();
@@ -172,7 +176,7 @@ public class AdminViewStudentJava extends MainContentView {
 		PopulateNativeSelect();
 
 		datas = new ConverterDates();
-		
+
 		UI.getCurrent().addWindow(windowEdit);
 		windowEdit.setCaption("Editar alumne");
 
@@ -195,23 +199,23 @@ public class AdminViewStudentJava extends MainContentView {
 			e1.printStackTrace();
 		}
 
-		alumneformEdit.fecha.setValue(date);
+		studentsFormEdit.fecha.setValue(date);
 
-		alumneformEdit.nom.setValue(name.toString());
-		alumneformEdit.cognom.setValue(surname.toString());
+		studentsFormEdit.nom.setValue(name.toString());
+		studentsFormEdit.cognom.setValue(surname.toString());
 
 		if (email.toString() == null) {
-			alumneformEdit.emails.setValue(" ");
+			studentsFormEdit.emails.setValue(" ");
 		} else {
-			alumneformEdit.emails.setValue(email.toString());
+			studentsFormEdit.emails.setValue(email.toString());
 
 		}
 
-		alumneformEdit.teléfons.setValue(phone.toString());
-		alumneformEdit.curs.setValue(curs.toString());
-		alumneformEdit.grup.setValue(grup.toString());
+		studentsFormEdit.teléfons.setValue(phone.toString());
+		studentsFormEdit.curs.setValue(curs.toString());
+		studentsFormEdit.grup.setValue(grup.toString());
 
-		alumneformEdit.aceptarButton.addClickListener(new ClickListener() {
+		studentsFormEdit.aceptarButton.addClickListener(new ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -241,7 +245,7 @@ public class AdminViewStudentJava extends MainContentView {
 
 		});
 
-		alumneformEdit.cancelarButton.addClickListener(new ClickListener() {
+		studentsFormEdit.cancelarButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				windowEdit.close();
@@ -279,13 +283,13 @@ public class AdminViewStudentJava extends MainContentView {
 
 	private Student getStudentAdd() {
 
-		String nom = alumneformAdd.nom.getValue().toString();
-		String cognom = alumneformAdd.cognom.getValue().toString();
+		String nom = studentsFormAdd.nom.getValue().toString();
+		String cognom = studentsFormAdd.cognom.getValue().toString();
 		String curs = course.currentCourse();
-		Date fecha = alumneformAdd.fecha.getValue();
-		String email = alumneformAdd.emails.getValue().toString();
-		String telf = alumneformAdd.teléfons.getValue().toString();
-		String grup = alumneformAdd.grup.getValue().toString();
+		Date fecha = studentsFormAdd.fecha.getValue();
+		String email = studentsFormAdd.emails.getValue().toString();
+		String telf = studentsFormAdd.teléfons.getValue().toString();
+		String grup = studentsFormAdd.grup.getValue().toString();
 
 		Student al = new Student(nom, cognom, email, telf, fecha, curs, grup);
 
@@ -294,13 +298,13 @@ public class AdminViewStudentJava extends MainContentView {
 
 	private Student getStudentEdit() {
 		Object id = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
-		String nom = alumneformEdit.nom.getValue().toString();
-		String cognom = alumneformEdit.cognom.getValue().toString();
+		String nom = studentsFormEdit.nom.getValue().toString();
+		String cognom = studentsFormEdit.cognom.getValue().toString();
 		String curs = course.currentCourse();
-		Date fecha = alumneformEdit.fecha.getValue();
-		String email = alumneformEdit.emails.getValue().toString();
-		String telf = alumneformEdit.teléfons.getValue().toString();
-		String grup = alumneformEdit.grup.getValue().toString();
+		Date fecha = studentsFormEdit.fecha.getValue();
+		String email = studentsFormEdit.emails.getValue().toString();
+		String telf = studentsFormEdit.teléfons.getValue().toString();
+		String grup = studentsFormEdit.grup.getValue().toString();
 
 		Student al = new Student(Integer.parseInt(id.toString()), nom, cognom, email, telf, curs, fecha, grup);
 		return al;
@@ -331,59 +335,55 @@ public class AdminViewStudentJava extends MainContentView {
 	}
 
 	private void clearEditForm() {
-		alumneformEdit.nom.clear();
-		alumneformEdit.cognom.clear();
-		alumneformEdit.emails.clear();
-		alumneformEdit.emails.clear();
-		alumneformEdit.teléfons.clear();
-		alumneformEdit.curs.clear();
-		alumneformEdit.grup.clear();
+		studentsFormEdit.nom.clear();
+		studentsFormEdit.cognom.clear();
+		studentsFormEdit.emails.clear();
+		studentsFormEdit.emails.clear();
+		studentsFormEdit.teléfons.clear();
+		studentsFormEdit.curs.clear();
+		studentsFormEdit.grup.clear();
 	}
 
 	private void clearAddForm() {
-		alumneformAdd.nom.clear();
-		alumneformAdd.cognom.clear();
-		alumneformAdd.emails.clear();
-		alumneformAdd.emails.clear();
-		alumneformAdd.teléfons.clear();
-		alumneformAdd.curs.clear();
-		alumneformAdd.grup.clear();
+		studentsFormAdd.nom.clear();
+		studentsFormAdd.cognom.clear();
+		studentsFormAdd.emails.clear();
+		studentsFormAdd.emails.clear();
+		studentsFormAdd.teléfons.clear();
+		studentsFormAdd.curs.clear();
+		studentsFormAdd.grup.clear();
 	}
 
-	private void buttonsSettings() {
+	private void generalSettings() {
 
-		horizontalTitle.addStyleName("horizontal-title");
-		txtTitle.addStyleName("main-title");
-		bAdd.setCaption("Afegir");
-		txtTitle.setValue("Gestió d'Alumnes");
 		bDelete.addStyleName(ValoTheme.BUTTON_DANGER);
 		bAdd.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		bRegister.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonEdit.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		
+		horizontalTitle.addStyleName("horizontal-title");
+		txtTitle.addStyleName("main-title");
+		bAdd.setCaption("Afegir");
+		txtTitle.setValue("Gestió d'Alumnes");
+		
 		bDelete.setEnabled(false);
 		bDelete.setVisible(false);
 		buttonEdit.setEnabled(false);
 		bRegister.setVisible(false);
 		bAdd.setEnabled(true);
 		clearTxt.setVisible(false);
-		alumneformEdit.curs.setVisible(false);
-		alumneformAdd.curs.setVisible(false);
+		studentsFormEdit.curs.setVisible(false);
+		studentsFormAdd.curs.setVisible(false);
 
 	}
 
 	public Grid GridProperties() {
 
-		alumnes = JPAContainerFactory.make(Student.class, em);
-		grid = new Grid("", alumnes);
+		students = JPAContainerFactory.make(Student.class, em);
+		grid = new Grid("", students);
 		grid.setSizeFull();
 		grid.setColumnReorderingAllowed(true);
-
 		grid.setColumns("nom", "cognoms", "curs", "grup", "email", "data_naixement");
-
-		// grid.addRow(new ThemeResource("no_user.png"));
-
-		// grid.setIcon(new ThemeResource("no_user.png"));
-
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addSelectionListener(new SelectionListener() {
 
@@ -407,7 +407,7 @@ public class AdminViewStudentJava extends MainContentView {
 		windowAdd.setModal(true);
 		windowAdd.center();
 		windowAdd.setDraggable(false);
-		windowAdd.setContent(alumneformAdd);
+		windowAdd.setContent(studentsFormAdd);
 	}
 
 	private void WindowPropertiesEditStudent() {
@@ -418,19 +418,19 @@ public class AdminViewStudentJava extends MainContentView {
 		windowEdit.setModal(true);
 		windowEdit.center();
 		windowEdit.setDraggable(false);
-		windowEdit.setContent(alumneformEdit);
+		windowEdit.setContent(studentsFormEdit);
 	}
 
 	private void PopulateNativeSelect() {
 
 		container = JPAContainerFactory.make(Group.class, em);
-		alumneformAdd.grup.setContainerDataSource(container);
-		alumneformAdd.grup.setItemCaptionMode(ItemCaptionMode.PROPERTY);
-		alumneformAdd.grup.setItemCaptionPropertyId("id");
+		studentsFormAdd.grup.setContainerDataSource(container);
+		studentsFormAdd.grup.setItemCaptionMode(ItemCaptionMode.PROPERTY);
+		studentsFormAdd.grup.setItemCaptionPropertyId("id");
 
-		alumneformEdit.grup.setContainerDataSource(container);
-		alumneformEdit.grup.setItemCaptionMode(ItemCaptionMode.PROPERTY);
-		alumneformEdit.grup.setItemCaptionPropertyId("id");
+		studentsFormEdit.grup.setContainerDataSource(container);
+		studentsFormEdit.grup.setItemCaptionMode(ItemCaptionMode.PROPERTY);
+		studentsFormEdit.grup.setItemCaptionPropertyId("id");
 
 	}
 
@@ -445,7 +445,6 @@ public class AdminViewStudentJava extends MainContentView {
 
 		Notification notif = new Notification(mensaje, null, Notification.Type.TRAY_NOTIFICATION, true); // Contains
 																											// HTML
-
 		// Customize it
 		notif.show(Page.getCurrent());
 		notif.setDelayMsec(500);
