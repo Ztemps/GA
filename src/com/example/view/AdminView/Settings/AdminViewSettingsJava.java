@@ -42,6 +42,8 @@ public class AdminViewSettingsJava extends MainContentView {
 	private ConverterDates dates;
 
 	public AdminViewSettingsJava() {
+		adminsettings = new AdminViewSettings();
+
 		GeneralSettings();
 		listeners();
 
@@ -57,18 +59,18 @@ public class AdminViewSettingsJava extends MainContentView {
 
 		vHorizontalMain.addComponent(adminsettings);
 		vHorizontalMain.setComponentAlignment(adminsettings, Alignment.MIDDLE_CENTER);
-		adminsettings = new AdminViewSettings();
 		adminsettings.setVisible(true);
 		adminsettings.setStyleName("whiteBackground");
-		adminsettings.checkEmailTutors.setVisible(false);
-		adminsettings.checkEmailParents.addStyleName("settings");
-		adminsettings.checkWhatsParents.addStyleName("settings");
-		adminsettings.startCoursDate.addStyleName("settings");
-		adminsettings.endCoursDate.addStyleName("settings");
-		adminsettings.trim1EndDate.addStyleName("settings");
-		adminsettings.trim2EndDate.addStyleName("settings");
-		adminsettings.trim2StartDate.addStyleName("settings");
-		adminsettings.trim3Startdate.addStyleName("settings");
+
+		adminsettings.checkEmailPares.addStyleName("settings");
+		adminsettings.checkWhatsPares.addStyleName("settings");
+		adminsettings.dataIniciCurs.addStyleName("settings");
+		adminsettings.dataFinalCurs.addStyleName("settings");
+		adminsettings.dataFinaltrimestre1.addStyleName("settings");
+		adminsettings.dataFinaltrimestre2.addStyleName("settings");
+		adminsettings.dataInicitrimestre2.addStyleName("settings");
+		adminsettings.dataInicitrimestre3.addStyleName("settings");
+
 		txtTitle.addStyleName("main-title");
 		txtTitle.setValue("Configuració");
 		txtSearch.setVisible(false);
@@ -100,7 +102,7 @@ public class AdminViewSettingsJava extends MainContentView {
 	public void notif(String msg) {
 
 		Notification notif = new Notification(msg, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
-																												// HTML
+																											// HTML
 
 		// Customize it
 		notif.show(Page.getCurrent());
@@ -123,27 +125,22 @@ public class AdminViewSettingsJava extends MainContentView {
 		String path2;
 		try {
 
-			Date datainicitrimestre1 = adminsettings.startCoursDate.getValue();
+			Date datainicitrimestre1 = adminsettings.dataIniciCurs.getValue();
 			datainicitrimestre1buena = dates.converterDate(datainicitrimestre1);
-
-			Date datafinaltrimestre3 = adminsettings.endCoursDate.getValue();
+			Date datafinaltrimestre3 = adminsettings.dataFinalCurs.getValue();
 			datafinaltrimestre3buena = dates.converterDate(datafinaltrimestre3);
-
-			Date datafintrimestre1 = adminsettings.trim1EndDate.getValue();
+			Date datafintrimestre1 = adminsettings.dataFinaltrimestre1.getValue();
 			datafintrimestre1buena = dates.converterDate(datafintrimestre1);
-
-			Date datafintrimestre2 = adminsettings.trim2EndDate.getValue();
+			Date datafintrimestre2 = adminsettings.dataFinaltrimestre2.getValue();
 			datafintrimestre2buena = dates.converterDate(datafintrimestre2);
-
-			Date fechaIniciTrimestre3 = adminsettings.trim3Startdate.getValue();
+			Date fechaIniciTrimestre3 = adminsettings.dataInicitrimestre3.getValue();
 			fechaIniciTrimestre3buena = dates.converterDate(fechaIniciTrimestre3);
-
-			Date fechaIniciTrimestre2 = adminsettings.trim2StartDate.getValue();
+			Date fechaIniciTrimestre2 = adminsettings.dataInicitrimestre2.getValue();
 			fechaIniciTrimestre2buena = dates.converterDate(fechaIniciTrimestre2);
 
+			boolean checkPares = adminsettings.checkEmailPares.getValue();
+			boolean checkTelegram = adminsettings.checkWhatsPares.getValue();
 			boolean checkTutor = adminsettings.checkEmailTutors.getValue();
-			boolean checkPares = adminsettings.checkEmailParents.getValue();
-			boolean checkTelegram = adminsettings.checkWhatsParents.getValue();
 
 			path2 = currDir.getCanonicalPath();
 			File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
@@ -246,15 +243,15 @@ public class AdminViewSettingsJava extends MainContentView {
 
 			}
 
-			adminsettings.startCoursDate.setValue(fechaIniciTrimestre1);
-			adminsettings.endCoursDate.setValue(fechaFinalTrimestre3);
-			adminsettings.trim1EndDate.setValue(fechafinaltrimestre1);
-			adminsettings.trim2EndDate.setValue(fechafinaltrimestre2);
+			adminsettings.dataIniciCurs.setValue(fechaIniciTrimestre1);
+			adminsettings.dataFinalCurs.setValue(fechaFinalTrimestre3);
+			adminsettings.dataFinaltrimestre1.setValue(fechafinaltrimestre1);
+			adminsettings.dataFinaltrimestre2.setValue(fechafinaltrimestre2);
 			adminsettings.checkEmailTutors.setValue(checkTutor);
-			adminsettings.checkEmailParents.setValue(checkPares);
-			adminsettings.checkWhatsParents.setValue(checkTelegram);
-			adminsettings.trim2StartDate.setValue(fechaIniciTrimestre2);
-			adminsettings.trim3Startdate.setValue(fechaIniciTrimestre3);
+			adminsettings.checkEmailPares.setValue(checkPares);
+			adminsettings.checkWhatsPares.setValue(checkTelegram);
+			adminsettings.dataInicitrimestre2.setValue(fechaIniciTrimestre2);
+			adminsettings.dataInicitrimestre3.setValue(fechaIniciTrimestre3);
 
 		}
 	}
