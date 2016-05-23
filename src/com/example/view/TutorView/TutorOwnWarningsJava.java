@@ -1,13 +1,15 @@
 /*******************************************************************************
+ * 
  * Gestió d'Amonestacions v1.0
  *
  * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
  * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
  *  
- * @author Francisco Javier Casado Moreno - fcasasdo@elpuig.xeill.net 
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
  * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
  * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
+ * 
  *******************************************************************************/
 package com.example.view.TutorView;
 
@@ -15,6 +17,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import com.example.Entities.Warning;
 import com.example.Logic.EntityManagerUtil;
@@ -51,21 +56,30 @@ public class TutorOwnWarningsJava extends MainContentView {
 	private String fecha;
 	private String hora;
 	private SQLContainer container;
+	private SQLContainer containerGroups;
+	private EntityManagerUtil entman = new EntityManagerUtil();
+	private EntityManager em = entman.getEntityManager();
 	private String usuari;
 	private Grid grid;
+	private Grid gridGroups;
+
+	private Query query = null;
+
 	private Window window = new Window();
 	private UserJPAManager MA = new UserJPAManager();
 	private JDBCConnectionPool jdbccp = new JDBCConnectionPool();
 	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
 	private Button b = new Button();
 
+	private boolean gridUsed=false;
+	private boolean gridUsedGroup=false;
+
 	public TutorOwnWarningsJava() throws MalformedURLException, DocumentException, IOException {
 
 		buttonsSettings();
-		b.setCaption("PRUEBA");
 		gridProperties();
+		gridGroupProperties();
 		WindowProperties();
-
 		bRegister.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -73,7 +87,14 @@ public class TutorOwnWarningsJava extends MainContentView {
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
 				try {
-					popupPDF();
+					
+					if (gridUsed) {
+						ownpopupPDF();
+
+					}else if (gridUsedGroup) {
+						popupPDF();
+
+					}
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -85,11 +106,36 @@ public class TutorOwnWarningsJava extends MainContentView {
 			}
 		});
 
-		vHorizontalMain.addComponent(gridProperties());
+		buttonEdit.addClickListener(new ClickListener() {
+			private static final long serialVersionUID = 1L;
 
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				vHorizontalMain.removeAllComponents();
+
+				if (gridUsed) {
+					vHorizontalMain.addComponent(gridGroupProperties());
+					gridUsed = false;
+
+				}else if (gridUsedGroup) {
+					vHorizontalMain.addComponent(gridProperties());
+					gridUsedGroup=false;
+
+				}
+			}
+
+		});
+		vHorizontalMain.addComponent(gridProperties());
 	}
 
 	public Grid gridProperties() {
+		
+		gridUsed=true;
+		txtTitle.setVisible(true);
+		txtTitle.addStyleName("main-title");
+		txtTitle.setValue("Les meves amonestacions");
+		buttonEdit.setCaption("Els meus Grups/Amonestats");
 
 		usuari = MA.currentTeacherName();
 		try {
@@ -126,6 +172,67 @@ public class TutorOwnWarningsJava extends MainContentView {
 		return grid;
 	}
 
+	public Grid gridGroupProperties() {
+		gridUsedGroup=true;
+
+		txtTitle.setVisible(true);
+		txtTitle.addStyleName("main-title");
+		txtTitle.setValue("Els meus Grups/Amonestats");
+		buttonEdit.setCaption("Les meves amonestacions");
+
+		int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
+
+		usuari = MA.currentTeacherName();
+		em.getTransaction().begin();
+
+		query = em.createNativeQuery(
+
+				"SELECT grup FROM usuari u, tutor t WHERE t.docent= u.id_docent AND u.id_docent = "+id+" LIMIT 1");
+
+		em.getTransaction().commit();
+
+		try {
+			/*
+			 * SELECT grup FROM usuari u, tutor t WHERE t.docent= u.id_docent
+			 * AND u.id_docent = 4
+			 */
+
+			/*
+			 * select * from amonestacio where grup LIKE 'ESO 1A'
+			 */
+			String tutorGroup = query.getSingleResult().toString();
+			containerGroups = new SQLContainer(new FreeformQuery("select al.nom, " + "al.cognoms," + " a.grup, "
+					+ "a.motius_selection," + " a.altres_motius," + "a.materia, a.data, " + "a.localitzacio "
+					+ "from amonestacio a, docent d, alumne al "
+					+ "where a.docent=d.id and a.alumne=al.id and d.nom LIKE '" + usuari + "' and a.grup LIKE '"+tutorGroup+"'",
+					jdbccp.GetConnection()));
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		gridGroups = new Grid("", containerGroups);
+		gridGroups.setContainerDataSource(containerGroups);
+		gridGroups.setColumns("nom", "cognoms", "grup", "data");
+		gridGroups.setSizeFull();
+		gridGroups.setColumnReorderingAllowed(true);
+		gridGroups.setSelectionMode(SelectionMode.SINGLE);
+		gridGroups.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void select(SelectionEvent event) {
+				// TODO Auto-generated method stub
+				bAdd.setEnabled(true);
+				// buttonEdit.setEnabled(true);
+				// bDelete.setEnabled(true);
+
+			}
+		});
+
+		return gridGroups;
+	}
+
 	public void clear() {
 		// TODO Auto-generated method stub
 		bDelete.setEnabled(false);
@@ -136,11 +243,10 @@ public class TutorOwnWarningsJava extends MainContentView {
 	private void buttonsSettings() {
 		// TODO Auto-generated method stub
 
-		txtTitle.setVisible(true);
-		txtTitle.addStyleName("main-title");
-		txtTitle.setValue("Les meves amonestacions");
+
 		bAdd.setVisible(false);
-		buttonEdit.setVisible(false);
+		buttonEdit.setVisible(true);
+		buttonEdit.setCaption("Amonestacions dels meus Grups");
 		bDelete.setVisible(false);
 		bRegister.setVisible(true);
 		bRegister.setCaption("Detalls");
@@ -186,8 +292,54 @@ public class TutorOwnWarningsJava extends MainContentView {
 		return hora;
 	}
 
+	private String getItemGroupsNomCognomSelected() {
+
+		String name = gridGroups.getContainerDataSource().getItem(gridGroups.getSelectedRow()).getItemProperty("nom")
+				.getValue().toString();
+		String surname = gridGroups.getContainerDataSource().getItem(gridGroups.getSelectedRow())
+				.getItemProperty("cognoms").getValue().toString();
+
+		String nomCognom = (name.concat(" " + surname)).replaceFirst(" ", "").replaceAll(" ", "_");
+
+		return nomCognom;
+
+	}
+
+	private String getGroupsDateSelected() {
+
+		Object data = gridGroups.getContainerDataSource().getItem(gridGroups.getSelectedRow()).getItemProperty("data")
+				.getValue();
+		fecha = data.toString();
+		hora = fecha.substring(11, 16);
+
+		return hora;
+	}
+
 	@SuppressWarnings("deprecation")
 	public void popupPDF() throws IOException, DocumentException {
+
+		generatePDF generatepdf = new generatePDF();
+		Embedded c = new Embedded();
+		sourceFile = new File(generatepdf.getPath2(getItemGroupsNomCognomSelected(), getGroupsDateSelected()));
+		c.setSource(new FileResource(sourceFile));
+		c.setWidth("100%");
+		c.setHeight("600px");
+		c.setType(Embedded.TYPE_BROWSER);
+		pdf.verticalpdf.removeAllComponents();
+		pdf.verticalpdf.setSizeFull();
+		pdf.verticalpdf.addComponent(c);
+		pdf.hbuttons.setVisible(false);
+		window.setContent(pdf);
+		UI.getCurrent().addWindow(window);
+
+		window.setVisible(true);
+
+	}
+
+	
+
+	@SuppressWarnings("deprecation")
+	public void ownpopupPDF() throws IOException, DocumentException {
 
 		generatePDF generatepdf = new generatePDF();
 		Embedded c = new Embedded();
@@ -206,46 +358,12 @@ public class TutorOwnWarningsJava extends MainContentView {
 		window.setVisible(true);
 
 	}
-
+	
 	public void reloadGrid() {
-		vHorizontalMain.removeAllComponents();
-		vHorizontalMain.addComponent(gridProperties());
-	}
+//		vHorizontalMain.removeAllComponents();
+		// vHorizontalMain.addComponent(gridProperties());
+//		vHorizontalMain.addComponent(gridGroupProperties());
 
-	/*
-	 * package com.vaadin.demo.ejemplovaadin; import com.vaadin.Application;
-	 * import com.vaadin.ui.*; import java.sql.*; import
-	 * com.vaadin.addon.sqlcontainer.SQLContainer; import
-	 * com.vaadin.addon.sqlcontainer.connection.SimpleJDBCConnectionPool; import
-	 * com.vaadin.addon.sqlcontainer.query.FreeformQuery;
-	 * 
-	 * public class EjemploVaadinAplicacion extends Application {
-	 * 
-	 * @Override public void init() { Window mainWindow = new Window(
-	 * "Consulta demo Vaadin"); SimpleJDBCConnectionPool connectionPool; Table
-	 * table = null; try { connectionPool = new
-	 * SimpleJDBCConnectionPool("com.microsoft.sqlserver.jdbc.SQLServerDriver",
-	 * "jdbc:sqlserver://direccionDelServidor:1433;databaseName=nombreBaseDatos;",
-	 * "usuario", "contraseña", 2, 5);
-	 * 
-	 * SQLContainer container = null; container = new SQLContainer(new
-	 * FreeformQuery("SELECT * FROM Prueba" , connectionPool));
-	 * 
-	 * table = new Table(null, container); //Establecemos el tamaño de Grid
-	 * table.setWidth("100%"); //Ocupa todo el ancho del navegador
-	 * table.setHeight("170px"); //Altura del Grid.
-	 * 
-	 * //Opciones en la selección del Grid table.setSelectable(true); //Hacemos
-	 * que se puedan seleccionar las filas del Grid.
-	 * table.setMultiSelect(true);//Selección de múltiples filas del Grid.
-	 * 
-	 * table.setContainerDataSource(container);
-	 * 
-	 * //Establecemos el nombre de las cabeceras de las columnas
-	 * table.setColumnHeaders(new String[] { "ID Contacto", "Nombre Contacto"
-	 * }); } catch (SQLException e){ System.out.println("SQL Exception: "+
-	 * e.toString()); } mainWindow.addComponent(table);
-	 * setMainWindow(mainWindow); } }
-	 */
+	}
 
 }
