@@ -100,6 +100,7 @@ public class TeacherOwnWarningsJava extends MainContentView {
 					jdbccp.GetConnection()));
 			grid = new Grid("", container);
 			grid.setContainerDataSource(container);
+			grid.setColumns("nom", "cognoms", "grup", "data");
 			grid.setSizeFull();
 			grid.setColumnReorderingAllowed(true);
 			grid.setSelectionMode(SelectionMode.SINGLE);

@@ -76,7 +76,6 @@ public class LoginView extends LoginViewDesign implements View {
 	private static final long serialVersionUID = 4731762934864687953L;
 	private static final String TITLE = "Plataforma Gestió d'Amonestacions";
 	private static final String USER = "Plataforma Gestió d'Amonestacions";
-	private static final String FILE = "userList.txt";
 
 	public static final String NAME = "login";
 	private User user;
@@ -155,18 +154,7 @@ public class LoginView extends LoginViewDesign implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		FileWriter fw;
-		try {
-			fw = new FileWriter(FILE);
-			BufferedWriter br = new BufferedWriter(fw);
-			br.write("false");
-			br.close();
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		
 		txtUsername.focus();
 
 	}
@@ -219,10 +207,7 @@ public class LoginView extends LoginViewDesign implements View {
 			if (user.getUsername().equals(username) && user.getPassword().equals(passwordhash)) {
 				if (user.getRol().equals("Administrador")) {
 
-					FileWriter fw = new FileWriter(FILE);
-					BufferedWriter br = new BufferedWriter(fw);
-					br.write("true");
-					br.close();
+		
 
 					setAttributeSession(username);
 					getUI().getNavigator().navigateTo(AdminView.NAME);//

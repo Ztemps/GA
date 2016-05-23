@@ -755,7 +755,7 @@ public class TeacherViewWarningJava extends MainContentView {
 			Notification.show("Els camps obligatoris s'han d'emplenar");
 			e.printStackTrace();
 		}
-		if ((amonestacioForm.materia.getValue().toString()).equals("")) {
+		if ((String.valueOf(amonestacioForm.materia.getValue()).equals("null"))) {
 
 			assignatura = null;
 		} else {
@@ -828,7 +828,7 @@ public class TeacherViewWarningJava extends MainContentView {
 			Notification.show("Els camps obligatoris s'han d'emplenar");
 			e.printStackTrace();
 		}
-		if ((amonestacioForm.materia.getValue().toString()).equals("")) {
+		if ((String.valueOf(amonestacioForm.materia.getValue()).equals("null"))) {
 
 			assignatura = null;
 		} else {

@@ -400,11 +400,6 @@ public class AdminViewCharts extends MainContentView {
 	public Chart WarningsPerTrimestre1() throws ReadOnlyException, ConversionException, IOException {
 
 		ArrayList<Date> dates = Dates();
-
-		System.out.println("FECHAAAAAA " + dates.get(0));
-
-		// dates.get(0);
-
 		Chart chart = new Chart(ChartType.COLUMN);
 		chart.setWidth("50%");
 		jdbccp = new JDBCConnectionPool();

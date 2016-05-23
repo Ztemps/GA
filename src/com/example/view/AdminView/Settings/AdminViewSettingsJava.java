@@ -189,7 +189,7 @@ public class AdminViewSettingsJava extends MainContentView {
 			e1.printStackTrace();
 		}
 
-		File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
+		File f = new File(path2 + "/webapps/GALite/Settings/settings.txt");
 
 		if (!f.exists()) {
 			f.createNewFile();

@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import org.eclipse.persistence.internal.oxm.mappings.Login;
 
@@ -86,6 +87,8 @@ public class AdminView extends MainView implements View {
 	private BufferedReader br = null;
     com.vaadin.ui.Notification notif;
     CssLayout menuContent = new CssLayout();
+    private ResourceBundle rb = ResourceBundle.getBundle("GA");
+
 
 
 	@Override
@@ -303,11 +306,11 @@ public class AdminView extends MainView implements View {
 	} // end loadView
 
 	private void setLogo() throws IOException {
-		// TODO Auto-generated method stub
-		File currDir = new File(".");
-		String path2 = currDir.getCanonicalPath();
+		
+		
 
-		FileResource resource = new FileResource(new File(path2 + "/git/ga2/WebContent/VAADIN/themes/images/logo.png"));
+
+		FileResource resource = new FileResource(new File(rb.getString("main_logo")));
 		Image logo = new Image("", resource);
 		logo.setWidth("90px");
 		logo.setHeight("90px");
