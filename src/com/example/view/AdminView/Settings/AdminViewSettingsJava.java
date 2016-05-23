@@ -54,7 +54,8 @@ public class AdminViewSettingsJava extends MainContentView {
 	}
 
 	private void GeneralSettings() {
-
+		
+		adminsettings = new AdminViewSettings();
 		vHorizontalMain.addComponent(adminsettings);
 		vHorizontalMain.setComponentAlignment(adminsettings, Alignment.MIDDLE_CENTER);
 		adminsettings = new AdminViewSettings();
