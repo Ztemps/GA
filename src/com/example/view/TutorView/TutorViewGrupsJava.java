@@ -11,13 +11,14 @@
  *******************************************************************************/
 package com.example.view.TutorView;
 
-import java.io.File; 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.example.Dates.ConverterDates;
 import com.example.Entities.Group;
 import com.example.Entities.Student;
 import com.example.Entities.User;
@@ -69,9 +70,9 @@ public class TutorViewGrupsJava extends MainContentView {
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em = entman.getEntityManager();
 
+	private ConverterDates converter = new ConverterDates();
 	private Query query = null;
 
-	
 	public TutorViewGrupsJava() {
 		// TODO Auto-generated constructor stub
 
@@ -142,9 +143,6 @@ public class TutorViewGrupsJava extends MainContentView {
 		System.out.println(id);
 
 		em.getTransaction().begin();
-		// list_grups = em.createQuery("SELECT g.id,d.nom FROM grup g, tutor
-		// t,docent d WHERE g.id = t.grup and t.docent =
-		// d.id").getResultList();
 
 		query = em.createNativeQuery(
 
@@ -152,16 +150,13 @@ public class TutorViewGrupsJava extends MainContentView {
 
 		em.getTransaction().commit();
 
-		
 		tutorviewdetailsform.nameStudent.setValue(name.toString());
 		tutorviewdetailsform.lastnameStudent.setValue(surname.toString());
-		tutorviewdetailsform.dateStudent.setValue(data.toString());
+		tutorviewdetailsform.dateStudent.setValue(converter.converterDate2(data.toString()));
 		tutorviewdetailsform.dateStudent.setReadOnly(true);
 		tutorviewdetailsform.lastnameStudent.setReadOnly(true);
 		tutorviewdetailsform.nameStudent.setReadOnly(true);
 
-		
-		
 		if (email.toString() == null) {
 			tutorviewdetailsform.emailStudent.setValue(" ");
 		} else {
@@ -208,10 +203,9 @@ public class TutorViewGrupsJava extends MainContentView {
 		buttonEdit.addStyleName(ValoTheme.BUTTON_PRIMARY);
 
 		buttonEdit.setCaption("Detalls");
-		
+
 		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
-		
 
 		bDelete.setEnabled(false);
 		bDelete.setVisible(false);
@@ -256,15 +250,14 @@ public class TutorViewGrupsJava extends MainContentView {
 	public Grid gridProperties() {
 
 		students = JPAContainerFactory.make(Student.class, em);
-		int id=0;
-		String grupTutor="";
-		try{
+		int id = 0;
+		String grupTutor = "";
+		try {
 			id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
 			grupTutor = MA.getGroupTutor(id);
-		}catch(NullPointerException e){
-			
+		} catch (NullPointerException e) {
+
 		}
-		
 
 		Filter filter = new Compare.Equal("grup", grupTutor);
 		students.addContainerFilter(filter);
@@ -297,6 +290,5 @@ public class TutorViewGrupsJava extends MainContentView {
 		mygrid.setVisible(visible);
 
 	}
-
 
 }
