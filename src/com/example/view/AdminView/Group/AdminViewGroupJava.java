@@ -186,9 +186,9 @@ public class AdminViewGroupJava extends MainContentView {
 		MA = new GroupJPAManager();
 
 		Object id = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
-		Object numAlumnes = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("max_alumnes");
+		Object numStudents = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("max_alumnes");
 
-		Group gr = new Group(id.toString(), Integer.parseInt(numAlumnes.toString()));
+		Group gr = new Group(id.toString(), Integer.parseInt(numStudents.toString()));
 
 		MA.removeGroup(gr);
 		MA.closeTransaction();
@@ -200,9 +200,9 @@ public class AdminViewGroupJava extends MainContentView {
 	private Group getGroupAdd() {
 
 		String id = grupFormAdd.txtGrup.getValue().toString().toUpperCase();
-		int numAlumnes = 35;
+		int numStudents = 35;
 
-		Group gr = new Group(id, numAlumnes);
+		Group gr = new Group(id, numStudents);
 
 		return gr;
 	}
@@ -210,18 +210,18 @@ public class AdminViewGroupJava extends MainContentView {
 	private Group getGroupEdit() {
 
 		String id = grupFormEdit.txtGrup.getValue().toString();
-		int numAlumnes = 0;
+		int numStudents = 0;
 		try {
 			// Por algún motivo, al editar por segunda vez, da error de formato
 			// del número
-			numAlumnes = Integer.parseInt(grupFormEdit.txtMaxAl.getValue().toString());
+			numStudents = Integer.parseInt(grupFormEdit.txtMaxAl.getValue().toString());
 
 		} catch (NumberFormatException nfe) {
 			notif("Format del número incorrecte");
 
 		}
 
-		Group gr = new Group(id, numAlumnes);
+		Group gr = new Group(id, numStudents);
 
 		return gr;
 	}
@@ -350,9 +350,9 @@ public class AdminViewGroupJava extends MainContentView {
 	}
 
 
-	public void notif(String mensaje) {
+	public void notif(String msg) {
 
-		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
+		Notification notif = new Notification(msg, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
 																												// HTML
 		// Customize it
 		notif.show(Page.getCurrent());

@@ -57,7 +57,6 @@ public class AdminViewSettingsJava extends MainContentView {
 
 	private void GeneralSettings() {
 		
-		adminsettings = new AdminViewSettings();
 		vHorizontalMain.addComponent(adminsettings);
 		vHorizontalMain.setComponentAlignment(adminsettings, Alignment.MIDDLE_CENTER);
 		adminsettings.setVisible(true);
@@ -65,12 +64,12 @@ public class AdminViewSettingsJava extends MainContentView {
 
 		adminsettings.checkEmailPares.addStyleName("settings");
 		adminsettings.checkWhatsPares.addStyleName("settings");
-		adminsettings.dataIniciCurs.addStyleName("settings");
-		adminsettings.dataFinalCurs.addStyleName("settings");
-		adminsettings.dataFinaltrimestre1.addStyleName("settings");
-		adminsettings.dataFinaltrimestre2.addStyleName("settings");
-		adminsettings.dataInicitrimestre2.addStyleName("settings");
-		adminsettings.dataInicitrimestre3.addStyleName("settings");
+		adminsettings.startDateGrade.addStyleName("settings");
+		adminsettings.endGradeDate.addStyleName("settings");
+		adminsettings.firstTrimesterEndDate.addStyleName("settings");
+		adminsettings.secondTrimesterEndDate.addStyleName("settings");
+		adminsettings.secondTrimesterStartDate.addStyleName("settings");
+		adminsettings.thirdTrimesterStartDate.addStyleName("settings");
 
 		txtTitle.addStyleName("main-title");
 		txtTitle.setValue("Configuració");
@@ -126,17 +125,17 @@ public class AdminViewSettingsJava extends MainContentView {
 		String path2;
 		try {
 
-			Date datainicitrimestre1 = adminsettings.dataIniciCurs.getValue();
+			Date datainicitrimestre1 = adminsettings.startDateGrade.getValue();
 			datainicitrimestre1buena = dates.converterDate(datainicitrimestre1);
-			Date datafinaltrimestre3 = adminsettings.dataFinalCurs.getValue();
+			Date datafinaltrimestre3 = adminsettings.endGradeDate.getValue();
 			datafinaltrimestre3buena = dates.converterDate(datafinaltrimestre3);
-			Date datafintrimestre1 = adminsettings.dataFinaltrimestre1.getValue();
+			Date datafintrimestre1 = adminsettings.firstTrimesterEndDate.getValue();
 			datafintrimestre1buena = dates.converterDate(datafintrimestre1);
-			Date datafintrimestre2 = adminsettings.dataFinaltrimestre2.getValue();
+			Date datafintrimestre2 = adminsettings.secondTrimesterEndDate.getValue();
 			datafintrimestre2buena = dates.converterDate(datafintrimestre2);
-			Date fechaIniciTrimestre3 = adminsettings.dataInicitrimestre3.getValue();
+			Date fechaIniciTrimestre3 = adminsettings.thirdTrimesterStartDate.getValue();
 			fechaIniciTrimestre3buena = dates.converterDate(fechaIniciTrimestre3);
-			Date fechaIniciTrimestre2 = adminsettings.dataInicitrimestre2.getValue();
+			Date fechaIniciTrimestre2 = adminsettings.secondTrimesterStartDate.getValue();
 			fechaIniciTrimestre2buena = dates.converterDate(fechaIniciTrimestre2);
 
 			boolean checkPares = adminsettings.checkEmailPares.getValue();
@@ -244,15 +243,15 @@ public class AdminViewSettingsJava extends MainContentView {
 
 			}
 
-			adminsettings.dataIniciCurs.setValue(fechaIniciTrimestre1);
-			adminsettings.dataFinalCurs.setValue(fechaFinalTrimestre3);
-			adminsettings.dataFinaltrimestre1.setValue(fechafinaltrimestre1);
-			adminsettings.dataFinaltrimestre2.setValue(fechafinaltrimestre2);
+			adminsettings.startDateGrade.setValue(fechaIniciTrimestre1);
+			adminsettings.endGradeDate.setValue(fechaFinalTrimestre3);
+			adminsettings.firstTrimesterEndDate.setValue(fechafinaltrimestre1);
+			adminsettings.secondTrimesterEndDate.setValue(fechafinaltrimestre2);
 			adminsettings.checkEmailTutors.setValue(checkTutor);
 			adminsettings.checkEmailPares.setValue(checkPares);
 			adminsettings.checkWhatsPares.setValue(checkTelegram);
-			adminsettings.dataInicitrimestre2.setValue(fechaIniciTrimestre2);
-			adminsettings.dataInicitrimestre3.setValue(fechaIniciTrimestre3);
+			adminsettings.secondTrimesterStartDate.setValue(fechaIniciTrimestre2);
+			adminsettings.thirdTrimesterStartDate.setValue(fechaIniciTrimestre3);
 
 		}
 	}

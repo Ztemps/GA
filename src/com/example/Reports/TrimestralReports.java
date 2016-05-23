@@ -59,15 +59,15 @@ public class TrimestralReports {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		Date diaIniciTrimestre1;
-		Calendar diaIniciCal;
+		Date firstTrimesterStartDate;
+		Calendar startDate;
 
-		List calculoAmonest;
-		List calculoExpuls;
-		Date diaFinalTrimestre1;
+		List warningCalculate;
+		List pushOutCalculate;
+		Date firstTrimesterFinalDate;
 
 		long diff;
-		long numSetmanes;
+		long numberOfWeeks;
 
 		FileWriter fileWriter = null;
 
@@ -77,16 +77,16 @@ public class TrimestralReports {
 
 		for (int x = 0; x < grupos.size(); x++) {
 
-			diaIniciTrimestre1 = dates.get(0);
-			diaIniciCal = Calendar.getInstance();
-			diaIniciCal.setTime(diaIniciTrimestre1);
+			firstTrimesterStartDate = dates.get(0);
+			startDate = Calendar.getInstance();
+			startDate.setTime(firstTrimesterStartDate);
 
-			calculoAmonest = null;
-			calculoExpuls = null;
-			diaFinalTrimestre1 = dates.get(1);
+			warningCalculate = null;
+			pushOutCalculate = null;
+			firstTrimesterFinalDate = dates.get(1);
 
-			diff = diaFinalTrimestre1.getTime() - diaIniciTrimestre1.getTime();
-			numSetmanes = (diff / (24 * 60 * 60 * 1000)) / 7;
+			diff = firstTrimesterFinalDate.getTime() - firstTrimesterStartDate.getTime();
+			numberOfWeeks = (diff / (24 * 60 * 60 * 1000)) / 7;
 
 			// FOR STUDENT ID
 			query = new ReportQuerys();
@@ -104,26 +104,26 @@ public class TrimestralReports {
 
 			// FOR NOMS
 			query = new ReportQuerys();
-			List noms = query.getNomAlumnes(grupos.get(x).getId());
+			List names = query.getNomAlumnes(grupos.get(x).getId());
 			// query.closeTransaction();
 
-			List nomsList = new ArrayList<>();
+			List namesList = new ArrayList<>();
 
-			for (int i = 0; i < noms.size(); i++) {
-				nomsList.add(noms.get(i));
+			for (int i = 0; i < names.size(); i++) {
+				namesList.add(names.get(i));
 
 			}
 
 			// FOR COGNOMS
 
 			query = new ReportQuerys();
-			List cognoms = query.getCognomsAlumnes(grupos.get(x).getId());
+			List surnames = query.getCognomsAlumnes(grupos.get(x).getId());
 			// query.closeTransaction();
 
-			List cognomsList = new ArrayList<>();
+			List surnamesList = new ArrayList<>();
 
-			for (int i = 0; i < cognoms.size(); i++) {
-				cognomsList.add(cognoms.get(i));
+			for (int i = 0; i < surnames.size(); i++) {
+				surnamesList.add(surnames.get(i));
 
 			}
 
@@ -149,21 +149,21 @@ public class TrimestralReports {
 				fileWriter.append(COMMA_DELIMITER);
 
 				// CONSULTA
-				String setmana = "Set. ";
+				String week = "Set. ";
 
-				for (int i = 1; i <= numSetmanes; i++) {
+				for (int i = 1; i <= numberOfWeeks; i++) {
 
-					setmana.equals(numSetmanes + i);
-					fileWriter.append(setmana + i);
+					week.equals(numberOfWeeks + i);
+					fileWriter.append(week + i);
 					fileWriter.append(COMMA_DELIMITER);
 
-					Date diaInicial = diaIniciCal.getTime();
+					Date diaInicial = startDate.getTime();
 					String fechainicialBuena = datas.converterDate(diaInicial);
 
 					fileWriter.append(fechainicialBuena);
 					// diaInici=aux;
 					fileWriter.append(COMMA_DELIMITER);
-					diaIniciCal.add(Calendar.DATE, 7);
+					startDate.add(Calendar.DATE, 7);
 
 				}
 				fileWriter.append(NEW_LINE_SEPARATOR);
@@ -172,7 +172,7 @@ public class TrimestralReports {
 				fileWriter.append("ALUMNE");
 				fileWriter.append(COMMA_DELIMITER);
 
-				for (int i = 0; i < numSetmanes; i++) {
+				for (int i = 0; i < numberOfWeeks; i++) {
 					fileWriter.append("A");
 					fileWriter.append(COMMA_DELIMITER);
 					fileWriter.append("E");
@@ -185,44 +185,44 @@ public class TrimestralReports {
 				fileWriter.append(NEW_LINE_SEPARATOR);
 
 				// ADD STUDENTS
-				for (int i = 0; i < nomsList.size(); i++) {
-					Calendar diaInicisetmanes = Calendar.getInstance();
-					diaInicisetmanes.setTime(diaIniciTrimestre1);
-					Date semana2 = null;
-					Date semana1 = diaInicisetmanes.getTime();
-					diaInicisetmanes.add(Calendar.DATE, 7);
+				for (int i = 0; i < namesList.size(); i++) {
+					Calendar startWeekDay = Calendar.getInstance();
+					startWeekDay.setTime(firstTrimesterStartDate);
+					Date week2 = null;
+					Date week1 = startWeekDay.getTime();
+					startWeekDay.add(Calendar.DATE, 7);
 
-					semana2 = diaInicisetmanes.getTime();
-					fileWriter.append(nomsList.get(i).toString() + " " + cognomsList.get(i).toString());
+					week2 = startWeekDay.getTime();
+					fileWriter.append(namesList.get(i).toString() + " " + surnamesList.get(i).toString());
 					fileWriter.append(COMMA_DELIMITER);
 
-					for (int l = 0; l < numSetmanes; l++) {
+					for (int l = 0; l < numberOfWeeks; l++) {
 
-						calculoAmonest = new ArrayList<>();
-						calculoExpuls = new ArrayList<>();
+						warningCalculate = new ArrayList<>();
+						pushOutCalculate = new ArrayList<>();
 
 						// Debería de pasarle solo el id del alumnno
-						calculoAmonest = calcularAmonestadosPorSemana(idList, semana1, semana2);
-						calculoExpuls = calcularExpulsadosPorSemana(idList, semana1, semana2);
+						warningCalculate = calcularAmonestadosPorSemana(idList, week1, week2);
+						pushOutCalculate = calcularExpulsadosPorSemana(idList, week1, week2);
 
-						semana1 = semana2;
-						diaInicisetmanes.add(Calendar.DATE, 7);
-						semana2 = diaInicisetmanes.getTime();
+						week1 = week2;
+						startWeekDay.add(Calendar.DATE, 7);
+						week2 = startWeekDay.getTime();
 
-						if (calculoAmonest.get(i).toString().equals("0")) {
+						if (warningCalculate.get(i).toString().equals("0")) {
 							fileWriter.append("");
 
 						} else {
-							fileWriter.append(calculoAmonest.get(i).toString());
+							fileWriter.append(warningCalculate.get(i).toString());
 
 						}
 						fileWriter.append(COMMA_DELIMITER);
 
-						if (calculoExpuls.get(i).toString().equals("0")) {
+						if (pushOutCalculate.get(i).toString().equals("0")) {
 							fileWriter.append("");
 
 						} else {
-							fileWriter.append(calculoExpuls.get(i).toString());
+							fileWriter.append(pushOutCalculate.get(i).toString());
 
 						}
 						fileWriter.append(COMMA_DELIMITER);
@@ -246,7 +246,7 @@ public class TrimestralReports {
 		}
 	}
 
-	public  void calcularSegundoTrimestre() {
+	public  void calculateSecondTrimester() {
 		// CALCULO DE FECHAS
 		// VARIABLE A COJER
 		try {
@@ -258,8 +258,8 @@ public class TrimestralReports {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		Date diaIniciTrimestre2;
-		Calendar diaIniciCal;
+		Date secondTrimesterStartDate;
+		Calendar calendarStartDate;
 		List calculoAmonest = null;
 		List calculoExpuls = null;
 		Date diaFinalTrimestre2;
@@ -276,15 +276,15 @@ public class TrimestralReports {
 		grupos = jpa.getGroups();
 
 		for (int x = 0; x < grupos.size(); x++) {
-			diaIniciTrimestre2 = dates.get(2);
-			diaIniciCal = Calendar.getInstance();
-			diaIniciCal.setTime(diaIniciTrimestre2);
+			secondTrimesterStartDate = dates.get(2);
+			calendarStartDate = Calendar.getInstance();
+			calendarStartDate.setTime(secondTrimesterStartDate);
 
 			calculoAmonest = null;
 			calculoExpuls = null;
 			diaFinalTrimestre2 = dates.get(3);
 
-			diff = diaFinalTrimestre2.getTime() - diaIniciTrimestre2.getTime();
+			diff = diaFinalTrimestre2.getTime() - secondTrimesterStartDate.getTime();
 			numSetmanes = (diff / (24 * 60 * 60 * 1000)) / 7;
 
 			// FOR STUDENT ID
@@ -355,12 +355,12 @@ public class TrimestralReports {
 					fileWriter.append(setmana + i);
 					fileWriter.append(COMMA_DELIMITER);
 
-					Date diaInicial = diaIniciCal.getTime();
+					Date diaInicial = calendarStartDate.getTime();
 					String fechainicialBuena = datas.converterDate(diaInicial);
 
 					fileWriter.append(fechainicialBuena);
 					fileWriter.append(COMMA_DELIMITER);
-					diaIniciCal.add(Calendar.DATE, 7);
+					calendarStartDate.add(Calendar.DATE, 7);
 
 				}
 				fileWriter.append(NEW_LINE_SEPARATOR);
@@ -382,7 +382,7 @@ public class TrimestralReports {
 				// ADD STUDENTS
 				for (int i = 0; i < nomsList.size(); i++) {
 					Calendar diaInicisetmanes = Calendar.getInstance();
-					diaInicisetmanes.setTime(diaIniciTrimestre2);
+					diaInicisetmanes.setTime(secondTrimesterStartDate);
 					Date semana2 = null;
 					Date semana1 = diaInicisetmanes.getTime();
 					diaInicisetmanes.add(Calendar.DATE, 7);
@@ -440,7 +440,7 @@ public class TrimestralReports {
 		}
 	}
 
-	public  void calcularTercerTrimestre() {
+	public  void calculateThirdTrimester() {
 		// CALCULO DE FECHAS
 		// VARIABLE A COJER
 		try {
@@ -452,14 +452,14 @@ public class TrimestralReports {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		Date diaIniciTrimestre3;
-		Calendar diaIniciCal;
-		List calculoAmonest = null;
-		List calculoExpuls = null;
-		Date diaFinalTrimestre3;
+		Date thirdTrimesterStartDate;
+		Calendar startDay;
+		List warningCalculate = null;
+		List pushOutCalculate = null;
+		Date thirdTrimestralFinalDate;
 
 		long diff;
-		long numSetmanes;
+		long numberOfWeeks;
 		// Delimiter used in CSV file
 
 		FileWriter fileWriter = null;
@@ -470,16 +470,16 @@ public class TrimestralReports {
 		grupos = jpa.getGroups();
 
 		for (int x = 0; x < grupos.size(); x++) {
-			diaIniciTrimestre3 = dates.get(4);
-			diaIniciCal = Calendar.getInstance();
-			diaIniciCal.setTime(diaIniciTrimestre3);
+			thirdTrimesterStartDate = dates.get(4);
+			startDay = Calendar.getInstance();
+			startDay.setTime(thirdTrimesterStartDate);
 
-			calculoAmonest = null;
-			calculoExpuls = null;
-			diaFinalTrimestre3 = dates.get(5);
+			warningCalculate = null;
+			pushOutCalculate = null;
+			thirdTrimestralFinalDate = dates.get(5);
 
-			diff = diaFinalTrimestre3.getTime() - diaIniciTrimestre3.getTime();
-			numSetmanes = (diff / (24 * 60 * 60 * 1000)) / 7;
+			diff = thirdTrimestralFinalDate.getTime() - thirdTrimesterStartDate.getTime();
+			numberOfWeeks = (diff / (24 * 60 * 60 * 1000)) / 7;
 
 			// FOR STUDENT ID
 			query = new ReportQuerys();
@@ -544,18 +544,18 @@ public class TrimestralReports {
 				// CONSULTA
 				String setmana = "Set. ";
 
-				for (int i = 1; i <= numSetmanes; i++) {
+				for (int i = 1; i <= numberOfWeeks; i++) {
 
-					setmana.equals(numSetmanes + i);
+					setmana.equals(numberOfWeeks + i);
 					fileWriter.append(setmana + i);
 					fileWriter.append(COMMA_DELIMITER);
 
-					Date diaInicial = diaIniciCal.getTime();
+					Date diaInicial = startDay.getTime();
 					String fechainicialBuena = datas.converterDate(diaInicial);
 
 					fileWriter.append(fechainicialBuena);
 					fileWriter.append(COMMA_DELIMITER);
-					diaIniciCal.add(Calendar.DATE, 7);
+					startDay.add(Calendar.DATE, 7);
 
 				}
 				fileWriter.append(NEW_LINE_SEPARATOR);
@@ -564,7 +564,7 @@ public class TrimestralReports {
 				fileWriter.append("ALUMNE");
 				fileWriter.append(COMMA_DELIMITER);
 
-				for (int i = 0; i < numSetmanes; i++) {
+				for (int i = 0; i < numberOfWeeks; i++) {
 					fileWriter.append("A");
 					fileWriter.append(COMMA_DELIMITER);
 					fileWriter.append("E");
@@ -577,7 +577,7 @@ public class TrimestralReports {
 				// ADD STUDENTS
 				for (int i = 0; i < nomsList.size(); i++) {
 					Calendar diaInicisetmanes = Calendar.getInstance();
-					diaInicisetmanes.setTime(diaIniciTrimestre3);
+					diaInicisetmanes.setTime(thirdTrimesterStartDate);
 					Date semana2 = null;
 					Date semana1 = diaInicisetmanes.getTime();
 					diaInicisetmanes.add(Calendar.DATE, 7);
@@ -586,32 +586,32 @@ public class TrimestralReports {
 					fileWriter.append(nomsList.get(i).toString() + " " + cognomsList.get(i).toString());
 					fileWriter.append(COMMA_DELIMITER);
 
-					for (int l = 0; l < numSetmanes; l++) {
+					for (int l = 0; l < numberOfWeeks; l++) {
 
-						calculoExpuls = new ArrayList<>();
-						calculoAmonest = new ArrayList<>();
+						pushOutCalculate = new ArrayList<>();
+						warningCalculate = new ArrayList<>();
 
-						calculoAmonest = calcularAmonestadosPorSemana(idList, semana1, semana2);
-						calculoExpuls = calcularExpulsadosPorSemana(idList, semana1, semana2);
+						warningCalculate = calcularAmonestadosPorSemana(idList, semana1, semana2);
+						pushOutCalculate = calcularExpulsadosPorSemana(idList, semana1, semana2);
 
 						semana1 = semana2;
 						diaInicisetmanes.add(Calendar.DATE, 7);
 						semana2 = diaInicisetmanes.getTime();
 
-						if (calculoAmonest.get(i).toString().equals("0")) {
+						if (warningCalculate.get(i).toString().equals("0")) {
 							fileWriter.append("");
 
 						} else {
-							fileWriter.append(calculoAmonest.get(i).toString());
+							fileWriter.append(warningCalculate.get(i).toString());
 
 						}
 						fileWriter.append(COMMA_DELIMITER);
 
-						if (calculoExpuls.get(i).toString().equals("0")) {
+						if (pushOutCalculate.get(i).toString().equals("0")) {
 							fileWriter.append("");
 
 						} else {
-							fileWriter.append(calculoExpuls.get(i).toString());
+							fileWriter.append(pushOutCalculate.get(i).toString());
 
 						}
 						fileWriter.append(COMMA_DELIMITER);
