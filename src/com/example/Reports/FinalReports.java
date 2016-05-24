@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 import javax.persistence.Query;
@@ -40,6 +41,7 @@ public class FinalReports {
 	private static final String FILE_HEADER = "ALUMNE,A,E";
 
 	private ReportQuerys query;
+	private ResourceBundle rb = ResourceBundle.getBundle("GA");
 	private ArrayList<Date> dates;
 	private GroupJPAManager jpa;
 	private List<Group> grupos;
@@ -584,7 +586,7 @@ public class FinalReports {
 			e1.printStackTrace();
 		}
 
-		File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
+		File f = new File(rb.getString("file_settings"));
 
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if (br.readLine() == null) {
