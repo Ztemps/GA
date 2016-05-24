@@ -534,7 +534,7 @@ public class generatePDF extends WarningJPAManager {
 	 */
 	public String getPath2(String nomCognom, String fecha) throws IOException {
 
-		return rb.getString("path_warning")+ "(" + fecha + ")(" + nomCognom + ").pdf";
+		return rb.getString("path_warning")+"amonestacio"+ "(" + fecha + ")(" + nomCognom + ").pdf";
 
 	}
 }
