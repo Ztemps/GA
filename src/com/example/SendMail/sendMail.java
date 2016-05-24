@@ -40,7 +40,7 @@ public class sendMail {
 	private String emailSubject = null;
 	private String filename = null;
 	private ResourceBundle rb = ResourceBundle.getBundle("GA");
-	private String senderEmailID = rb.getString("sender_mail");
+	private String senderEmailID = "smtp.gmail.com";
 	private String senderPassword = rb.getString("sender_pass");
 	private String emailSMTPserver = rb.getString("sender_smpt");
 	private String emailServerPort = rb.getString("sender_port");

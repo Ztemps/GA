@@ -159,18 +159,12 @@ public class TeacherViewWarningJava extends MainContentView {
 				private boolean check() {
 					// TODO Auto-generated method stub
 
-					if (amonestacioForm.nom.getValue() == "" || amonestacioForm.cognoms.getValue() == ""
+					if ((amonestacioForm.nom.getValue() == "" || amonestacioForm.cognoms.getValue() == ""
 							|| amonestacioForm.accio.getValue() == null || amonestacioForm.caracter.getValue() == null
 							|| amonestacioForm.motiu.getValue() == null || amonestacioForm.motiu2.getValue() == null
 							|| amonestacioForm.circunstancia.getValue() == null || amonestacioForm.grup.getValue() == ""
-							|| amonestacioForm.tutor.getValue() == "") {
-
+							|| amonestacioForm.tutor.getValue() == "")) {
 						notif("Omple els camps obligatoris");
-
-						return false;
-					} else if ((amonestacioForm.motiu.getValue() == null || amonestacioForm.motiu2.getValue() == null)
-							&& amonestacioForm.amotius.getValue() == "") {
-						notif("S'ha de seleccionar almenys un motiu");
 						return false;
 					} else {
 
@@ -705,7 +699,6 @@ public class TeacherViewWarningJava extends MainContentView {
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
 			Notification.show("Els camps obligatoris s'han d'emplenar");
-			e.printStackTrace();
 		}
 		if (String.valueOf(amonestacioForm.materia.getValue()).equals("null")) {
 
