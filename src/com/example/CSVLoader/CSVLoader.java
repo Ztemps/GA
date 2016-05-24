@@ -1,17 +1,3 @@
-/*******************************************************************************
- * 
- * Gestió d'Amonestacions v1.0
- *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
- * 
- * 
- *******************************************************************************/
 package com.example.CSVLoader;
 
 import java.io.BufferedReader;
@@ -46,6 +32,29 @@ import com.vaadin.server.Page;
 import com.vaadin.shared.Position;
 import com.vaadin.ui.Notification;
 
+/*******************************************************************************
+ * 
+ * Gestió d'Amonestacions
+ * v1.0https://www.google.com/search?client=ubuntu&channel=fs&q=tutorial+javadoc
+ * &ie=utf-8&oe=utf-8
+ *
+ * Esta obra está sujeta a la licencia
+ * Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative
+ * Commons. Para ver una copia de esta licencia, visite
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ * 
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net
+ * 
+ * 
+ * 
+ *         Esta clase se encarga de cargar masivamente alumnos, grupos,
+ *         docentes, usuarios y tutores mediante un fichero csv
+ * 
+ *******************************************************************************/
+
 public class CSVLoader {
 
 	private final static String FORMAT = "ISO-8859-3";
@@ -54,7 +63,7 @@ public class CSVLoader {
 	private final static String ROLTUTOR = "Tutor";
 	private final static String ROLPROFESSOR = "Professor";
 	private final static String NOTIF = "Dades carregades correctament";
-	
+
 	private int id;
 	private String surname, name, group, country, nacionality, phone;
 	private String email, password, user, tutoring;
@@ -74,7 +83,12 @@ public class CSVLoader {
 	private String line = "";
 	private String passwordHash;
 	private CurrentCourse course;
-	
+
+	/**
+	 * Este es el método main en el que se inician las conexiones con la base de
+	 * datos para cada entidad.
+	 * 
+	 */
 	public CSVLoader() {
 
 		course = new CurrentCourse();
@@ -84,6 +98,17 @@ public class CSVLoader {
 		groupsJPA = new GroupJPAManager();
 		tutorJPA = new TutorJPAManager();
 	}
+
+	/**
+	 * Este es el método en el que se cargan los alumnos en la base de datos
+	 * además de los grupos.
+	 * 
+	 * @param file
+	 *            Este parámetro es el fichero que se descarga el programa a
+	 *            partir del fichero elejido por el usuario para posteriormente
+	 *            cargarlo en la base de datos
+	 * 
+	 */
 
 	public void loadStudents(File file) throws IOException, SQLException, ParseException {
 
@@ -141,6 +166,16 @@ public class CSVLoader {
 
 	}
 
+	/**
+	 * Este es el método en el que se cargan los docentes en la base de datos
+	 * además de los tutores y usuarios.
+	 * 
+	 * @param file
+	 *            Este parámetro es el fichero que se descarga el programa a
+	 *            partir del fichero elejido por el usuario para posteriormente
+	 *            cargarlo en la base de datos
+	 * 
+	 */
 	public void loadTeachers(File file) throws IOException, SQLException, ParseException, NoSuchAlgorithmException {
 
 		messageDigest = MessageDigest.getInstance(ALGORITHM);
@@ -159,14 +194,14 @@ public class CSVLoader {
 			password = str.nextToken();
 			tutoring = str.nextToken();
 
-			userJPA.addDocent(new Teacher(name, surname, email));
+			teachersJPA.addTeacher(new Teacher(name, surname, email));
 
 			passwordHash = hBinaryAdapter.marshal(messageDigest.digest(password.getBytes())).toLowerCase();
 
 			if (!tutoring.equals("null")) {
 				tutorJPA.addTutor(new Tutor(teachersJPA.getIdDocent(email), tutoring));
 				userJPA.addUser(new User(teachersJPA.getIdDocent(email), passwordHash, user, ROLTUTOR));
-			} else 
+			} else
 				userJPA.addUser(new User(teachersJPA.getIdDocent(email), passwordHash, user, ROLPROFESSOR));
 
 		}
@@ -175,6 +210,17 @@ public class CSVLoader {
 		notif("Dades carregades correctament");
 
 	}
+
+	/**
+	 * Este es el método en el que se declaran las notificaciones que el usuario
+	 * verá en pantalla
+	 * 
+	 * @param mensaje
+	 *            Este parámetro es la String que se mostrará por pantalla al
+	 *            usuario
+	 * 
+	 * 
+	 */
 
 	public static void notif(String mensaje) {
 		Notification notif = new Notification(mensaje, null, Notification.Type.HUMANIZED_MESSAGE, true); // Contains
