@@ -491,7 +491,7 @@ public class generatePDF extends WarningJPAManager {
 
 	/**
 	 * Método que selecciona la imagen en la ruta definida i le otorgará unos valores de 
-	 * de tamaño, posición y escala predeterminados.
+	 * de tamaño, posición y escala predeterminados
 	 * @return Una Imagen
 	 * @throws IOException
 	 * @throws BadElementException
