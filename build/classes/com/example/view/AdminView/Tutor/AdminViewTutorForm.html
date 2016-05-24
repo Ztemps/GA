@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src&quot;,&quot;THEME&quot;:&quot;gestioamonestacions&quot;}">
+ </head> 
+ <body> 
+  <vaadin-css-layout size-full> 
+   <vaadin-vertical-layout height="287px"> 
+    <vaadin-horizontal-layout spacing height="74px" margin-bottom :middle :center> 
+     <vaadin-text-field icon="fonticon://FontAwesome/f007" caption="Nom" required immediate width="145px" _id="nom"></vaadin-text-field> 
+     <vaadin-text-field icon="fonticon://FontAwesome/f007" caption="Cognoms" required immediate width="324px" _id="cognoms"></vaadin-text-field> 
+    </vaadin-horizontal-layout> 
+    <vaadin-horizontal-layout spacing width="480px" height="63px" :middle :center> 
+     <vaadin-text-field icon="fonticon://FontAwesome/f003" caption="Email" required immediate width="99.68%" _id="email" :middle :center :expand></vaadin-text-field> 
+     <vaadin-text-field caption="Usuario" width="160px" _id="txtUsername" :middle :center></vaadin-text-field> 
+    </vaadin-horizontal-layout> 
+    <vaadin-horizontal-layout spacing width="46.15%" height="60px" :middle :center> 
+     <vaadin-vertical-layout width-auto height-full> 
+      <vaadin-check-box caption="Tutor" _id="isTutor" :middle :center></vaadin-check-box> 
+     </vaadin-vertical-layout> 
+     <vaadin-vertical-layout width-auto height-full> 
+      <vaadin-native-select item-caption-mode="id" _id="selectGroup" :middle :center> 
+       <option>Option 1</option> 
+       <option>Option 2</option> 
+       <option>Option 3</option> 
+      </vaadin-native-select> 
+     </vaadin-vertical-layout> 
+    </vaadin-horizontal-layout> 
+    <vaadin-horizontal-layout spacing width="296px" height="54px" :center> 
+     <vaadin-button icon="fonticon://FontAwesome/f00c" style-name="icon-align-right primary" width="118px" plain-text _id="aceptarButton" :middle>
+       Aceptar 
+     </vaadin-button> 
+     <vaadin-button icon="fonticon://FontAwesome/f00d" style-name="danger icon-align-right" width="118px" plain-text _id="cancelarButton" :middle>
+       Cancelar 
+     </vaadin-button> 
+    </vaadin-horizontal-layout> 
+    <vaadin-horizontal-layout width-full :expand> 
+     <vaadin-label size-auto plain-text :middle :center>
+       *Si l'usuari 
+     </vaadin-label> 
+    </vaadin-horizontal-layout> 
+   </vaadin-vertical-layout> 
+  </vaadin-css-layout>  
+ </body>
+</html>
