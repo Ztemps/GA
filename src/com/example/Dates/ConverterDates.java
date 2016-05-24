@@ -1,20 +1,24 @@
-/*******************************************************************************
- * 
- * Gestió d'Amonestacions v1.0
- *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
- * 
- *******************************************************************************/
-
 package com.example.Dates;
 
 import java.util.Date;
+
+/**
+ * 
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia
+ * Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative
+ * Commons. Para ver una copia de esta licencia, visite
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ * 
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net
+ * 
+ * 
+ *         Este clase sirve para convertir fechas al formato necesario.
+ */
 
 public class ConverterDates {
 
@@ -22,25 +26,52 @@ public class ConverterDates {
 	private String initialDate;
 	private String[] date;
 	private String lastMonth;
+
+	/**
+	 * Método que convierte la fecha que le pasamos, la corta con el método
+	 * split
+	 * 
+	 * @params initialDate la fecha de la clase Date que queremos convertir
+	 * 
+	 * @return fecha en formato dd-MM-yyyy en una String
+	 */
 	public String converterDate(Date initialDate) {
 
 		this.initialDate = initialDate.toLocaleString();
 		date = this.initialDate.substring(0, 11).split("-");
 		month = getMonth(date[1]);
-		
+
 		return date[0] + "-" + month + "-" + date[2];
 
 	}
 
-	public  String converterDate2(String initialDate) {
+	/**
+	 * Método que convierte la fecha que le pasamos, la corta con el método
+	 * split
+	 * 
+	 * @params month el nombre del mes en formato reducido...ene, feb...tanto en
+	 *         inglés como en español
+	 * 
+	 * @return fecha en formato dd-MM-yyyy en una String
+	 */
+	public String converterDate2(String initialDate) {
 
 		date = initialDate.substring(0, initialDate.length()).split(" ");
 		month = getMonth(date[1]);
-		
+
 		return date[2] + "-" + month + "-" + date[5];
 	}
 
-	public  String getMonth(String month) {
+	/**
+	 * Método que devuelve el número de mes dependiendo de el parámetro que le
+	 * pasamos
+	 * 
+	 * @params month el nombre del mes en formato reducido...ene, feb...tanto en
+	 *         inglés como en español
+	 * @return Número de mes
+	 */
+
+	public String getMonth(String month) {
 
 		switch (month) {
 		// English format

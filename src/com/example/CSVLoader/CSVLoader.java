@@ -10,6 +10,7 @@
  * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
  * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
  * 
+ * 
  *******************************************************************************/
 package com.example.CSVLoader;
 
@@ -20,9 +21,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -30,12 +28,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashSet;
-import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
-
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
-
 import com.example.Entities.Group;
 import com.example.Entities.Student;
 import com.example.Entities.Teacher;
@@ -47,10 +42,8 @@ import com.example.Logic.StudentsJPAManager;
 import com.example.Logic.TeachersJPAManager;
 import com.example.Logic.TutorJPAManager;
 import com.example.Logic.UserJPAManager;
-import com.google.gwt.user.client.rpc.core.java.util.Arrays;
 import com.vaadin.server.Page;
 import com.vaadin.shared.Position;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.Notification;
 
 public class CSVLoader {
