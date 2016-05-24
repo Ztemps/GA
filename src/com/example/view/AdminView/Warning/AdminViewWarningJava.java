@@ -213,8 +213,9 @@ public class AdminViewWarningJava extends MainContentView {
 				} finally {
 					window.close();
 					windowpdf.close();
-					// SENDTELEGRAM
-
+					
+//					sendTel.sendWarning("Gerard_Paulino", timewarning[0]);
+					
 					FileReader reader;
 					String path2 = null;
 					File currDir = new File(".");
