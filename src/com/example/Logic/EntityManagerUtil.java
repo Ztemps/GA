@@ -1,3 +1,12 @@
+
+package com.example.Logic;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import org.apache.log4j.Logger;
+
 /*******************************************************************************
  * 
  * Gestió d'Amonestacions v1.0
@@ -10,24 +19,30 @@
  * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
  * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
  * 
+ * 
+ * 	Esta clase se encarga de la persistencia a la base de datos mediante al entity manager factory(jpa)
+ * 
  *******************************************************************************/
-package com.example.Logic;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
-import org.apache.log4j.Logger;
-
 public class EntityManagerUtil {
 
 	private static final String PERSISTENCE = "GestioAmonestacions";
 	public static EntityManagerFactory emf = null;
 
+	/**
+	 * Este es el método en el que se crea la persistencia.
+	 * @return 
+	 * 
+	 * 
+	 */
 	public EntityManagerUtil() {
 		emf = Persistence.createEntityManagerFactory(PERSISTENCE);
 	}
 
+	/**
+	 * Este es el método en el que se abre la conexión con la base de datos.
+	 * @return emf Devuelve el entity manager factory
+	 * 		
+	 */
 	public EntityManagerFactory getEntityManagerFactory() {
 		if (emf == null) {
 			emf = Persistence.createEntityManagerFactory(PERSISTENCE);
@@ -35,10 +50,18 @@ public class EntityManagerUtil {
 		return emf;
 	}
 
+	/**
+	 * Este es el método en el que se obtiene la conexion ya establecida.
+	 * 
+	 */
+	
 	public EntityManager getEntityManager() {
 		return getEntityManagerFactory().createEntityManager();
 	}
-
+	/**
+	 * Este es el método en el que se cierra la conexión.
+	 * 
+	 */
 	public static void close() {
 		emf.close();
 	}

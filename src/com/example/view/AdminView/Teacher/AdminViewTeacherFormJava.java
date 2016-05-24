@@ -39,6 +39,7 @@ import com.example.Entities.Tutor;
 import com.example.Entities.User;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.TeachersJPAManager;
+import com.example.Logic.TutorJPAManager;
 import com.example.Logic.UserJPAManager;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.client.ui.VGridLayout;
@@ -58,7 +59,7 @@ public class AdminViewTeacherFormJava extends AdminViewTeacherForm {
 	private static final long serialVersionUID = 1038815527250707361L;
 	private TeachersJPAManager MA;
 	private UserJPAManager MA2;
-
+	private TutorJPAManager MA3;
 	ResourceBundle rb = ResourceBundle.getBundle("GA");
 	
 	private String username;
@@ -101,7 +102,7 @@ public class AdminViewTeacherFormJava extends AdminViewTeacherForm {
 
 		MA = new TeachersJPAManager();
 		MA2 = new UserJPAManager();
-
+		MA3 = new TutorJPAManager();
 		String passwordhash = hbinary.marshal(md.digest(password.getBytes())).toLowerCase();
 		System.out.println("Encriptada: " + passwordhash);
 
@@ -128,7 +129,7 @@ public class AdminViewTeacherFormJava extends AdminViewTeacherForm {
 
 		if (isTutor.getValue()) {
 			group = this.selectGroup.getValue().toString();
-			MA2.addTutor(new Tutor(id, group));
+			MA3.addTutor(new Tutor(id, group));
 			rol = "Tutor";
 		}
 		MA2.addUser(new User(id, passwordhash, username.toLowerCase(), rol));
