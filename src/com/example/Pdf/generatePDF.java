@@ -116,7 +116,7 @@ public class generatePDF extends WarningJPAManager {
 
 		String nameLastname = (query[0].concat(" " + query[1])).replaceFirst(" ", "").replaceAll(" ", "_");
 
-		String path = path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + hourWarning.substring(0, 5) + ")("
+		String path = rb.getString("path_warning") + "amonestacio(" + hourWarning.substring(0, 5) + ")("
 				+ nameLastname + ").pdf";
 
 		// Definimos la ruta de nuestro documento
@@ -534,7 +534,7 @@ public class generatePDF extends WarningJPAManager {
 	 */
 	public String getPath2(String nomCognom, String fecha) throws IOException {
 
-		return rb.getString("path_warning")+"amonestacio"+ "(" + fecha + ")(" + nomCognom + ").pdf";
+		return rb.getString("path_warning")+ "(" + fecha + ")(" + nomCognom + ").pdf";
 
 	}
 }
