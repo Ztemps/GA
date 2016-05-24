@@ -1,16 +1,3 @@
-/*******************************************************************************
- * 
- * Gestió d'Amonestacions v1.0
- *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
- * 
- *******************************************************************************/
 package com.example.LoginView;
 
 import java.awt.Toolkit;
@@ -69,13 +56,28 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.Reindeer;
 import com.vaadin.ui.themes.ValoTheme;
 
+/**
+ * 
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia
+ * Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative
+ * Commons. Para ver una copia de esta licencia, visite
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ * 
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net
+ * 
+ *         Vista de la pantalla de login.
+ * 
+ */
+
 @Title("Login - Plataforma Gestió d'Amonestacions")
 
 public class LoginView extends LoginViewDesign implements View {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4731762934864687953L;
 	private static final String TITLE = "Plataforma Gestió d'Amonestacions";
 	private static final String USER = "Plataforma Gestió d'Amonestacions";
@@ -92,26 +94,37 @@ public class LoginView extends LoginViewDesign implements View {
 
 	public LoginView() throws ClassNotFoundException, IOException {
 
-		// Creando una etiqueta con un stylo predefinido
-		txtTitle.setValue("Plataforma Gestió d'Amonestacions");
-		txtTitle.addStyleName("loginTitle");
+		iconsAndCaption();
+		styles();
+		listeners();
 
-		txtUsername.setCaption("Usuari");
-		txtPassword.setCaption("Contrasenya");
-		txtUsername.setIcon(FontAwesome.USER);
-		txtUsername.setInvalidAllowed(false);
+	}
 
-		txtPassword.setIcon(FontAwesome.LOCK);
+	public void iconsAndCaption() {
 
 		bLogin.setEnabled(false);
 		bLogin.setClickShortcut(KeyCode.ENTER);
+		txtTitle.setValue("Plataforma Gestió d'Amonestacions");
+		txtUsername.setCaption("Usuari");
+		txtPassword.setCaption("Contrasenya");
+		txtUsername.setInvalidAllowed(false);
+		txtUsername.setIcon(FontAwesome.USER);
+		txtPassword.setIcon(FontAwesome.LOCK);
+
+	}
+
+	public void styles() {
+		txtTitle.addStyleName("loginTitle");
 		bLogin.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		vMainLogin.setStyleName(Reindeer.LAYOUT_BLUE);
+		vLogin.addStyleName("loginview");
+
+	}
+
+	public void listeners() {
 
 		txtPassword.addTextChangeListener(new TextChangeListener() {
 
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 7811790145041299537L;
 
 			@Override
@@ -128,8 +141,6 @@ public class LoginView extends LoginViewDesign implements View {
 			}
 		});
 
-		vMainLogin.setStyleName(Reindeer.LAYOUT_BLUE);
-		vLogin.addStyleName("loginview");
 		bLogin.addClickListener(new ClickListener() {
 
 			@Override
@@ -150,7 +161,6 @@ public class LoginView extends LoginViewDesign implements View {
 
 		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true);
 
-		// Customize it
 		notif.show(Page.getCurrent());
 		notif.setDelayMsec(500);
 		notif.setPosition(Position.TOP_CENTER);
@@ -161,14 +171,20 @@ public class LoginView extends LoginViewDesign implements View {
 		txtUsername.focus();
 	}
 
+	/**
+	 * Este método realiza las comprobaciones pertinentes en la base de datos
+	 * para asegurar que el usuario que se conecta existe, y comprobar si así es
+	 * que rol tiene para derivarlo a una vista u otra
+	 * 
+	 */
 	public void LoginValidator() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 
 		MessageDigest md = MessageDigest.getInstance("SHA-1");
 		HexBinaryAdapter hbinary = new HexBinaryAdapter();
-		// Conecxión con la base de datos
+		// Conexión con la base de datos
 		String dbURL = "jdbc:postgresql:GAdb";
 		Class.forName("org.postgresql.Driver");
-		
+
 		Connection conn = null;
 		conn = DriverManager.getConnection(dbURL, "postgres", "postgres");
 
@@ -238,7 +254,10 @@ public class LoginView extends LoginViewDesign implements View {
 		conn.close();
 
 	}
-
+	
+	/**Asignación de los atributos de sesión para el usuario, los cuales usaremos mas tarde
+	 * 
+	 * @params username nombre del usuario que se ha logueado correctamente y accede a la plataforma*/
 	public void setAttributeSession(String username) {
 
 		getUI().getSession().setAttribute("user", username);
