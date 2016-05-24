@@ -1,4 +1,6 @@
-/*******************************************************************************
+package com.example.Entities;
+
+/**
  * 
  * Gestió d'Amonestacions v1.0
  *
@@ -10,8 +12,9 @@
  * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
  * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
  * 
- *******************************************************************************/
-package com.example.Entities;
+ * 		Java POJO que representa un usuario de la aplicación
+ * 
+ */
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -49,6 +52,15 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
+	/**
+	 * Constructor completo de la clase User
+	 * 
+	 * @params id identificador del usuario
+	 * @params password del usuario
+	 * @params username nickname del usuario
+	 * @params rol al que está asignado este usuario
+	 * 
+	 */
 	public User(int id, String password, String username, String rol) {
 		super();
 		this.id = id;
@@ -70,6 +82,7 @@ public class User implements Serializable {
 		this.password = password;
 	}
 	
+	// Getters y Setter
 	public int getId() {
 		return id;
 	}

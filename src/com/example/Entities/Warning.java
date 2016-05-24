@@ -1,4 +1,14 @@
-/*******************************************************************************
+package com.example.Entities;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
  * 
  * Gestió d'Amonestacions v1.0
  *
@@ -10,24 +20,15 @@
  * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
  * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
  * 
- *******************************************************************************/
-package com.example.Entities;
-
-import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+ * 
+ * 		Java POJO que representa una amonestación
+ */
 
 @Entity
 @Table(name = "amonestacio")
 public class Warning implements Serializable {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	@Id
 	private int docent;
@@ -47,6 +48,25 @@ public class Warning implements Serializable {
 	private String motiu;
 	private String altres_motius;
 
+	
+	/**
+	 * Constructor completo de la clase Warning
+	 * 
+	 * @params docent identificador del profesor
+	 * @params data fecha de la amonestación
+	 * @params grup grupo del alumno
+	 * @params alumne id del alumno
+	 * @params gravetat gravedad de la amonestación (LLEU, GREU...)
+	 * @params localitzacio lugar donde se produjo la amonestación
+	 * @params materia assignatura en la que se produjo la amonestación
+	 * @params tutor identificador del tutor del alumno
+	 * @params amonestat indica si el alumno fue amonestado
+	 * @params explulsat indica si el alumno fue expulsado
+	 * @params curs curso actual del alumno
+	 * @params motiu motivo o motivos de la amonestación
+	 * @params altre_motius motivos no contemplados en motiu
+	 * 
+	 */
 	public Warning(int docent, Date data, String grup, int alumne, String gravetat, String localitzacio,
 			String materia, int tutor, boolean amonestat, boolean expulsat, String curs, String motiu,
 			String altres_motius) {
@@ -65,7 +85,9 @@ public class Warning implements Serializable {
 		this.motiu = motiu;
 		this.altres_motius = altres_motius;
 	}
-
+	
+	
+	// Getters y Setters
 	public String getAltres_motius() {
 		return altres_motius;
 	}
@@ -90,11 +112,6 @@ public class Warning implements Serializable {
 		this.localitzacio = localitzacio;
 	}
 
-	public Warning(int id, Date currentTimeStamp, String string, int id2, String string2, String string3,
-			String string4, int grupo, String string5, String string6, String string7, String string8, String string9) {
-		// TODO Auto-generated constructor stub
-
-	}
 
 	public int getDocent() {
 		return docent;

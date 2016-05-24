@@ -1,4 +1,13 @@
-/*******************************************************************************
+package com.example.Entities;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+/**
  * 
  * Gestió d'Amonestacions v1.0
  *
@@ -10,14 +19,9 @@
  * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
  * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
  * 
- *******************************************************************************/
-package com.example.Entities;
-
-import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+ * 		Java POJO que representa un tutor
+ * 
+ */
 
 @Entity
 @Table(name="tutor")
@@ -32,7 +36,13 @@ public class Tutor implements Serializable{
 	
 	}
 	
-
+	/**
+	 * Constructor completo de la clase Tutor
+	 * 
+	 * @params docent identificador del alumno
+	 * @params grup nombre del grupo (ESO 1A, ESO 1B...)
+	 * 
+	 */
 	public Tutor(int docent, String grup) {
 		super();
 		this.docent = docent;
@@ -40,6 +50,7 @@ public class Tutor implements Serializable{
 	}
 	
 	
+	// Getters i Setters
 	public int getDocent() {
 		return docent;
 	}

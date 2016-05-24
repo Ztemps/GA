@@ -1,4 +1,13 @@
-/*******************************************************************************
+
+package com.example.Entities;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+ /**
  * 
  * Gestió d'Amonestacions v1.0
  *
@@ -10,14 +19,11 @@
  * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
  * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
  * 
- *******************************************************************************/
-package com.example.Entities;
+ * 
+ * 	Java POJO que representa el historico de las amonestaciones
+ * 
+ */
 
-import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
 //@Entity
 //@Table(name = "historic")
@@ -43,6 +49,8 @@ public class Historic implements Serializable {
 		this.nom_alumne = nom_alumne;
 		this.amonestacions = amonestacions;
 	}
+	
+	// Getters i Setters
 	public String getCurs() {
 		return curs;
 	}
