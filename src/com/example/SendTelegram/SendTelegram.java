@@ -14,12 +14,14 @@
 package com.example.SendTelegram;
 
 import java.io.File;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class SendTelegram {
 
 	public void sendWarning(String contactName, String sourceToFile) {
 
+		ResourceBundle rb = ResourceBundle.getBundle("GA");
 		String msg = "Atenció:_El_seu_fill/a_ha_sigut_amonestat_a_l'Institut_Puig_Castellar.__"
 				+ "L'hi_adjuntem_un_fitxer_PDF_amb_l'amonestació,_on_podrá_veure_els_motius_mes_detalladament.___"
 				+ "Gracies__" + "Att.Institut_Puig_Castellar_____"
@@ -33,7 +35,7 @@ public class SendTelegram {
 		try {
 			String homedir = System.getProperty("user.home");
 			File wd = new File(homedir);
-			Process pwd = Runtime.getRuntime().exec("./sendWarning.sh " + contactName + " " + msg + " " + sourceToFile,
+			Process pwd = Runtime.getRuntime().exec(rb.getString("send_telegram") + contactName + " " + msg + " " + sourceToFile,
 					null, wd);
 
 			Scanner scanner = new Scanner(pwd.getInputStream());

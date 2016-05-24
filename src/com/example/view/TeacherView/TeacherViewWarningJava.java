@@ -113,7 +113,7 @@ public class TeacherViewWarningJava extends MainContentView {
 	public TeacherViewWarningJava() throws MalformedURLException, DocumentException, IOException {
 
 		GridProperties();
-		//filterTextProperties();
+		// filterTextProperties();
 		WindowProperties();
 		buttonsSettings();
 		WindowPdfProperties();
@@ -136,15 +136,6 @@ public class TeacherViewWarningJava extends MainContentView {
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-
-					// REVISAR!!!! PARA COMPROBAR QUE ALGUNO DE LOS MOTIVOS NO
-					// HA DE SER NULO
-					/*
-					 * if(amonestacioForm.motiu.getValue() == null &&
-					 * amonestacioForm.motiu2.getValue() == null &&
-					 * amonestacioForm.amotius.getValue() == ""){ notif.show(
-					 * "S'ha de seleccionar almenys un motiu"); }
-					 */
 
 					if (check()) {
 
@@ -176,6 +167,10 @@ public class TeacherViewWarningJava extends MainContentView {
 
 						notif("Omple els camps obligatoris");
 
+						return false;
+					} else if ((amonestacioForm.motiu.getValue() == null || amonestacioForm.motiu2.getValue() == null)
+							&& amonestacioForm.amotius.getValue() == "") {
+						notif("S'ha de seleccionar almenys un motiu");
 						return false;
 					} else {
 
@@ -276,7 +271,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		vHorizontalMain.addComponent(GridProperties());
 
 	}
-	
+
 	private void PopulateComboBoxSubjects() {
 
 		List subjects = new ArrayList<>();
@@ -339,26 +334,6 @@ public class TeacherViewWarningJava extends MainContentView {
 
 		}
 
-		/*
-		 * amonestacioForm.comboProf.setNewItemHandler(new NewItemHandler() {
-		 * 
-		 * @Override public void addNewItem(final String newItemCaption) {
-		 * boolean newItem = true; for (final Object itemId :
-		 * amonestacioForm.comboProf.getItemIds()) { if
-		 * (newItemCaption.equalsIgnoreCase(amonestacioForm.comboProf.
-		 * getItemCaption(itemId))) { newItem = false; break; } } if (newItem) {
-		 * // Adds new option if
-		 * (amonestacioForm.comboProf.addItem(newItemCaption) != null) { final
-		 * Item item = amonestacioForm.comboProf.getItem(newItemCaption);
-		 * 
-		 * amonestacioForm.comboProf.setValue(newItemCaption); } } } });
-		 */
-
-		// amonestacioForm.comboProf.addValueChangeListener(e ->
-		// Notification.show("Value changed:",
-		// String.valueOf(e.getProperty().getValue()),
-		// Type.TRAY_NOTIFICATION));
-
 	}
 
 	private String mailStudent() {
@@ -380,10 +355,10 @@ public class TeacherViewWarningJava extends MainContentView {
 		bAdd.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		bRegister.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonEdit.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		
+
 		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
-		
+
 		bDelete.setVisible(false);
 		buttonEdit.setVisible(false);
 		bRegister.setVisible(false);
@@ -401,32 +376,6 @@ public class TeacherViewWarningJava extends MainContentView {
 		notif.setDelayMsec(500);
 		notif.setPosition(Position.TOP_CENTER);
 	}
-
-	/*private TextField filterTextProperties() {
-		// TODO Auto-generated method stub
-		txtSearch.setInputPrompt("Filtra per cognom...");
-		txtSearch.addTextChangeListener(new TextChangeListener() {
-
-			private static final long serialVersionUID = 1L;
-			SimpleStringFilter filter = null;
-
-			@Override
-			public void textChange(TextChangeEvent event) {
-				// TODO Auto-generated method stub
-
-				Filterable f = (Filterable) grid.getContainerDataSource();
-
-				// Remove old filter
-				if (filter != null)
-					f.removeContainerFilter(filter);
-
-				// Set new filter for the "Name" column
-				filter = new SimpleStringFilter("cognoms", event.getText(), true, false);
-				f.addContainerFilter(filter);
-			}
-		});
-		return txtSearch;
-	}*/
 
 	private void FilterGridName() {
 

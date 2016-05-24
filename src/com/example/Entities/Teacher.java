@@ -1,16 +1,3 @@
-/*******************************************************************************
- * 
- * Gestió d'Amonestacions v1.0
- *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
- * 
- *******************************************************************************/
 package com.example.Entities;
 
 import java.io.Serializable;
@@ -23,6 +10,21 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.sql.rowset.serial.SerialArray;
 
+
+/**
+ * 
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
+ * 
+ * 		Java POJO que representa un profesor
+ */
 @Entity
 @Table(name = "docent")
 public class Teacher implements Serializable {
@@ -37,7 +39,15 @@ public class Teacher implements Serializable {
 		
 	}
 	
-
+	/**
+	 * Constructor completo de la clase Teacher
+	 * 
+	 * @params id identificador del profesor
+	 * @params nom nombre del profesor
+	 * @params cognom apellido del profesor
+	 * @params email del profesor
+	 * 	 * 
+	 */
 	public Teacher(int id, String nom,String cognoms, String email) {
 		super();
 		this.id = id;
@@ -64,7 +74,7 @@ public class Teacher implements Serializable {
 		cognoms = cognoms;
 	}
 
-
+	// Getters y Setters
 	public int getId() {
 		return id;
 	}

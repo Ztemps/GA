@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 import com.example.Dates.ConverterDates;
@@ -42,6 +43,7 @@ public class AdminViewSettingsJava extends MainContentView {
 
 	private AdminViewSettings adminsettings;
 	private ConverterDates dates;
+	private ResourceBundle rb = ResourceBundle.getBundle("GA");
 
 	public AdminViewSettingsJava() {
 		adminsettings = new AdminViewSettings();
@@ -58,7 +60,7 @@ public class AdminViewSettingsJava extends MainContentView {
 	}
 
 	private void GeneralSettings() {
-		
+
 		vHorizontalMain.addComponent(adminsettings);
 		vHorizontalMain.setComponentAlignment(adminsettings, Alignment.MIDDLE_CENTER);
 		adminsettings.setVisible(true);
@@ -145,7 +147,7 @@ public class AdminViewSettingsJava extends MainContentView {
 			boolean checkTutor = adminsettings.checkEmailTutors.getValue();
 
 			path2 = currDir.getCanonicalPath();
-			File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
+			File f = new File(rb.getString("file_settings"));
 			FileWriter fw = new FileWriter(f, false);
 			BufferedWriter bf = new BufferedWriter(fw);
 
@@ -191,7 +193,7 @@ public class AdminViewSettingsJava extends MainContentView {
 			e1.printStackTrace();
 		}
 
-		File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
+		File f = new File(rb.getString("file_settings"));
 
 		if (!f.exists()) {
 			f.createNewFile();

@@ -204,7 +204,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 						e.printStackTrace();
 					}
 
-					file = new File(path + "/git/ga2/WebContent/CSVContent/" + filename);
+					file = new File(rb.getString("path_csv")+ filename);
 					fos = new FileOutputStream(file);
 
 				} catch (final java.io.FileNotFoundException e) {
@@ -270,7 +270,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 						e.printStackTrace();
 					}
 
-					file = new File(path + "/git/ga2/WebContent/CSVContent/" + filename);
+					file = new File(rb.getString("path_csv")+ filename);
 					fos = new FileOutputStream(file);
 				} catch (final java.io.FileNotFoundException e) {
 					new Notification("No s'ha pogut obrir el fitxer", e.getMessage(), Notification.Type.ERROR_MESSAGE)

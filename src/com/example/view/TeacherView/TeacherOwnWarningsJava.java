@@ -207,40 +207,4 @@ public class TeacherOwnWarningsJava extends MainContentView {
 
 	}
 
-	/*
-	 * package com.vaadin.demo.ejemplovaadin; import com.vaadin.Application;
-	 * import com.vaadin.ui.*; import java.sql.*; import
-	 * com.vaadin.addon.sqlcontainer.SQLContainer; import
-	 * com.vaadin.addon.sqlcontainer.connection.SimpleJDBCConnectionPool; import
-	 * com.vaadin.addon.sqlcontainer.query.FreeformQuery;
-	 * 
-	 * public class EjemploVaadinAplicacion extends Application {
-	 * 
-	 * @Override public void init() { Window mainWindow = new Window(
-	 * "Consulta demo Vaadin"); SimpleJDBCConnectionPool connectionPool; Table
-	 * table = null; try { connectionPool = new
-	 * SimpleJDBCConnectionPool("com.microsoft.sqlserver.jdbc.SQLServerDriver",
-	 * "jdbc:sqlserver://direccionDelServidor:1433;databaseName=nombreBaseDatos;",
-	 * "usuario", "contraseña", 2, 5);
-	 * 
-	 * SQLContainer container = null; container = new SQLContainer(new
-	 * FreeformQuery("SELECT * FROM Prueba" , connectionPool));
-	 * 
-	 * table = new Table(null, container); //Establecemos el tamaño de Grid
-	 * table.setWidth("100%"); //Ocupa todo el ancho del navegador
-	 * table.setHeight("170px"); //Altura del Grid.
-	 * 
-	 * //Opciones en la selección del Grid table.setSelectable(true); //Hacemos
-	 * que se puedan seleccionar las filas del Grid.
-	 * table.setMultiSelect(true);//Selección de múltiples filas del Grid.
-	 * 
-	 * table.setContainerDataSource(container);
-	 * 
-	 * //Establecemos el nombre de las cabeceras de las columnas
-	 * table.setColumnHeaders(new String[] { "ID Contacto", "Nombre Contacto"
-	 * }); } catch (SQLException e){ System.out.println("SQL Exception: "+
-	 * e.toString()); } mainWindow.addComponent(table);
-	 * setMainWindow(mainWindow); } }
-	 */
-
 }
