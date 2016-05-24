@@ -1,36 +1,14 @@
-/*******************************************************************************
- * 
- * Gestió d'Amonestacions v1.0
- *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
- * 
- *******************************************************************************/
+
 package com.example.Pdf;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-
-import com.example.view.TeacherView.TeacherViewWarningJava;
 import com.example.Entities.Student;
-import com.example.Entities.Teacher;
-import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.UserJPAManager;
 import com.example.Logic.WarningJPAManager;
 import com.itextpdf.text.BadElementException;
@@ -46,193 +24,226 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+/*******************************************************************************
+ * 
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia
+ * Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative
+ * Commons. Para ver una copia de esta licencia, visite
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ * 
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net
+ * 
+ *******************************************************************************/
+
+
+/**
+ * Esta clase consiste en la creación de un PDF,el cual se genera a partir
+ * de los campos seleccionados a la hora de introducir un parte.
+ */
 public class generatePDF extends WarningJPAManager {
 
-	private String timeWarning;
 	private WarningJPAManager warningJPA;
 	private UserJPAManager userJPA;
 	private File currentDirectory;
 	private String path2;
 
+	//Definimos las fuentes para el PDF
+	public static final Font BLACK_BOLD = new Font(FontFamily.HELVETICA, 8, Font.BOLD, BaseColor.BLACK);
+	public static final Font HEADER = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+	public static final Font CAPS = new Font(FontFamily.HELVETICA, 9, Font.BOLD, BaseColor.BLACK);
+	public static final Font DADES = new Font(FontFamily.HELVETICA, 8, Font.NORMAL, BaseColor.BLACK);
+	public static final Font SUBLINE = new Font(FontFamily.HELVETICA, 6, Font.NORMAL, BaseColor.BLACK);
+
+
 	/**
-	 * Main method.
+	 * Constructor de la clase
 	 * 
-	 * @param args
-	 *            no arguments needed
-	 * @throws DocumentException
 	 * @throws IOException
 	 */
-
 	public generatePDF() throws IOException {
-		
+
 		currentDirectory = new File(".");
 		path2 = currentDirectory.getCanonicalPath();
 		warningJPA = new WarningJPAManager();
 		userJPA = new UserJPAManager();
 	}
 
+	/**
+	 * Método el cual le hemos de pasar como parametro un array para poder
+	 * realizar la correcta creación del parte.
+	 * 
+	 * @return Nos retorna path, fechaparte, horaparte que serán necesarios para
+	 *         poder encontrar el parte generado en nuestro sistema y mostrarlo
+	 *         en una ventana.
+	 * @param query
+	 * @throws DocumentException
+	 * @throws IOException
+	 */
 	public String[] generate(String[] query) throws DocumentException, IOException {
 
-		// OBTENER ALUMNO
+		// Obtenemos el alumno
 		Student al = userJPA.ObtenerAlumno(query[0], query[1]);
-
-		// OBTENER TUTOR
+		// Obtenemos tutor
 		int tutorname = userJPA.getIdTutor(al.getGrup());
-		// OBTENER PERSONA QUE REALIZA EL PARTE
+		// Obtenemos persona que realiza el parte
 		String nametutor = userJPA.getNomTutor(tutorname);
 
+		// Conversión de la fecha
 		java.util.Date date = new java.util.Date();
 		Timestamp data1 = new Timestamp(date.getTime());
 		String dateparsed = String.valueOf(data1);
 
-		String fechaparte = dateparsed.substring(0, 10);
-		String horaparte = dateparsed.substring(11, 19);
+		String dateWarning = dateparsed.substring(0, 10);
+		String hourWarning = dateparsed.substring(11, 19);
 
 		if (query[13].length() > 2) {
-			fechaparte = query[13];
-			horaparte = query[14];
+			dateWarning = query[13];
+			hourWarning = query[14];
 		}
+
+		// Creamos un nuevo documento, que será el nuevo parte(PDF)
 		Document document = new Document();
 		Paragraph preface = new Paragraph();
 
 		Image img = logoImage();
 
-		String nomCognom = (query[0].concat(" " + query[1])).replaceFirst(" ", "").replaceAll(" ", "_");
+		String nameLastname = (query[0].concat(" " + query[1])).replaceFirst(" ", "").replaceAll(" ", "_");
 
-		String path = path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + horaparte.substring(0, 5) + ")("
-				+ nomCognom + ").pdf";
+		String path = path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + hourWarning.substring(0, 5) + ")("
+				+ nameLastname + ").pdf";
 
+		// Definimos la ruta de nuestro documento
 		PdfWriter.getInstance(document, new FileOutputStream(path));
+
+		// Creacion del parrafo 1
 		Paragraph paragraph1 = new Paragraph("Generalitat de Catalunya\nDepartament d'Ensenyament", BLACK_BOLD);
 		paragraph1.setIndentationLeft(40);
 		paragraph1.setSpacingBefore(11);
 
-		// P2
+		// Creacion del parrafo 2
 		Paragraph paragraph2 = new Paragraph("Institut Puig Castellar\nSanta Coloma de Gramenet", BLACK_BOLD);
 		paragraph2.setSpacingBefore(-25);
 		paragraph2.setIndentationLeft(205);
 
-		// P3
+		// Creacion del parrafo 3
 		Paragraph paragraph3 = new Paragraph("Anselm de Riu, 10\nTelèfon 93 391 61 11", BLACK_BOLD);
 		paragraph3.setSpacingBefore(-25);
 		paragraph3.setIndentationLeft(380);
 
-		// Header
-		Paragraph headerFalta = new Paragraph("NOTIFICACIÓ DE FALTA", HEADER);
-		headerFalta.setIndentationLeft(180);
+		//Creacion de la cabecera
+		Paragraph headerWarning = new Paragraph("NOTIFICACIÓ DE FALTA", HEADER);
+		headerWarning.setIndentationLeft(180);
+		
+		//Obtencion del nombre del alumno
+		String studentName = query[0] + " " + query[1];
+		Paragraph student = new Paragraph("ALUMNE: ", CAPS);
+		student.setIndentationLeft(25);
+		student.setSpacingBefore(10);
+		Paragraph campStudent = new Paragraph(studentName, DADES);
+		campStudent.setIndentationLeft(75);
+		campStudent.setSpacingBefore(-12);
 
-		// Prueba
-		String nomAlumne = query[0] + " " + query[1];
+		//Obtencion del grupo del alumno
+		String groupStudent = query[2];
 		// CAMP ALUMNE
-		Paragraph alumne = new Paragraph("ALUMNE: ", CAPS);
-		alumne.setIndentationLeft(25);
-		alumne.setSpacingBefore(10);
-		Paragraph campAlumne = new Paragraph(nomAlumne, DADES);
-		campAlumne.setIndentationLeft(75);
-		campAlumne.setSpacingBefore(-12);
-
-		// Prueba
-		String grupAlumne = query[2];
-		// CAMP ALUMNE
-		Paragraph grup = new Paragraph("GRUP: ", CAPS);
-		grup.setIndentationLeft(220);
-		grup.setSpacingBefore(-13);
-		Paragraph campGrup = new Paragraph(grupAlumne, DADES);
+		Paragraph group = new Paragraph("GRUP: ", CAPS);
+		group.setIndentationLeft(220);
+		group.setSpacingBefore(-13);
+		Paragraph campGrup = new Paragraph(groupStudent, DADES);
 		campGrup.setIndentationLeft(255);
 		campGrup.setSpacingBefore(-13);
 
-
-		String dataAlumne = fechaparte;
-
+		//Obtencion de la hora del parte
+		String dateStudent = dateWarning;
 		Paragraph data = new Paragraph("DATA: ", CAPS);
 		data.setIndentationLeft(340);
 		data.setSpacingBefore(-13);
-		Paragraph campData = new Paragraph(dataAlumne, DADES);
+		Paragraph campData = new Paragraph(dateStudent, DADES);
 		campData.setIndentationLeft(380);
 		campData.setSpacingBefore(-12);
 
-		// Prueba
-
-		String materiaAlumne;
+		String studentSubject;
 
 		if (query[5] == null) {
-			materiaAlumne = " ";
+			studentSubject = " ";
 		} else {
-			materiaAlumne = query[5];
+			studentSubject = query[5];
 		}
 
-		// CAMP ALUMNE
-		Paragraph materia = new Paragraph("MATÈRIA: ", CAPS);
-		materia.setIndentationLeft(25);
-		Paragraph campMateria = new Paragraph(materiaAlumne, DADES);
-		campMateria.setIndentationLeft(75);
-		campMateria.setSpacingBefore(-12);
+		//Obtencion de la materia del parte
+		Paragraph subject = new Paragraph("MATÈRIA: ", CAPS);
+		subject.setIndentationLeft(25);
+		Paragraph campSubject = new Paragraph(studentSubject, DADES);
+		campSubject.setIndentationLeft(75);
+		campSubject.setSpacingBefore(-12);
 
-	
+		//Obtencion de la hora del parte
+		Paragraph hour = new Paragraph("HORA: ", CAPS);
+		hour.setIndentationLeft(195);
+		hour.setSpacingBefore(-13);
+		Paragraph campHour = new Paragraph(hourWarning, DADES);
+		campHour.setIndentationLeft(230);
+		campHour.setSpacingBefore(-12);
 
-		// CAMP ALUMNE
-		Paragraph hora = new Paragraph("HORA: ", CAPS);
-		hora.setIndentationLeft(195);
-		hora.setSpacingBefore(-13);
-		Paragraph campHora = new Paragraph(horaparte, DADES);
-		campHora.setIndentationLeft(230);
-		campHora.setSpacingBefore(-12);
-
-		// Prueba
+		//Obtencion de la circumstancia en la que se impone el parte
 		String cirAlumne = query[4];
-		// CAMP CIRCUMSTANCIA
-		Paragraph circumstancia = new Paragraph("CIRCUMSTÀNCIA(aula,pati,etc.): ", CAPS);
-		circumstancia.setIndentationLeft(280);
-		circumstancia.setSpacingBefore(-13);
+		Paragraph circumstance = new Paragraph("CIRCUMSTÀNCIA(aula,pati,etc.): ", CAPS);
+		circumstance.setIndentationLeft(280);
+		circumstance.setSpacingBefore(-13);
 		Paragraph campCirc = new Paragraph(cirAlumne, DADES);
 		campCirc.setIndentationLeft(430);
 		campCirc.setSpacingBefore(-12);
 
-		String nomProfessor = userJPA.currentTeacher();
+		//Obtención del nombre del profesor
+		String teacherName = userJPA.currentTeacher();
 
 		if (query[12] != null) {
-			nomProfessor = query[12];
+			teacherName = query[12];
 		}
 
 		if (query[12] == "null") {
-			nomProfessor = userJPA.currentTeacher();
+			teacherName = userJPA.currentTeacher();
 		}
 
-		// CAMP PROFESSOR
 		Paragraph professor = new Paragraph("PROFESSOR: ", CAPS);
 		professor.setIndentationLeft(25);
-		Paragraph campProfe = new Paragraph(nomProfessor, DADES);
+		Paragraph campProfe = new Paragraph(teacherName, DADES);
 		campProfe.setIndentationLeft(90);
 		campProfe.setSpacingBefore(-12);
 
-		// Prueba
-		String tutorAlumne = nametutor;
-		// CAMP ALUMNE
+		//Obtención del nombre del profesor
+		String tutorStudent = nametutor;
 		Paragraph tutor = new Paragraph("TUTOR: ", CAPS);
 		tutor.setIndentationLeft(220);
 		tutor.setSpacingBefore(-13);
-		Paragraph campTutor = new Paragraph(tutorAlumne, DADES);
+		Paragraph campTutor = new Paragraph(tutorStudent, DADES);
 		campTutor.setIndentationLeft(260);
 		campTutor.setSpacingBefore(-12);
 
-		String grauPart = null;
+		String warningLevel = null;
 		// Prueba
 		if (query[7].equals("true")) {
-			grauPart = "[ ]EXPULSAT DE CLASSE\n[X]AMONESTAT";
+			warningLevel = "[ ]EXPULSAT DE CLASSE\n[X]AMONESTAT";
 		} else {
-			grauPart = "[X]EXPULSAT DE CLASSE\n[ ]AMONESTAT";
+			warningLevel = "[X]EXPULSAT DE CLASSE\n[ ]AMONESTAT";
 
 		}
-		// CAMP 2part
-		Paragraph gravetat = new Paragraph(
-				"En compliment de la Normativa de Règim Intern vigent, l'esmentat alumne ha estat: ", DADES);
-		gravetat.setIndentationLeft(25);
 
-		Paragraph campGrav = new Paragraph(grauPart, DADES);
+		//Motius seleccionats per el Profesor/Tutor
+		Paragraph level = new Paragraph(
+				"En compliment de la Normativa de Règim Intern vigent, l'esmentat alumne ha estat: ", DADES);
+		level.setIndentationLeft(25);
+
+		Paragraph campGrav = new Paragraph(warningLevel, DADES);
 		campGrav.setIndentationLeft(330);
 		campGrav.setSpacingBefore(-12);
 
-		String[] motivos = { "Faltar al respecte al professor", "Faltar al respecte a algún company",
+		String[] reasons = { "Faltar al respecte al professor", "Faltar al respecte a algún company",
 				"Acumulació d'amonestacions lleus", "Causar dany o desperfecte material",
 				"Negar-se a realitzar treballs encomanats", "Molestar o distreure de forma reiterada als companys" };
 
@@ -240,294 +251,285 @@ public class generatePDF extends WarningJPAManager {
 
 		String subQuery = queryCon.substring(1, queryCon.length() - 1).trim();
 
-		// System.out.println("Subquery: " + subQuery);
-		String[] motiusUsuari = subQuery.split(",");
+		String[] userReasons = subQuery.split(",");
 
-		// Faltar al respecte al professor, Acumulació d'amonestacions
-		// lleus,Causar dany o desperfecte material, Negar-se a realitzar
-		// treballs encomanats
+		//Bloc1Left
+		String reason1 = null;
+		String reason3 = null;
+		String reason5 = null;
+		//Bloc2Right
+		String reason2 = null;
+		String reason4 = null;
+		String reason6 = null;
 
-		// Bloc1Left
-		String motiu1 = null;
-		String motiu3 = null;
-		String motiu5 = null;
-		// Bloc2Right
-		String motiu2 = null;
-		String motiu4 = null;
-		String motiu6 = null;
+		List reasonsList = new ArrayList<>();
 
-		List llistaMotius = new ArrayList<>();
-
-		for (int i = 0; i < motiusUsuari.length; i++) {
-			motiusUsuari[i] = motiusUsuari[i].trim();
+		//Comparación de los campos seleccionados para poder determinar cuales marcar con [X]
+		for (int i = 0; i < userReasons.length; i++) {
+			userReasons[i] = userReasons[i].trim();
 
 		}
 
-		for (int i = 0; i < motivos.length; i++) {
+		for (int i = 0; i < reasons.length; i++) {
 
 			// System.out.println(motivos[i].trim());
 			boolean marcat = false;
 
-			for (int j = 0; j < motiusUsuari.length; j++) {
+			for (int j = 0; j < userReasons.length; j++) {
 
-				marcat = marcat || motivos[i].equals(motiusUsuari[j]);
+				marcat = marcat || reasons[i].equals(userReasons[j]);
 
 			}
 			if (marcat) {
-				llistaMotius.add("[X]" + motivos[i].trim());
+				reasonsList.add("[X]" + reasons[i].trim());
 
 			} else {
 
-				llistaMotius.add("[  ]" + motivos[i].trim());
+				reasonsList.add("[  ]" + reasons[i].trim());
 
 			}
 		}
 
+		//Bloc 1
+		if (reasonsList.contains("[X]Faltar al respecte al professor")) {
 
-		if (llistaMotius.contains("[X]Faltar al respecte al professor")) {
-
-			motiu1 = "[X]Faltar al respecte al professor";
+			reason1 = "[X]Faltar al respecte al professor";
 
 		} else {
 
-			motiu1 = "[ ]Faltar al respecte al professor";
+			reason1 = "[ ]Faltar al respecte al professor";
 
 		}
 
-		if (llistaMotius.contains("[X]Faltar al respecte a algún company")) {
+		if (reasonsList.contains("[X]Faltar al respecte a algún company")) {
 
-			motiu3 = "[X]Faltar al respecte a algún company";
+			reason3 = "[X]Faltar al respecte a algún company";
 
 		} else {
 
-			motiu3 = "[ ]Faltar al respecte a algún company";
+			reason3 = "[ ]Faltar al respecte a algún company";
 
 		}
 
-		if (llistaMotius.contains("[X]Acumulació d'amonestacions lleus")) {
+		if (reasonsList.contains("[X]Acumulació d'amonestacions lleus")) {
 
-			motiu5 = "[X]Acumulació d'amonestacions lleus";
+			reason5 = "[X]Acumulació d'amonestacions lleus";
 
 		} else {
 
-			motiu5 = "[ ]Acumulació d'amonestacions lleus";
+			reason5 = "[ ]Acumulació d'amonestacions lleus";
 
 		}
 
 		// Bloc2
 
-		if (llistaMotius.contains("[X]Causar dany o desperfecte material")) {
+		if (reasonsList.contains("[X]Causar dany o desperfecte material")) {
 
-			motiu2 = "[X]Causar dany o desperfecte material";
-
-		} else {
-
-			motiu2 = "[ ]Causar dany o desperfecte material";
-
-		}
-
-		if (llistaMotius.contains("[X]Negar-se a realitzar treballs encomanats")) {
-
-			motiu4 = "[X]Negar-se a realitzar treballs encomanats";
+			reason2 = "[X]Causar dany o desperfecte material";
 
 		} else {
 
-			motiu4 = "[ ]Negar-se a realitzar treballs encomanats";
+			reason2 = "[ ]Causar dany o desperfecte material";
 
 		}
 
-		if (llistaMotius.contains("[X]Molestar o distreure de forma reiterada als companys")) {
+		if (reasonsList.contains("[X]Negar-se a realitzar treballs encomanats")) {
 
-			motiu6 = "[X]Molestar o distreure de forma reiterada als companys";
+			reason4 = "[X]Negar-se a realitzar treballs encomanats";
 
 		} else {
 
-			motiu6 = "[ ]Molestar o distreure de forma reiterada als companys";
+			reason4 = "[ ]Negar-se a realitzar treballs encomanats";
 
 		}
 
-		String motiu10 = null;
-		// System.out.println("Altres motius"+query[10]);
+		if (reasonsList.contains("[X]Molestar o distreure de forma reiterada als companys")) {
+
+			reason6 = "[X]Molestar o distreure de forma reiterada als companys";
+
+		} else {
+
+			reason6 = "[ ]Molestar o distreure de forma reiterada als companys";
+
+		}
+
+		//Obtención de otros motivos
+		String reason10 = null;
+
 		if (query[10].equals("")) {
 
-			motiu10 = "[  ]Altres motius:";
+			reason10 = "[  ]Altres motius:";
 
 		} else {
-			motiu10 = "[X]Altres motius:";
+			reason10 = "[X]Altres motius:";
 
 		}
 
 		// CAMP 2part
-		Paragraph motius = new Paragraph("Pel següent motiu: ", DADES);
-		motius.setIndentationLeft(25);
+		Paragraph pReasons = new Paragraph("Pel següent motiu: ", DADES);
+		pReasons.setIndentationLeft(25);
 
-		Paragraph motiuNum1 = new Paragraph(motiu1, DADES);
-		motiuNum1.setIndentationLeft(95);
-		motiuNum1.setSpacingBefore(-12);
+		Paragraph pReason1 = new Paragraph(reason1, DADES);
+		pReason1.setIndentationLeft(95);
+		pReason1.setSpacingBefore(-12);
 
-		Paragraph motiuNum2 = new Paragraph(motiu2, DADES);
-		motiuNum2.setIndentationLeft(235);
-		motiuNum2.setSpacingBefore(-12);
+		Paragraph pReason2 = new Paragraph(reason2, DADES);
+		pReason2.setIndentationLeft(235);
+		pReason2.setSpacingBefore(-12);
 
-		Paragraph motiuNum3 = new Paragraph(motiu3, DADES);
-		motiuNum3.setIndentationLeft(95);
+		Paragraph pReason3 = new Paragraph(reason3, DADES);
+		pReason3.setIndentationLeft(95);
 
-		Paragraph motiuNum4 = new Paragraph(motiu4, DADES);
-		motiuNum4.setIndentationLeft(235);
-		motiuNum4.setSpacingBefore(-12);
+		Paragraph pReason4 = new Paragraph(reason4, DADES);
+		pReason4.setIndentationLeft(235);
+		pReason4.setSpacingBefore(-12);
 
-		Paragraph motiuNum5 = new Paragraph(motiu5, DADES);
-		motiuNum5.setIndentationLeft(95);
+		Paragraph pReason5 = new Paragraph(reason5, DADES);
+		pReason5.setIndentationLeft(95);
 
-		Paragraph motiuNum6 = new Paragraph(motiu6, DADES);
-		motiuNum6.setIndentationLeft(235);
-		motiuNum6.setSpacingBefore(-12);
+		Paragraph pReason6 = new Paragraph(reason6, DADES);
+		pReason6.setIndentationLeft(235);
+		pReason6.setSpacingBefore(-12);
 
-		Paragraph motiuNum10 = new Paragraph(motiu10, DADES);
-		motiuNum10.setIndentationLeft(95);
+		Paragraph pReason10 = new Paragraph(reason10, DADES);
+		pReason10.setIndentationLeft(95);
 
-		Paragraph campMotiu10 = new Paragraph(query[10] + " ", DADES);
-		campMotiu10.setIndentationLeft(160);
-		campMotiu10.setSpacingBefore(-12);
-		campMotiu10.setSpacingAfter(10);
+		Paragraph campReason10 = new Paragraph(query[10] + " ", DADES);
+		campReason10.setIndentationLeft(160);
+		campReason10.setSpacingBefore(-12);
+		campReason10.setSpacingAfter(10);
 
 		String lineCamp = "     __________________________________________________________________________________________________________";
 		Paragraph line = new Paragraph(lineCamp, DADES);
 		line.setSpacingAfter(5);
 
-		Paragraph signProfe = new Paragraph("Signatura del professor\nque impossa l'amonestació", SUBLINE);
-		signProfe.setIndentationLeft(25);
+		Paragraph teacherSign = new Paragraph("Signatura del professor\nque impossa l'amonestació", SUBLINE);
+		teacherSign.setIndentationLeft(25);
 
-		Paragraph signPares = new Paragraph("Signatura dels pares", SUBLINE);
-		signPares.setIndentationLeft(210);
-		signPares.setSpacingBefore(-19);
+		Paragraph fathersSign = new Paragraph("Signatura dels pares", SUBLINE);
+		fathersSign.setIndentationLeft(210);
+		fathersSign.setSpacingBefore(-19);
 
-		Paragraph signAlumne = new Paragraph("Signatura de l'alumne", SUBLINE);
-		signAlumne.setIndentationLeft(410);
-		signAlumne.setSpacingBefore(-9);
-		signAlumne.setSpacingAfter(35);
+		Paragraph studentSign = new Paragraph("Signatura de l'alumne", SUBLINE);
+		studentSign.setIndentationLeft(410);
+		studentSign.setSpacingBefore(-9);
+		studentSign.setSpacingAfter(35);
 
-		Paragraph avis = new Paragraph("(A retornar signat al Professor el dia següent.)", SUBLINE);
-		avis.setIndentationLeft(410);
+		Paragraph alert = new Paragraph("(A retornar signat al Professor el dia següent.)", SUBLINE);
+		alert.setIndentationLeft(410);
 
 		PdfPTable table = new PdfPTable(2);
 		table.setWidthPercentage(80 / 2f);
-		// table.setWidths(new int[]{1, 1, 1});
 		PdfPCell cell;
-		String caracterGreu = null;
-		String caracterLleu = null;
+		String seriousChar = null;
+		String mildChar = null;
 
 		if (query[3].equals("Lleu")) {
-			caracterGreu = "    [ ]GREU";
-			caracterLleu = "    [X]LLEU";
+			seriousChar = "    [ ]GREU";
+			mildChar = "    [X]LLEU";
 		} else if (query[3].equals("Greu")) {
-			caracterGreu = "    [X]GREU";
-			caracterLleu = "    [ ]LLEU";
+			seriousChar = "    [X]GREU";
+			mildChar = "    [ ]LLEU";
 		}
 
 		cell = new PdfPCell(new Phrase("CARÀCTER DE LA FALTA", DADES));
 		cell.setColspan(1);
 		table.addCell(cell);
-		cell = new PdfPCell(new Phrase("" + caracterGreu + "" + caracterLleu, DADES));
+		cell = new PdfPCell(new Phrase("" + seriousChar + "" + mildChar, DADES));
 		cell.setRowspan(2);
 		table.addCell(cell);
 
-		// DOC
+		//Añadimos todos los elementos obtenidos al documento
 
 		document.open();
 		document.add(img);
 		document.add(paragraph1);
 		document.add(paragraph2);
 		document.add(paragraph3);
-		document.add(headerFalta);
-		document.add(alumne);
-		document.add(campAlumne);
-		document.add(grup);
+		document.add(headerWarning);
+		document.add(campStudent);
+		document.add(group);
 		document.add(campGrup);
 		document.add(data);
 		document.add(campData);
-		document.add(materia);
-		document.add(campMateria);
-		document.add(hora);
-		document.add(campHora);
-		document.add(circumstancia);
+		document.add(subject);
+		document.add(campSubject);
+		document.add(hour);
+		document.add(campHour);
+		document.add(circumstance);
 		document.add(campCirc);
 		document.add(professor);
 		document.add(campProfe);
 		document.add(tutor);
 		document.add(campTutor);
-		document.add(gravetat);
+		document.add(level);
 		document.add(campGrav);
-		document.add(motius);
-		document.add(motiuNum1);
-		document.add(motiuNum2);
-		document.add(motiuNum3);
-		document.add(motiuNum4);
-		document.add(motiuNum5);
-		document.add(motiuNum6);
+		document.add(pReasons);
+		document.add(pReason1);
+		document.add(pReason2);
+		document.add(pReason3);
+		document.add(pReason4);
+		document.add(pReason5);
+		document.add(pReason6);
 
-		document.add(motiuNum10);
-		document.add(campMotiu10);
+		document.add(pReason10);
+		document.add(campReason10);
 		document.add(table);
 		document.add(line);
-		document.add(signProfe);
-		document.add(signPares);
-		document.add(signAlumne);
-		document.add(avis);
+		document.add(teacherSign);
+		document.add(fathersSign);
+		document.add(studentSign);
+		document.add(alert);
 
 		document.add(preface);
 		document.close();
 
-		String[] re = { path, fechaparte, horaparte };
+		String[] re = { path, dateWarning, hourWarning };
 
 		return re;
 	}
 
 	/**
-	 * @return
-	 * @throws IOException 
-	 * @throws BadElementException 
+	 * Método que selecciona la imagen en la ruta definida i le otorgará unos valores de 
+	 * de tamaño, posición y escala predeterminados.
+	 * @return Una Imagen
+	 * @throws IOException
+	 * @throws BadElementException
 	 */
 	private Image logoImage() throws IOException, BadElementException {
 		// TODO Auto-generated method stub
-		
+
 		Image img = Image.getInstance(String.format(path2 + "/git/ga2/WebContent/PDFContent/icons/logo1.jpg"));
 		img.setWidthPercentage(50);
 		// X - Y
 		img.setAbsolutePosition(45, 770);
 		img.scaleToFit(25, 25);
-		
+
 		return img;
 	}
 
+
+
 	/**
-	 * Creates a PDF with information about the movies
-	 * 
-	 * @param filename
-	 *            the name of the PDF file that will be created.
+	 * Método que crea una celda para la imagen
+	 * @param path
+	 * @return cell
 	 * @throws DocumentException
 	 * @throws IOException
 	 */
-	public static final Font BLACK_BOLD = new Font(FontFamily.HELVETICA, 8, Font.BOLD, BaseColor.BLACK);
-	public static final Font HEADER = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
-	public static final Font CAPS = new Font(FontFamily.HELVETICA, 9, Font.BOLD, BaseColor.BLACK);
-	public static final Font DADES = new Font(FontFamily.HELVETICA, 8, Font.NORMAL, BaseColor.BLACK);
-	public static final Font SUBLINE = new Font(FontFamily.HELVETICA, 6, Font.NORMAL, BaseColor.BLACK);
-
-	/**
-	 * Creates our first table
-	 * 
-	 * @return our first table
-	 * @throws IOException
-	 * @throws DocumentException
-	 */
-
 	public static PdfPCell createImageCell(String path) throws DocumentException, IOException {
 		Image img = Image.getInstance(path);
 		PdfPCell cell = new PdfPCell(img, true);
 		return cell;
 	}
 
+	/**
+	 * Método que retorna la ruta donde esta alojado el PDF
+	 * @param nomCognom
+	 * @param fecha
+	 * @return
+	 * @throws IOException
+	 */
 	public String getPath2(String nomCognom, String fecha) throws IOException {
 
 		return path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + fecha + ")(" + nomCognom + ").pdf";
