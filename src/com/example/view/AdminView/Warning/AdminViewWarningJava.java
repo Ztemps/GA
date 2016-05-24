@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 import javax.persistence.EntityManager;
@@ -105,9 +106,10 @@ public class AdminViewWarningJava extends MainContentView {
 	private generatePDF genPDF = new generatePDF();
 	private File currDir = new File(".");
 	private String path2 = currDir.getCanonicalPath();
-	HeaderRow filterRow;
-	TextField filterField;
-	HeaderCell cell;
+	private HeaderRow filterRow;
+	private TextField filterField;
+	private HeaderCell cell;
+	private ResourceBundle rb = ResourceBundle.getBundle("GA");
 	private static final String AL_NOM = "nom";
 	private static final String AL_COGNOMS = "cognoms";
 	private static final String AL_CURS = "curs";
@@ -151,7 +153,6 @@ public class AdminViewWarningJava extends MainContentView {
 
 						if (windowpdf.isAttached()) {
 							getUI().removeWindow(windowpdf);
-
 						}
 
 						UI.getCurrent().addWindow(windowpdf);
@@ -232,7 +233,7 @@ public class AdminViewWarningJava extends MainContentView {
 						e1.printStackTrace();
 					}
 
-					File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
+					File f = new File(rb.getString("file_settings"));
 
 					try {
 						if (!f.exists()) {
@@ -678,10 +679,6 @@ public class AdminViewWarningJava extends MainContentView {
 		String nomCognom = (amonestacioForm.nom.getValue().concat(" " + amonestacioForm.cognoms.getValue()))
 				.replaceFirst(" ", "").replaceAll(" ", "_");
 
-		// String nomCognom = amonestacioForm.nom.getValue();
-
-		System.out.println("adminViewWarning: " + nomCognom);
-
 		Embedded c = new Embedded();
 		sourceFile = new File(timewarning[0]);
 
@@ -741,12 +738,6 @@ public class AdminViewWarningJava extends MainContentView {
 
 		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 
-		// if(!amonestacioForm.datefield.getValue().toString().equals("")){
-		// System.out.println("valor date: "+
-		// amonestacioForm.datefield.getValue().toString());
-		// timewarning = amonestacioForm.datefield.getValue().toString()+"
-		// "+amonestacioForm.time.getValue().toString();
-		// }
 		tutor = MA.getNomTutor(id);
 		try {
 			data = amonestacioForm.datefield.getValue().toString();

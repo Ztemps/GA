@@ -23,6 +23,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 import javax.persistence.EntityManager;
@@ -54,10 +55,11 @@ public class WarningJPAManager {
 	private SendTelegram sendTel;
 	private sendMail sendMail;
 
-	DateFormat dateFormat;
+	private DateFormat dateFormat;
 	private boolean checkTutor = false;
 	private boolean checkPares = false;
 	private boolean checkTelegram = false;
+	private ResourceBundle rb = ResourceBundle.getBundle("GA");
 
 	/**
 	 * 
@@ -72,9 +74,7 @@ public class WarningJPAManager {
 	public void introducirParte(String[] query)
 			throws MalformedURLException, DocumentException, IOException, ParseException {
 
-		File currDir = new File(".");
-		String path2 = currDir.getCanonicalPath();
-
+		
 		dateFormat = new SimpleDateFormat(DATEFORMAT);
 		Date date;
 
@@ -108,14 +108,9 @@ public class WarningJPAManager {
 		FileReader reader;
 		String linea = null;
 
-		try {
-			path2 = currDir.getCanonicalPath();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 
-		File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
+
+		File f = new File(rb.getString("file_settings"));
 
 		try {
 			if (!f.exists()) {

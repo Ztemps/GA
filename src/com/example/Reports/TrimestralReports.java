@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 import javax.persistence.Query;
@@ -46,6 +47,7 @@ public class TrimestralReports {
 	// CSV file header
 	public  GroupJPAManager jpa;
 	private  List<Group> grupos = null;
+	private ResourceBundle rb = ResourceBundle.getBundle("GA");
 
 	ConverterDates datas;
 	public void calcularPrimerTrimestre() {
@@ -1696,7 +1698,7 @@ public class TrimestralReports {
 			e1.printStackTrace();
 		}
 
-		File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
+		File f = new File(rb.getString("file_settings"));
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if (br.readLine() == null) {
 			System.out.println("No Hay fecha en el documento settings");

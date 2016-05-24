@@ -150,7 +150,6 @@ public class TeacherOwnWarningsJava extends MainContentView {
 		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
 
-		// AdminViewCarregarCSVJava upload = new AdminViewCarregarCSVJava();
 
 	}
 
