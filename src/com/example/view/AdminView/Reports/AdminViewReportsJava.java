@@ -140,8 +140,7 @@ public class AdminViewReportsJava extends MainContentView {
 				
 				
 				
-				File zip = new File(ZipFiles("totalcurs.zip", "/tmp/total"
-						+ ""));
+				File zip = new File(ZipFiles("totalcurs.zip", "/tmp/total"+ ""));
 				InputStream targetStream = null;
 				try {
 					targetStream = new FileInputStream(zip);

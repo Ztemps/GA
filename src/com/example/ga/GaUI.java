@@ -46,7 +46,6 @@ public class GaUI extends UI {
 			super.servletInitialized();
 
 		}
-
 	}
 
 	@Override
