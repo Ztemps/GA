@@ -214,6 +214,7 @@ public class AdminViewWarningJava extends MainContentView {
 					window.close();
 					windowpdf.close();
 					
+					//Enviar telegram
 //					sendTel.sendWarning("Gerard_Paulino", timewarning[0]);
 					
 					FileReader reader;
