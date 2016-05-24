@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
 
@@ -44,6 +45,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinService;
 import com.vaadin.shared.Position;
+import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
@@ -67,7 +69,7 @@ public class TutorView extends MainView implements View {
 	private UserJPAManager ma;
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em = entman.getEntityManager();
-
+	private ResourceBundle rb = ResourceBundle.getBundle("GA");
 	private TutorViewGrupsJava TutorViewGrups;
 
 	public TutorView() throws MalformedURLException, DocumentException, IOException, SQLException {
@@ -303,7 +305,7 @@ public class TutorView extends MainView implements View {
 		File currDir = new File(".");
 		String path2 = currDir.getCanonicalPath();
 
-		FileResource resource = new FileResource(new File(path2 + "/git/ga2/WebContent/VAADIN/themes/images/logo.png"));
+		FileResource resource = new FileResource(new File(rb.getString("main_logo")));
 		Image logo = new Image("", resource);
 		logo.setWidth("90px");
 		logo.setHeight("90px");

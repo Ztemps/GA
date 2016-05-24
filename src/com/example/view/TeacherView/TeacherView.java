@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -71,10 +72,11 @@ public class TeacherView extends MainView implements View {
 
 	public static final String NAME = "Professor";
 
-	TeacherViewWarningJava vistaAmonestacion;
-	TeacherOwnWarningsJava vistaOwn;
-	TeacherConfigView vistaConfig;
-	UserJPAManager ma;
+	private TeacherViewWarningJava vistaAmonestacion;
+	private TeacherOwnWarningsJava vistaOwn;
+	private TeacherConfigView vistaConfig;
+	private UserJPAManager ma;
+	private ResourceBundle rb = ResourceBundle.getBundle("GA");
 
 	public TeacherView() throws MalformedURLException, DocumentException, IOException, SQLException {
 
@@ -253,8 +255,7 @@ public class TeacherView extends MainView implements View {
 		File currDir = new File(".");
 		String path2 = currDir.getCanonicalPath();
 
-		FileResource resource = new FileResource(new File(path2 + "/git/ga2/WebContent/VAADIN/themes/images/logo.png"));
-		Image logo = new Image("", resource);
+		FileResource resource = new FileResource(new File(rb.getString("main_logo")));		Image logo = new Image("", resource);
 		logo.setWidth("90px");
 		logo.setHeight("90px");
 		vImage.removeAllComponents();
