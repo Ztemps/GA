@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import com.example.Entities.Student;
 import com.example.Logic.UserJPAManager;
@@ -51,6 +52,7 @@ public class generatePDF extends WarningJPAManager {
 	private UserJPAManager userJPA;
 	private File currentDirectory;
 	private String path2;
+	private ResourceBundle rb = ResourceBundle.getBundle("GA");
 
 	//Definimos las fuentes para el PDF
 	public static final Font BLACK_BOLD = new Font(FontFamily.HELVETICA, 8, Font.BOLD, BaseColor.BLACK);
@@ -499,7 +501,7 @@ public class generatePDF extends WarningJPAManager {
 	private Image logoImage() throws IOException, BadElementException {
 		// TODO Auto-generated method stub
 
-		Image img = Image.getInstance(String.format(path2 + "/git/ga2/WebContent/PDFContent/icons/logo1.jpg"));
+		Image img = Image.getInstance(String.format(rb.getString("logo_pdf")));
 		img.setWidthPercentage(50);
 		// X - Y
 		img.setAbsolutePosition(45, 770);
@@ -532,7 +534,7 @@ public class generatePDF extends WarningJPAManager {
 	 */
 	public String getPath2(String nomCognom, String fecha) throws IOException {
 
-		return path2 + "/git/ga2/WebContent/PDFContent/pdftmp/amonestacio(" + fecha + ")(" + nomCognom + ").pdf";
+		return rb.getString("path_warning")+ "(" + fecha + ")(" + nomCognom + ").pdf";
 
 	}
 }
