@@ -33,6 +33,7 @@ import com.example.Pdf.generatePDF;
 import com.example.Templates.ConfirmWarningPDF;
 import com.example.Templates.MainContentView;
 import com.example.view.AdminView.AdminView;
+import com.google.gwt.resources.css.ast.CssProperty.StringValue;
 import com.itextpdf.text.DocumentException;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
@@ -757,7 +758,7 @@ public class TeacherViewWarningJava extends MainContentView {
 			Notification.show("Els camps obligatoris s'han d'emplenar");
 			e.printStackTrace();
 		}
-		if ((amonestacioForm.materia.getValue().toString()).equals("")) {
+		if (String.valueOf(amonestacioForm.materia.getValue()).equals("null")) {
 
 			assignatura = null;
 		} else {
@@ -830,8 +831,7 @@ public class TeacherViewWarningJava extends MainContentView {
 			Notification.show("Els camps obligatoris s'han d'emplenar");
 			e.printStackTrace();
 		}
-		if ((amonestacioForm.materia.getValue().toString()).equals("")) {
-
+		if (String.valueOf(amonestacioForm.materia.getValue()).equals("null")) {
 			assignatura = null;
 		} else {
 			assignatura = amonestacioForm.materia.getValue().toString();

@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
@@ -58,9 +59,11 @@ public class AdminViewTeacherFormJava extends AdminViewTeacherForm {
 	private TeachersJPAManager MA;
 	private UserJPAManager MA2;
 
+	ResourceBundle rb = ResourceBundle.getBundle("GA");
+	
 	private String username;
-	private String rol = "Professor";
-	private String password = "Nomeolvides1";
+	private String rol =  rb.getString("tutor_role");
+	private String password = rb.getString("default_password");
 
 	@SuppressWarnings("deprecation")
 	public AdminViewTeacherFormJava() {

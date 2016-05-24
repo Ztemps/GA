@@ -85,7 +85,6 @@ public class TutorView extends MainView implements View {
 		tutorownwarning.setVisible(false);
 		vistaConfig.setVisible(false);
 
-
 		students.setVisible(false);
 		teachers.setVisible(false);
 		groups.setVisible(false);

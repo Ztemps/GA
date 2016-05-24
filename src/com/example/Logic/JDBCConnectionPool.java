@@ -14,22 +14,22 @@
 package com.example.Logic;
 
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import com.vaadin.data.util.sqlcontainer.connection.SimpleJDBCConnectionPool;
 
 public class JDBCConnectionPool {
 
+	private ResourceBundle rb = ResourceBundle.getBundle("GA");
+	
 	private static final String DRIVER = "org.postgresql.Driver";
-	private static final String DATABASE = "jdbc:postgresql://localhost:5432/GAdb";
-	private static final String USER = "postgres";
-	private static final String PASSWORD = "postgres";
+
 
 	private SimpleJDBCConnectionPool connectionPool;
-
 	public JDBCConnectionPool() {
 
 		try {
-			connectionPool = new SimpleJDBCConnectionPool(DRIVER, DATABASE, USER, PASSWORD, 2, 5);
+			connectionPool = new SimpleJDBCConnectionPool(DRIVER, rb.getString("database"),rb.getString("user"), rb.getString("password"), 2, 5);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

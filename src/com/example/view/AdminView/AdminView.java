@@ -87,22 +87,21 @@ public class AdminView extends MainView implements View {
 	private UserJPAManager ma;
 	private static AdminViewTutorJava Viewtutors;
 	private BufferedReader br = null;
-    com.vaadin.ui.Notification notif;
-    private ResourceBundle rb = ResourceBundle.getBundle("GA");
-    CssLayout menuContent = new CssLayout();
-
+	com.vaadin.ui.Notification notif;
+	private ResourceBundle rb = ResourceBundle.getBundle("GA");
+	CssLayout menuContent = new CssLayout();
 
 	@Override
 	public void enter(ViewChangeEvent event) {
 
 		if (getUI().getCurrent().getSession().getAttribute("login") == null) {
-			
+
 			getUI().getSession().setAttribute("user", "");
-			getUI().getSession().setAttribute("id", "");	
+			getUI().getSession().setAttribute("id", "");
 			getUI().getPage().setLocation("/GA");
-			
-		}else{
-			
+
+		} else {
+
 			setWellcome();
 		}
 
@@ -110,92 +109,85 @@ public class AdminView extends MainView implements View {
 
 	public AdminView() throws IOException, DocumentException, SQLException {
 
-			
-			
-			content.addStyleName("contenido");
+		content.addStyleName("contenido");
 
-			loadView();
-			
-			
-			ViewGrupos = new AdminViewGroupJava();
-			ViewStudents = new AdminViewStudentJava();
-			ViewDocents = new AdminViewTeacherJava();
-			ViewWarning = new AdminViewWarningJava();
-			ViewUsers = new AdminViewUser();
-			ViewListWarnings = new AdminViewWarnings();
-			ViewCSV = new AdminViewCSVUploadJava();
-			ViewTeachersWarnings = new TeacherOwnWarningsJava();
-			Viewtutors = new AdminViewTutorJava();
-			ViewCharts = new AdminViewCharts();
-			ViewForms = new AdminViewReportsJava();
-			ViewSettings = new AdminViewSettingsJava();
+		loadView();
 
-			content.removeAllComponents();
-			content.addComponents(ViewGrupos);
-			content.addComponents(ViewStudents);
-			content.addComponent(ViewDocents);
-			content.addComponent(ViewWarning);
-			content.addComponent(ViewUsers);
-			content.addComponent(ViewListWarnings);
-			content.addComponent(ViewCSV);
-			content.addComponent(ViewTeachersWarnings);
-			content.addComponent(Viewtutors);
-			content.addComponent(ViewCharts);
-			content.addComponent(ViewForms);
-			content.addComponent(ViewSettings);
+		ViewGrupos = new AdminViewGroupJava();
+		ViewStudents = new AdminViewStudentJava();
+		ViewDocents = new AdminViewTeacherJava();
+		ViewWarning = new AdminViewWarningJava();
+		ViewUsers = new AdminViewUser();
+		ViewListWarnings = new AdminViewWarnings();
+		ViewCSV = new AdminViewCSVUploadJava();
+		ViewTeachersWarnings = new TeacherOwnWarningsJava();
+		Viewtutors = new AdminViewTutorJava();
+		ViewCharts = new AdminViewCharts();
+		ViewForms = new AdminViewReportsJava();
+		ViewSettings = new AdminViewSettingsJava();
 
-			warning.focus();
-			ViewDocents.setVisible(false);
-			ViewStudents.setVisible(false);
-			ViewCharts.setVisible(false);
-			ViewForms.setVisible(false);
-			ViewGrupos.setVisible(false);
-			ViewUsers.setVisible(false);
-			ViewListWarnings.setVisible(false);
-			ViewCSV.setVisible(false);
-			ViewTeachersWarnings.setVisible(false);
-			mevesAmonestacions.setVisible(false);
-			groupsTutor.setVisible(false);
-			Viewtutors.setVisible(false);
-			ViewSettings.setVisible(false);
+		content.removeAllComponents();
+		content.addComponents(ViewGrupos);
+		content.addComponents(ViewStudents);
+		content.addComponent(ViewDocents);
+		content.addComponent(ViewWarning);
+		content.addComponent(ViewUsers);
+		content.addComponent(ViewListWarnings);
+		content.addComponent(ViewCSV);
+		content.addComponent(ViewTeachersWarnings);
+		content.addComponent(Viewtutors);
+		content.addComponent(ViewCharts);
+		content.addComponent(ViewForms);
+		content.addComponent(ViewSettings);
 
-			sep.addClickListener(e -> subMenuWarning());
-			sep3.addClickListener(e -> subMenuGeneral());
-			sep4.addClickListener(e -> subMenuGeneral2());
-			sep5.setDisableOnClick(true);	
-			
-			menuToggle.addClickListener(new ClickListener(){
-	            @Override
-	            public void buttonClick(final ClickEvent event) {
-	            	
-	                if (getStyleName().contains("valo-menu-visible")) {
-	                    removeStyleName("valo-menu-visible");
-	                    notif.show("Botón responsive");
-	                    
-	                    
-	                } else {
-	                    addStyleName("valo-menu-visible");
-	                    notif.show("Botonaco");
-	                    buildContent();
-	                }
-	            }
-	        });
+		warning.focus();
+		ViewDocents.setVisible(false);
+		ViewStudents.setVisible(false);
+		ViewCharts.setVisible(false);
+		ViewForms.setVisible(false);
+		ViewGrupos.setVisible(false);
+		ViewUsers.setVisible(false);
+		ViewListWarnings.setVisible(false);
+		ViewCSV.setVisible(false);
+		ViewTeachersWarnings.setVisible(false);
+		mevesAmonestacions.setVisible(false);
+		groupsTutor.setVisible(false);
+		Viewtutors.setVisible(false);
+		ViewSettings.setVisible(false);
+
+		sep.addClickListener(e -> subMenuWarning());
+		sep3.addClickListener(e -> subMenuGeneral());
+		sep4.addClickListener(e -> subMenuGeneral2());
+		sep5.setDisableOnClick(true);
+
+		menuToggle.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(final ClickEvent event) {
+
+				if (getStyleName().contains("valo-menu-visible")) {
+					removeStyleName("valo-menu-visible");
+					notif.show("Botón responsive");
+
+				} else {
+					addStyleName("valo-menu-visible");
+					notif.show("Botonaco");
+					buildContent();
+				}
+			}
+		});
 
 	}
-	
-	 private void buildContent() {
-	        menuContent = new CssLayout();
-	        menuContent.addStyleName("sidebar");
-	        menuContent.addStyleName(ValoTheme.MENU_PART);
-	        menuContent.addStyleName("no-vertical-drag-hints");
-	        menuContent.addStyleName("no-horizontal-drag-hints");
-	        menuContent.setWidth(null);
-	        menuContent.setHeight("100%");
-	        
 
-	    }
+	private void buildContent() {
+		menuContent = new CssLayout();
+		menuContent.addStyleName("sidebar");
+		menuContent.addStyleName(ValoTheme.MENU_PART);
+		menuContent.addStyleName("no-vertical-drag-hints");
+		menuContent.addStyleName("no-horizontal-drag-hints");
+		menuContent.setWidth(null);
+		menuContent.setHeight("100%");
 
-
+	}
 
 	private void subMenuGeneral2() {
 		// TODO Auto-generated method stub
@@ -308,7 +300,7 @@ public class AdminView extends MainView implements View {
 
 	private void setLogo() throws IOException {
 		// TODO Auto-generated method stub
-		
+
 		FileResource resource = new FileResource(new File(rb.getString("main_logo")));
 		Image logo = new Image("", resource);
 		logo.setWidth("90px");
@@ -572,7 +564,6 @@ public class AdminView extends MainView implements View {
 		Button no = new Button("No");
 		no.addStyleName(ValoTheme.BUTTON_DANGER);
 
-
 		no.addClickListener(new ClickListener() {
 
 			/**
@@ -642,7 +633,6 @@ public class AdminView extends MainView implements View {
 		int id2 = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
 		wellcome.addStyleName("wellcome");
 		wellcome.setCaption("Benvingut/uda " + ma.getNomTutorHeader(id2));
-
 
 	}
 }

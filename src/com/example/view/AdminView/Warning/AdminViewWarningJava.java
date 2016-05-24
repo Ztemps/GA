@@ -810,12 +810,6 @@ public class AdminViewWarningJava extends MainContentView {
 
 		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 
-		// if(!amonestacioForm.datefield.getValue().toString().equals("")){
-		// System.out.println("valor date: "+
-		// amonestacioForm.datefield.getValue().toString());
-		// timewarning = amonestacioForm.datefield.getValue().toString()+"
-		// "+amonestacioForm.time.getValue().toString();
-		// }
 		tutor = MA.getNomTutor(id);
 		try {
 			data = amonestacioForm.datefield.getValue().toString();

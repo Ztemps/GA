@@ -20,6 +20,7 @@ import java.io.OutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ResourceBundle;
 
 import com.example.CSVLoader.CSVLoader;
 import com.example.Pdf.generatePDF;
@@ -54,7 +55,9 @@ public class AdminViewCSVUploadJava extends MainContentView {
 	private Upload uploadStudent;
 	private Upload uploadTeacher;
 	private File sourceFile;
+    private ResourceBundle rb = ResourceBundle.getBundle("GA");
 	private Window window;
+	private FileResource resource;
 	private AdminCSVHelper help;
 
 	public AdminViewCSVUploadJava() throws IOException {
@@ -65,10 +68,9 @@ public class AdminViewCSVUploadJava extends MainContentView {
 
 		buttonsSettings();
 		WindowProperties();
-		File currDir = new File(".");
-		String path = currDir.getCanonicalPath();
-		FileResource resource = new FileResource(
-				new File(path + "/git/ga2/WebContent/VAADIN/themes/images/upload-icon.png"));
+	
+		
+		resource = new FileResource(new File(rb.getString("upload_icon")));
 
 		// CSV STUDENTS
 		uploadStudent.setButtonCaption(null);
@@ -133,7 +135,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 
 		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 
-		FileResource resource = new FileResource(new File(basepath + "/VAADIN/themes/images/csvAlumnes.png"));
+		FileResource resource = new FileResource(new File(rb.getString("help_csvalumnes")));
 
 		Image image = new Image("", resource);
 		help.txtDescription.setCaption("Selecciona un fitxer amb extensió .\"csv\""
