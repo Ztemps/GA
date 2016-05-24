@@ -130,7 +130,11 @@ public class AdminViewTeacherFormJava extends AdminViewTeacherForm {
 		if (isTutor.getValue()) {
 			group = this.selectGroup.getValue().toString();
 			MA3.addTutor(new Tutor(id, group));
+			
 			rol = "Tutor";
+		}else{
+			
+			rol = "Professor";
 		}
 		MA2.addUser(new User(id, passwordhash, username.toLowerCase(), rol));
 		MA.closeTransaction();

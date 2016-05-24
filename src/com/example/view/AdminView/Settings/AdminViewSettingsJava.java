@@ -74,7 +74,9 @@ public class AdminViewSettingsJava extends MainContentView {
 		adminsettings.secondTrimesterEndDate.addStyleName("settings");
 		adminsettings.secondTrimesterStartDate.addStyleName("settings");
 		adminsettings.thirdTrimesterStartDate.addStyleName("settings");
-
+		
+		adminsettings.checkEmailTutors.setVisible(false);
+		
 		txtTitle.addStyleName("main-title");
 		txtTitle.setValue("Configuració");
 		txtSearch.setVisible(false);
@@ -145,6 +147,7 @@ public class AdminViewSettingsJava extends MainContentView {
 			boolean checkPares = adminsettings.checkEmailPares.getValue();
 			boolean checkTelegram = adminsettings.checkWhatsPares.getValue();
 			boolean checkTutor = adminsettings.checkEmailTutors.getValue();
+			
 
 			path2 = currDir.getCanonicalPath();
 			File f = new File(rb.getString("file_settings"));
@@ -251,7 +254,7 @@ public class AdminViewSettingsJava extends MainContentView {
 			adminsettings.endGradeDate.setValue(fechaFinalTrimestre3);
 			adminsettings.firstTrimesterEndDate.setValue(fechafinaltrimestre1);
 			adminsettings.secondTrimesterEndDate.setValue(fechafinaltrimestre2);
-			adminsettings.checkEmailTutors.setValue(checkTutor);
+			adminsettings.checkEmailTutors.setValue(checkTutor);	
 			adminsettings.checkEmailPares.setValue(checkPares);
 			adminsettings.checkWhatsPares.setValue(checkTelegram);
 			adminsettings.secondTrimesterStartDate.setValue(fechaIniciTrimestre2);
