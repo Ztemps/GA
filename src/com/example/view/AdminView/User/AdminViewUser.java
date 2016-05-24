@@ -64,11 +64,14 @@ public class AdminViewUser extends MainContentView {
 	private AdminViewEditUser userformEdit;
 	private JPAContainer<User> usuaris;
 	private UserJPAManager MA;
-	private EntityManagerUtil entman = new EntityManagerUtil();
-	private EntityManager em = entman.getEntityManager();
+	private EntityManagerUtil entman ;
+	private EntityManager em ;
 
 	public AdminViewUser() {
 
+		entman = new EntityManagerUtil();
+		em = entman.getEntityManager();
+		
 		userformEdit = new AdminViewEditUser();
 
 		buttonsSettings();

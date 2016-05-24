@@ -58,7 +58,9 @@ public class TutorOwnWarningsJava extends MainContentView {
 	private SQLContainer container;
 	private SQLContainer containerGroups;
 	private EntityManagerUtil entman = new EntityManagerUtil();
+
 	private EntityManager em = entman.getEntityManager();
+
 	private String usuari;
 	private Grid grid;
 	private Grid gridGroups;
@@ -71,8 +73,8 @@ public class TutorOwnWarningsJava extends MainContentView {
 	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
 	private Button b = new Button();
 
-	private boolean gridUsed=false;
-	private boolean gridUsedGroup=false;
+	private boolean gridUsed = false;
+	private boolean gridUsedGroup = false;
 
 	public TutorOwnWarningsJava() throws MalformedURLException, DocumentException, IOException {
 
@@ -80,6 +82,7 @@ public class TutorOwnWarningsJava extends MainContentView {
 		gridProperties();
 		gridGroupProperties();
 		WindowProperties();
+
 		bRegister.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -87,11 +90,11 @@ public class TutorOwnWarningsJava extends MainContentView {
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
 				try {
-					
+
 					if (gridUsed) {
 						ownpopupPDF();
 
-					}else if (gridUsedGroup) {
+					} else if (gridUsedGroup) {
 						popupPDF();
 
 					}
@@ -118,9 +121,9 @@ public class TutorOwnWarningsJava extends MainContentView {
 					vHorizontalMain.addComponent(gridGroupProperties());
 					gridUsed = false;
 
-				}else if (gridUsedGroup) {
+				} else if (gridUsedGroup) {
 					vHorizontalMain.addComponent(gridProperties());
-					gridUsedGroup=false;
+					gridUsedGroup = false;
 
 				}
 			}
@@ -130,8 +133,8 @@ public class TutorOwnWarningsJava extends MainContentView {
 	}
 
 	public Grid gridProperties() {
-		
-		gridUsed=true;
+
+		gridUsed = true;
 		txtTitle.setVisible(true);
 		txtTitle.addStyleName("main-title");
 		txtTitle.setValue("Les meves amonestacions");
@@ -173,7 +176,7 @@ public class TutorOwnWarningsJava extends MainContentView {
 	}
 
 	public Grid gridGroupProperties() {
-		gridUsedGroup=true;
+		gridUsedGroup = true;
 
 		txtTitle.setVisible(true);
 		txtTitle.addStyleName("main-title");
@@ -187,24 +190,18 @@ public class TutorOwnWarningsJava extends MainContentView {
 
 		query = em.createNativeQuery(
 
-				"SELECT grup FROM usuari u, tutor t WHERE t.docent= u.id_docent AND u.id_docent = "+id+" LIMIT 1");
+				"SELECT grup FROM usuari u, tutor t WHERE t.docent= u.id_docent AND u.id_docent = " + id + " LIMIT 1");
 
 		em.getTransaction().commit();
 
 		try {
-			/*
-			 * SELECT grup FROM usuari u, tutor t WHERE t.docent= u.id_docent
-			 * AND u.id_docent = 4
-			 */
-
-			/*
-			 * select * from amonestacio where grup LIKE 'ESO 1A'
-			 */
+	
 			String tutorGroup = query.getSingleResult().toString();
-			containerGroups = new SQLContainer(new FreeformQuery("select al.nom, " + "al.cognoms," + " a.grup, "
-					+ "a.motius_selection," + " a.altres_motius," + "a.materia, a.data, " + "a.localitzacio "
-					+ "from amonestacio a, docent d, alumne al "
-					+ "where a.docent=d.id and a.alumne=al.id and d.nom LIKE '" + usuari + "' and a.grup LIKE '"+tutorGroup+"'",
+			containerGroups = new SQLContainer(new FreeformQuery(
+					"select al.nom, " + "al.cognoms," + " a.grup, " + "a.motius_selection," + " a.altres_motius,"
+							+ "a.materia, a.data, " + "a.localitzacio " + "from amonestacio a, docent d, alumne al "
+							+ "where a.docent=d.id and a.alumne=al.id and d.nom LIKE '" + usuari + "' and a.grup LIKE '"
+							+ tutorGroup + "'",
 					jdbccp.GetConnection()));
 
 		} catch (SQLException e) {
@@ -242,7 +239,6 @@ public class TutorOwnWarningsJava extends MainContentView {
 
 	private void buttonsSettings() {
 		// TODO Auto-generated method stub
-
 
 		bAdd.setVisible(false);
 		buttonEdit.setVisible(true);
@@ -336,8 +332,6 @@ public class TutorOwnWarningsJava extends MainContentView {
 
 	}
 
-	
-
 	@SuppressWarnings("deprecation")
 	public void ownpopupPDF() throws IOException, DocumentException {
 
@@ -358,11 +352,11 @@ public class TutorOwnWarningsJava extends MainContentView {
 		window.setVisible(true);
 
 	}
-	
+
 	public void reloadGrid() {
-//		vHorizontalMain.removeAllComponents();
+		// vHorizontalMain.removeAllComponents();
 		// vHorizontalMain.addComponent(gridProperties());
-//		vHorizontalMain.addComponent(gridGroupProperties());
+		// vHorizontalMain.addComponent(gridGroupProperties());
 
 	}
 

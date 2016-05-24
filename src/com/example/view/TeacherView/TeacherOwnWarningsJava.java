@@ -102,6 +102,7 @@ public class TeacherOwnWarningsJava extends MainContentView {
 					jdbccp.GetConnection()));
 			grid = new Grid("", container);
 			grid.setContainerDataSource(container);
+			grid.setColumns("nom", "cognoms", "grup", "data");
 			grid.setSizeFull();
 			grid.setColumnReorderingAllowed(true);
 			grid.setSelectionMode(SelectionMode.SINGLE);
@@ -172,9 +173,7 @@ public class TeacherOwnWarningsJava extends MainContentView {
 		String surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms")
 				.getValue().toString();
 
-		String nomCognom = (name.concat(" " + surname)).replaceFirst(" ", "").replaceAll(" ", "_");
-
-		return nomCognom;
+		return  (name.concat(" " + surname)).replaceFirst(" ", "").replaceAll(" ", "_");
 
 	}
 

@@ -4296,8 +4296,12 @@ div.v-layout.v-horizontal.v-widget {
 	box-sizing: border-box;
 	overflow: hidden;
 	font-size: 17px;
-	font-weight:bold;
+	font-weight:bolder;
 	color:black;
+}
+.gatheme .v-grid-cell:focus {
+	
+	background:red;
 }
 
 .gatheme .v-grid-cell.frozen {
@@ -12381,13 +12385,7 @@ font-weight:bold;
 
 .gatheme .valo-menu {
 	height: 100%;
-/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f1f1f1+50,e1e1e1+51,f6f6f6+100;White+Gloss+%231 */
-background: #ffffff; /* Old browsers */
-background: -moz-linear-gradient(-45deg,  #ffffff 0%, #f1f1f1 50%, #e1e1e1 51%, #f6f6f6 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(-45deg,  #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(135deg,  #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
+	background:url(../images/backgroun_lateral.png);
 	color: black;
 	font-size: 14px;
 	line-height: 30px;
@@ -12648,7 +12646,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
 .gatheme .valo-menu-item:focus, .gatheme .valo-menu-item:hover, .gatheme .valo-menu-item.selected {
 	color: white;
-	background-color:#197de1;
+	background-color:#99bbff;
 	
 
 }

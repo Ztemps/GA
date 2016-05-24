@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 import org.eclipse.jetty.security.authentication.SessionAuthentication;
 
 import com.example.Entities.User;
+import com.example.Logic.UserJPAManager;
 import com.example.view.AdminView.AdminView;
 import com.example.view.TeacherView.TeacherView;
 import com.example.view.TutorView.TutorView;
@@ -78,11 +79,11 @@ public class LoginView extends LoginViewDesign implements View {
 	private static final long serialVersionUID = 4731762934864687953L;
 	private static final String TITLE = "Plataforma Gestió d'Amonestacions";
 	private static final String USER = "Plataforma Gestió d'Amonestacions";
-	private static final String FILE = "userList.txt";
 
 	public static final String NAME = "login";
 	private User user;
 	private boolean isAdmin;
+	private UserJPAManager UserJPA;
 	public boolean conected;
 	private boolean login = true;
 	private ArrayList<User> users;
@@ -157,30 +158,17 @@ public class LoginView extends LoginViewDesign implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		FileWriter fw;
-		try {
-			fw = new FileWriter(FILE);
-			BufferedWriter br = new BufferedWriter(fw);
-			br.write("false");
-			br.close();
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		txtUsername.focus();
-
 	}
 
 	public void LoginValidator() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 
 		MessageDigest md = MessageDigest.getInstance("SHA-1");
 		HexBinaryAdapter hbinary = new HexBinaryAdapter();
-
 		// Conecxión con la base de datos
 		String dbURL = "jdbc:postgresql:GAdb";
 		Class.forName("org.postgresql.Driver");
+		
 		Connection conn = null;
 		conn = DriverManager.getConnection(dbURL, "postgres", "postgres");
 
@@ -220,11 +208,6 @@ public class LoginView extends LoginViewDesign implements View {
 			// comparamos otra vez si el usuario y el nombre son el mismo
 			if (user.getUsername().equals(username) && user.getPassword().equals(passwordhash)) {
 				if (user.getRol().equals("Administrador")) {
-
-					FileWriter fw = new FileWriter(FILE);
-					BufferedWriter br = new BufferedWriter(fw);
-					br.write("true");
-					br.close();
 
 					setAttributeSession(username);
 					getUI().getNavigator().navigateTo(AdminView.NAME);//

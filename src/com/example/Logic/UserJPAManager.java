@@ -76,6 +76,17 @@ public class UserJPAManager {
 	};
 
 
+	public boolean validateUser(User user){
+		
+		em.getTransaction().begin();
+		
+		User ss = (User) em.find(User.class, user.getId());
+		
+
+		
+		
+		return false;
+	}
 	public List<User> listUsers() {
 
 		try {

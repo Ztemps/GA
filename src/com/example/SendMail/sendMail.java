@@ -15,6 +15,7 @@ package com.example.SendMail;
 
 import java.io.File;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -32,24 +33,22 @@ import javax.mail.internet.MimeMultipart;
 
 public class sendMail {
 
-	final String senderEmailID = "gestioamonestacions@gmail.com";
-	final String senderPassword = "Nomeolvides2";
-	final String emailSMTPserver = "smtp.gmail.com";
-	final String emailServerPort = "465";
-	final MimeBodyPart messageBodyPart;
-
-	final MimeMultipart multipart;
-	DataSource source;
-	String receiverEmailID = null;
-	String emailSubject = null;
-	String emailBody = null;
-	String filename = null;
+	private MimeBodyPart messageBodyPart;
+	private MimeMultipart multipart;
+	private DataSource source;
+	private String receiverEmailID = null;
+	private String emailSubject = null;
+	private String filename = null;
+	private ResourceBundle rb = ResourceBundle.getBundle("GA");
+	private String senderEmailID = rb.getString("sender_mail");
+	private String senderPassword = rb.getString("sender_pass");
+	private String emailSMTPserver = rb.getString("sender_smpt");
+	private String emailServerPort = rb.getString("sender_port");
 
 	// Constructor send mail
 	public sendMail(String receiverEmailID, String emailSubject, String filename) {
 		this.receiverEmailID = receiverEmailID;
 		this.emailSubject = emailSubject;
-		this.emailBody = emailBody;
 		this.filename = filename;
 
 		messageBodyPart = new MimeBodyPart();
