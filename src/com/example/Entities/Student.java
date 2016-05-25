@@ -47,8 +47,6 @@ public class Student implements Serializable {
 	private String curs;
 	@Column(name = "grup")
 	private String grup;
-	@Column(name = "foto")
-	private Image foto;
 
 	public Student() {
 	}
@@ -101,13 +99,6 @@ public class Student implements Serializable {
 	}
 
 	// Getters y Setters
-	public Image getFoto() {
-		return foto;
-	}
-
-	public void setFoto(Image foto) {
-		this.foto = foto;
-	}
 
 	public int getId() {
 		return id;
