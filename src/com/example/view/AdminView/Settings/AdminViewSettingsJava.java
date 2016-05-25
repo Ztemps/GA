@@ -130,7 +130,6 @@ public class AdminViewSettingsJava extends MainContentView {
 		});
 	}
 	
-	
 	private void NewPassTextFieldProperties() {
 		
 		adminsettings.changePassLayout.setCaption("Canvi de password. Introdueixi password actual. ");

@@ -100,8 +100,11 @@ public class generatePDF extends WarningJPAManager {
 		Timestamp data1 = new Timestamp(date.getTime());
 		String dateparsed = String.valueOf(data1);
 
+		System.out.println("DATEPARSED: " +dateparsed);
+		
 		String dateWarning = dateparsed.substring(0, 10);
 		String hourWarning = dateparsed.substring(11, 19);
+		
 
 		if (query[13].length() > 2) {
 			dateWarning = query[13];
@@ -115,6 +118,8 @@ public class generatePDF extends WarningJPAManager {
 		Image img = logoImage();
 
 		String nameLastname = (query[0].concat(" " + query[1])).replaceFirst(" ", "").replaceAll(" ", "_");
+		
+		System.out.println("SUBSTRING: "+query[14]);
 
 		String path = rb.getString("path_warning") + "amonestacio(" + hourWarning.substring(0, 5) + ")("
 				+ nameLastname + ").pdf";

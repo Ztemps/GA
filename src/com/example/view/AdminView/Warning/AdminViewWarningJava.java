@@ -28,6 +28,7 @@ import java.util.StringTokenizer;
 
 import javax.persistence.EntityManager;
 
+import com.example.Dates.ConverterDates;
 import com.example.Entities.Student;
 import com.example.Entities.Teacher;
 import com.example.Logic.EntityManagerUtil;
@@ -114,6 +115,8 @@ public class AdminViewWarningJava extends MainContentView {
 	private static final String AL_COGNOMS = "cognoms";
 	private static final String AL_CURS = "curs";
 	private static final String AL_GRUP = "grup";
+	private ConverterDates convertDate;
+	String convertedDate;
 
 	public AdminViewWarningJava() throws MalformedURLException, DocumentException, IOException {
 
@@ -123,6 +126,20 @@ public class AdminViewWarningJava extends MainContentView {
 		WindowPdfProperties();
 		PopulateComboBoxProf();
 		PopulateComboBoxSubjects();
+		
+		amonestacioForm.datefield.addValueChangeListener(new ValueChangeListener() {
+
+		
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				// TODO Auto-generated method stub
+
+					amonestacioForm.time.setEnabled(true);
+					amonestacioForm.time.focus();
+				
+
+			}
+		});
 
 		amonestacioForm.comboProf.addValueChangeListener(new ValueChangeListener() {
 
@@ -214,9 +231,9 @@ public class AdminViewWarningJava extends MainContentView {
 				} finally {
 					window.close();
 					windowpdf.close();
-					
-//					sendTel.sendWarning("Gerard_Paulino", timewarning[0]);
-					
+
+					// sendTel.sendWarning("Gerard_Paulino", timewarning[0]);
+
 					FileReader reader;
 					String path2 = null;
 					File currDir = new File(".");
@@ -290,8 +307,6 @@ public class AdminViewWarningJava extends MainContentView {
 						e.printStackTrace();
 					}
 
-
-
 				}
 
 			}
@@ -324,6 +339,7 @@ public class AdminViewWarningJava extends MainContentView {
 				amonestacioForm.grup.setReadOnly(false);
 				clearFields();
 				window.close();
+				
 
 			}
 		});
@@ -363,8 +379,8 @@ public class AdminViewWarningJava extends MainContentView {
 		bAdd.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		bRegister.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonEdit.addStyleName(ValoTheme.BUTTON_PRIMARY);
-
-		amonestacioForm.datefield.setInputPrompt("yyyy-MM-dd");
+		amonestacioForm.datefield.setDateFormat("dd-MM-yyyy");
+		// amonestacioForm.datefield.setInputPrompt("yyyy-MM-dd");
 		amonestacioForm.time.setInputPrompt("16:25");
 		bDelete.setVisible(false);
 		buttonEdit.setVisible(false);
@@ -372,6 +388,7 @@ public class AdminViewWarningJava extends MainContentView {
 		bAdd.setEnabled(false);
 		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
+		amonestacioForm.time.setEnabled(false);
 
 	}
 
@@ -387,81 +404,65 @@ public class AdminViewWarningJava extends MainContentView {
 
 	}
 
+	private void FilterGridName() {
 
-	
-	private void FilterGridName(){
-		
-		    cell = filterRow.getCell(AL_NOM);   
-		    // Have an input field to use for filter
-		    filterField = new TextField();
-		    filterField.setSizeFull();
-		    filterField.setInputPrompt("Filtra per nom");
-		    // Update filter When the filter input is changed
-		    filterField.addTextChangeListener(change -> {
-		        // Can't modify filters so need to replace
-		        alumnes.removeContainerFilters(AL_NOM);
-		        
-		        // (Re)create the filter if necessary
-		        if (! change.getText().isEmpty())
-		        	alumnes.addContainerFilter(
-		                new SimpleStringFilter(AL_NOM,
-		                    change.getText(), true, false));
-		      
-		    });
-		    
-		    cell.setComponent(filterField);
-		}
-		
-	private void FilterGridSurName(){
-		
-	    cell = filterRow.getCell(AL_COGNOMS);   
-	    // Have an input field to use for filter
-	    filterField = new TextField();
-	    filterField.setSizeFull();
-	    filterField.setInputPrompt("Filtra per cognoms");
-	    // Update filter When the filter input is changed
-	    filterField.addTextChangeListener(change -> {
-	        // Can't modify filters so need to replace
-	        alumnes.removeContainerFilters(AL_COGNOMS);
+		cell = filterRow.getCell(AL_NOM);
+		// Have an input field to use for filter
+		filterField = new TextField();
+		filterField.setSizeFull();
+		filterField.setInputPrompt("Filtra per nom");
+		// Update filter When the filter input is changed
+		filterField.addTextChangeListener(change -> {
+			// Can't modify filters so need to replace
+			alumnes.removeContainerFilters(AL_NOM);
 
-	        // (Re)create the filter if necessary
-	        if (! change.getText().isEmpty())
-	        	alumnes.addContainerFilter(
-	                new SimpleStringFilter(AL_COGNOMS,
-	                    change.getText(), true, false));
-	        
-	  
-	    });
-	    cell.setComponent(filterField);
+			// (Re)create the filter if necessary
+			if (!change.getText().isEmpty())
+				alumnes.addContainerFilter(new SimpleStringFilter(AL_NOM, change.getText(), true, false));
+
+		});
+
+		cell.setComponent(filterField);
+	}
+
+	private void FilterGridSurName() {
+
+		cell = filterRow.getCell(AL_COGNOMS);
+		// Have an input field to use for filter
+		filterField = new TextField();
+		filterField.setSizeFull();
+		filterField.setInputPrompt("Filtra per cognoms");
+		// Update filter When the filter input is changed
+		filterField.addTextChangeListener(change -> {
+			// Can't modify filters so need to replace
+			alumnes.removeContainerFilters(AL_COGNOMS);
+
+			// (Re)create the filter if necessary
+			if (!change.getText().isEmpty())
+				alumnes.addContainerFilter(new SimpleStringFilter(AL_COGNOMS, change.getText(), true, false));
+
+		});
+		cell.setComponent(filterField);
 
 	}
 
-	
-	/*private void FilterGridCurs(){
-		
-	    cell = filterRow.getCell(AL_CURS);   
-	    // Have an input field to use for filter
-	    filterField = new TextField();
-	    filterField.setSizeFull();
-	    filterField.setInputPrompt("Filtra per curs");
-	    // Update filter When the filter input is changed
-	    filterField.addTextChangeListener(change -> {
-	        // Can't modify filters so need to replace
-	        alumnes.removeContainerFilters(AL_CURS);
-
-	        // (Re)create the filter if necessary
-	        if (! change.getText().isEmpty())
-	        	alumnes.addContainerFilter(
-	                new SimpleStringFilter(AL_CURS,
-	                    change.getText(), true, false));
-	  
-	        
-	    });
-	    cell.setComponent(filterField);
-	}*/
-	
-
-
+	/*
+	 * private void FilterGridCurs(){
+	 * 
+	 * cell = filterRow.getCell(AL_CURS); // Have an input field to use for
+	 * filter filterField = new TextField(); filterField.setSizeFull();
+	 * filterField.setInputPrompt("Filtra per curs"); // Update filter When the
+	 * filter input is changed filterField.addTextChangeListener(change -> { //
+	 * Can't modify filters so need to replace
+	 * alumnes.removeContainerFilters(AL_CURS);
+	 * 
+	 * // (Re)create the filter if necessary if (! change.getText().isEmpty())
+	 * alumnes.addContainerFilter( new SimpleStringFilter(AL_CURS,
+	 * change.getText(), true, false));
+	 * 
+	 * 
+	 * }); cell.setComponent(filterField); }
+	 */
 
 	private void FilterGridGrup() {
 
@@ -533,7 +534,7 @@ public class AdminViewWarningJava extends MainContentView {
 		filterRow = grid.appendHeaderRow();
 		FilterGridName();
 		FilterGridSurName();
-		//FilterGridCurs();
+		// FilterGridCurs();
 		FilterGridGrup();
 		return grid;
 
@@ -563,11 +564,14 @@ public class AdminViewWarningJava extends MainContentView {
 		amonestacioForm.tutor.setReadOnly(false);
 		amonestacioForm.grup.setReadOnly(false);
 
+		
+
 		if (window.isAttached())
 			getUI().getWindows().remove(window);
 
 		UI.getCurrent().addWindow(window);
 		window.setVisible(true);
+
 		clearFields();
 
 		MA1 = new WarningJPAManager();
@@ -709,6 +713,8 @@ public class AdminViewWarningJava extends MainContentView {
 		amonestacioForm.circunstancia.clear();
 		amonestacioForm.accio.clear();
 		amonestacioForm.comboSubject.clear();
+		amonestacioForm.datefield.clear();
+		amonestacioForm.time.clear();
 	}
 
 	public String[] returnQuery() throws MalformedURLException, DocumentException, IOException {
@@ -740,6 +746,12 @@ public class AdminViewWarningJava extends MainContentView {
 		tutor = MA.getNomTutor(id);
 		try {
 			data = amonestacioForm.datefield.getValue().toString();
+			System.out.println("FECHAAAAA" + data);
+
+			convertDate = new ConverterDates();
+			convertedDate = convertDate.converterDate2(data);
+
+			System.out.println("FECHAAAAA" + convertedDate);
 			time = amonestacioForm.time.getValue().toString();
 			grup = amonestacioForm.grup.getValue();
 			gravetat = amonestacioForm.caracter.getValue().toString();
@@ -769,7 +781,9 @@ public class AdminViewWarningJava extends MainContentView {
 		}
 
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
-				altres_motius, motiu2, nameTeacher, data, time };
+				altres_motius, motiu2, nameTeacher, convertedDate, time };
+
+		System.out.println("TIMEEE " + time);
 
 		// DATOS PARA INTRODUCIR EN EL PARTE
 
@@ -804,7 +818,13 @@ public class AdminViewWarningJava extends MainContentView {
 
 		tutor = MA.getNomTutor(id);
 		try {
+
 			data = amonestacioForm.datefield.getValue().toString();
+			System.out.println("FECHAAAAA" + data);
+
+			convertDate = new ConverterDates();
+			String convertedDate = convertDate.converterDate2(data);
+
 			time = amonestacioForm.time.getValue().toString();
 			grup = amonestacioForm.grup.getValue();
 			gravetat = amonestacioForm.caracter.getValue().toString();
@@ -850,11 +870,11 @@ public class AdminViewWarningJava extends MainContentView {
 		windowpdf.setCaption("Confirmar amonestació");
 		windowpdf.center();
 		amonestacioForm.baceptar.setEnabled(true);
+		amonestacioForm.time.setEnabled(false);
 	}
 
 	public void clear() {
 		// TODO Auto-generated method stub
-
 		bAdd.setEnabled(false);
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);

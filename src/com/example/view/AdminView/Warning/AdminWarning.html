@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
  <head>
-  <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src&quot;,&quot;THEME&quot;:&quot;ga&quot;}">
+  <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src&quot;,&quot;THEME&quot;:&quot;gatheme&quot;}">
  </head> 
  <body> 
   <vaadin-css-layout width-full="true"> 
@@ -9,7 +9,6 @@
     <vaadin-horizontal-layout spacing="true" size-full="true" margin-top="true" margin-bottom="true" :middle="" :center="" :expand=""> 
      <vaadin-text-field icon="fonticon://FontAwesome/f007" caption="Nom" width-full="true" _id="nom" :middle="" :center="" :expand=""></vaadin-text-field> 
      <vaadin-text-field icon="fonticon://FontAwesome/f007" caption="Cognoms" width-full="true" _id="cognoms" :middle="" :center="" :expand=""></vaadin-text-field> 
-    <!-- <vaadin-text-field icon="fonticon://FontAwesome/f02d" caption="Matèria" width-full="true" _id="materia" :middle="" :center="" :expand=""></vaadin-text-field> -->  
      <vaadin-combo-box icon="fonticon://FontAwesome/f02d" caption="Matèria" width-full="true" _id="comboSubject" :middle="" :center="" :expand=""> 
       <option>Option 1</option> 
       <option>Option 2</option> 
@@ -20,7 +19,7 @@
       <option>Option 2</option> 
       <option>Option 3</option> 
      </vaadin-combo-box> 
-     <vaadin-text-field icon="fonticon://FontAwesome/f073" caption="Data [yyyy-MM-dd]" width-full="true" _id="datefield" :middle="" :center="" :expand=""></vaadin-text-field> 
+     <vaadin-popup-date-field icon="fonticon://FontAwesome/f133" caption="Data" _id="datefield"></vaadin-popup-date-field> 
     </vaadin-horizontal-layout> 
     <vaadin-horizontal-layout spacing="true" size-full="true" :middle="" :center="" :expand=""> 
      <vaadin-native-select icon="fonticon://FontAwesome/f124" caption="Circumstància" item-caption-mode="id" width-full="true" _id="circunstancia" :middle="" :center="" :expand=""> 
