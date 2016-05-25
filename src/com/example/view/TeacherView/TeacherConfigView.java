@@ -50,6 +50,7 @@ public class TeacherConfigView extends MainContentView {
 
 	private PasswordField oldPass = new PasswordField();
 	private PasswordField newPass = new PasswordField();
+	private PasswordField confirmNewPass = new PasswordField();
 	private Button acceptOldPass = new Button("Acceptar");
 	private Button acceptNewPass = new Button("Acceptar");
 	private Label titlepass = new Label("CANVI DE PASSWORD");
@@ -101,17 +102,27 @@ public class TeacherConfigView extends MainContentView {
 				}
 				HexBinaryAdapter hbinary = new HexBinaryAdapter();
 				String password = newPass.getValue();
-				String passwordhash = hbinary.marshal(md.digest(password.getBytes())).toLowerCase();
-				System.out.println("Encriptada: " + passwordhash);
-
-				int id = Integer.parseInt(getUI().getSession().getAttribute("id").toString());
-
+				String confirmpass = confirmNewPass.getValue();
 				
-				MA.updateUser(new User(id, passwordhash));
-				MA.closeTransaction();
-				notif("Contraseña nova acceptada. ");
-				ShowNewPassTextField();
-				ClearFields();
+				if(password.equals(confirmpass)){
+					String passwordhash = hbinary.marshal(md.digest(password.getBytes())).toLowerCase();
+					System.out.println("Encriptada: " + passwordhash);
+
+					int id = Integer.parseInt(getUI().getSession().getAttribute("id").toString());
+
+					
+					MA.updateUser(new User(id, passwordhash));
+					MA.closeTransaction();
+					notif("Contraseña nova acceptada. ");
+					ShowNewPassTextField();
+					ClearFields();
+				}
+				else{
+					notifWrong("La contrasenya nova no coincideix als dos camps. Torni a intentar-ho.");
+					ShowNewPassTextField();
+					ClearFields();
+				}
+				
 
 			}
 		});
@@ -124,7 +135,9 @@ public class TeacherConfigView extends MainContentView {
 		vl.addComponent(oldPass);
 		vl.addComponent(acceptOldPass);
 		vl.addComponents(newPass);
+		vl.addComponent(confirmNewPass);
 		vl.addComponent(acceptNewPass);
+		
 	}
 
 	public void ButtonProperties() {
@@ -132,7 +145,6 @@ public class TeacherConfigView extends MainContentView {
 		acceptOldPass.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		acceptOldPass.setClickShortcut(KeyCode.ENTER);
 		acceptOldPass.addStyleName("settings");
-
 		acceptNewPass.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		acceptNewPass.setClickShortcut(KeyCode.ENTER);
 		acceptNewPass.addStyleName("settings");
@@ -145,6 +157,7 @@ public class TeacherConfigView extends MainContentView {
 	public void ClearFields() {
 		oldPass.clear();
 		newPass.clear();
+		confirmNewPass.clear();
 	}
 
 	private void ShowNewPassTextField() {
@@ -154,11 +167,13 @@ public class TeacherConfigView extends MainContentView {
 			oldPass.setVisible(false);
 			acceptOldPass.setVisible(false);
 			newPass.setVisible(true);
+			confirmNewPass.setVisible(true);
 			acceptNewPass.setVisible(true);
 		} else {
 			oldPass.setVisible(true);
 			acceptOldPass.setVisible(true);
 			newPass.setVisible(false);
+			confirmNewPass.setVisible(false);
 			acceptNewPass.setVisible(false);
 		}
 	}
@@ -187,6 +202,8 @@ public class TeacherConfigView extends MainContentView {
 		newPass.setCaption("Introdueixi nou password");
 		newPass.addStyleName("settings");
 		newPass.setVisible(false);
+		confirmNewPass.setCaption("Repeteixi el nou password");
+		confirmNewPass.setVisible(false);
 		acceptNewPass.setVisible(false);
 	}
 
@@ -247,6 +264,17 @@ public class TeacherConfigView extends MainContentView {
 	public void notif(String mensaje) {
 
 		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
+																												// HTML
+
+		// Customize it
+		notif.show(Page.getCurrent());
+		notif.setDelayMsec(500);
+		notif.setPosition(Position.TOP_CENTER);
+	}
+	
+	public void notifWrong(String mensaje) {
+
+		Notification notif = new Notification(mensaje, null, Notification.Type.WARNING_MESSAGE, true); // Contains
 																												// HTML
 
 		// Customize it
