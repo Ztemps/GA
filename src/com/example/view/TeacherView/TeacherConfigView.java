@@ -101,28 +101,12 @@ public class TeacherConfigView extends MainContentView {
 				}
 				HexBinaryAdapter hbinary = new HexBinaryAdapter();
 				String password = newPass.getValue();
-
-				/*
-				 * try { SecretKey key =
-				 * KeyGenerator.getInstance("DES").generateKey(); try {
-				 * EncryptDecryptStringWithDES.dcipher =
-				 * Cipher.getInstance("DES");
-				 * EncryptDecryptStringWithDES.dcipher.init(Cipher.ENCRYPT_MODE,
-				 * key); } catch (NoSuchPaddingException e) { // TODO
-				 * Auto-generated catch block e.printStackTrace(); } catch
-				 * (InvalidKeyException e) { // TODO Auto-generated catch block
-				 * e.printStackTrace(); } } catch (NoSuchAlgorithmException e) {
-				 * // TODO Auto-generated catch block e.printStackTrace(); }
-				 * String passwordEncrypted =
-				 * EncryptDecryptStringWithDES.encrypt(password);
-				 */
-
 				String passwordhash = hbinary.marshal(md.digest(password.getBytes())).toLowerCase();
 				System.out.println("Encriptada: " + passwordhash);
 
 				int id = Integer.parseInt(getUI().getSession().getAttribute("id").toString());
-				System.out.println("ID " + id);
-				System.out.println("NOMEOLVIDES : " + passwordhash);
+
+				
 				MA.updateUser(new User(id, passwordhash));
 				MA.closeTransaction();
 				notif("Contraseña nova acceptada. ");

@@ -114,56 +114,63 @@ public class AdminViewUser extends MainContentView {
 
 	private void editUser() {
 
-
-		getItemSelected();
+		userformEdit.txtGrup.setReadOnly(false);
 
 		Object id = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
 		Object user = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("username");
 
+		if(user.toString().equals("admin")){
+			
+			notif("Aquest usuari no es pot editar");
+			
+		}else{
+			
+			getItemSelected();
+			userformEdit.txtGrup.setValue(user.toString());
+			userformEdit.txtGrup.setReadOnly(true);
 
-		userformEdit.txtGrup.setValue(user.toString());
-		userformEdit.txtGrup.setReadOnly(true);
+			userformEdit.aceptarButton.addClickListener(new ClickListener() {
 
-		userformEdit.aceptarButton.addClickListener(new ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					// TODO Auto-generated method stub
+					
+					MA = new UserJPAManager();
+					User user = getUserEdit();
+					MessageDigest md = null;
+					try {
+						md = MessageDigest.getInstance("SHA-1");
+					} catch (NoSuchAlgorithmException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					HexBinaryAdapter hbinary = new HexBinaryAdapter();
+					String password = userformEdit.txtPassword.getValue();
+					
+					
+					String passwordhash = hbinary.marshal(md.digest(password.getBytes())).toLowerCase();
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-				
-				MA = new UserJPAManager();
-				User user = getUserEdit();
-				MessageDigest md = null;
-				try {
-					md = MessageDigest.getInstance("SHA-1");
-				} catch (NoSuchAlgorithmException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					MA.updateUser(new User(user.getId(), passwordhash));
+					MA.closeTransaction();
+					reloadGrid();
+					windowEdit.close();
+					clearEditForm();	
+					getUI().getNavigator().navigateTo(AdminView.NAME);
+
+					notif("Usuari editat correctament");
+					
+					}
+
+			});
+
+			userformEdit.cancelarButton.addClickListener(new ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					windowEdit.close();
 				}
-				HexBinaryAdapter hbinary = new HexBinaryAdapter();
-				String password = userformEdit.txtPassword.getValue();
-				
-				
-				String passwordhash = hbinary.marshal(md.digest(password.getBytes())).toLowerCase();
+			});
+		}
 
-				MA.updateUser(new User(user.getId(), passwordhash));
-				MA.closeTransaction();
-				reloadGrid();
-				windowEdit.close();
-				clearEditForm();	
-				getUI().getNavigator().navigateTo(AdminView.NAME);
-
-				notif("Usuari editat correctament");
-				
-				}
-
-		});
-
-		userformEdit.cancelarButton.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				windowEdit.close();
-			}
-		});
 	}
 
 	private void clearEditForm() {
