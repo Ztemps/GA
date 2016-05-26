@@ -175,7 +175,7 @@ public class AdminViewReportsJava extends MainContentView {
 				
 				Thread t2 = new Thread(){
 					public void run(){
-						trimestralReports.calculateThirdTrimester();
+						trimestralReports.calcularTercerTrimestre();
 
 					}
 				};
@@ -235,7 +235,7 @@ public class AdminViewReportsJava extends MainContentView {
 				
 				Thread t2 = new Thread(){
 					public void run(){
-						trimestralReports.calculateSecondTrimester();
+						trimestralReports.calcularSegundoTrimestre();
 
 					}
 				};
