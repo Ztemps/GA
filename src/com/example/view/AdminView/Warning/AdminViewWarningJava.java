@@ -745,14 +745,7 @@ public class AdminViewWarningJava extends MainContentView {
 
 		tutor = MA.getNomTutor(id);
 		try {
-			data = amonestacioForm.datefield.getValue().toString();
-			System.out.println("FECHAAAAA" + data);
-
-			convertDate = new ConverterDates();
-			convertedDate = convertDate.converterDate2(data);
-
-			System.out.println("FECHAAAAA" + convertedDate);
-			time = amonestacioForm.time.getValue().toString();
+			
 			grup = amonestacioForm.grup.getValue();
 			gravetat = amonestacioForm.caracter.getValue().toString();
 			motiu = amonestacioForm.motiu.getValue().toString();
@@ -779,11 +772,34 @@ public class AdminViewWarningJava extends MainContentView {
 		} else {
 			assignatura = amonestacioForm.comboSubject.getValue().toString();
 		}
+		
+		
+		
+		if ((String.valueOf(amonestacioForm.time.getValue()).equals("null"))) {
+
+			time = null;
+
+		} else {
+			time = amonestacioForm.time.getValue().toString();
+
+		}
+		
+		if ((String.valueOf(amonestacioForm.datefield.getValue()).equals("null"))) {
+
+			convertedDate = null;
+		} else {
+			data = amonestacioForm.datefield.getValue().toString();
+			System.out.println("FECHAAAAA" + data);
+
+			convertDate = new ConverterDates();
+			convertedDate = convertDate.converterDate2(data);
+
+		}
+		
 
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
 				altres_motius, motiu2, nameTeacher, convertedDate, time };
 
-		System.out.println("TIMEEE " + time);
 
 		// DATOS PARA INTRODUCIR EN EL PARTE
 

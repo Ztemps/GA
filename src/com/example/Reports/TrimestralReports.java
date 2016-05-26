@@ -100,7 +100,7 @@ public class TrimestralReports {
 			for (int i = 0; i < ids.size(); i++) {
 				idList.add(ids.get(i));
 
-				System.out.println(ids.get(i));
+			//	System.out.println(ids.get(i));
 			}
 
 			// FOR NOMS
