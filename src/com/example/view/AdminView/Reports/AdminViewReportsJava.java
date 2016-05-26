@@ -140,7 +140,7 @@ public class AdminViewReportsJava extends MainContentView {
 				
 				
 				
-				File zip = new File(ZipFiles("totalcurs.zip", "/tmp/total"+ ""));
+				File zip = new File(ZipFiles("totalcurs.zip", "/home/ubuntu/informes/total"+ ""));
 				InputStream targetStream = null;
 				try {
 					targetStream = new FileInputStream(zip);
@@ -201,7 +201,7 @@ public class AdminViewReportsJava extends MainContentView {
 				trimestralReports.closeAllConnections();
 				
 				
-				File zip = new File(ZipFiles("trimestre3.zip", "/tmp/trimestre3"));
+				File zip = new File(ZipFiles("trimestre3.zip", "/home/ubuntu/informes/trimestre3"));
 				InputStream targetStream = null;
 				try {
 					targetStream = new FileInputStream(zip);
@@ -261,7 +261,7 @@ public class AdminViewReportsJava extends MainContentView {
 				trimestralReports.closeAllConnections();
 				
 				
-				File zip = new File(ZipFiles("trimestre2.zip", "/tmp/trimestre2"));
+				File zip = new File(ZipFiles("trimestre2.zip", "/home/ubuntu/informes/trimestre2"));
 				InputStream targetStream = null;
 				try {
 					targetStream = new FileInputStream(zip);
@@ -319,7 +319,7 @@ public class AdminViewReportsJava extends MainContentView {
 				}
 				
 				trimestralReports.closeAllConnections();
-				File zip = new File(ZipFiles("trimestre1.zip", "/tmp/trimestre1"));
+				File zip = new File(ZipFiles("trimestre1.zip", "/home/ubuntu/informes/trimestre1"));
 				InputStream targetStream = null;
 				try {
 					targetStream = new FileInputStream(zip);

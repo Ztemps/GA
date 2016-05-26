@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 import javax.persistence.Query;
@@ -38,7 +39,7 @@ public class TrimestralReports {
 	private static final String COMMA_DELIMITER = ",";
 	private static final String NEW_LINE_SEPARATOR = "\n";
 	private static final String FILE_HEADER = "ALUMNE,A,E";
-
+	ResourceBundle rb = ResourceBundle.getBundle("GA");
 	public ReportQuerys query;
 	ArrayList<Date> dates = new ArrayList<Date>();
 	// CSV file header
@@ -129,12 +130,12 @@ public class TrimestralReports {
 
 			try {
 
-				File f = new File("/tmp/trimestre1");
+				File f = new File("/home/ubuntu/informes/trimestre1");
 				if (!f.exists()) {
 					f.mkdirs();
 				}
 
-				fileWriter = new FileWriter("/tmp/trimestre1/alumnes" + grupos.get(x).getId() + ".xls");
+				fileWriter = new FileWriter("/home/ubuntu/informes/trimestre1/alumnes" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
 				// query.closeTransaction();
@@ -327,12 +328,12 @@ public class TrimestralReports {
 			}
 
 			try {
-				File f = new File("/tmp/trimestre2");
+				File f = new File("/home/ubuntu/informes/trimestre2");
 				if (!f.exists()) {
 					f.mkdirs();
 				}
 
-				fileWriter = new FileWriter("/tmp/trimestre2/alumnes" + grupos.get(x).getId() + ".xls");
+				fileWriter = new FileWriter("/home/ubuntu/informes/trimestre2/alumnes" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
 				// query.closeTransaction();
@@ -522,12 +523,12 @@ public class TrimestralReports {
 
 			try {
 
-				File f = new File("/tmp/trimestre3");
+				File f = new File("/home/ubuntu/informes/trimestre3");
 				if (!f.exists()) {
 					f.mkdirs();
 				}
 
-				fileWriter = new FileWriter("/tmp/trimestre3/alumnes" + grupos.get(x).getId() + ".xls");
+				fileWriter = new FileWriter("/home/ubuntu/informes/trimestre3/alumnes" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
 				// query.closeTransaction();
@@ -684,11 +685,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-			File f2 = new File("/tmp/trimestre1");
+			File f2 = new File("/home/ubuntu/informes/trimestre1");
 			if (!f2.exists()) {
 				f2.mkdirs();
 			}
-			fileWriter = new FileWriter("/tmp/trimestre1/resumen.xls");
+			fileWriter = new FileWriter("/home/ubuntu/informes/trimestre1/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -853,11 +854,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-			File f = new File("/tmp/trimestre2");
+			File f = new File("/home/ubuntu/informes/trimestre2");
 			if (!f.exists()) {
 				f.mkdirs();
 			}
-			fileWriter = new FileWriter("/tmp/trimestre2/resumen.xls");
+			fileWriter = new FileWriter("/home/ubuntu/informes/trimestre2/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -1022,11 +1023,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-			File f = new File("/tmp/trimestre3");
+			File f = new File("/home/ubuntu/informes/trimestre3");
 			if (!f.exists()) {
 				f.mkdirs();
 			}
-			fileWriter = new FileWriter("/tmp/trimestre3/resumen.xls");
+			fileWriter = new FileWriter("/home/ubuntu/informes/trimestre3/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -1194,11 +1195,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-			File f = new File("/tmp/trimestre1");
+			File f = new File("/home/ubuntu/informes/trimestre1");
 			if (!f.exists()) {
 				f.mkdirs();
 			}
-			fileWriter = new FileWriter("/tmp/trimestre1/resumen2.xls");
+			fileWriter = new FileWriter("/home/ubuntu/informes/trimestre1/resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -1360,11 +1361,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-			File f = new File("/tmp/trimestre2");
+			File f = new File("/home/ubuntu/informes/trimestre2");
 			if (!f.exists()) {
 				f.mkdirs();
 			}
-			fileWriter = new FileWriter("/tmp/trimestre2/resumen2.xls");
+			fileWriter = new FileWriter("/home/ubuntu/informes/trimestre2/resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -1526,11 +1527,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-			File f = new File("/tmp/trimestre3");
+			File f = new File("/home/ubuntu/informes/trimestre3");
 			if (!f.exists()) {
 				f.mkdirs();
 			}
-			fileWriter = new FileWriter("/tmp/trimestre3/resumen2.xls");
+			fileWriter = new FileWriter("/home/ubuntu/informes/trimestre3/resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -1676,7 +1677,6 @@ public class TrimestralReports {
 
 	private ArrayList<Date> readFile() throws ReadOnlyException, ConversionException, IOException {
 		FileReader reader;
-		String path2 = null;
 		File currDir = new File(".");
 		String linea = null;
 		Date fechaIniciTrimestre1 = null;
@@ -1688,13 +1688,9 @@ public class TrimestralReports {
 		ArrayList<Date> fechas = new ArrayList<Date>();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
-		try {
-			path2 = currDir.getCanonicalPath();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+		
 
-		File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
+		File f = new File(rb.getString("file_settings"));
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if (br.readLine() == null) {
 			System.out.println("No Hay fecha en el documento settings");

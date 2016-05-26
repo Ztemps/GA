@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 import javax.persistence.Query;
@@ -37,7 +38,7 @@ public class FinalReports {
 	private static final String COMMA_DELIMITER = ",";
 	private static final String NEW_LINE_SEPARATOR = "\n";
 	private static final String FILE_HEADER = "ALUMNE,A,E";
-
+	ResourceBundle rb = ResourceBundle.getBundle("GA");
 	private ReportQuerys query;
 	private ArrayList<Date> dates;
 	private GroupJPAManager jpa;
@@ -134,12 +135,12 @@ public class FinalReports {
 			}
 
 			try {
-				File f = new File("/tmp/total");
+				File f = new File("/home/ubuntu/informes/total");
 				if (!f.exists()) {
 					f.mkdirs();
 				}
 
-				fileWriter = new FileWriter("/tmp/total/" + grupos.get(x).getId() + ".xls");
+				fileWriter = new FileWriter("/home/ubuntu/informes/total/" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
 				// query.closeTransaction();
@@ -320,11 +321,11 @@ public class FinalReports {
 		try {
 
 			dates = readFile();
-			File f = new File("/tmp/total/");
+			File f = new File("/home/ubuntu/informes/total/");
 			if (!f.exists()) {
 				f.mkdirs();
 			}
-			fileWriter = new FileWriter("/tmp/total/resumen.xls");
+			fileWriter = new FileWriter("/home/ubuntu/informes/total/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -565,7 +566,6 @@ public class FinalReports {
 
 	public ArrayList<Date> readFile() throws ReadOnlyException, ConversionException, IOException {
 		FileReader reader;
-		String path2 = null;
 		File currDir = new File(".");
 		String linea = null;
 		Date fechaIniciTrimestre1 = null;
@@ -577,13 +577,8 @@ public class FinalReports {
 		ArrayList<Date> fechas = new ArrayList<Date>();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
-		try {
-			path2 = currDir.getCanonicalPath();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
 
-		File f = new File(path2 + "/git/ga2/WebContent/Settings/settings.txt");
+		File f = new File(rb.getString("file_settings"));
 
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if (br.readLine() == null) {
