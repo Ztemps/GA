@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ResourceBundle;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -46,7 +47,7 @@ public class AdminViewReportsJava extends MainContentView {
 	private StreamResource sr2 = getTrimestral2Zip();
 	private StreamResource sr3 = getTrimestral3Zip();
 	private StreamResource sr4 = getTrimestral4Zip();
-
+	ResourceBundle rb = ResourceBundle.getBundle("GA");
 
 	private FileDownloader fileDownloader = new FileDownloader(sr);
 	private FileDownloader fileDownloader2 = new FileDownloader(sr2);
@@ -140,7 +141,13 @@ public class AdminViewReportsJava extends MainContentView {
 				
 				
 				
-				File zip = new File(ZipFiles("totalcurs.zip", "/tmp/total"+ ""));
+				File zip=null;
+				try {
+					zip = new File(zipFolder("/home/ubuntu/informes/totalcurs.zip", rb.getString("zip_total")));
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				InputStream targetStream = null;
 				try {
 					targetStream = new FileInputStream(zip);
@@ -201,7 +208,13 @@ public class AdminViewReportsJava extends MainContentView {
 				trimestralReports.closeAllConnections();
 				
 				
-				File zip = new File(ZipFiles("trimestre3.zip", "/tmp/trimestre3"));
+				File zip=null;
+				try {
+					zip = new File(zipFolder("/home/ubuntu/informes/trimestre3.zip", "/home/ubuntu/informes/trimestre3"));
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				InputStream targetStream = null;
 				try {
 					targetStream = new FileInputStream(zip);
@@ -261,7 +274,13 @@ public class AdminViewReportsJava extends MainContentView {
 				trimestralReports.closeAllConnections();
 				
 				
-				File zip = new File(ZipFiles("trimestre2.zip", "/tmp/trimestre2"));
+				File zip=null;
+				try {
+					zip = new File(zipFolder("/home/ubuntu/informes/trimestre2.zip", "/home/ubuntu/informes/trimestre2"));
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				InputStream targetStream = null;
 				try {
 					targetStream = new FileInputStream(zip);
@@ -319,7 +338,13 @@ public class AdminViewReportsJava extends MainContentView {
 				}
 				
 				trimestralReports.closeAllConnections();
-				File zip = new File(ZipFiles("trimestre1.zip", "/tmp/trimestre1"));
+				File zip=null;
+				try {
+					zip = new File(zipFolder("/home/ubuntu/informes/trimestre1.zip", "/home/ubuntu/informes/trimestre1"));
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				InputStream targetStream = null;
 				try {
 					targetStream = new FileInputStream(zip);
@@ -412,54 +437,98 @@ public class AdminViewReportsJava extends MainContentView {
 
 	}
 
-	public String ZipFiles(String zipFile, String folder) {
+//	public String ZipFiles(String zipFile, String folder) {
+//
+//		try {
+//			FileOutputStream fos = new FileOutputStream(zipFile);
+//			ZipOutputStream zos = new ZipOutputStream(fos);
+//
+//			Files.walk(Paths.get(folder)).forEach(filePath -> {
+//				if (Files.isRegularFile(filePath)) {
+//					String path = filePath.toString();
+//					System.out.println("PATHHH " + path);
+//					try {
+//						addToZipFile(path, zos);
+//					} catch (Exception e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				}
+//			});
+//
+//			zos.close();
+//			fos.close();
+//
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return zipFile;
+//	}
 
-		try {
-			FileOutputStream fos = new FileOutputStream(zipFile);
-			ZipOutputStream zos = new ZipOutputStream(fos);
+//	public static void addToZipFile(String fileName, ZipOutputStream zos) throws FileNotFoundException, IOException {
+//
+//		System.out.println("Writing '" + fileName + "' to zip file");
+//
+//		File file = new File(fileName);
+//		FileInputStream fis = new FileInputStream(file);
+//		ZipEntry zipEntry = new ZipEntry(fileName);
+//		zos.putNextEntry(zipEntry);
+//
+//		byte[] bytes = new byte[1048576];
+//		int length;
+//		while ((length = fis.read(bytes)) >= 0) {
+//			zos.write(bytes, 0, length);
+//		}
+//
+//		zos.closeEntry();
+//		fis.close();
+//	}
+	
+	static public String zipFolder(String destZipFile,String srcFolder) throws Exception {
+	    ZipOutputStream zip = null;
+	    FileOutputStream fileWriter = null;
 
-			Files.walk(Paths.get(folder)).forEach(filePath -> {
-				if (Files.isRegularFile(filePath)) {
-					String path = filePath.toString();
-					System.out.println("PATHHH " + path);
-					try {
-						addToZipFile(path, zos);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			});
+	    fileWriter = new FileOutputStream(destZipFile);
+	    zip = new ZipOutputStream(fileWriter);
 
-			zos.close();
-			fos.close();
+	    addFolderToZip("", srcFolder, zip);
+	    zip.flush();
+	    zip.close();
+	    
+	    return destZipFile;
+	  }
+	
+	static private void addFileToZip(String path, String srcFile, ZipOutputStream zip)
+		      throws Exception {
 
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		    File folder = new File(srcFile);
+		    if (folder.isDirectory()) {
+		      addFolderToZip(path, srcFile, zip);
+		    } else {
+		      byte[] buf = new byte[1024];
+		      int len;
+		      FileInputStream in = new FileInputStream(srcFile);
+		      zip.putNextEntry(new ZipEntry(path + "/" + folder.getName()));
+		      while ((len = in.read(buf)) > 0) {
+		        zip.write(buf, 0, len);
+		      }
+		    }
+		  }
+	
+	static private void addFolderToZip(String path, String srcFolder, ZipOutputStream zip)
+		      throws Exception {
+		    File folder = new File(srcFolder);
 
-		return zipFile;
-	}
-
-	public static void addToZipFile(String fileName, ZipOutputStream zos) throws FileNotFoundException, IOException {
-
-		System.out.println("Writing '" + fileName + "' to zip file");
-
-		File file = new File(fileName);
-		FileInputStream fis = new FileInputStream(file);
-		ZipEntry zipEntry = new ZipEntry(fileName);
-		zos.putNextEntry(zipEntry);
-
-		byte[] bytes = new byte[1048576];
-		int length;
-		while ((length = fis.read(bytes)) >= 0) {
-			zos.write(bytes, 0, length);
-		}
-
-		zos.closeEntry();
-		fis.close();
-	}
+		    for (String fileName : folder.list()) {
+		      if (path.equals("")) {
+		        addFileToZip(folder.getName(), srcFolder + "/" + fileName, zip);
+		      } else {
+		        addFileToZip(path + "/" + folder.getName(), srcFolder + "/" + fileName, zip);
+		      }
+		    }
+		  }
 
 }

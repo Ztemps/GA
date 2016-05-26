@@ -176,7 +176,7 @@ public class AdminViewWarningJava extends MainContentView {
 
 						try {
 							popupPDF();
-						} catch (IOException | DocumentException e) {
+						} catch (IOException | DocumentException | StringIndexOutOfBoundsException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
@@ -193,7 +193,7 @@ public class AdminViewWarningJava extends MainContentView {
 							|| amonestacioForm.motiu.getValue() == null || amonestacioForm.motiu2.getValue() == null
 							|| amonestacioForm.circunstancia.getValue() == null || amonestacioForm.grup.getValue() == ""
 							|| amonestacioForm.tutor.getValue() == "" || amonestacioForm.datefield.getValue() == null 
-							 || amonestacioForm.time.getValue() == "") {
+							 || amonestacioForm.time.getValue() == null || amonestacioForm.time.getValue() == "") {
 
 						notif("Omple els camps obligatoris");
 
@@ -757,9 +757,6 @@ public class AdminViewWarningJava extends MainContentView {
 			
 			convertDate = new ConverterDates();
 			convertedDate = convertDate.converterDate2(data);
-			
-			convertDate = new ConverterDates();
-			convertedDate = convertDate.converterDate2(data);
 
 			System.out.println("FECHAAAAA" + convertedDate);
 			time = amonestacioForm.time.getValue().toString();
@@ -770,12 +767,13 @@ public class AdminViewWarningJava extends MainContentView {
 			amonestat = amonestacioForm.accio.getValue().toString();
 			localitzacio = amonestacioForm.circunstancia.getValue().toString();
 			System.out.println("Nombreprofe: " + nameTeacher);
+			
 
 			if (amonestat.equals("Amonestat")) {
 				amonestat2 = "true";
-			} else
+			} else{
 				amonestat2 = "false";
-
+			}
 			altres_motius = amonestacioForm.amotius.getValue();
 
 		} catch (NullPointerException e) {
