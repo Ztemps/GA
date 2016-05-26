@@ -192,7 +192,8 @@ public class AdminViewWarningJava extends MainContentView {
 							|| amonestacioForm.accio.getValue() == null || amonestacioForm.caracter.getValue() == null
 							|| amonestacioForm.motiu.getValue() == null || amonestacioForm.motiu2.getValue() == null
 							|| amonestacioForm.circunstancia.getValue() == null || amonestacioForm.grup.getValue() == ""
-							|| amonestacioForm.tutor.getValue() == "") {
+							|| amonestacioForm.tutor.getValue() == "" || amonestacioForm.datefield.getValue() == null 
+							 || amonestacioForm.time.getValue() == "") {
 
 						notif("Omple els camps obligatoris");
 
@@ -660,6 +661,9 @@ public class AdminViewWarningJava extends MainContentView {
 		amonestacioForm.caracter.setRequired(true);
 		amonestacioForm.accio.setRequired(true);
 		amonestacioForm.nom.setRequired(true);
+		amonestacioForm.datefield.setRequired(true);
+		amonestacioForm.time.setRequired(true);
+
 
 		amonestacioForm.nom.setRequiredError("El camp nom és obligatori");
 		amonestacioForm.cognoms.setRequiredError("El camp cognoms és obligatori");
@@ -669,6 +673,9 @@ public class AdminViewWarningJava extends MainContentView {
 		amonestacioForm.grup.setRequiredError("El camp grup és obligatori");
 		amonestacioForm.caracter.setRequiredError("El camp caracter és obligatori");
 		amonestacioForm.accio.setRequiredError("El camp acció és obligatori");
+		amonestacioForm.datefield.setRequiredError("El camp data és obligatori");
+		amonestacioForm.time.setRequiredError("El camp hora és obligatori");
+
 	}
 
 	@SuppressWarnings("deprecation")
@@ -747,7 +754,10 @@ public class AdminViewWarningJava extends MainContentView {
 		try {
 			data = amonestacioForm.datefield.getValue().toString();
 			System.out.println("FECHAAAAA" + data);
-
+			
+			convertDate = new ConverterDates();
+			convertedDate = convertDate.converterDate2(data);
+			
 			convertDate = new ConverterDates();
 			convertedDate = convertDate.converterDate2(data);
 
