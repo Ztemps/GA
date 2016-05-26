@@ -158,6 +158,7 @@ public class AdminViewSettingsJava extends MainContentView {
 			adminsettings.oldPass.setVisible(true);
 			adminsettings.checkOldPass.setVisible(true);
 			adminsettings.newPass.setVisible(false);
+			adminsettings.changePassLayout.setCaption("Introdueixi password actual. ");
 			adminsettings.confirmNewPass.setVisible(false);
 			adminsettings.enterNewPass.setVisible(false);
 		}
