@@ -267,13 +267,27 @@ public class AdminView extends MainView implements View {
 		teachers.addClickListener(e -> viewTeachers());
 
 		// TUTOR
-		tutors.addClickListener(e -> ViewTutors());
+		tutors.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				ViewTutors();
+			}
+		});
 
 		// GRUPS
 		groups.addClickListener(e -> viewGroup());
 
 		// ALUMNES
-		students.addClickListener(e -> viewStudents());
+		students.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				viewStudents();
+			}
+		});
 
 		// USERS
 		usuaris.addClickListener(e -> viewUsers());

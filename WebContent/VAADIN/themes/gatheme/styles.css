@@ -6924,6 +6924,12 @@ div.v-layout.v-horizontal.v-widget {
 	background: transparent;
 }
 
+.loginfooter{
+	
+	background:#333333;
+	color:white;
+	font-weight:bold;
+}
 .gatheme .v-inline-datefield-calendarpanel-day-today {
 	color: #191919;
 	font-weight: 600;
