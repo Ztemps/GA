@@ -94,21 +94,36 @@ public class UserJPAManager {
 		em.getTransaction().commit();
 	}
 
+	/**
+	 * Este método se encarga de añadir una amonestación en la tabla
+	 * amonestaciones de la base de datos a través de un objeto de tipo Warning.
+	 * 
+	 * @param user
+	 *            Éste es el objeto Warning que se quiere editar en la base de
+	 *            datos
+	 */
 	public void addWarning(Warning amonestacio) {
 		em.getTransaction().begin();
 		em.persist(amonestacio);
 		em.getTransaction().commit();
 	};
 
-	public boolean validateUser(User user) {
+	/*
+	 * public boolean validateUser(User user) {
+	 * 
+	 * em.getTransaction().begin();
+	 * 
+	 * User ss = (User) em.find(User.class, user.getId());
+	 * 
+	 * return false; }
+	 */
 
-		em.getTransaction().begin();
-
-		User ss = (User) em.find(User.class, user.getId());
-
-		return false;
-	}
-
+	/**
+	 * Este método se encarga de añadir una amonestación en la tabla
+	 * amonestaciones de la base de datos a través de un objeto de tipo Warning.
+	 * 
+	 * @return
+	 */
 	public List<User> listUsers() {
 
 		try {
@@ -126,26 +141,40 @@ public class UserJPAManager {
 
 	}
 
-	// ITERATOR LIST USERS
+	/**
+	 * Este método se encarga de obtener una lista de objetos de tipo Group a
+	 * partir de una consulta con entity manager
+	 * 
+	 * @return una lista de grupos
+	 * 
+	 */
+	/*
+	 * public List<Group> listTeachers() { // TODO Auto-generated method stub
+	 * 
+	 * try {
+	 * 
+	 * em.getTransaction().begin(); list_grups = em.createQuery(
+	 * "Select e From Docent e").getResultList();
+	 * 
+	 * em.getTransaction().commit(); return list_grups;
+	 * 
+	 * } catch (Exception e) { em.getTransaction().rollback(); }
+	 * 
+	 * return null; }
+	 */
 
-	public List<Group> listTeachers() {
-		// TODO Auto-generated method stub
-
-		try {
-
-			em.getTransaction().begin();
-			list_grups = em.createQuery("Select e From Docent e").getResultList();
-
-			em.getTransaction().commit();
-			return list_grups;
-
-		} catch (Exception e) {
-			em.getTransaction().rollback();
-		}
-
-		return null;
-	}
-
+	/**
+	 * Este método se utiliza para localizar un alumno en concreto
+	 * 
+	 * @param name
+	 *            nombre del alumno
+	 * @param surname
+	 *            apellidos del alumno
+	 * 
+	 * 
+	 * @return Objeto de tipo alumno 
+	 * 
+	 */
 	public Student ObtenerAlumno(String name, String surname) {
 
 		Query query = em.createNativeQuery("SELECT id FROM alumne where nom LIKE #name AND cognoms LIKE #surname",
@@ -260,16 +289,15 @@ public class UserJPAManager {
 
 	}
 
-	
-
 	public void closeTransaction() {
 
 		em.close();
 
 	}
+
 	/**
-	 * Este método se encarga de eliminar un usuario en la tabla usuari de la base
-	 * de datos a través de un objeto de tipo User.
+	 * Este método se encarga de eliminar un usuario en la tabla usuari de la
+	 * base de datos a través de un objeto de tipo User.
 	 * 
 	 * @param user
 	 *            Éste es el objeto User que se quiere eliminar en la base de
