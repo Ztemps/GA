@@ -31,9 +31,11 @@ import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.data.Container.Filterable;
 import com.vaadin.data.util.filter.SimpleStringFilter;
+import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
@@ -87,15 +89,78 @@ public class AdminViewStudentJava extends MainContentView {
 
 		vHorizontalMain.addComponent(GridProperties());
 
+		studentsFormEdit.cancelarButton.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				windowEdit.close();
+				buttonEdit.setEnabled(false);
+			}
+		});
+		
+	
 	}
 
+	
+	private void editStudent(ItemClickEvent event) {
+		// TODO Auto-generated method stub
+		
+		datas = new ConverterDates();
+
+		UI.getCurrent().addWindow(windowEdit);
+		windowEdit.setCaption("Editar alumne");
+
+		Object id = event.getItem().getItemProperty("id");
+		Object name = event.getItem().getItemProperty("nom");
+		Object surname = event.getItem().getItemProperty("cognoms");
+		Object email = event.getItem().getItemProperty("email");
+		Object phone = event.getItem().getItemProperty("telefon");
+		Object data = event.getItem().getItemProperty("data_naixement");
+		Object curs = event.getItem().getItemProperty("curs");
+		Object grup = event.getItem().getItemProperty("grup");
+
+		String fecha = datas.converterDate2(data.toString());
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		Date date = null;
+		try {
+			date = formatter.parse(fecha);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		studentsFormEdit.fecha.setValue(date);
+
+		studentsFormEdit.nom.setValue(name.toString());
+		studentsFormEdit.cognom.setValue(surname.toString());
+
+		if (email.toString() == null) {
+			studentsFormEdit.emails.setValue(" ");
+		} else {
+			studentsFormEdit.emails.setValue(email.toString());
+
+		}
+
+		studentsFormEdit.teléfons.setValue(phone.toString());
+		studentsFormEdit.curs.setValue(curs.toString());
+		studentsFormEdit.grup.setValue(grup.toString());
+
+	
+
+
+
+		if (windowEdit.isAttached()) {
+
+			getUI().removeWindow(windowEdit);
+		}
+		UI.getCurrent().addWindow(windowEdit);
+		
+	}
 	private void Listeners() {
+	
 		buttonEdit.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-
 				editStudent();
-
 			}
 		});
 		bRegister.addClickListener(new ClickListener() {
@@ -115,7 +180,6 @@ public class AdminViewStudentJava extends MainContentView {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				addStudent();
-
 			}
 
 		});
@@ -123,7 +187,6 @@ public class AdminViewStudentJava extends MainContentView {
 	}
 
 	private void addStudent() {
-		PopulateNativeSelect();
 
 		studentsFormAdd.aceptarButton.addClickListener(new ClickListener() {
 
@@ -238,22 +301,14 @@ public class AdminViewStudentJava extends MainContentView {
 					notif("Alumne modificat correctament");
 
 				} catch (NullPointerException e) {
-
 					notif("Omple els camps obligatoris");
-
 				}
 
 			}
 
 		});
 
-		studentsFormEdit.cancelarButton.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				windowEdit.close();
-			}
-		});
-
+	
 		if (windowEdit.isAttached()) {
 
 			getUI().removeWindow(windowEdit);
@@ -397,6 +452,29 @@ public class AdminViewStudentJava extends MainContentView {
 
 			}
 		});
+		
+		grid.addItemClickListener(new ItemClickListener() {
+
+			private static final long serialVersionUID = 991142819147193429L;
+
+			@Override
+			public void itemClick(ItemClickEvent event) {
+				// TODO Auto-generated method stub
+				// IF EVENT DOUBLE CLICK, WINDOW WARNING APPEARS
+				if (event.isDoubleClick()) {
+					try {
+						editStudent(event);
+					} catch (NullPointerException e) {
+						notif("L'alumne no te asignat un tutor");
+
+					}
+				}
+
+			}
+
+			
+		});
+		
 
 		return grid;
 	}

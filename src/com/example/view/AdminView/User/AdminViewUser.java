@@ -69,12 +69,13 @@ public class AdminViewUser extends MainContentView {
 
 	public AdminViewUser() {
 
+		buttonsSettings();
+
 		entman = new EntityManagerUtil();
 		em = entman.getEntityManager();
 		
 		userformEdit = new AdminViewEditUser();
 
-		buttonsSettings();
 		filterTextProperties();
 		WindowProperties();
 		buttonsAction();

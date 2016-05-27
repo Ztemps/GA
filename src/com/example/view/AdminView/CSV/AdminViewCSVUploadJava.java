@@ -54,8 +54,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 	private File file;
 	private Upload uploadStudent;
 	private Upload uploadTeacher;
-	private File sourceFile;
-    private ResourceBundle rb = ResourceBundle.getBundle("GA");
+	private ResourceBundle rb = ResourceBundle.getBundle("GA");
 	private Window window;
 	private FileResource resource;
 
@@ -66,8 +65,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 
 		buttonsSettings();
 		WindowProperties();
-	
-		
+
 		resource = new FileResource(new File(rb.getString("upload_icon")));
 
 		// CSV STUDENTS
@@ -83,6 +81,8 @@ public class AdminViewCSVUploadJava extends MainContentView {
 
 			}
 		});
+
+		
 
 		csv.txtUpStudents.setValue("Carrega de alumnes");
 		csv.txtUpStudents.addStyleName("upload-title");
@@ -112,28 +112,10 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		csv.vTeachers.removeAllComponents();
 		csv.vTeachers.addComponents(new Image("", resource), uploadTeacher);
 		csv.vTeachers.setComponentAlignment(uploadTeacher, Alignment.MIDDLE_CENTER);
+
+	}
+
 	
-
-	}
-
-	private void ViewHelp() throws IOException {
-
-		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-
-		FileResource resource = new FileResource(new File(rb.getString("help_csvalumnes")));
-
-		Image image = new Image("", resource);
-//		help.txtDescription.setCaption("Selecciona un fitxer amb extensió .\"csv\""
-//				+ " en que els seus camps estiguin separats per" + " comes. \n "
-//				+ "El fitxer ha de tenir les següents columnes en el següent ordre: id de l'alumne, cognoms, nom, grup, date de naixement, pais,nacionalitat i telefons com l'imatge");
-//		help.vImage.removeAllComponents();
-//		help.vImage.addComponent(image);
-	//	window.setContent(help);
-		UI.getCurrent().addWindow(window);
-
-		window.setVisible(true);
-
-	}
 
 	private void WindowProperties() {
 
@@ -157,19 +139,17 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		bRegister.setVisible(false);
 		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
-		csv.bHelp.setVisible(false);
-
 		horizontalTitle.addStyleName("horizontal-title");
 		txtTitle.addStyleName("main-title");
 		txtTitle.setValue("Carrega de CSV");
-
+		csv.bButtonHelp.setReadOnly(true);
 	}
 
 	public class FileReciverStudents implements Receiver, SucceededListener {
 		CSVLoader csvloader = new CSVLoader();
 
 		public FileReciverStudents() {
-			
+
 		}
 
 		@Override
@@ -189,7 +169,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 						e.printStackTrace();
 					}
 
-					file = new File(rb.getString("path_csv")+ filename);
+					file = new File(rb.getString("path_csv") + filename);
 					fos = new FileOutputStream(file);
 
 				} catch (final java.io.FileNotFoundException e) {
@@ -239,7 +219,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 
 		@Override
 		public OutputStream receiveUpload(String filename, String mimeType) {
-			FileOutputStream fos = null; 
+			FileOutputStream fos = null;
 			String path = null;
 
 			String extension = filename.substring(filename.indexOf("."));
@@ -255,7 +235,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 						e.printStackTrace();
 					}
 
-					file = new File(rb.getString("path_csv")+ filename);
+					file = new File(rb.getString("path_csv") + filename);
 					fos = new FileOutputStream(file);
 				} catch (final java.io.FileNotFoundException e) {
 					new Notification("No s'ha pogut obrir el fitxer", e.getMessage(), Notification.Type.ERROR_MESSAGE)

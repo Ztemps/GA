@@ -9,6 +9,7 @@
  * 
  * @group lists
  */
+
 /**
  * Cross-browser opacity.
  *
@@ -998,7 +999,7 @@
  */
 
 .v-vaadin-version:after {
-	content: "7.6.5";
+	content: "7.6.4";
 }
 
 .v-widget {
@@ -1007,7 +1008,7 @@
 	box-sizing: border-box;
 	display: inline-block;
 	vertical-align: top;
-	text-align: center;
+	text-align: left;
 	white-space: normal;
 }
 
@@ -1118,13 +1119,9 @@
 	line-height: 1.55;
 }
 
-.v-csslayout-valo-menuitems .v-captiontext {
+.v-captiontext {
 	display: inline-block;
 	line-height: inherit;
-	font-weight:bold;
-	color:black;
-	font-size:19px;
-    font-style: italic;
 }
 
 div.v-layout.v-horizontal.v-widget {
@@ -1413,7 +1410,6 @@ div.v-layout.v-horizontal.v-widget {
 
 .v-colorpicker-grid {
 	height: 319px;
-	
 }
 
 .v-colorpicker-popup .colorselect td {
@@ -1564,8 +1560,7 @@ div.v-layout.v-horizontal.v-widget {
 .gatheme.v-app, .gatheme.v-app-loading {
 	font: 300 16px/1.55 "Open Sans", sans-serif;
 	color: #464646;
-	background: url(../images/puig.png);
-	background-size:100%;
+	background-color: #fafafa;
 	cursor: default;
 }
 
@@ -2148,9 +2143,9 @@ div.v-layout.v-horizontal.v-widget {
 	height: 37px;
 	padding: 0 16px;
 	color: #ecf2f8;
-	font-weight: bold;
+	font-weight: 400;
 	
-	font-size:18px;
+	
 	border-radius: 4px;
 	border: 1px solid #1362b1;
 	border-top-color: #156ab3;
@@ -3007,7 +3002,7 @@ div.v-layout.v-horizontal.v-widget {
 	-webkit-transition: color 140ms;
 	-moz-transition: color 140ms;
 	transition: color 140ms;
-	position: relative;
+	position: absolute;
 	width: 37px;
 	text-align: center;
 	top: 50%;
@@ -4177,7 +4172,6 @@ div.v-layout.v-horizontal.v-widget {
 
 .gatheme .v-grid {
 	position: relative;
-	
 }
 
 .gatheme .v-grid-scroller {
@@ -4238,10 +4232,6 @@ div.v-layout.v-horizontal.v-widget {
 	box-sizing: border-box;
 }
 
-
-
-
-
 .gatheme .v-grid-header, .gatheme .v-grid-body, .gatheme .v-grid-footer {
 	position: absolute;
 	left: 0;
@@ -4295,13 +4285,7 @@ div.v-layout.v-horizontal.v-widget {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	overflow: hidden;
-	font-size: 17px;
-	font-weight:bolder;
-	color:black;
-}
-.gatheme .v-grid-cell:focus {
-	
-	background:red;
+	font-size: 16px;
 }
 
 .gatheme .v-grid-cell.frozen {
@@ -4344,7 +4328,7 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .gatheme .v-grid-tablewrapper {
-	border: 4px solid #d4d4d4;
+	border: 1px solid #d4d4d4;
 }
 
 .gatheme .v-grid .header-drag-table {
@@ -5080,8 +5064,6 @@ div.v-layout.v-horizontal.v-widget {
 
 .gatheme .v-textfield[class*="prompt"] {
 	color: #a3a3a3;
-	font-size:19px;
-	font-style:italic;
 }
 
 .gatheme .v-textfield-readonly {
@@ -6924,12 +6906,6 @@ div.v-layout.v-horizontal.v-widget {
 	background: transparent;
 }
 
-.loginfooter{
-	
-	background:#333333;
-	color:white;
-	font-weight:bold;
-}
 .gatheme .v-inline-datefield-calendarpanel-day-today {
 	color: #191919;
 	font-weight: 600;
@@ -8083,14 +8059,6 @@ div.v-layout.v-horizontal.v-widget {
 	-webkit-transition: color 100ms;
 	-moz-transition: color 100ms;
 	transition: color 100ms;
-}
-
-.loginTitle{
-	
-font-size:18px;
-color:#197de1;
-font-weight:bold;
-	
 }
 
 :root .gatheme .v-select-optiongroup-large .v-checkbox > input:active ~ label:after {
@@ -11155,12 +11123,6 @@ font-weight:bold;
 	white-space: nowrap;
 }
 
-.v-verticallayout .v-layout .v-vertical .v-widget .whiteBackground .v-verticallayout-whiteBackground .v-has-width{
-	width: 100%;
-    border: 4px solid gray;
-    padding: 10px;
-}
-
 .gatheme .v-calendar-time {
 	text-align: right;
 	padding-right: 9px;
@@ -11345,15 +11307,6 @@ font-weight:bold;
 	background-color: #c8eaf4;
 	background-color: rgba(200, 234, 244, 0.8);
 	color: #00ace0;
-}
-
-.marginTitle{
-	margin-bottom: 30px;
-    margin-top: 10px;
-}
-
-.v-slot .v-slot-csvstudent .v-align-center .v-align-middle{
-	margin-bottom: 20px;
 }
 
 .gatheme .v-calendar-week-wrapper .v-calendar-event {
@@ -12086,7 +12039,6 @@ font-weight:bold;
 	color: #197de1;
 	font-size: 19px;
 	line-height: 1;
-	
 }
 
 .gatheme .v-Notification .v-Notification-description {
@@ -12391,8 +12343,10 @@ font-weight:bold;
 
 .gatheme .valo-menu {
 	height: 100%;
-	background:url(../images/backgroun_lateral.png);
-	color: black;
+	background-color: #4b4b4b;
+	background-image: -webkit-linear-gradient(right, #414141 0%, #4b4b4b 9px);
+	background-image: linear-gradient(to left,#414141 0%, #4b4b4b 9px);
+	color: #a5a5a5;
 	font-size: 14px;
 	line-height: 30px;
 	border-right: 1px solid #3b3b3b;
@@ -12572,7 +12526,7 @@ font-weight:bold;
 }
 
 .gatheme .valo-menu-subtitle {
-	color: white;
+	color: #868686;
 	margin: 7px 0 7px 19px;
 	border-bottom: 1px solid #666666;
 }
@@ -12587,27 +12541,15 @@ font-weight:bold;
 
 .gatheme .valo-menu-item {
 	outline: none;
-	font-weight: bolder;
+	font-weight: 400;
 	padding: 0 37px 0 19px;
 	cursor: pointer;
 	position: relative;
 	overflow: hidden;
-	text-align:left;
-	font-size:18px;
 	text-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
 	-webkit-transition: background-color 300ms, color 60ms;
 	-moz-transition: background-color 300ms, color 60ms;
 	transition: background-color 300ms, color 60ms;
-}
-
-.gatheme .valo-menu-item.selected {
-	background-color:red;
-}
-
-.gatheme .valo-menu-item:active{
-	
-	background-color:#197de1;
-	
 }
 
 .gatheme .valo-menu-item [class*="caption"] {
@@ -12615,8 +12557,6 @@ font-weight:bold;
 	display: inline-block;
 	width: 90%;
 	max-width: 15em;
-	color:black;
-	font-size:20px;
 	padding-right: 19px;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -12627,20 +12567,11 @@ font-weight:bold;
 }
 
 .gatheme .valo-menu-item.selected {
-	background: red;
+	background: #434343;
 }
 
 .gatheme .valo-menu-item.selected .v-icon {
 	color: #197de1;
-}
-
-.gatheme .valo-menu-item .v-widget .v-has-width.selected{
-	
-	background:green;
-}
-
-.gatheme .valo-menu-item:focus, .gatheme.valo-menu-item:hover, .gatheme .valo-menu-item.selected {
-	color: green;
 }
 
 .gatheme .valo-menu-item.selected [class*="badge"] {
@@ -12651,16 +12582,6 @@ font-weight:bold;
 }
 
 .gatheme .valo-menu-item:focus, .gatheme .valo-menu-item:hover, .gatheme .valo-menu-item.selected {
-	color: white;
-	background-color:#99bbff;
-	
-
-}
-
-.gatheme .valo-menu-item.selected .v-icon {
-    color: #197de1;
-}
-.gatheme .valo-menu-item:active, .gatheme .valo-menu-item:active, .gatheme .valo-menu-item.selected {
 	color: white;
 }
 
@@ -12675,8 +12596,6 @@ font-weight:bold;
 .gatheme .valo-menu-item span.v-icon  + span {
 	margin-left: 0;
 }
-
-
 
 .gatheme .valo-menu-item [class*="badge"] {
 	background-color: #585858;
@@ -12796,8 +12715,6 @@ font-weight:bold;
 	background-color: #197de1;
 	background-image: -webkit-linear-gradient(top, #1b87e3 2%, #166ed5 98%);
 	background-image: linear-gradient(to bottom,#1b87e3 2%, #166ed5 98%);
-	
-	
 	color: white;
 	font-size: 25px;
 	line-height: 44px;
@@ -13024,7 +12941,6 @@ font-weight:bold;
 	color: #197de1;
 }
 
-
 .gatheme .v-formlayout {
 	text-align: center;
 }
@@ -13050,15 +12966,8 @@ font-weight:bold;
 }
 
 .gatheme .main-title {
-	font-size: 45px;
-	font-weight: bold;}
-	
-.gatheme .upload-title {
-	font-size: 25px;
-	font-weight: bold;	
+	font-size: 35px;
 }
-	
-	
 
 .gatheme .horizontal-title {
 	margin-bottom: 15px;
@@ -13101,52 +13010,19 @@ font-weight:bold;
 }
 
 .gatheme .v-verticallayout-csvstudent {
+	border-radius: 18px;
 	background-color: rgba(255, 255, 255, 0.3);
 	background: rgba(255, 255, 255, 0.8);
-	padding:10px;
-	border: 4px solid #d4d4d4;
 }
 
-.gatheme .ga.v-app-loading {
-	background: url(../images/puig.png);
+.gatheme .ga.v-app, .gatheme .ga.v-app-loading {
+	background: url(../../images/puig.png);
 	background-size: 100%;
 }
 
 .gatheme .contenido {
-	background: url(../images/groundcontent.jpg);
-	background-size:100%;
-	
+	background-color: white;
 }
-
-.whiteBackground{
-	border-radius: 18px;
-	background-color: rgba(255, 255, 255, 0.3);
-	background: rgba(255, 255, 255, 0.8);
-	width: 100%;
-	border: 4px solid #d4d4d4;
-    border-radius: 1px;
-    padding-bottom: 30px;
-    padding:10px;
-    
-}
-
-.settingBackgroundTeacher{
-	
-	border-radius: 18px;
-	background-color: rgba(255, 255, 255, 0.3);
-	background: rgba(255, 255, 255, 0.8);
-	width: 100%;
-	border: 4px solid #d4d4d4;
-    border-radius: 1px;
-    padding-bottom: 30px;
-    padding:10px;
-}
-
-
-.v-slot .v-slot-csvstudent .v-align-center .v-align-middle{
-	margin-bottom: 20px;
-}
-
 
 .gatheme gestioamonestacions .v-panel {
 	background: transparent;
@@ -13177,8 +13053,8 @@ font-weight:bold;
 	font-weight: bold;
 	text-align: center;
 	font-size: 17px;
-	
 }
+
 .gatheme .loginview {
 	background-color: rgba(255, 255, 255, 0.3);
 	background: rgba(255, 255, 255, 0.8);
@@ -13195,4 +13071,13 @@ font-weight:bold;
 
 .gatheme .v-table {
 	border-radius: 10px;
+}
+
+.gatheme .whiteBackground {
+	border-radius: 1px;
+	background-color: rgba(255, 255, 255, 0.3);
+	background: rgba(255, 255, 255, 0.8);
+	width: 100%;
+	border: 4px solid gray;
+	padding-bottom: 20px;
 }
