@@ -58,10 +58,8 @@ public class AdminViewCSVUploadJava extends MainContentView {
     private ResourceBundle rb = ResourceBundle.getBundle("GA");
 	private Window window;
 	private FileResource resource;
-	private AdminCSVHelper help;
 
 	public AdminViewCSVUploadJava() throws IOException {
-		help = new AdminCSVHelper();
 		csv = new AdminCSVUpload();
 		uploadTeacher = new Upload("", receiver2);
 		uploadStudent = new Upload("", receiver);
@@ -114,20 +112,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		csv.vTeachers.removeAllComponents();
 		csv.vTeachers.addComponents(new Image("", resource), uploadTeacher);
 		csv.vTeachers.setComponentAlignment(uploadTeacher, Alignment.MIDDLE_CENTER);
-		csv.bHelp.addClickListener(new ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-
-				try {
-					ViewHelp();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
+	
 
 	}
 
@@ -138,12 +123,12 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		FileResource resource = new FileResource(new File(rb.getString("help_csvalumnes")));
 
 		Image image = new Image("", resource);
-		help.txtDescription.setCaption("Selecciona un fitxer amb extensió .\"csv\""
-				+ " en que els seus camps estiguin separats per" + " comes. \n "
-				+ "El fitxer ha de tenir les següents columnes en el següent ordre: id de l'alumne, cognoms, nom, grup, date de naixement, pais,nacionalitat i telefons com l'imatge");
-		help.vImage.removeAllComponents();
-		help.vImage.addComponent(image);
-		window.setContent(help);
+//		help.txtDescription.setCaption("Selecciona un fitxer amb extensió .\"csv\""
+//				+ " en que els seus camps estiguin separats per" + " comes. \n "
+//				+ "El fitxer ha de tenir les següents columnes en el següent ordre: id de l'alumne, cognoms, nom, grup, date de naixement, pais,nacionalitat i telefons com l'imatge");
+//		help.vImage.removeAllComponents();
+//		help.vImage.addComponent(image);
+	//	window.setContent(help);
 		UI.getCurrent().addWindow(window);
 
 		window.setVisible(true);
