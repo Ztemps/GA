@@ -434,7 +434,7 @@ public class AdminViewTeacherJava extends MainContentView {
 				
 			}
 		}
-	//	professorAddForm.selectGroup.removeAllItems();
+		professorAddForm.selectGroup.removeAllItems();
 
 		for (int i = 0; i < lista1.size(); i++) {
 
