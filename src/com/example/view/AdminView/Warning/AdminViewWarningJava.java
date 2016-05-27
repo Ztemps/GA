@@ -51,6 +51,7 @@ import com.vaadin.data.Container.Filterable;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.filter.SimpleStringFilter;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
@@ -193,7 +194,8 @@ public class AdminViewWarningJava extends MainContentView {
 							|| amonestacioForm.motiu.getValue() == null || amonestacioForm.motiu2.getValue() == null
 							|| amonestacioForm.circunstancia.getValue() == null || amonestacioForm.grup.getValue() == ""
 							|| amonestacioForm.tutor.getValue() == "" || amonestacioForm.datefield.getValue() == null 
-							 || amonestacioForm.time.getValue() == null || amonestacioForm.time.getValue() == "") {
+							 || amonestacioForm.time.getValue() == null || amonestacioForm.time.getValue().length() > 5 
+							 || amonestacioForm.time.getValue().length() == 0  || amonestacioForm.time.getValue().length() < 5 ) {
 
 						notif("Omple els camps obligatoris");
 
@@ -390,6 +392,8 @@ public class AdminViewWarningJava extends MainContentView {
 		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
 		amonestacioForm.time.setEnabled(false);
+		
+		amonestacioForm.time.addValidator(new StringLengthValidator("Format incorrecte. Ex: 15:04", 5, 5, false));
 
 	}
 
