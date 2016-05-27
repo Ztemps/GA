@@ -34,6 +34,8 @@ public class GroupJPAManager {
 	private EntityManagerUtil entman;
 	private EntityManager em;
 	private List<Group> listGroups;
+	private List<Tutor> listTutors;
+
 
 	/**
 	 * Este método es el constructor del JPA manager en el que se obtiene la
@@ -134,6 +136,30 @@ public class GroupJPAManager {
 		}
 
 		return listGroups;
+
+	}
+	
+	
+	/**
+	 * Este método obtiene la lista de grupos ordenados alfabéticamente de la tabla tutor
+	 * 
+	 * @return Devuelve la lista de los grupos
+	 */
+	public List<Tutor> getGroups2() {
+
+		try {
+
+			em.getTransaction().begin();
+			listTutors = em.createQuery("Select e From Tutor e").getResultList();
+
+			em.getTransaction().commit();
+			return listTutors;
+
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+		}
+
+		return listTutors;
 
 	}
 

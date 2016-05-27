@@ -13,6 +13,7 @@
  *******************************************************************************/
 package com.example.view.AdminView.Teacher;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,8 +25,10 @@ import org.postgresql.util.PSQLException;
 import com.example.Entities.Group;
 import com.example.Entities.Student;
 import com.example.Entities.Teacher;
+import com.example.Entities.Tutor;
 import com.example.Logic.CurrentCourse;
 import com.example.Logic.EntityManagerUtil;
+import com.example.Logic.GroupJPAManager;
 import com.example.Logic.StudentsJPAManager;
 import com.example.Logic.TeachersJPAManager;
 import com.example.Logic.UserJPAManager;
@@ -63,6 +66,7 @@ public class AdminViewTeacherJava extends MainContentView {
 	private Window windowEdit = new Window();
 	private JPAContainer<Teacher> docents;
 	private JPAContainer<Group> container;
+	private GroupJPAManager grupsjpa;
 	private TeachersJPAManager MA;
 	private AdminViewTeacherFormJava professorAddForm;
 	private AdminViewTeacherFormJava professorEditForm;
@@ -409,11 +413,33 @@ public class AdminViewTeacherJava extends MainContentView {
 
 
 	private void PopulateNativeSelect() {
+		List<Group> lista1 = new ArrayList<Group>();
+		List<Tutor> lista2 = new ArrayList<Tutor>();
+		List<String> listaBuena = new ArrayList<String>();
 
-		container = JPAContainerFactory.make(Group.class, em);
-		professorAddForm.selectGroup.setContainerDataSource(container);
-		professorAddForm.selectGroup.setItemCaptionMode(ItemCaptionMode.PROPERTY);
-		professorAddForm.selectGroup.setItemCaptionPropertyId("id");
+		grupsjpa= new GroupJPAManager();
+		lista1 = grupsjpa.getGroups();
+		lista2 = grupsjpa.getGroups2();
+		
+		boolean existe=false;
+
+		System.out.println(lista1.size());
+
+		for (int i=0; i< lista1.size(); i++){
+			for (int j=0; j< lista2.size(); j++){
+				if(lista1.get(i).getId().equals(lista2.get(j).getGrup())){
+					lista1.remove(i);
+					
+				}
+				
+			}
+		}
+		professorAddForm.selectGroup.removeAllItems();
+
+		for (int i = 0; i < lista1.size(); i++) {
+
+			professorAddForm.selectGroup.addItem(lista1.get(i).getId());
+		}
 
 	}
 

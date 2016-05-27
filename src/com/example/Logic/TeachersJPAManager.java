@@ -134,6 +134,8 @@ public class TeachersJPAManager {
 
 	}
 
+	
+	
 	/**
 	 * Este método cierra las conexiones con la base de datos.
 	 */

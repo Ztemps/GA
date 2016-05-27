@@ -108,6 +108,7 @@ public class UserJPAManager {
 		em.getTransaction().commit();
 	};
 
+
 	/*
 	 * public boolean validateUser(User user) {
 	 * 
@@ -117,6 +118,8 @@ public class UserJPAManager {
 	 * 
 	 * return false; }
 	 */
+
+
 
 	/**
 	 * Este método se encarga de añadir una amonestación en la tabla

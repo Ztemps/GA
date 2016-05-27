@@ -31,6 +31,8 @@ import com.vaadin.data.Container.Filterable;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.data.util.sqlcontainer.query.FreeformQuery;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
@@ -149,6 +151,24 @@ public class AdminViewWarnings extends MainContentView {
 			grid.setContainerDataSource(AllWarnings);
 
 		}
+		grid.addItemClickListener(new ItemClickListener() {
+			
+			@Override
+			public void itemClick(ItemClickEvent event) {
+				// TODO Auto-generated method stub
+				
+				if (event.isDoubleClick()){
+					
+					try {
+						popupPDF();
+					} catch (IOException | DocumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		grid.setColumnOrder("data");
 		grid.setColumnReorderingAllowed(true);
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addSelectionListener(new SelectionListener() {

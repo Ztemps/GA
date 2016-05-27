@@ -94,6 +94,7 @@ public class LoginView extends LoginViewDesign implements View {
 
 	public LoginView() throws ClassNotFoundException, IOException {
 
+		login_footer.addStyleName("loginfooter");
 		iconsAndCaption();
 		styles();
 		listeners();
