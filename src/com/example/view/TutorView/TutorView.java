@@ -24,6 +24,7 @@ import javax.persistence.EntityManager;
 
 import com.example.Entities.Student;
 import com.example.Logic.EntityManagerUtil;
+import com.example.Logic.TutorJPAManager;
 import com.example.Logic.UserJPAManager;
 import com.example.LoginView.LoginView;
 import com.example.Templates.MainView;
@@ -66,7 +67,7 @@ public class TutorView extends MainView implements View {
 	private JPAContainer<Student> alumnes;
 	private Grid grid;
 	private TeacherConfigView vistaConfig;
-	private UserJPAManager ma;
+	private TutorJPAManager tutorJPA;
 	private EntityManagerUtil entman = new EntityManagerUtil();
 	private EntityManager em = entman.getEntityManager();
 	private ResourceBundle rb = ResourceBundle.getBundle("GA");
@@ -165,12 +166,12 @@ public class TutorView extends MainView implements View {
 
 	private void setWellcome() {
 		// TODO Auto-generated method stub
-		ma = new UserJPAManager();
+		tutorJPA = new TutorJPAManager();
 
 		try {
 
 			int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
-			wellcome.setCaption("Benvingut/uda " + ma.getNomTutorHeader(id));
+			wellcome.setCaption("Benvingut/uda " + tutorJPA.getNomTutorHeader(id));
 
 		} catch (NullPointerException e) {
 

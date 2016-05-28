@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import com.example.Entities.Warning;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.JDBCConnectionPool;
+import com.example.Logic.TeachersJPAManager;
 import com.example.Logic.UserJPAManager;
 import com.example.Pdf.generatePDF;
 import com.example.Templates.ConfirmWarningPDF;
@@ -56,7 +57,8 @@ public class TeacherOwnWarningsJava extends MainContentView {
 	private String usuari;
 	private Grid grid;
 	private Window window = new Window();
-	private UserJPAManager MA = new UserJPAManager();
+	private UserJPAManager UserJPA = new UserJPAManager();
+	private TeachersJPAManager teacherJPA = new TeachersJPAManager();
 	private JDBCConnectionPool jdbccp = new JDBCConnectionPool();
 	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
 	private Button b = new Button();
@@ -92,7 +94,7 @@ public class TeacherOwnWarningsJava extends MainContentView {
 
 	public Grid gridProperties() {
 
-		usuari = MA.currentTeacherName();
+		usuari = teacherJPA.currentTeacherName();
 		try {
 
 			container = new SQLContainer(new FreeformQuery(

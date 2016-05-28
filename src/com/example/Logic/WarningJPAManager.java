@@ -10,6 +10,9 @@
  * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
  * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
  * 
+ *    Esta clase se encarga de gestionar las operacions con la base de
+ *         datos referentes a las amonestaciones mediante JPA.
+ *         
  *******************************************************************************/
 package com.example.Logic;
 
@@ -54,15 +57,19 @@ public class WarningJPAManager {
 	private EntityManager em;
 	private SendTelegram sendTel;
 	private sendMail sendMail;
-
+	private TeachersJPAManager teacherJPA;
+	private TutorJPAManager tutorJPA;
+	private StudentsJPAManager studentJPA;
 	private DateFormat dateFormat;
 	private boolean checkTutor = false;
 	private boolean checkPares = false;
 	private boolean checkTelegram = false;
 	private ResourceBundle rb = ResourceBundle.getBundle("GA");
 
+
 	/**
-	 * 
+	 * Este método es el constructor WarningJPAManager que controla los accesos a la base de datos mediante JPA.
+	 * Principalmente esta clase se usa para gestionar las amonestaciones.
 	 */
 	public WarningJPAManager() {
 		// TODO Auto-generated constructor stub
@@ -71,10 +78,20 @@ public class WarningJPAManager {
 		sendTel = new SendTelegram();
 	}
 
+
+	/**
+	 * Este método introduce una amonestación en la base de datos a partir de un Array de Strings
+	 * 
+	 * @param query
+	 *            Este es el parámetro que se utiliza para obtener toda la información referente a la 
+	 *            amonestación que se va a introducir en la base de datos.
+	 */
 	public void introducirParte(String[] query)
 			throws MalformedURLException, DocumentException, IOException, ParseException {
 
-		
+		teacherJPA = new TeachersJPAManager();
+		studentJPA = new StudentsJPAManager();
+		tutorJPA = new TutorJPAManager();
 		dateFormat = new SimpleDateFormat(DATEFORMAT);
 		Date date;
 
@@ -97,11 +114,11 @@ public class WarningJPAManager {
 		String querycon = queryCon.substring(1, queryCon.length() - 1).trim();
 
 		// OBTENER ALUMNO
-		Student al = ObtenerAlumno(query[0], query[1]);
+		Student al = studentJPA.ObtenerAlumno(query[0], query[1]);
 		// OBTENER TUTOR
-		int tutor = getIdTutor(al.getGrup());
+		int tutor = tutorJPA.getIdTutor(al.getGrup());
 		// OBTENER PERSONA QUE REALIZA EL PARTE
-		user = getIdCurrentDocent(currentUser());
+		user = teacherJPA.getIdCurrentDocent(currentUser());
 
 		date = new Date();
 
@@ -183,56 +200,28 @@ public class WarningJPAManager {
 
 	}
 
-	public User getIdCurrentDocent(String currentUser) {
 
-		Query query = em.createNativeQuery("SELECT id_docent FROM usuari where usuari  LIKE #currentUser", User.class);
-		query.setParameter("currentUser", currentUser);
-		//
-		User user = (User) query.getSingleResult();
-
-		return user;
-	}
-
-	public int getIdTutor(String grup) {
-
-		Query query = em.createNativeQuery("SELECT docent FROM tutor where grup LIKE #grup", Tutor.class);
-		query.setParameter("grup", grup);
-		//
-		Tutor tutor = (Tutor) query.getSingleResult();
-
-		return tutor.getDocent();
-	}
-
-	public void addWarning(Warning amonestacio) {
+	/**
+	 * Este método introduce una amonestación en la base de datos.
+	 * 
+	 * @param warning
+	 *            Este es el parámetro que se utiliza para introducir el objecto Warning a la base de datos.
+	 */
+	public void addWarning(Warning warning) {
 
 		em.getTransaction().begin();
-		em.persist(amonestacio);
+		em.persist(warning);
 		em.getTransaction().commit();
 		em.close();
 	};
 
-	public Date getCurrentTimeStamp() {
 
-		java.util.Date date = new java.util.Date();
-		Timestamp data = new Timestamp(date.getTime());
-
-		return data;
-
-	}
-
-	public Student ObtenerAlumno(String name, String surname) {
-
-		Query query = em.createNativeQuery("SELECT id FROM alumne where nom LIKE #name AND cognoms LIKE #surname",
-				Student.class);
-
-		query.setParameter("name", name);
-		query.setParameter("surname", surname);
-
-		Student alumne = (Student) query.getSingleResult();
-
-		return alumne;
-
-	}
+	/**
+	 * Este método devuelve el nombre del usuario actual
+	 *
+	 * @return Objeto de tipo string
+	 * 
+	 */
 
 	public String currentUser() {
 

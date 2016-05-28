@@ -34,9 +34,7 @@ import com.vaadin.ui.Notification;
 
 /*******************************************************************************
  * 
- * Gestió d'Amonestacions
- * v1.0https://www.google.com/search?client=ubuntu&channel=fs&q=tutorial+javadoc
- * &ie=utf-8&oe=utf-8
+ * Gestió d'Amonestacions v1.0
  *
  * Esta obra está sujeta a la licencia
  * Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative

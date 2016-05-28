@@ -24,6 +24,8 @@ import javax.persistence.Query;
 import com.example.Entities.Warning;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.JDBCConnectionPool;
+import com.example.Logic.TeachersJPAManager;
+import com.example.Logic.TutorJPAManager;
 import com.example.Logic.UserJPAManager;
 import com.example.Pdf.generatePDF;
 import com.example.Templates.ConfirmWarningPDF;
@@ -68,7 +70,7 @@ public class TutorOwnWarningsJava extends MainContentView {
 	private Query query = null;
 
 	private Window window = new Window();
-	private UserJPAManager MA = new UserJPAManager();
+	private TeachersJPAManager teacherJPA = new TeachersJPAManager();
 	private JDBCConnectionPool jdbccp = new JDBCConnectionPool();
 	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
 	private Button b = new Button();
@@ -140,7 +142,7 @@ public class TutorOwnWarningsJava extends MainContentView {
 		txtTitle.setValue("Les meves amonestacions");
 		buttonEdit.setCaption("Els meus Grups/Amonestats");
 
-		usuari = MA.currentTeacherName();
+		usuari = teacherJPA.currentTeacherName();
 		try {
 
 			container = new SQLContainer(new FreeformQuery(
@@ -185,7 +187,7 @@ public class TutorOwnWarningsJava extends MainContentView {
 
 		int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
 
-		usuari = MA.currentTeacherName();
+		usuari = teacherJPA.currentTeacherName();
 		em.getTransaction().begin();
 
 		query = em.createNativeQuery(

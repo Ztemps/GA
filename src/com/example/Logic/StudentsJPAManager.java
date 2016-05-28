@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import com.example.Entities.Student;
 import com.example.Entities.Warning;
@@ -40,6 +41,32 @@ public class StudentsJPAManager {
 
 		entman = new EntityManagerUtil();
 		em = entman.getEntityManager();
+	}
+
+	/**
+	 * Este método devuelve un objecto students a partir de su nombre y apellido
+	 * 
+	 * @param name
+	 *            Parámetor que almacena el nombre del estudiante para
+	 *            posteriormente buscarlo
+	 * 
+	 * @param surname
+	 *            Parámetor que almacena el apellido del estudiante para
+	 *            posteriormente buscarlo
+	 * 
+	 */
+	public Student ObtenerAlumno(String name, String surname) {
+
+		Query query = em.createNativeQuery("SELECT id FROM alumne where nom LIKE #name AND cognoms LIKE #surname",
+				Student.class);
+
+		query.setParameter("name", name);
+		query.setParameter("surname", surname);
+
+		Student alumne = (Student) query.getSingleResult();
+
+		return alumne;
+
 	}
 
 	/**

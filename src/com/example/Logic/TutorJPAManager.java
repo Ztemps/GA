@@ -72,6 +72,7 @@ public class TutorJPAManager {
 
 		return tutor.getDocent();
 	}
+	
 
 	/**
 	 * Este método se encarga de obtener el nombre y apellidos del docente que

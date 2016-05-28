@@ -10,6 +10,8 @@
  * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
  * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
  * 
+ *  Clase que permite amonestar a un alumno y generar un pdf para posteriormente imprimirlo y almacenar los datos en la base de datos
+ *  
  *******************************************************************************/
 package com.example.view.AdminView.Warning;
 
@@ -34,6 +36,7 @@ import com.example.Entities.Teacher;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.JDBCConnectionPool;
 import com.example.Logic.TeachersJPAManager;
+import com.example.Logic.TutorJPAManager;
 import com.example.Logic.UserJPAManager;
 import com.example.Logic.WarningJPAManager;
 import com.example.Pdf.generatePDF;
@@ -92,10 +95,11 @@ public class AdminViewWarningJava extends MainContentView {
 	private Window window = new Window();
 	private Window windowpdf = new Window();
 	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
-	private JPAContainer<Student> alumnes;
+	private JPAContainer<Student> students;
 	private AdminWarning amonestacioForm;
-	private UserJPAManager MA;
-	private WarningJPAManager MA1;
+	private TutorJPAManager t;
+	private WarningJPAManager WarningJPA;
+	private TutorJPAManager tutorJPA;
 	private File sourceFile;
 	private FileResource resource;
 	private String[] timewarning;
@@ -419,11 +423,11 @@ public class AdminViewWarningJava extends MainContentView {
 		// Update filter When the filter input is changed
 		filterField.addTextChangeListener(change -> {
 			// Can't modify filters so need to replace
-			alumnes.removeContainerFilters(AL_NOM);
+			students.removeContainerFilters(AL_NOM);
 
 			// (Re)create the filter if necessary
 			if (!change.getText().isEmpty())
-				alumnes.addContainerFilter(new SimpleStringFilter(AL_NOM, change.getText(), true, false));
+				students.addContainerFilter(new SimpleStringFilter(AL_NOM, change.getText(), true, false));
 
 		});
 
@@ -440,11 +444,11 @@ public class AdminViewWarningJava extends MainContentView {
 		// Update filter When the filter input is changed
 		filterField.addTextChangeListener(change -> {
 			// Can't modify filters so need to replace
-			alumnes.removeContainerFilters(AL_COGNOMS);
+			students.removeContainerFilters(AL_COGNOMS);
 
 			// (Re)create the filter if necessary
 			if (!change.getText().isEmpty())
-				alumnes.addContainerFilter(new SimpleStringFilter(AL_COGNOMS, change.getText(), true, false));
+				students.addContainerFilter(new SimpleStringFilter(AL_COGNOMS, change.getText(), true, false));
 
 		});
 		cell.setComponent(filterField);
@@ -479,11 +483,11 @@ public class AdminViewWarningJava extends MainContentView {
 		// Update filter When the filter input is changed
 		filterField.addTextChangeListener(change -> {
 			// Can't modify filters so need to replace
-			alumnes.removeContainerFilters(AL_GRUP);
+			students.removeContainerFilters(AL_GRUP);
 
 			// (Re)create the filter if necessary
 			if (!change.getText().isEmpty())
-				alumnes.addContainerFilter(new SimpleStringFilter(AL_GRUP, change.getText(), true, false));
+				students.addContainerFilter(new SimpleStringFilter(AL_GRUP, change.getText(), true, false));
 		});
 		cell.setComponent(filterField);
 	}
@@ -491,10 +495,10 @@ public class AdminViewWarningJava extends MainContentView {
 	private Grid GridProperties() {
 
 		// Fill the grid with data
-		alumnes = JPAContainerFactory.make(Student.class, em);
-		grid = new Grid("", alumnes);
+		students = JPAContainerFactory.make(Student.class, em);
+		grid = new Grid("", students);
 		grid.setSizeFull();
-		grid.setContainerDataSource(alumnes);
+		grid.setContainerDataSource(students);
 		grid.setColumnReorderingAllowed(true);
 		grid.setColumns(AL_NOM, AL_COGNOMS, AL_GRUP);
 
@@ -579,15 +583,15 @@ public class AdminViewWarningJava extends MainContentView {
 
 		clearFields();
 
-		MA1 = new WarningJPAManager();
-		MA = new UserJPAManager();
+		WarningJPA = new WarningJPAManager();
+		tutorJPA = new TutorJPAManager();
 
 		Object name = event.getItem().getItemProperty("nom");
 		Object surname = event.getItem().getItemProperty("cognoms");
 		Object grup = event.getItem().getItemProperty("grup");
 
-		int idtutor = MA1.getIdTutor(grup.toString());
-		String nametutor = MA.getNomTutor(idtutor);
+		int idtutor = tutorJPA.getIdTutor(grup.toString());
+		String nametutor = tutorJPA.getNomTutor(idtutor);
 
 		amonestacioForm.nom.setValue(name.toString());
 		amonestacioForm.cognoms.setValue(surname.toString());
@@ -617,8 +621,7 @@ public class AdminViewWarningJava extends MainContentView {
 		UI.getCurrent().addWindow(window);
 		window.setVisible(true);
 
-		MA1 = new WarningJPAManager();
-		MA = new UserJPAManager();
+		WarningJPA = new WarningJPAManager();
 		clearFields();
 
 		Object name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom");
@@ -628,8 +631,8 @@ public class AdminViewWarningJava extends MainContentView {
 		int idtutor = 0;
 		String nametutor = "";
 		try {
-			idtutor = MA1.getIdTutor(grup.toString());
-			nametutor = MA.getNomTutor(idtutor);
+			idtutor = tutorJPA.getIdTutor(grup.toString());
+			nametutor = tutorJPA.getNomTutor(idtutor);
 
 		} catch (Exception e) {
 			Notification notif = new Notification("ATENCIÓ:", "<br>L'alumne no té cap tutor<br/>",
@@ -754,7 +757,7 @@ public class AdminViewWarningJava extends MainContentView {
 
 		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 
-		tutor = MA.getNomTutor(id);
+		tutor = tutorJPA.getNomTutor(id);
 		try {
 			data = amonestacioForm.datefield.getValue().toString();
 			System.out.println("FECHAAAAA" + data);
@@ -828,7 +831,7 @@ public class AdminViewWarningJava extends MainContentView {
 
 		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 
-		tutor = MA.getNomTutor(id);
+		tutor = tutorJPA.getNomTutor(id);
 		try {
 
 			data = amonestacioForm.datefield.getValue().toString();

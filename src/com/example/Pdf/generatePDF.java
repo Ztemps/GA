@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.example.Entities.Student;
+import com.example.Logic.StudentsJPAManager;
+import com.example.Logic.TeachersJPAManager;
+import com.example.Logic.TutorJPAManager;
 import com.example.Logic.UserJPAManager;
 import com.example.Logic.WarningJPAManager;
 import com.itextpdf.text.BadElementException;
@@ -50,6 +53,9 @@ public class generatePDF extends WarningJPAManager {
 
 	private WarningJPAManager warningJPA;
 	private UserJPAManager userJPA;
+	private TutorJPAManager tutorJPA;
+	private TeachersJPAManager teacherJPA;
+	private StudentsJPAManager studentJPA;
 	private File currentDirectory;
 	private String path2;
 	private ResourceBundle rb = ResourceBundle.getBundle("GA");
@@ -73,6 +79,9 @@ public class generatePDF extends WarningJPAManager {
 		path2 = currentDirectory.getCanonicalPath();
 		warningJPA = new WarningJPAManager();
 		userJPA = new UserJPAManager();
+		teacherJPA = new TeachersJPAManager();
+		tutorJPA = new TutorJPAManager();
+		studentJPA = new StudentsJPAManager();
 	}
 
 	/**
@@ -89,11 +98,11 @@ public class generatePDF extends WarningJPAManager {
 	public String[] generate(String[] query) throws DocumentException, IOException {
 
 		// Obtenemos el alumno
-		Student al = userJPA.ObtenerAlumno(query[0], query[1]);
+		Student al = studentJPA.ObtenerAlumno(query[0], query[1]);
 		// Obtenemos tutor
-		int tutorname = userJPA.getIdTutor(al.getGrup());
+		int tutorname = tutorJPA.getIdTutor(al.getGrup());
 		// Obtenemos persona que realiza el parte
-		String nametutor = userJPA.getNomTutor(tutorname);
+		String nametutor = tutorJPA.getNomTutor(tutorname);
 
 		// Conversión de la fecha
 		java.util.Date date = new java.util.Date();
@@ -207,14 +216,14 @@ public class generatePDF extends WarningJPAManager {
 		campCirc.setSpacingBefore(-12);
 
 		//Obtención del nombre del profesor
-		String teacherName = userJPA.currentTeacher();
+		String teacherName = teacherJPA.currentTeacher();
 
 		if (query[12] != null) {
 			teacherName = query[12];
 		}
 
 		if (query[12] == "null") {
-			teacherName = userJPA.currentTeacher();
+			teacherName = teacherJPA.currentTeacher();
 		}
 
 		Paragraph professor = new Paragraph("PROFESSOR: ", CAPS);
@@ -515,8 +524,6 @@ public class generatePDF extends WarningJPAManager {
 
 		return img;
 	}
-
-
 
 	/**
 	 * Método que crea una celda para la imagen

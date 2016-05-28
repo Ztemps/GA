@@ -27,6 +27,7 @@ import com.example.Entities.Teacher;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.JDBCConnectionPool;
 import com.example.Logic.TeachersJPAManager;
+import com.example.Logic.TutorJPAManager;
 import com.example.Logic.UserJPAManager;
 import com.example.Logic.WarningJPAManager;
 import com.example.Pdf.generatePDF;
@@ -92,8 +93,8 @@ public class TeacherViewWarningJava extends MainContentView {
 	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
 	private JPAContainer<Student> alumnes;
 	private WarningTeacher amonestacioForm;
-	private UserJPAManager MA;
-	private WarningJPAManager MA1;
+	private WarningJPAManager WarningJPA;
+	private TutorJPAManager tutorJPA;
 	private File sourceFile;
 	private FileResource resource;
 	private String[] timewarning;
@@ -518,15 +519,15 @@ public class TeacherViewWarningJava extends MainContentView {
 		window.setVisible(true);
 		clearFields();
 
-		MA1 = new WarningJPAManager();
-		MA = new UserJPAManager();
+		WarningJPA = new WarningJPAManager();
+		tutorJPA = new TutorJPAManager();
 
 		Object name = event.getItem().getItemProperty("nom");
 		Object surname = event.getItem().getItemProperty("cognoms");
 		Object grup = event.getItem().getItemProperty("grup");
 
-		int idtutor = MA1.getIdTutor(grup.toString());
-		String nametutor = MA.getNomTutor(idtutor);
+		int idtutor = tutorJPA.getIdTutor(grup.toString());
+		String nametutor = tutorJPA.getNomTutor(idtutor);
 
 		amonestacioForm.nom.setValue(name.toString());
 		amonestacioForm.cognoms.setValue(surname.toString());
@@ -556,8 +557,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		UI.getCurrent().addWindow(window);
 		window.setVisible(true);
 
-		MA1 = new WarningJPAManager();
-		MA = new UserJPAManager();
+		WarningJPA = new WarningJPAManager();
 		clearFields();
 
 		Object name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom");
@@ -567,8 +567,8 @@ public class TeacherViewWarningJava extends MainContentView {
 		int idtutor = 0;
 		String nametutor = "";
 		try {
-			idtutor = MA1.getIdTutor(grup.toString());
-			nametutor = MA.getNomTutor(idtutor);
+			idtutor = tutorJPA.getIdTutor(grup.toString());
+			nametutor = tutorJPA.getNomTutor(idtutor);
 
 		} catch (Exception e) {
 			Notification notif = new Notification("ATENCIÓ:", "<br>L'alumne no té cap tutor<br/>",
@@ -680,7 +680,7 @@ public class TeacherViewWarningJava extends MainContentView {
 
 		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 
-		tutor = MA.getNomTutor(id);
+		tutor = tutorJPA.getNomTutor(id);
 		try {
 			grup = amonestacioForm.grup.getValue();
 			gravetat = amonestacioForm.caracter.getValue().toString();
@@ -751,7 +751,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		// timewarning = amonestacioForm.datefield.getValue().toString()+"
 		// "+amonestacioForm.time.getValue().toString();
 		// }
-		tutor = MA.getNomTutor(id);
+		tutor = tutorJPA.getNomTutor(id);
 		try {
 			grup = amonestacioForm.grup.getValue();
 			gravetat = amonestacioForm.caracter.getValue().toString();

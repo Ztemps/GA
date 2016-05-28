@@ -12,6 +12,7 @@ import javax.persistence.Query;
 
 import com.example.Entities.Teacher;
 import com.example.Entities.User;
+import com.example.ga.GaUI;
 
 /*******************************************************************************
  * 
@@ -36,6 +37,7 @@ public class TeachersJPAManager {
 	private EntityManagerUtil entman;
 	private EntityManager em;
 	private List<Teacher> listTeachers;
+	private TutorJPAManager tutorJPA;
 
 	/**
 	 * Este método es el constructor del JPA manager en el que se obtiene la
@@ -134,7 +136,55 @@ public class TeachersJPAManager {
 
 	}
 
+	/**
+	 * Este método devuelve el nombre del profesor actual que impone una amonestación
+	 * 
+	 * @return String Devuelve el nombre del profesor que pone la amonestación.
+	 */
+	public String currentTeacherName() {
+		int id = 0;
+		tutorJPA = new TutorJPAManager();
+		try {
+			id = Integer.parseInt(String.valueOf(GaUI.getCurrent().getSession().getAttribute("id")));
+		} catch (NullPointerException | NumberFormatException e) {
+
+			return null;
+		}
+
+		return tutorJPA.getNomTutorHeader(id);
+
+	}
 	
+	/**
+	 * Este método devuelve el objecto usuario del profesor actual.
+	 * 
+	 * @param currentUser Parámetor que recoge una string del usuario actual para poder devolver el objecto
+	 * 
+	 * @return User Objecto usuario actual
+	 */
+	
+	public User getIdCurrentDocent(String currentUser) {
+
+		Query query = em.createNativeQuery("SELECT id_docent FROM usuari where usuari  LIKE #currentUser", User.class);
+		query.setParameter("currentUser", currentUser);
+		//
+		User user = (User) query.getSingleResult();
+
+		return user;
+	}
+	
+	/**
+	 * Este método devuelve una string del nombre del professor actual
+	 * 
+	 * @return String Devuelve el nombre del profesor actual
+	 */
+	public String currentTeacher() {
+
+		tutorJPA = new TutorJPAManager();
+		
+		return tutorJPA.getNomTutor(Integer.parseInt(String.valueOf(GaUI.getCurrent().getSession().getAttribute("id"))));
+
+	}
 	
 	/**
 	 * Este método cierra las conexiones con la base de datos.
