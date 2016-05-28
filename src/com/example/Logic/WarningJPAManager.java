@@ -66,10 +66,10 @@ public class WarningJPAManager {
 	private boolean checkTelegram = false;
 	private ResourceBundle rb = ResourceBundle.getBundle("GA");
 
-
 	/**
-	 * Este método es el constructor WarningJPAManager que controla los accesos a la base de datos mediante JPA.
-	 * Principalmente esta clase se usa para gestionar las amonestaciones.
+	 * Este método es el constructor WarningJPAManager que controla los accesos
+	 * a la base de datos mediante JPA. Principalmente esta clase se usa para
+	 * gestionar las amonestaciones.
 	 */
 	public WarningJPAManager() {
 		// TODO Auto-generated constructor stub
@@ -78,13 +78,14 @@ public class WarningJPAManager {
 		sendTel = new SendTelegram();
 	}
 
-
 	/**
-	 * Este método introduce una amonestación en la base de datos a partir de un Array de Strings
+	 * Este método introduce una amonestación en la base de datos a partir de un
+	 * Array de Strings
 	 * 
 	 * @param query
-	 *            Este es el parámetro que se utiliza para obtener toda la información referente a la 
-	 *            amonestación que se va a introducir en la base de datos.
+	 *            Este es el parámetro que se utiliza para obtener toda la
+	 *            información referente a la amonestación que se va a introducir
+	 *            en la base de datos.
 	 */
 	public void introducirParte(String[] query)
 			throws MalformedURLException, DocumentException, IOException, ParseException {
@@ -124,8 +125,6 @@ public class WarningJPAManager {
 
 		FileReader reader;
 		String linea = null;
-
-
 
 		File f = new File(rb.getString("file_settings"));
 
@@ -181,31 +180,22 @@ public class WarningJPAManager {
 			e.printStackTrace();
 		}
 
-		if (checkPares) {
-			try {
-
-				if (al.getEmail().contains("@") || al.getEmail() != null) {
-					sendMail = new sendMail(al.getEmail(),
-							"El seu fill " + query[0] + " " + query[1] + " a sigut amonestat ", query[12]);
-				}
-			} catch (NullPointerException e) {
-
-			}
-
-		}
-
 		String fecha = query[14] + " " + query[15];
 		addWarning(new Warning(user.getId(), dateFormat.parse(fecha), query[2], al.getId(), query[3], query[4],
 				query[5], tutor, amonestat2, expulsat, "15/16", querycon, query[10]));
 
+		if (al.getEmail().contains("@") || al.getEmail() != null) {
+			sendMail = new sendMail(al.getEmail(), "El seu fill " + query[0] + " " + query[1] + " a sigut amonestat ",
+					query[12]);
+		}
 	}
-
 
 	/**
 	 * Este método introduce una amonestación en la base de datos.
 	 * 
 	 * @param warning
-	 *            Este es el parámetro que se utiliza para introducir el objecto Warning a la base de datos.
+	 *            Este es el parámetro que se utiliza para introducir el objecto
+	 *            Warning a la base de datos.
 	 */
 	public void addWarning(Warning warning) {
 
@@ -214,7 +204,6 @@ public class WarningJPAManager {
 		em.getTransaction().commit();
 		em.close();
 	};
-
 
 	/**
 	 * Este método devuelve el nombre del usuario actual
