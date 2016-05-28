@@ -180,7 +180,8 @@ public class WarningJPAManager {
 			e.printStackTrace();
 		}
 
-		String fecha = query[14] + " " + query[15];
+		String fecha = query[14].substring(6, 10)+"-"+query[14].substring(3, 5)+"-"+query[14].substring(0, 2)+ " " + query[15];
+		
 		addWarning(new Warning(user.getId(), dateFormat.parse(fecha), query[2], al.getId(), query[3], query[4],
 				query[5], tutor, amonestat2, expulsat, "15/16", querycon, query[10]));
 

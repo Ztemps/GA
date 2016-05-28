@@ -44,10 +44,9 @@ import com.itextpdf.text.pdf.PdfWriter;
  * 
  *******************************************************************************/
 
-
 /**
- * Esta clase consiste en la creación de un PDF,el cual se genera a partir
- * de los campos seleccionados a la hora de introducir un parte.
+ * Esta clase consiste en la creación de un PDF,el cual se genera a partir de
+ * los campos seleccionados a la hora de introducir un parte.
  */
 public class generatePDF extends WarningJPAManager {
 
@@ -60,13 +59,12 @@ public class generatePDF extends WarningJPAManager {
 	private String path2;
 	private ResourceBundle rb = ResourceBundle.getBundle("GA");
 
-	//Definimos las fuentes para el PDF
+	// Definimos las fuentes para el PDF
 	public static final Font BLACK_BOLD = new Font(FontFamily.HELVETICA, 8, Font.BOLD, BaseColor.BLACK);
 	public static final Font HEADER = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 	public static final Font CAPS = new Font(FontFamily.HELVETICA, 9, Font.BOLD, BaseColor.BLACK);
 	public static final Font DADES = new Font(FontFamily.HELVETICA, 8, Font.NORMAL, BaseColor.BLACK);
 	public static final Font SUBLINE = new Font(FontFamily.HELVETICA, 6, Font.NORMAL, BaseColor.BLACK);
-
 
 	/**
 	 * Constructor de la clase
@@ -104,21 +102,10 @@ public class generatePDF extends WarningJPAManager {
 		// Obtenemos persona que realiza el parte
 		String nametutor = tutorJPA.getNomTutor(tutorname);
 
-		// Conversión de la fecha
-		java.util.Date date = new java.util.Date();
-		Timestamp data1 = new Timestamp(date.getTime());
-		String dateparsed = String.valueOf(data1);
+		String dateWarning = query[13];
+		String hourWarning = query[14];
 
-		System.out.println("DATEPARSED: " +dateparsed);
-		
-		String dateWarning = dateparsed.substring(0, 10);
-		String hourWarning = dateparsed.substring(11, 19);
-		
-
-		if (query[13].length() > 2) {
-			dateWarning = query[13];
-			hourWarning = query[14];
-		}
+		dateWarning = query[13];
 
 		// Creamos un nuevo documento, que será el nuevo parte(PDF)
 		Document document = new Document();
@@ -127,11 +114,11 @@ public class generatePDF extends WarningJPAManager {
 		Image img = logoImage();
 
 		String nameLastname = (query[0].concat(" " + query[1])).replaceFirst(" ", "").replaceAll(" ", "_");
-		
-		System.out.println("SUBSTRING: "+query[14]);
 
-		String path = rb.getString("path_warning") + "amonestacio(" + hourWarning.substring(0, 5) + ")("
-				+ nameLastname + ").pdf";
+		System.out.println("SUBSTRING: " + query[14]);
+
+		String path = rb.getString("path_warning") + "amonestacio(" + hourWarning.substring(0, 5) + ")(" + nameLastname
+				+ ").pdf";
 
 		// Definimos la ruta de nuestro documento
 		PdfWriter.getInstance(document, new FileOutputStream(path));
@@ -151,11 +138,11 @@ public class generatePDF extends WarningJPAManager {
 		paragraph3.setSpacingBefore(-25);
 		paragraph3.setIndentationLeft(380);
 
-		//Creacion de la cabecera
+		// Creacion de la cabecera
 		Paragraph headerWarning = new Paragraph("NOTIFICACIÓ DE FALTA", HEADER);
 		headerWarning.setIndentationLeft(180);
-		
-		//Obtencion del nombre del alumno
+
+		// Obtencion del nombre del alumno
 		String studentName = query[0] + " " + query[1];
 		Paragraph student = new Paragraph("ALUMNE: ", CAPS);
 		student.setIndentationLeft(25);
@@ -164,7 +151,7 @@ public class generatePDF extends WarningJPAManager {
 		campStudent.setIndentationLeft(75);
 		campStudent.setSpacingBefore(-12);
 
-		//Obtencion del grupo del alumno
+		// Obtencion del grupo del alumno
 		String groupStudent = query[2];
 		// CAMP ALUMNE
 		Paragraph group = new Paragraph("GRUP: ", CAPS);
@@ -174,7 +161,7 @@ public class generatePDF extends WarningJPAManager {
 		campGrup.setIndentationLeft(255);
 		campGrup.setSpacingBefore(-13);
 
-		//Obtencion de la hora del parte
+		// Obtencion de la hora del parte
 		String dateStudent = dateWarning;
 		Paragraph data = new Paragraph("DATA: ", CAPS);
 		data.setIndentationLeft(340);
@@ -191,14 +178,14 @@ public class generatePDF extends WarningJPAManager {
 			studentSubject = query[5];
 		}
 
-		//Obtencion de la materia del parte
+		// Obtencion de la materia del parte
 		Paragraph subject = new Paragraph("MATÈRIA: ", CAPS);
 		subject.setIndentationLeft(25);
 		Paragraph campSubject = new Paragraph(studentSubject, DADES);
 		campSubject.setIndentationLeft(75);
 		campSubject.setSpacingBefore(-12);
 
-		//Obtencion de la hora del parte
+		// Obtencion de la hora del parte
 		Paragraph hour = new Paragraph("HORA: ", CAPS);
 		hour.setIndentationLeft(195);
 		hour.setSpacingBefore(-13);
@@ -206,7 +193,7 @@ public class generatePDF extends WarningJPAManager {
 		campHour.setIndentationLeft(230);
 		campHour.setSpacingBefore(-12);
 
-		//Obtencion de la circumstancia en la que se impone el parte
+		// Obtencion de la circumstancia en la que se impone el parte
 		String cirAlumne = query[4];
 		Paragraph circumstance = new Paragraph("CIRCUMSTÀNCIA(aula,pati,etc.): ", CAPS);
 		circumstance.setIndentationLeft(280);
@@ -215,7 +202,7 @@ public class generatePDF extends WarningJPAManager {
 		campCirc.setIndentationLeft(430);
 		campCirc.setSpacingBefore(-12);
 
-		//Obtención del nombre del profesor
+		// Obtención del nombre del profesor
 		String teacherName = teacherJPA.currentTeacher();
 
 		if (query[12] != null) {
@@ -232,7 +219,7 @@ public class generatePDF extends WarningJPAManager {
 		campProfe.setIndentationLeft(90);
 		campProfe.setSpacingBefore(-12);
 
-		//Obtención del nombre del profesor
+		// Obtención del nombre del profesor
 		String tutorStudent = nametutor;
 		Paragraph tutor = new Paragraph("TUTOR: ", CAPS);
 		tutor.setIndentationLeft(220);
@@ -250,7 +237,7 @@ public class generatePDF extends WarningJPAManager {
 
 		}
 
-		//Motius seleccionats per el Profesor/Tutor
+		// Motius seleccionats per el Profesor/Tutor
 		Paragraph level = new Paragraph(
 				"En compliment de la Normativa de Règim Intern vigent, l'esmentat alumne ha estat: ", DADES);
 		level.setIndentationLeft(25);
@@ -269,18 +256,19 @@ public class generatePDF extends WarningJPAManager {
 
 		String[] userReasons = subQuery.split(",");
 
-		//Bloc1Left
+		// Bloc1Left
 		String reason1 = null;
 		String reason3 = null;
 		String reason5 = null;
-		//Bloc2Right
+		// Bloc2Right
 		String reason2 = null;
 		String reason4 = null;
 		String reason6 = null;
 
 		List reasonsList = new ArrayList<>();
 
-		//Comparación de los campos seleccionados para poder determinar cuales marcar con [X]
+		// Comparación de los campos seleccionados para poder determinar cuales
+		// marcar con [X]
 		for (int i = 0; i < userReasons.length; i++) {
 			userReasons[i] = userReasons[i].trim();
 
@@ -306,7 +294,7 @@ public class generatePDF extends WarningJPAManager {
 			}
 		}
 
-		//Bloc 1
+		// Bloc 1
 		if (reasonsList.contains("[X]Faltar al respecte al professor")) {
 
 			reason1 = "[X]Faltar al respecte al professor";
@@ -369,7 +357,7 @@ public class generatePDF extends WarningJPAManager {
 
 		}
 
-		//Obtención de otros motivos
+		// Obtención de otros motivos
 		String reason10 = null;
 
 		if (query[10].equals("")) {
@@ -455,7 +443,7 @@ public class generatePDF extends WarningJPAManager {
 		cell.setRowspan(2);
 		table.addCell(cell);
 
-		//Añadimos todos los elementos obtenidos al documento
+		// Añadimos todos los elementos obtenidos al documento
 
 		document.open();
 		document.add(img);
@@ -507,8 +495,9 @@ public class generatePDF extends WarningJPAManager {
 	}
 
 	/**
-	 * Método que selecciona la imagen en la ruta definida i le otorgará unos valores de 
-	 * de tamaño, posición y escala predeterminados
+	 * Método que selecciona la imagen en la ruta definida i le otorgará unos
+	 * valores de de tamaño, posición y escala predeterminados
+	 * 
 	 * @return Una Imagen
 	 * @throws IOException
 	 * @throws BadElementException
@@ -527,6 +516,7 @@ public class generatePDF extends WarningJPAManager {
 
 	/**
 	 * Método que crea una celda para la imagen
+	 * 
 	 * @param path
 	 * @return cell
 	 * @throws DocumentException
@@ -540,6 +530,7 @@ public class generatePDF extends WarningJPAManager {
 
 	/**
 	 * Método que retorna la ruta donde esta alojado el PDF
+	 * 
 	 * @param nomCognom
 	 * @param fecha
 	 * @return
@@ -547,7 +538,7 @@ public class generatePDF extends WarningJPAManager {
 	 */
 	public String getPath2(String nomCognom, String fecha) throws IOException {
 
-		return rb.getString("path_warning")+"amonestacio(" + fecha + ")(" + nomCognom + ").pdf";
+		return rb.getString("path_warning") + "amonestacio(" + fecha + ")(" + nomCognom + ").pdf";
 
 	}
 }

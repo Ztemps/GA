@@ -90,6 +90,17 @@ public class TeacherOwnWarningsJava extends MainContentView {
 
 		vHorizontalMain.addComponent(gridProperties());
 
+		grid.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void select(SelectionEvent event) {
+				// TODO Auto-generated method stub
+				bAdd.setEnabled(true);
+				// buttonEdit.setEnabled(true);
+				// bDelete.setEnabled(true);
+
+			}
+		});
 	}
 
 	public Grid gridProperties() {
@@ -115,17 +126,7 @@ public class TeacherOwnWarningsJava extends MainContentView {
 		}
 
 		
-		grid.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void select(SelectionEvent event) {
-				// TODO Auto-generated method stub
-				bAdd.setEnabled(true);
-				// buttonEdit.setEnabled(true);
-				// bDelete.setEnabled(true);
-
-			}
-		});
+		
 
 		return grid;
 	}

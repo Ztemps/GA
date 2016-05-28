@@ -120,6 +120,7 @@ public class AdminViewWarningJava extends MainContentView {
 	private static final String AL_COGNOMS = "cognoms";
 	private static final String AL_CURS = "curs";
 	private static final String AL_GRUP = "grup";
+	private String data = null;
 	private ConverterDates convertDate;
 	String convertedDate;
 
@@ -163,13 +164,6 @@ public class AdminViewWarningJava extends MainContentView {
 				@Override
 				public void buttonClick(ClickEvent event) {
 
-					// REVISAR!!!! PARA COMPROBAR QUE ALGUNO DE LOS MOTIVOS NO
-					// HA DE SER NULO
-					/*
-					 * if( motiu.getValue() == null && motiu2.getValue() == null
-					 * && amotius.getValue() == ""){ notif.show(
-					 * "S'ha de seleccionar almenys un motiu"); }
-					 */
 
 					if (check()) {
 
@@ -573,8 +567,6 @@ public class AdminViewWarningJava extends MainContentView {
 		amonestacioForm.tutor.setReadOnly(false);
 		amonestacioForm.grup.setReadOnly(false);
 
-		
-
 		if (window.isAttached())
 			getUI().getWindows().remove(window);
 
@@ -592,7 +584,8 @@ public class AdminViewWarningJava extends MainContentView {
 
 		int idtutor = tutorJPA.getIdTutor(grup.toString());
 		String nametutor = tutorJPA.getNomTutor(idtutor);
-
+		
+		amonestacioForm.tutor.setValue(nametutor);
 		amonestacioForm.nom.setValue(name.toString());
 		amonestacioForm.cognoms.setValue(surname.toString());
 		amonestacioForm.grup.setValue(grup.toString());
@@ -628,23 +621,13 @@ public class AdminViewWarningJava extends MainContentView {
 		Object surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms");
 		Object grup = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("grup");
 
-		int idtutor = 0;
-		String nametutor = "";
-		try {
-			idtutor = tutorJPA.getIdTutor(grup.toString());
-			nametutor = tutorJPA.getNomTutor(idtutor);
-
-		} catch (Exception e) {
-			Notification notif = new Notification("ATENCIÓ:", "<br>L'alumne no té cap tutor<br/>",
-					Notification.Type.HUMANIZED_MESSAGE, true); // Contains HTML
-		}
+		int idtutor = tutorJPA.getIdTutor(grup.toString());
+		String nametutor = tutorJPA.getNomTutor(idtutor);
 
 		amonestacioForm.nom.setValue(name.toString());
 		amonestacioForm.cognoms.setValue(surname.toString());
 		amonestacioForm.grup.setValue(grup.toString());
 		amonestacioForm.tutor.setValue(nametutor);
-
-		nomCognom = amonestacioForm.nom.getValue() + " " + amonestacioForm.cognoms.getValue();
 
 		fieldsRequired();
 
@@ -752,7 +735,6 @@ public class AdminViewWarningJava extends MainContentView {
 		String assignatura = null;
 		String altres_motius = null;
 		String amonestat2 = null;
-		String data = null;
 		String time = null;
 
 		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
@@ -760,12 +742,8 @@ public class AdminViewWarningJava extends MainContentView {
 		tutor = tutorJPA.getNomTutor(id);
 		try {
 			data = amonestacioForm.datefield.getValue().toString();
-			System.out.println("FECHAAAAA" + data);
-			
 			convertDate = new ConverterDates();
 			convertedDate = convertDate.converterDate2(data);
-
-			System.out.println("FECHAAAAA" + convertedDate);
 			time = amonestacioForm.time.getValue().toString();
 			grup = amonestacioForm.grup.getValue();
 			gravetat = amonestacioForm.caracter.getValue().toString();
@@ -869,7 +847,7 @@ public class AdminViewWarningJava extends MainContentView {
 		}
 
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
-				altres_motius, motiu2, timewarning[0], nameTeacher, timewarning[1], timewarning[2] };
+				altres_motius, motiu2, timewarning[0], nameTeacher, convertedDate, timewarning[2] };
 
 		// DATOS PARA INTRODUCIR EN EL PARTE
 
