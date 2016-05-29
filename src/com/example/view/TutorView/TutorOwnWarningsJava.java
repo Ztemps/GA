@@ -1,17 +1,6 @@
-/*******************************************************************************
- * 
- * Gestió d'Amonestacions v1.0
- *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
- * 
- *******************************************************************************/
+
 package com.example.view.TutorView;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -21,35 +10,43 @@ import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.example.Entities.Warning;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.JDBCConnectionPool;
 import com.example.Logic.TeachersJPAManager;
-import com.example.Logic.TutorJPAManager;
-import com.example.Logic.UserJPAManager;
 import com.example.Pdf.generatePDF;
 import com.example.Templates.ConfirmWarningPDF;
 import com.example.Templates.MainContentView;
 import com.itextpdf.text.DocumentException;
-import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
-import com.vaadin.data.util.sqlcontainer.connection.SimpleJDBCConnectionPool;
 import com.vaadin.data.util.sqlcontainer.query.FreeformQuery;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.server.FileResource;
-import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Embedded;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.Grid.SelectionMode;
-import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Embedded;
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-import sun.text.normalizer.UBiDiProps;
+/*******************************************************************************
+ * 
+ * Gestió d'Amonestacions v1.0  
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
+ * 
+ * 	En esta clase se mostrarán los partes de los alumnos del Tutor
+ * 
+ *******************************************************************************/
 
 public class TutorOwnWarningsJava extends MainContentView {
 
@@ -78,6 +75,11 @@ public class TutorOwnWarningsJava extends MainContentView {
 	private boolean gridUsed = false;
 	private boolean gridUsedGroup = false;
 
+	/**
+	 * @throws MalformedURLException
+	 * @throws DocumentException
+	 * @throws IOException
+	 */
 	public TutorOwnWarningsJava() throws MalformedURLException, DocumentException, IOException {
 
 		buttonsSettings();
@@ -134,6 +136,11 @@ public class TutorOwnWarningsJava extends MainContentView {
 		vHorizontalMain.addComponent(gridProperties());
 	}
 
+	/**
+	 *	Método que contiene las propiedas de la grid de alumnos
+	 * @return grid
+	 * 			Contiene los datos de los alumnos
+	 */
 	public Grid gridProperties() {
 
 		gridUsed = true;
@@ -177,6 +184,11 @@ public class TutorOwnWarningsJava extends MainContentView {
 		return grid;
 	}
 
+	/**
+	 *	Método que contiene las propiedades de la grid de grupos
+	 * @return grid
+	 * 			Con datos de los grupos
+	 */
 	public Grid gridGroupProperties() {
 		gridUsedGroup = true;
 
@@ -232,13 +244,20 @@ public class TutorOwnWarningsJava extends MainContentView {
 		return gridGroups;
 	}
 
+	/**
+	 * Método que limpiará los campos
+	 */
 	public void clear() {
+		
 		// TODO Auto-generated method stub
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);
 		grid.deselectAll();
 	}
 
+	/**
+	 * Método que contiene las opciones de los botones
+	 */
 	private void buttonsSettings() {
 		// TODO Auto-generated method stub
 
@@ -256,7 +275,10 @@ public class TutorOwnWarningsJava extends MainContentView {
 
 	}
 
-	private void WindowProperties() throws MalformedURLException, DocumentException, IOException {
+	/**
+	 * 	Método que contiene las opciones de los botones
+	 */
+	private void WindowProperties(){
 
 		window.setHeight("95%");
 		window.setWidth("95%");
@@ -268,6 +290,10 @@ public class TutorOwnWarningsJava extends MainContentView {
 
 	}
 
+	/**
+	 * Método que consigue el nombre y apellido del item seleccionado
+	 * @return nomCognom
+	 */
 	private String getItemNomCognomSelected() {
 
 		String name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom").getValue()
@@ -281,6 +307,10 @@ public class TutorOwnWarningsJava extends MainContentView {
 
 	}
 
+	/**
+	 *	Método que consigue la hora del item seleccionado
+	 * @return hora
+	 */
 	private String getDateSelected() {
 
 		Object data = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("data").getValue();
@@ -290,6 +320,11 @@ public class TutorOwnWarningsJava extends MainContentView {
 		return hora;
 	}
 
+	/**
+	 * 
+	 *  Método que consigue el nombre y apellido del grupo seleccionado
+	 * @return nomCognom
+	 */
 	private String getItemGroupsNomCognomSelected() {
 
 		String name = gridGroups.getContainerDataSource().getItem(gridGroups.getSelectedRow()).getItemProperty("nom")
@@ -303,6 +338,10 @@ public class TutorOwnWarningsJava extends MainContentView {
 
 	}
 
+	/**
+	 * Método que consigue la hora del grupo seleccionado
+	 * @return
+	 */
 	private String getGroupsDateSelected() {
 
 		Object data = gridGroups.getContainerDataSource().getItem(gridGroups.getSelectedRow()).getItemProperty("data")
@@ -313,6 +352,13 @@ public class TutorOwnWarningsJava extends MainContentView {
 		return hora;
 	}
 
+	
+	/**
+	 * 
+	 * Método que genera un PDF una ventana con el PDF ya generado a partir de la ruta seleccionada
+	 * @throws IOException
+	 * @throws DocumentException
+	 */
 	@SuppressWarnings("deprecation")
 	public void popupPDF() throws IOException, DocumentException {
 
@@ -334,6 +380,12 @@ public class TutorOwnWarningsJava extends MainContentView {
 
 	}
 
+	/**
+	 * 
+	 * Método que genera un PDF una ventana con el PDF ya generado a partir de la ruta seleccionada
+	 * @throws IOException
+	 * @throws DocumentException
+	 */
 	@SuppressWarnings("deprecation")
 	public void ownpopupPDF() throws IOException, DocumentException {
 
@@ -352,13 +404,6 @@ public class TutorOwnWarningsJava extends MainContentView {
 		UI.getCurrent().addWindow(window);
 
 		window.setVisible(true);
-
-	}
-
-	public void reloadGrid() {
-		// vHorizontalMain.removeAllComponents();
-		// vHorizontalMain.addComponent(gridProperties());
-		// vHorizontalMain.addComponent(gridGroupProperties());
 
 	}
 
