@@ -243,7 +243,7 @@ public class TrimestralReports {
 				e.printStackTrace();
 			}
 
-			System.out.println("Grup " + grupos.get(x).getId() + "finalitzat");
+			//System.out.println("Grup " + grupos.get(x).getId() + "finalitzat");
 
 		}
 	}
@@ -438,7 +438,7 @@ public class TrimestralReports {
 				e.printStackTrace();
 			}
 
-			System.out.println("Grup " + grupos.get(x).getId() + "finalitzat");
+			//System.out.println("Grup " + grupos.get(x).getId() + "finalitzat");
 
 		}
 	}
@@ -635,7 +635,7 @@ public class TrimestralReports {
 				e.printStackTrace();
 			}
 
-			System.out.println("Grup " + grupos.get(x).getId() + "finalitzat");
+			//System.out.println("Grup " + grupos.get(x).getId() + "finalitzat");
 
 		}
 	}
@@ -1735,7 +1735,7 @@ public class TrimestralReports {
 		File f = new File(rb.getString("file_settings"));	
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if (br.readLine() == null) {
-			System.out.println("No Hay fecha en el documento settings");
+			//System.out.println("No Hay fecha en el documento settings");
 
 		} else {
 
