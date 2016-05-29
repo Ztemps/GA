@@ -1,19 +1,5 @@
-/*******************************************************************************
- * 
- * Gestió d'Amonestacions v1.0
- *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
- * 
- *******************************************************************************/
-package com.example.view.TutorView;
 
-import java.io.BufferedReader;
+package com.example.view.TutorView;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -25,16 +11,10 @@ import javax.persistence.EntityManager;
 import com.example.Entities.Student;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.TutorJPAManager;
-import com.example.Logic.UserJPAManager;
 import com.example.LoginView.LoginView;
 import com.example.Templates.MainView;
-import com.example.view.AdminView.AdminView;
-import com.example.view.AdminView.Group.AdminViewGroupJava;
-import com.example.view.AdminView.Students.AdminViewStudentJava;
-import com.example.view.AdminView.Teacher.AdminViewTeacherJava;
 import com.example.view.AdminView.Warning.AdminViewWarningJava;
 import com.example.view.TeacherView.TeacherConfigView;
-import com.example.view.TeacherView.TeacherViewWarningJava;
 import com.itextpdf.text.DocumentException;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
@@ -47,19 +27,32 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinService;
 import com.vaadin.shared.Position;
-import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.themes.ValoTheme;
+
+/*******************************************************************************
+ * 
+ * Gestió d'Amonestacions v1.0 
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
+ * 
+ *******************************************************************************/
 
 public class TutorView extends MainView implements View {
 	public static final String NAME = "Tutor";
@@ -78,13 +71,10 @@ public class TutorView extends MainView implements View {
 
 		content.addStyleName("contenido");
 		setLogo();
-		// Side menu button options
 		vistaAmonestacion = new AdminViewWarningJava();
 		TutorViewGrups = new TutorViewGrupsJava();
 		vistaConfig = new TeacherConfigView();
 		tutorownwarning = new TutorOwnWarningsJava();
-		// false para que no aparezca junto con las amonestaciones nada mas
-		// entrar
 		TutorViewGrups.setVisible(false);
 		tutorownwarning.setVisible(false);
 		vistaConfig.setVisible(false);
@@ -130,7 +120,11 @@ public class TutorView extends MainView implements View {
 	}
 
 	
+	/**
+	 * Método de configuración de la vista de Tutors
+	 */
 	public void Config() {
+		
 		vistaConfig.setVisible(true);
 		TutorViewGrups.setVisible(false);
 		vistaAmonestacion.setVisible(false);
@@ -138,9 +132,11 @@ public class TutorView extends MainView implements View {
 		
 
 	}
+	/**
+	 * Método de configuración de la vista de amonestaciones
+	 */
 	private void viewWarnings() {
 		// TODO Auto-generated method stub
-
 		TutorViewGrups.setVisible(false);
 		vistaAmonestacion.setVisible(true);
 		tutorownwarning.setVisible(false);
@@ -149,9 +145,11 @@ public class TutorView extends MainView implements View {
 
 	}
 
+	/**
+	 * Método de configuración de la vista de amonestaciones de su grupo(Tutor)
+	 */
 	private void ownWarnings() {
 		// TODO Auto-generated method stub
-		tutorownwarning.reloadGrid();
 		TutorViewGrups.setVisible(false);
 		vistaAmonestacion.setVisible(false);
 		tutorownwarning.setVisible(true);
@@ -159,13 +157,21 @@ public class TutorView extends MainView implements View {
 
 	}
 
+	/**
+	 * Método que nos indicará las opciones para cerrar la sesión
+	 */
 	public void logoutActions() {
 
 		getUI().getCurrent().addWindow(DeleteSubWindows());
 
 	}
 
+	/**
+	 * Método en el cual se configura el saludo de bienvenida en la posición izquierda, por debajo del icono de GA
+	 * obteniendo el nombre del professor
+	 */
 	private void setWellcome() {
+		
 		// TODO Auto-generated method stub
 		tutorJPA = new TutorJPAManager();
 
@@ -180,12 +186,12 @@ public class TutorView extends MainView implements View {
 
 	}
 
+	/**
+	 * Método para controlar el acceso a la vista de Tutor
+	 */
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
-
-		// en caso de no haberse logeado anteriormente se mandara a la vista
-		// principal(login)
 		if (getUI().getCurrent().getSession().getAttribute("login") == null) {
 			// getUI().getSession().setAttribute("user", "");
 			getUI().getSession().setAttribute("id", 0);
@@ -198,7 +204,11 @@ public class TutorView extends MainView implements View {
 		}
 
 	}
-
+	
+	/**
+	 * Método que contiene la configuración de la grid de los alumnos
+	 * @return grid 
+	 */
 	private Grid GridProperties() {
 
 		// Fill the grid with data
@@ -212,18 +222,11 @@ public class TutorView extends MainView implements View {
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		grid.addSelectionListener(new SelectionListener() {
 
-			/**
-			 * 
-			 */
+	
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void select(SelectionEvent event) {
-				// TODO Auto-generated method stub
-				// bAdd.setEnabled(true);
-				// buttonEdit.setEnabled(true);
-				// bDelete.setEnabled(true);
-
 			}
 		});
 
@@ -231,6 +234,13 @@ public class TutorView extends MainView implements View {
 
 	}
 
+	/**
+	 * 
+	 * Método para el cierre de sesión
+	 * @return win
+	 *			Devolvera una vista
+	 *
+	 */
 	public Window DeleteSubWindows() {
 
 		Window win = new Window(" Tancar sessió");
@@ -266,6 +276,7 @@ public class TutorView extends MainView implements View {
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
 
+				//Cerramos la vista
 				win.close();
 				logout();
 			}
@@ -281,6 +292,9 @@ public class TutorView extends MainView implements View {
 
 	}
 
+	/**
+	 * Método para realizar un correcto cierre de sesión.
+	 */
 	public void logout() {
 
 		getUI().getNavigator().navigateTo(LoginView.NAME);
@@ -291,17 +305,22 @@ public class TutorView extends MainView implements View {
 
 	}
 
+	/**
+	 * Método que genera un mensaje para el usuario
+	 * @param mensaje
+	 */
 	public void notif(String mensaje) {
-
-		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
-																												// HTML
-
-		// Customize it
+		
+		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); 
 		notif.show(Page.getCurrent());
 		notif.setDelayMsec(500);
 		notif.setPosition(Position.TOP_CENTER);
 	}
 
+	/**
+	 * Método de propiedades del logo GA
+	 * @throws IOException
+	 */
 	private void setLogo() throws IOException {
 		// TODO Auto-generated method stub
 		File currDir = new File(".");

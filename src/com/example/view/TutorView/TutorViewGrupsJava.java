@@ -1,3 +1,35 @@
+
+package com.example.view.TutorView;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import com.example.Dates.ConverterDates;
+import com.example.Entities.Group;
+import com.example.Entities.Student;
+import com.example.Logic.EntityManagerUtil;
+import com.example.Logic.GroupJPAManager;
+import com.example.Templates.MainContentView;
+import com.vaadin.addon.jpacontainer.JPAContainer;
+import com.vaadin.addon.jpacontainer.JPAContainerFactory;
+import com.vaadin.data.Container.Filter;
+import com.vaadin.data.Container.Filterable;
+import com.vaadin.data.util.filter.Compare;
+import com.vaadin.data.util.filter.SimpleStringFilter;
+import com.vaadin.event.FieldEvents.TextChangeEvent;
+import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.event.SelectionEvent;
+import com.vaadin.event.SelectionEvent.SelectionListener;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
+import com.vaadin.ui.themes.ValoTheme;
+
 /*******************************************************************************
  * 
  * Gestió d'Amonestacions v1.0
@@ -11,53 +43,6 @@
  * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
  * 
  *******************************************************************************/
-package com.example.view.TutorView;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-
-import com.example.Dates.ConverterDates;
-import com.example.Entities.Group;
-import com.example.Entities.Student;
-import com.example.Entities.User;
-import com.example.Logic.EntityManagerUtil;
-import com.example.Logic.GroupJPAManager;
-import com.example.Logic.StudentsJPAManager;
-import com.example.Logic.UserJPAManager;
-import com.example.LoginView.LoginView;
-import com.example.Templates.MainContentView;
-import com.example.view.TutorView.TutorViewDetailsForm;
-import com.itextpdf.text.DocumentException;
-import com.vaadin.addon.jpacontainer.JPAContainer;
-import com.vaadin.addon.jpacontainer.JPAContainerFactory;
-import com.vaadin.data.Container.Filter;
-import com.vaadin.data.Container.Filterable;
-import com.vaadin.data.util.filter.Compare;
-import com.vaadin.data.util.filter.SimpleStringFilter;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
-import com.vaadin.event.FieldEvents.TextChangeListener;
-import com.vaadin.event.SelectionEvent;
-import com.vaadin.event.SelectionEvent.SelectionListener;
-import com.vaadin.server.FileResource;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Grid.FooterCell;
-import com.vaadin.ui.Grid.HeaderCell;
-import com.vaadin.ui.Grid.HeaderRow;
-import com.vaadin.ui.Grid.SelectionMode;
-import com.vaadin.ui.Grid.SingleSelectionModel;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
-import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
-import com.vaadin.ui.themes.ValoTheme;
 
 public class TutorViewGrupsJava extends MainContentView {
 
@@ -89,11 +74,6 @@ public class TutorViewGrupsJava extends MainContentView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-				// window.setCaption("Afegir nou grup");
-				// grupForm.txtGrup.setValue("");
-				// grupForm.txtMaxAl.setValue("");
-				// AddItemToGrupForm();
 			}
 		});
 		// Re-utilización del botón Edit para Detalls.
