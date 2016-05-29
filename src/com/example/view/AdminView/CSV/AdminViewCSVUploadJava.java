@@ -82,8 +82,6 @@ public class AdminViewCSVUploadJava extends MainContentView {
 			}
 		});
 
-		
-
 		csv.txtUpStudents.setValue("Carrega de alumnes");
 		csv.txtUpStudents.addStyleName("upload-title");
 		csv.vStudents.addStyleName("whiteBackground");
@@ -115,8 +113,9 @@ public class AdminViewCSVUploadJava extends MainContentView {
 
 	}
 
-	
-
+	/**
+	 * Configuración de la ventana emergente de la amonestación
+	 */
 	private void WindowProperties() {
 
 		window = new Window();
@@ -130,6 +129,9 @@ public class AdminViewCSVUploadJava extends MainContentView {
 
 	}
 
+	/**
+	 * Configuración de botones y estilos
+	 */
 	private void buttonsSettings() {
 
 		vHorizontalMain.addComponent(csv);
@@ -145,6 +147,11 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		csv.bButtonHelp.setReadOnly(true);
 	}
 
+	/**
+	 * Clase que implementa Receiver y SuccededListener, para poder subir el
+	 * archivo del usuario
+	 * 
+	 */
 	public class FileReciverStudents implements Receiver, SucceededListener {
 		CSVLoader csvloader = new CSVLoader();
 
@@ -152,6 +159,16 @@ public class AdminViewCSVUploadJava extends MainContentView {
 
 		}
 
+		/**
+		 * Sube el archivo del usuario, comprueba que sea el formato correcto.
+		 * 
+		 * @param filename
+		 *            ruta del fichero del usuario
+		 * @param mimeType
+		 *            extensión del archivo
+		 * 
+		 * @return salida del flujo de datos.
+		 */
 		@Override
 		public OutputStream receiveUpload(String filename, String mimeType) {
 			FileOutputStream fos = null; // Stream to write to
@@ -209,6 +226,11 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		}
 	}
 
+	/**
+	 * Clase que implementa Receiver y SuccededListener, para poder subir el
+	 * archivo del usuario
+	 * 
+	 */
 	public class FileReciverTeachers implements Receiver, SucceededListener {
 		public File file;
 		CSVLoader csvloader = new CSVLoader();
@@ -217,6 +239,16 @@ public class AdminViewCSVUploadJava extends MainContentView {
 
 		}
 
+		/**
+		 * Sube el archivo del usuario, comprueba que sea el formato correcto.
+		 * 
+		 * @param filename
+		 *            ruta del fichero del usuario
+		 * @param mimeType
+		 *            extensión del archivo
+		 * 
+		 * @return salida del flujo de datos.
+		 */
 		@Override
 		public OutputStream receiveUpload(String filename, String mimeType) {
 			FileOutputStream fos = null;

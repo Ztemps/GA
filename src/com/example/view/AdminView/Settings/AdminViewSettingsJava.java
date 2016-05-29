@@ -130,6 +130,10 @@ public class AdminViewSettingsJava extends MainContentView {
 		});
 	}
 	
+	
+	/**
+	 * Propiedades del campo de texto para introducir nueva contraseña
+	 * */
 	private void NewPassTextFieldProperties() {
 		
 		adminsettings.changePassLayout.setCaption("Canvi de password. Introdueixi password actual. ");
@@ -144,6 +148,11 @@ public class AdminViewSettingsJava extends MainContentView {
 		adminsettings.confirmNewPass.clear();
 	}
 	
+	
+	/**
+	 * Muestra el nuevo campo de texto para nuevo password si el campo 
+	 * de password antiguo es visible, si no al revés.
+	 * */
 	private void ShowNewPassTextField() {
 
 		if (adminsettings.oldPass.isVisible()) {
@@ -164,6 +173,10 @@ public class AdminViewSettingsJava extends MainContentView {
 		}
 	}
 
+	
+	/**
+	 * Estilos y componentes principales de la vista. Configuración de botones y etiquetas.
+	 * */
 	private void GeneralSettings() {
 
 		vHorizontalMain.addComponent(adminsettings);
@@ -203,6 +216,7 @@ public class AdminViewSettingsJava extends MainContentView {
 
 	}
 
+	
 	private void listeners() {
 
 		bAdd.addClickListener(new ClickListener() {
@@ -229,7 +243,10 @@ public class AdminViewSettingsJava extends MainContentView {
 		notif.setPosition(Position.TOP_CENTER);
 
 	}
-
+	
+	/**
+	 *Configuración del fichero de texto donde el administrador guardará las fechas de inicio de trimestres 
+	 * */
 	private void writeFile() {
 
 		String datainicitrimestre1buena = null;
@@ -286,6 +303,9 @@ public class AdminViewSettingsJava extends MainContentView {
 		}
 	}
 
+	/**
+	 *Lectura del fichero de  las fechas de inicio de trimestres 
+	 * */
 	public void readFile() throws ReadOnlyException, ConversionException, IOException {
 		FileReader reader;
 		String path2 = null;
@@ -376,6 +396,11 @@ public class AdminViewSettingsJava extends MainContentView {
 		}
 	}
 	
+	
+	/**
+	 * Comprobar que el password actual es correcto para poder mostrarle los nuevos
+	 * campos de texto para introducir el nuevo
+	 * */
 	private void CheckPassword() throws ClassNotFoundException, SQLException {
 
 		MessageDigest md = null;
@@ -430,6 +455,8 @@ public class AdminViewSettingsJava extends MainContentView {
 
 	}
 	
+	
+	/**Notificación personalizada*/
 	public void notifWrong(String mensaje) {
 
 		Notification notif = new Notification(mensaje, null, Notification.Type.WARNING_MESSAGE, true); // Contains

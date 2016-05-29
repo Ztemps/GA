@@ -101,6 +101,7 @@ public class AdminViewStudentJava extends MainContentView {
 	}
 
 	
+	
 	private void editStudent(ItemClickEvent event) {
 		// TODO Auto-generated method stub
 		

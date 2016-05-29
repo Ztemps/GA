@@ -77,15 +77,18 @@ public class AdminViewCharts extends MainContentView {
 	public AdminViewCharts() throws ReadOnlyException, ConversionException, IOException, PSQLException {
 
 		generalSettings();
-		
+
 		panel = PanelProp();
 		vertical = VerticalProp();
-		
+
 		panel.setContent(vertical);
 		vHorizontalMain.addComponent(panel);
 
 	}
 
+	/**
+	 * Configuración de los componentes que incluye el VerticaLayout vertical
+	 */
 	private VerticalLayout VerticalProp() throws ReadOnlyException, ConversionException, IOException, PSQLException {
 
 		vertical = new VerticalLayout();
@@ -101,6 +104,9 @@ public class AdminViewCharts extends MainContentView {
 
 	}
 
+	/**
+	 * Configuración del panel principal que incluye los gráficos
+	 */
 	private Panel PanelProp() {
 		panel = new Panel();
 		panel.addStyleName(ValoTheme.PANEL_SCROLL_INDICATOR);
@@ -111,13 +117,16 @@ public class AdminViewCharts extends MainContentView {
 
 	}
 
+	/**
+	 * Configuración general de botones y etiquetas
+	 */
 	private void generalSettings() {
 
 		bDelete.addStyleName(ValoTheme.BUTTON_DANGER);
 		bAdd.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		bRegister.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonEdit.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		
+
 		horizontalTitle.addStyleName("horizontal-title");
 		txtTitle.addStyleName("main-title");
 		bAdd.setCaption("Generar informe");
@@ -135,6 +144,10 @@ public class AdminViewCharts extends MainContentView {
 
 	}
 
+	/**
+	 * Configuración del gráfico que muestra en forma de columna las
+	 * amonestaciones por grupo
+	 */
 	public Chart WarningsPerGroup() {
 
 		Chart chart = new Chart(ChartType.COLUMN);
@@ -217,6 +230,10 @@ public class AdminViewCharts extends MainContentView {
 		return chart;
 	}
 
+	/**
+	 * Configuración del gráfico que muestra en forma de columna las
+	 * amonestaciones por profesor
+	 */
 	public Chart WarningsPerTeacher() {
 
 		Chart chart = new Chart(ChartType.COLUMN);
@@ -283,6 +300,12 @@ public class AdminViewCharts extends MainContentView {
 		return chart;
 	}
 
+	/**
+	 * Obtiene las fechas de ubn fichero y las añade al ArrayList<Date>
+	 * 
+	 * @return fechas de inicio de los trimestres
+	 * @see FinalReports, método readFile()
+	 */
 	public ArrayList<Date> Dates() throws ReadOnlyException, ConversionException, IOException {
 
 		finalReports = new FinalReports();
@@ -293,6 +316,10 @@ public class AdminViewCharts extends MainContentView {
 
 	}
 
+	/**
+	 * Configuración del gráfico que muestra en forma de columna las
+	 * amonestaciones por trimestre de cada grupo
+	 */
 	public Chart WarningsPerTrim() throws ReadOnlyException, ConversionException, IOException, PSQLException {
 
 		ArrayList<Date> dates = Dates();
@@ -398,7 +425,12 @@ public class AdminViewCharts extends MainContentView {
 
 		return chart;
 	}
-
+	
+	
+	/**
+	 * Configuración del gráfico que muestra en forma de columna las
+	 * amonestaciones para el primer trimestre
+	 */
 	public Chart WarningsPerTrimestre1() throws ReadOnlyException, ConversionException, IOException {
 
 		ArrayList<Date> dates = Dates();
@@ -471,6 +503,11 @@ public class AdminViewCharts extends MainContentView {
 		return chart;
 	}
 
+	
+	/**
+	 * Configuración del gráfico que muestra en forma de columna las
+	 * amonestaciones para el segundo trimestre
+	 */
 	public Chart WarningsPerTrimestre2() throws ReadOnlyException, ConversionException, IOException {
 
 		ArrayList<Date> dates = Dates();
@@ -541,6 +578,11 @@ public class AdminViewCharts extends MainContentView {
 		return chart;
 	}
 
+	
+	/**
+	 * Configuración del gráfico que muestra en forma de columna las
+	 * amonestaciones para el tercer trimestre
+	 */
 	public Chart WarningsPerTrimestre3() throws ReadOnlyException, ConversionException, IOException {
 
 		ArrayList<Date> dates = Dates();
@@ -610,15 +652,20 @@ public class AdminViewCharts extends MainContentView {
 
 		return chart;
 	}
+	
 
+	
+	/**
+	 * Actualización de la gráfica
+	 * */
 	public void reloadChart() {
 
 		vHorizontalMain.removeAllComponents();
 		vHorizontalMain.addComponent(panel);
 
-
 	}
 
+	
 	public void clear() {
 		// TODO Auto-generated method stub
 		bDelete.setEnabled(false);

@@ -94,6 +94,9 @@ public class AdminViewGroupJava extends MainContentView {
 		vHorizontalMain.addComponent(GridProperties());
 	}
 
+	/**
+	 * Acciones de los todos los listeners de los botones principales
+	 * */
 	private void Listeners() {
 		bRegister.addClickListener(new ClickListener() {
 			@Override
@@ -118,7 +121,10 @@ public class AdminViewGroupJava extends MainContentView {
 		});
 
 	}
-
+	
+	/**
+	 * Añade un grupo a la base de datos
+	 * */
 	private void addGroup() {
 
 		grupFormAdd.aceptarButton.addClickListener(new ClickListener() {
@@ -184,6 +190,11 @@ public class AdminViewGroupJava extends MainContentView {
 
 	}
 
+	
+	/**
+	 * Surprime un grupo a la base de datos
+	 * */
+	
 	private void deleteGroup() {
 		MA = new GroupJPAManager();
 
@@ -199,6 +210,7 @@ public class AdminViewGroupJava extends MainContentView {
 
 	}
 
+	/**Obtiene el grupo a añadir*/
 	private Group getGroupAdd() {
 
 		String id = grupFormAdd.txtGrup.getValue().toString().toUpperCase();
@@ -209,6 +221,7 @@ public class AdminViewGroupJava extends MainContentView {
 		return gr;
 	}
 
+	/**Obtiene el grupo a suprimir*/
 	private Group getGroupEdit() {
 
 		String id = grupFormEdit.txtGrup.getValue().toString();
@@ -228,6 +241,10 @@ public class AdminViewGroupJava extends MainContentView {
 		return gr;
 	}
 
+	/**
+	 * Filtro de búsqueda por id de grupo
+	 * 
+	 * */
 	private TextField filterTextProperties() {
 		txtSearch.setInputPrompt("Filtra grup id");
 		txtSearch.addTextChangeListener(new TextChangeListener() {
@@ -251,18 +268,28 @@ public class AdminViewGroupJava extends MainContentView {
 		return txtSearch;
 	}
 
+	/**
+	 * Limpia los campos de texto del modo editar
+	 * */
 	private void clearEditForm() {
 		grupFormEdit.txtGrup.clear();
 		grupFormEdit.txtMaxAl.clear();
 
 	}
 
+	/**
+	 * Limpia los campos de texto del modo añadir
+	 * */
 	private void clearAddForm() {
 		grupFormAdd.txtGrup.clear();
 		grupFormAdd.txtMaxAl.clear();
 
 	}
 
+	
+	/**
+	 * Configuraciones principales de estilos y botones
+	 * */
 	private void GeneralSettings() {
 
 		horizontalTitle.addStyleName("horizontal-title");
@@ -284,6 +311,10 @@ public class AdminViewGroupJava extends MainContentView {
 
 	}
 
+	
+	/**
+	 * Propiedades de la Grid, contenedor de datos, selección...
+	 * */
 	public Grid GridProperties() {
 
 		grupos = JPAContainerFactory.make(Group.class, em);
@@ -307,6 +338,9 @@ public class AdminViewGroupJava extends MainContentView {
 
 	}
 
+	/**
+	 * Configuración de la ventana emergente para añadir grupo
+	 * */
 	private void WindowPropertiesAddGroup() {
 
 		windowAdd.setCaption("Afegir nou grup");
@@ -319,6 +353,10 @@ public class AdminViewGroupJava extends MainContentView {
 		windowAdd.setContent(grupFormAdd);
 	}
 
+	
+	/**
+	 * Configuración de la ventana emergente para editar grupo
+	 * */
 	private void WindowPropertiesEditGroup() {
 
 		windowEdit.setCaption("Editar grup");
@@ -343,6 +381,7 @@ public class AdminViewGroupJava extends MainContentView {
 
 	}
 
+	/**Actualiza los campos de la Grid*/
 	public void reloadGrid() {
 		
 		grid.setVisible(false);
@@ -352,6 +391,9 @@ public class AdminViewGroupJava extends MainContentView {
 	}
 
 
+	/**
+	 * Función para crear notificaciones predefinidas
+	 * */
 	public void notif(String msg) {
 
 		Notification notif = new Notification(msg, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
