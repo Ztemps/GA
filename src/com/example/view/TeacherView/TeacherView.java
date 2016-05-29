@@ -31,6 +31,7 @@ import com.example.Logic.UserJPAManager;
 import com.example.LoginView.LoginView;
 import com.example.Templates.MainView;
 import com.example.view.AdminView.AdminView;
+import com.example.view.AdminView.Warning.AdminViewWarningJava;
 import com.itextpdf.text.DocumentException;
 //import com.example.templates.ProfessorFormJava;
 import com.vaadin.ui.Grid;
@@ -73,7 +74,8 @@ public class TeacherView extends MainView implements View {
 
 	public static final String NAME = "Professor";
 
-	private TeacherViewWarningJava vistaAmonestacion;
+	//private TeacherViewWarningJava vistaAmonestacion;
+	private AdminViewWarningJava vistaAmonestacion;
 	private TeacherOwnWarningsJava vistaOwn;
 	private TeacherConfigView vistaConfig;
 	private UserJPAManager ma;
@@ -84,7 +86,7 @@ public class TeacherView extends MainView implements View {
 
 		content.addStyleName("contenido");
 		// Side menu button options
-		vistaAmonestacion = new TeacherViewWarningJava();
+		vistaAmonestacion = new AdminViewWarningJava();
 		vistaOwn = new TeacherOwnWarningsJava();
 		vistaConfig = new TeacherConfigView();
 		Items();
