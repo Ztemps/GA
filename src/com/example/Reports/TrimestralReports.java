@@ -47,6 +47,7 @@ public class TrimestralReports {
 	private  List<Group> grupos = null;
 
 	ConverterDates datas;
+		
 	public void calcularPrimerTrimestre() {
 		datas = new ConverterDates();
 		// CALCULO DE FECHAS
@@ -203,27 +204,27 @@ public class TrimestralReports {
 						calculoExpuls = new ArrayList<>();
 
 						// Debería de pasarle solo el id del alumnno
-						calculoAmonest = calcularAmonestadosPorSemana(idList, semana1, semana2);
-						calculoExpuls = calcularExpulsadosPorSemana(idList, semana1, semana2);
+						calculoAmonest = calcularAmonestadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1, semana2);
+						calculoExpuls = calcularExpulsadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1, semana2);
 
 						semana1 = semana2;
 						diaInicisetmanes.add(Calendar.DATE, 7);
 						semana2 = diaInicisetmanes.getTime();
 
-						if (calculoAmonest.get(i).toString().equals("0")) {
+						if (calculoAmonest.get(0).toString().equals("0")) {
 							fileWriter.append("");
 
 						} else {
-							fileWriter.append(calculoAmonest.get(i).toString());
+							fileWriter.append(calculoAmonest.get(0).toString());
 
 						}
 						fileWriter.append(COMMA_DELIMITER);
 
-						if (calculoExpuls.get(i).toString().equals("0")) {
+						if (calculoExpuls.get(0).toString().equals("0")) {
 							fileWriter.append("");
 
 						} else {
-							fileWriter.append(calculoExpuls.get(i).toString());
+							fileWriter.append(calculoExpuls.get(0).toString());
 
 						}
 						fileWriter.append(COMMA_DELIMITER);
@@ -247,9 +248,10 @@ public class TrimestralReports {
 		}
 	}
 
-	public  void calcularSegundoTrimestre() {
+	public void calcularSegundoTrimestre() {
 		// CALCULO DE FECHAS
 		// VARIABLE A COJER
+		datas = new ConverterDates();
 		try {
 			dates = readFile();
 		} catch (ReadOnlyException e1) {
@@ -397,27 +399,27 @@ public class TrimestralReports {
 						calculoExpuls = new ArrayList<>();
 						calculoAmonest = new ArrayList<>();
 
-						calculoAmonest = calcularAmonestadosPorSemana(idList, semana1, semana2);
-						calculoExpuls = calcularExpulsadosPorSemana(idList, semana1, semana2);
+						calculoAmonest = calcularAmonestadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1, semana2);
+						calculoExpuls = calcularExpulsadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1, semana2);
 
 						semana1 = semana2;
 						diaInicisetmanes.add(Calendar.DATE, 7);
 						semana2 = diaInicisetmanes.getTime();
 
-						if (calculoAmonest.get(i).toString().equals("0")) {
+						if (calculoAmonest.get(0).toString().equals("0")) {
 							fileWriter.append("");
 
 						} else {
-							fileWriter.append(calculoAmonest.get(i).toString());
+							fileWriter.append(calculoAmonest.get(0).toString());
 
 						}
 						fileWriter.append(COMMA_DELIMITER);
 
-						if (calculoExpuls.get(i).toString().equals("0")) {
+						if (calculoExpuls.get(0).toString().equals("0")) {
 							fileWriter.append("");
 
 						} else {
-							fileWriter.append(calculoExpuls.get(i).toString());
+							fileWriter.append(calculoExpuls.get(0).toString());
 
 						}
 						fileWriter.append(COMMA_DELIMITER);
@@ -441,9 +443,11 @@ public class TrimestralReports {
 		}
 	}
 
-	public  void calcularTercerTrimestre() {
+	public void calcularTercerTrimestre() {
 		// CALCULO DE FECHAS
 		// VARIABLE A COJER
+		datas = new ConverterDates();
+
 		try {
 			dates = readFile();
 		} catch (ReadOnlyException e1) {
@@ -592,27 +596,27 @@ public class TrimestralReports {
 						calculoExpuls = new ArrayList<>();
 						calculoAmonest = new ArrayList<>();
 
-						calculoAmonest = calcularAmonestadosPorSemana(idList, semana1, semana2);
-						calculoExpuls = calcularExpulsadosPorSemana(idList, semana1, semana2);
+						calculoAmonest = calcularAmonestadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1, semana2);
+						calculoExpuls = calcularExpulsadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1, semana2);
 
 						semana1 = semana2;
 						diaInicisetmanes.add(Calendar.DATE, 7);
 						semana2 = diaInicisetmanes.getTime();
 
-						if (calculoAmonest.get(i).toString().equals("0")) {
+						if (calculoAmonest.get(0).toString().equals("0")) {
 							fileWriter.append("");
 
 						} else {
-							fileWriter.append(calculoAmonest.get(i).toString());
+							fileWriter.append(calculoAmonest.get(0).toString());
 
 						}
 						fileWriter.append(COMMA_DELIMITER);
 
-						if (calculoExpuls.get(i).toString().equals("0")) {
+						if (calculoExpuls.get(0).toString().equals("0")) {
 							fileWriter.append("");
 
 						} else {
-							fileWriter.append(calculoExpuls.get(i).toString());
+							fileWriter.append(calculoExpuls.get(0).toString());
 
 						}
 						fileWriter.append(COMMA_DELIMITER);
@@ -635,8 +639,10 @@ public class TrimestralReports {
 
 		}
 	}
-
-	private List calcularAmonestadosPorSemana(List idList, Date semana1, Date semana2) {
+	
+	
+	
+	private List calcularAmonestadosPorSemana2(List idList, Date semana1, Date semana2) {
 
 		List amonestacions1;
 
@@ -653,7 +659,7 @@ public class TrimestralReports {
 
 	}
 
-	private List calcularExpulsadosPorSemana(List idList, Date semana1, Date semana2) {
+	private List calcularExpulsadosPorSemana2(List idList, Date semana1, Date semana2) {
 
 		List expulsions1;
 		List expulsionsList1 = null;
@@ -666,6 +672,41 @@ public class TrimestralReports {
 			// query.closeTransaction();
 
 		}
+		return expulsions1;
+
+	
+	}
+	
+	
+
+	private List calcularAmonestadosPorSemana(int idList, Date semana1, Date semana2) {
+
+		List amonestacions1;
+
+		amonestacions1 = new ArrayList<>();
+
+			query = new ReportQuerys();
+			amonestacions1.add(query.getWarningCurs(idList, semana1, semana2));
+			// query.closeTransaction();
+
+		
+
+		return amonestacions1;
+
+	}
+
+	private List calcularExpulsadosPorSemana(int idList, Date semana1, Date semana2) {
+
+		List expulsions1;
+		List expulsionsList1 = null;
+
+		expulsions1 = new ArrayList<>();
+
+			query = new ReportQuerys();
+			expulsions1.add(query.getExpulsionCurs(idList, semana1, semana2));
+			// query.closeTransaction();
+
+		
 
 		return expulsions1;
 	}
@@ -787,8 +828,8 @@ public class TrimestralReports {
 					calculoExpuls = new ArrayList<>();
 					calculoAmonest = new ArrayList<>();
 
-					calculoAmonest = calcularAmonestadosPorSemana(idList, semana1, semana2);
-					calculoExpuls = calcularExpulsadosPorSemana(idList, semana1, semana2);
+					calculoAmonest = calcularAmonestadosPorSemana2(idList, semana1, semana2);
+					calculoExpuls = calcularExpulsadosPorSemana2(idList, semana1, semana2);
 
 					for (int n = 0; n < calculoAmonest.size(); n++) {
 						totalAmonest = totalAmonest + Integer.parseInt(calculoAmonest.get(n).toString());
@@ -956,8 +997,8 @@ public class TrimestralReports {
 					calculoExpuls = new ArrayList<>();
 					calculoAmonest = new ArrayList<>();
 
-					calculoAmonest = calcularAmonestadosPorSemana(idList, semana1, semana2);
-					calculoExpuls = calcularExpulsadosPorSemana(idList, semana1, semana2);
+					calculoAmonest = calcularAmonestadosPorSemana2(idList, semana1, semana2);
+					calculoExpuls = calcularExpulsadosPorSemana2(idList, semana1, semana2);
 
 					for (int n = 0; n < calculoAmonest.size(); n++) {
 						totalAmonest = totalAmonest + Integer.parseInt(calculoAmonest.get(n).toString());
@@ -1125,8 +1166,8 @@ public class TrimestralReports {
 					calculoExpuls = new ArrayList<>();
 					calculoAmonest = new ArrayList<>();
 
-					calculoAmonest = calcularAmonestadosPorSemana(idList, semana1, semana2);
-					calculoExpuls = calcularExpulsadosPorSemana(idList, semana1, semana2);
+					calculoAmonest = calcularAmonestadosPorSemana2(idList, semana1, semana2);
+					calculoExpuls = calcularExpulsadosPorSemana2(idList, semana1, semana2);
 
 					for (int n = 0; n < calculoAmonest.size(); n++) {
 						totalAmonest = totalAmonest + Integer.parseInt(calculoAmonest.get(n).toString());
@@ -1276,8 +1317,8 @@ public class TrimestralReports {
 				calculoExpuls = new ArrayList<>();
 				calculoAmonest = new ArrayList<>();
 
-				calculoAmonest = calcularAmonestadosPorSemana(idList, diaIniciTrimestre1, diaFinalTrimestre1);
-				calculoExpuls = calcularExpulsadosPorSemana(idList, diaIniciTrimestre1, diaFinalTrimestre1);
+				calculoAmonest = calcularAmonestadosPorSemana2(idList, diaIniciTrimestre1, diaFinalTrimestre1);
+				calculoExpuls = calcularExpulsadosPorSemana2(idList, diaIniciTrimestre1, diaFinalTrimestre1);
 
 				for (int n = 0; n < calculoAmonest.size(); n++) {
 					totalAmonest = totalAmonest + Integer.parseInt(calculoAmonest.get(n).toString());
@@ -1442,8 +1483,8 @@ public class TrimestralReports {
 				calculoExpuls = new ArrayList<>();
 				calculoAmonest = new ArrayList<>();
 
-				calculoAmonest = calcularAmonestadosPorSemana(idList, diaIniciTrimestre2, diaFinalTrimestre2);
-				calculoExpuls = calcularExpulsadosPorSemana(idList, diaIniciTrimestre2, diaFinalTrimestre2);
+				calculoAmonest = calcularAmonestadosPorSemana2(idList, diaIniciTrimestre2, diaFinalTrimestre2);
+				calculoExpuls = calcularExpulsadosPorSemana2(idList, diaIniciTrimestre2, diaFinalTrimestre2);
 
 				for (int n = 0; n < calculoAmonest.size(); n++) {
 					totalAmonest = totalAmonest + Integer.parseInt(calculoAmonest.get(n).toString());
@@ -1608,8 +1649,8 @@ public class TrimestralReports {
 				calculoExpuls = new ArrayList<>();
 				calculoAmonest = new ArrayList<>();
 
-				calculoAmonest = calcularAmonestadosPorSemana(idList, diaIniciTrimestre3, diaFinalTrimestre3);
-				calculoExpuls = calcularExpulsadosPorSemana(idList, diaIniciTrimestre3, diaFinalTrimestre3);
+				calculoAmonest = calcularAmonestadosPorSemana2(idList, diaIniciTrimestre3, diaFinalTrimestre3);
+				calculoExpuls = calcularExpulsadosPorSemana2(idList, diaIniciTrimestre3, diaFinalTrimestre3);
 
 				for (int n = 0; n < calculoAmonest.size(); n++) {
 					totalAmonest = totalAmonest + Integer.parseInt(calculoAmonest.get(n).toString());
@@ -1675,6 +1716,7 @@ public class TrimestralReports {
 
 	}
 
+
 	private ArrayList<Date> readFile() throws ReadOnlyException, ConversionException, IOException {
 		FileReader reader;
 		File currDir = new File(".");
@@ -1690,7 +1732,7 @@ public class TrimestralReports {
 
 		
 
-		File f = new File(rb.getString("file_settings"));
+		File f = new File(rb.getString("file_settings"));	
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if (br.readLine() == null) {
 			System.out.println("No Hay fecha en el documento settings");

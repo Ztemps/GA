@@ -11,7 +11,6 @@
  * @author Xavier Murcia Gámez - xmurica@elpuig.xeill.net 
  *******************************************************************************/
 package com.example.Reports;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -47,6 +46,11 @@ public class FinalReports {
 	/**
 	 * 
 	 */
+	
+	
+
+	
+	
 	public FinalReports() {
 		// TODO Auto-generated constructor stub
 		dates = new ArrayList<Date>();
@@ -140,7 +144,7 @@ public class FinalReports {
 					f.mkdirs();
 				}
 
-				fileWriter = new FileWriter("/home/ubuntu/informes/total/" + grupos.get(x).getId() + ".xls");
+				fileWriter = new FileWriter("/home/ubuntu/informes/total" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
 				// query.closeTransaction();
@@ -218,8 +222,8 @@ public class FinalReports {
 						calculoExpuls = new ArrayList<>();
 
 						// Debería de pasarle solo el id del alumnno
-						calculoAmonest = calcularAmonestadosPorSemana(idList, diaIniciTrimestre, diaFinalTrimestre);
-						calculoExpuls = calcularExpulsadosPorSemana(idList, diaIniciTrimestre, diaFinalTrimestre);
+						calculoAmonest = calcularAmonestadosPorSemana(Integer.parseInt(idList.get(i).toString()), diaIniciTrimestre, diaFinalTrimestre);
+						calculoExpuls = calcularExpulsadosPorSemana(Integer.parseInt(idList.get(i).toString()), diaIniciTrimestre, diaFinalTrimestre);
 
 						/*
 						 * for (int n=0; n<calculoAmonest.size(); n++){
@@ -231,26 +235,26 @@ public class FinalReports {
 						 * calculoExpuls.get(n).toString()); }
 						 */
 
-						if (calculoAmonest.get(i).toString().equals("0")) {
+						if (calculoAmonest.get(0).toString().equals("0")) {
 							fileWriter.append("");
 
 						} else {
-							fileWriter.append(calculoAmonest.get(i).toString());
+							fileWriter.append(calculoAmonest.get(0).toString());
 
 						}
 						fileWriter.append(COMMA_DELIMITER);
 
-						if (calculoExpuls.get(i).toString().equals("0")) {
+						if (calculoExpuls.get(0).toString().equals("0")) {
 							fileWriter.append("");
 
 						} else {
-							fileWriter.append(calculoExpuls.get(i).toString());
+							fileWriter.append(calculoExpuls.get(0).toString());
 
 						}
 						fileWriter.append(COMMA_DELIMITER);
 
-						totalExpuls = totalExpuls + Integer.parseInt(calculoAmonest.get(i).toString());
-						totalAmonest = totalAmonest + Integer.parseInt(calculoExpuls.get(i).toString());
+						totalExpuls = totalExpuls + Integer.parseInt(calculoAmonest.get(0).toString());
+						totalAmonest = totalAmonest + Integer.parseInt(calculoExpuls.get(0).toString());
 
 					}
 
@@ -439,8 +443,8 @@ public class FinalReports {
 						diaFinalTrimestre = dates.get(5);
 					}
 
-					calculoAmonest = calcularAmonestadosPorSemana(idList, diaIniciTrimestre, diaFinalTrimestre);
-					calculoExpuls = calcularExpulsadosPorSemana(idList, diaIniciTrimestre, diaFinalTrimestre);
+					calculoAmonest = calcularAmonestadosPorSemana2(idList, diaIniciTrimestre, diaFinalTrimestre);
+					calculoExpuls = calcularExpulsadosPorSemana2(idList, diaIniciTrimestre, diaFinalTrimestre);
 
 					for (int n = 0; n < calculoAmonest.size(); n++) {
 						totalAmonest = totalAmonest + Integer.parseInt(calculoAmonest.get(n).toString());
@@ -530,7 +534,44 @@ public class FinalReports {
 
 	}
 
-	private List calcularAmonestadosPorSemana(List idList, Date semana1, Date semana2) {
+
+	
+
+	private List calcularAmonestadosPorSemana(int idList, Date semana1, Date semana2) {
+
+		List amonestacions1;
+
+		amonestacions1 = new ArrayList<>();
+
+			query = new ReportQuerys();
+			amonestacions1.add(query.getWarningCurs(idList, semana1, semana2));
+			// query.closeTransaction();
+			System.out.println(amonestacions1.get(0));
+
+		
+
+		return amonestacions1;
+
+	}
+
+	private List calcularExpulsadosPorSemana(int idList, Date semana1, Date semana2) {
+
+		List expulsions1;
+		List expulsionsList1 = null;
+
+		expulsions1 = new ArrayList<>();
+
+			query = new ReportQuerys();
+			expulsions1.add(query.getExpulsionCurs(idList, semana1, semana2));
+			// query.closeTransaction();
+			System.out.println(expulsions1.get(0));
+		
+
+		return expulsions1;
+	}
+	
+	
+	private List calcularAmonestadosPorSemana2(List idList, Date semana1, Date semana2) {
 
 		List amonestacions1;
 
@@ -547,7 +588,8 @@ public class FinalReports {
 
 	}
 
-	private List calcularExpulsadosPorSemana(List idList, Date semana1, Date semana2) {
+	
+	private List calcularExpulsadosPorSemana2(List idList, Date semana1, Date semana2) {
 
 		List expulsions1;
 		List expulsionsList1 = null;
@@ -563,7 +605,8 @@ public class FinalReports {
 
 		return expulsions1;
 	}
-
+	
+	
 	public ArrayList<Date> readFile() throws ReadOnlyException, ConversionException, IOException {
 		FileReader reader;
 		File currDir = new File(".");
@@ -578,8 +621,7 @@ public class FinalReports {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
 
-		File f = new File(rb.getString("file_settings"));
-
+		File f = new File(rb.getString("file_settings"));		
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if (br.readLine() == null) {
 			System.out.println("No Hay fecha en el documento settings");
