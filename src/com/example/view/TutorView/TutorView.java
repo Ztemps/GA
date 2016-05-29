@@ -31,6 +31,7 @@ import com.example.view.AdminView.AdminView;
 import com.example.view.AdminView.Group.AdminViewGroupJava;
 import com.example.view.AdminView.Students.AdminViewStudentJava;
 import com.example.view.AdminView.Teacher.AdminViewTeacherJava;
+import com.example.view.AdminView.Warning.AdminViewWarningJava;
 import com.example.view.TeacherView.TeacherConfigView;
 import com.example.view.TeacherView.TeacherViewWarningJava;
 import com.itextpdf.text.DocumentException;
@@ -62,7 +63,7 @@ import com.vaadin.ui.themes.ValoTheme;
 public class TutorView extends MainView implements View {
 	public static final String NAME = "Tutor";
 	private TutorOwnWarningsJava tutorownwarning;
-	private TeacherViewWarningJava vistaAmonestacion;
+	private AdminViewWarningJava vistaAmonestacion;
 	private JPAContainer<Student> alumnes;
 	private Grid grid;
 	private TeacherConfigView vistaConfig;
@@ -77,7 +78,7 @@ public class TutorView extends MainView implements View {
 		content.addStyleName("contenido");
 		setLogo();
 		// Side menu button options
-		vistaAmonestacion = new TeacherViewWarningJava();
+		vistaAmonestacion = new AdminViewWarningJava();
 		TutorViewGrups = new TutorViewGrupsJava();
 		vistaConfig = new TeacherConfigView();
 		tutorownwarning = new TutorOwnWarningsJava();
