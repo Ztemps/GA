@@ -300,7 +300,7 @@ public class FinalReports {
 				e.printStackTrace();
 			}
 
-			System.out.println("FINAL: Grup " + grupos.get(x).getId() + "finalitzat");
+			//System.out.println("FINAL: Grup " + grupos.get(x).getId() + "finalitzat");
 
 		}
 	}
@@ -530,7 +530,7 @@ public class FinalReports {
 			e.printStackTrace();
 
 		}
-		System.out.println("FINAL resumen finalitzat");
+		//System.out.println("FINAL resumen finalitzat");
 
 	}
 
@@ -546,7 +546,7 @@ public class FinalReports {
 			query = new ReportQuerys();
 			amonestacions1.add(query.getWarningCurs(idList, semana1, semana2));
 			// query.closeTransaction();
-			System.out.println(amonestacions1.get(0));
+			//System.out.println(amonestacions1.get(0));
 
 		
 
@@ -564,7 +564,7 @@ public class FinalReports {
 			query = new ReportQuerys();
 			expulsions1.add(query.getExpulsionCurs(idList, semana1, semana2));
 			// query.closeTransaction();
-			System.out.println(expulsions1.get(0));
+			//System.out.println(expulsions1.get(0));
 		
 
 		return expulsions1;
@@ -624,7 +624,7 @@ public class FinalReports {
 		File f = new File(rb.getString("file_settings"));		
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if (br.readLine() == null) {
-			System.out.println("No Hay fecha en el documento settings");
+			//System.out.println("No Hay fecha en el documento settings");
 
 		} else {
 
