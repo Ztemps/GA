@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
 import org.eclipse.persistence.internal.oxm.mappings.Login;
 
 import com.example.Entities.Teacher;
+import com.example.Logic.TutorJPAManager;
 import com.example.Logic.UserJPAManager;
 import com.example.LoginView.LoginView;
 import com.example.Pdf.generatePDF;
@@ -84,7 +85,9 @@ public class AdminView extends MainView implements View {
 	private static AdminViewCharts ViewCharts;
 	private static AdminViewReportsJava ViewForms;
 	private static AdminViewSettingsJava ViewSettings;
-	private UserJPAManager ma;
+	private UserJPAManager userJPA;
+	private TutorJPAManager tutorJPA;
+
 	private static AdminViewTutorJava Viewtutors;
 	private BufferedReader br = null;
 	com.vaadin.ui.Notification notif;
@@ -642,11 +645,11 @@ public class AdminView extends MainView implements View {
 
 	private void setWellcome() {
 		// TODO Auto-generated method stub
-		ma = new UserJPAManager();
-
+		userJPA = new UserJPAManager();
+		tutorJPA = new TutorJPAManager();
 		int id2 = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
 		wellcome.addStyleName("wellcome");
-		wellcome.setCaption("Benvingut/uda " + ma.getNomTutorHeader(id2));
+		wellcome.setCaption("Benvingut/uda " + tutorJPA.getNomTutorHeader(id2));
 
 	}
 }

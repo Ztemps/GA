@@ -10,6 +10,8 @@
  * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
  * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
  * 
+ *  Clase que permite enviar un correo 
+ *  
  *******************************************************************************/
 package com.example.SendMail;
 
@@ -31,6 +33,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+
+
 public class sendMail {
 
 	private MimeBodyPart messageBodyPart;
@@ -41,11 +45,24 @@ public class sendMail {
 	private String filename = null;
 	private ResourceBundle rb = ResourceBundle.getBundle("GA");
 	private String senderEmailID = "smtp.gmail.com";
+	
 	private String senderPassword = rb.getString("sender_pass");
 	private String emailSMTPserver = rb.getString("sender_smpt");
 	private String emailServerPort = rb.getString("sender_port");
 
-	// Constructor send mail
+	/**
+	 * Este método es el encargado de enviar un mail a partir de los parametros solicitados
+	 * 
+	 * @param receiverEmailID
+	 *     		Parámetro que contiene el correo de la persona que va a recibirlo.
+	 *            
+	 * @param emailSubject 
+	 * 			Parámetro que contiene el asunto del correo
+	 * 
+	 * @param filename 
+	 * 			Parámetro que contiene el archivo adjunto que se va a enviar.
+	 * 
+	 */
 	public sendMail(String receiverEmailID, String emailSubject, String filename) {
 		this.receiverEmailID = receiverEmailID;
 		this.emailSubject = emailSubject;
@@ -96,6 +113,13 @@ public class sendMail {
 
 	}
 
+	/**
+	 * Este método se encarga de autentificar la conexión SMTP
+	 * 
+	 * @param grup
+	 *            Éste es el objeto Group que se quiere eliminar de la base de
+	 *            datos
+	 */
 	public class SMTPAuthenticator extends javax.mail.Authenticator {
 		public PasswordAuthentication getPasswordAuthentication() {
 			return new PasswordAuthentication(senderEmailID, senderPassword);

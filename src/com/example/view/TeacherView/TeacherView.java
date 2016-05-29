@@ -26,6 +26,7 @@ import com.example.Entities.Group;
 import com.example.Entities.Student;
 import com.example.Entities.User;
 import com.example.Logic.EntityManagerUtil;
+import com.example.Logic.TutorJPAManager;
 import com.example.Logic.UserJPAManager;
 import com.example.LoginView.LoginView;
 import com.example.Templates.MainView;
@@ -78,6 +79,7 @@ public class TeacherView extends MainView implements View {
 	private TeacherOwnWarningsJava vistaOwn;
 	private TeacherConfigView vistaConfig;
 	private UserJPAManager ma;
+	private TutorJPAManager tutorJPA;
 	private ResourceBundle rb = ResourceBundle.getBundle("GA");
 
 	public TeacherView() throws MalformedURLException, DocumentException, IOException, SQLException {
@@ -150,10 +152,11 @@ public class TeacherView extends MainView implements View {
 	private void setWellcome() {
 		// TODO Auto-generated method stub
 		ma = new UserJPAManager();
+		tutorJPA = new TutorJPAManager();
 		try{
 			int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
 			// TODO Auto-generated method stub
-			wellcome.setCaption("Benvingut/uda " + ma.getNomTutorHeader(id));
+			wellcome.setCaption("Benvingut/uda " + tutorJPA.getNomTutorHeader(id));
 			
 		}catch(NullPointerException e){
 			

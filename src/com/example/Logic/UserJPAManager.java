@@ -108,7 +108,6 @@ public class UserJPAManager {
 		em.getTransaction().commit();
 	};
 
-
 	/*
 	 * public boolean validateUser(User user) {
 	 * 
@@ -118,8 +117,6 @@ public class UserJPAManager {
 	 * 
 	 * return false; }
 	 */
-
-
 
 	/**
 	 * Este método se encarga de añadir una amonestación en la tabla
@@ -144,27 +141,6 @@ public class UserJPAManager {
 
 	}
 
-	/**
-	 * Este método se encarga de obtener una lista de objetos de tipo Group a
-	 * partir de una consulta con entity manager
-	 * 
-	 * @return una lista de grupos
-	 * 
-	 */
-	/*
-	 * public List<Group> listTeachers() { // TODO Auto-generated method stub
-	 * 
-	 * try {
-	 * 
-	 * em.getTransaction().begin(); list_grups = em.createQuery(
-	 * "Select e From Docent e").getResultList();
-	 * 
-	 * em.getTransaction().commit(); return list_grups;
-	 * 
-	 * } catch (Exception e) { em.getTransaction().rollback(); }
-	 * 
-	 * return null; }
-	 */
 
 	/**
 	 * Este método se utiliza para localizar un alumno en concreto
@@ -175,22 +151,17 @@ public class UserJPAManager {
 	 *            apellidos del alumno
 	 * 
 	 * 
-	 * @return Objeto de tipo alumno 
+	 * @return Objeto de tipo alumno
 	 * 
 	 */
-	public Student ObtenerAlumno(String name, String surname) {
 
-		Query query = em.createNativeQuery("SELECT id FROM alumne where nom LIKE #name AND cognoms LIKE #surname",
-				Student.class);
 
-		query.setParameter("name", name);
-		query.setParameter("surname", surname);
-
-		Student alumne = (Student) query.getSingleResult();
-
-		return alumne;
-
-	}
+	/**
+	 * Este método devuelve la fecha actual
+	 *
+	 * @return Objeto de tipo date
+	 * 
+	 */
 
 	public Date getCurrentTimeStamp() {
 
@@ -201,97 +172,21 @@ public class UserJPAManager {
 
 	}
 
-	public String getCurrentRol(String currentUser) {
-		Object obj = null;
-		System.out.println(currentUser);
-
-		Query query = em.createQuery("SELECT rol FROM usuari WHERE usuari LIKE #currentUser", User.class);
-
-		query.setParameter("currentUser", "Manolo");
-
-		try {
-			obj = query.getSingleResult();
-
-		} catch (Exception e) {
-
-		}
-
-		// EntityManagerUtil.close();
-
-		return obj.toString();
-
-	}
-
-	public User getIdCurrentDocent(String currentUser) {
-
-		Query query = em.createNativeQuery("SELECT id_docent FROM usuari where usuari  LIKE #currentUser", User.class);
-		query.setParameter("currentUser", currentUser);
-		//
-		User user = (User) query.getSingleResult();
-
-		// EntityManagerUtil.close();
-
-		return user;
-	}
-
-	public int getIdTutor(String grup) {
-
-		Query query = em.createNativeQuery("SELECT docent FROM tutor where grup LIKE #grup", Tutor.class);
-		query.setParameter("grup", grup);
-		//
-		Tutor tutor = (Tutor) query.getSingleResult();
-
-		return tutor.getDocent();
-	}
-
-	public String getNomTutor(int id) {
-
-		Query query = em.createNativeQuery("SELECT * FROM docent where id = #id", Teacher.class);
-		query.setParameter("id", id);
-		//
-		Teacher docent = (Teacher) query.getSingleResult();
-
-		System.out.println(docent.toString());
-
-		return docent.getNom() + " " + docent.getCognoms();
-	}
-
-	public String getNomTutorHeader(int id) {
-
-		Query query = em.createNativeQuery("SELECT * FROM docent where id = #id", Teacher.class);
-		query.setParameter("id", id);
-		//
-		Teacher docent = (Teacher) query.getSingleResult();
-
-		System.out.println(docent.toString());
-
-		return docent.getNom();
-	}
-
+	/**
+	 * Este método devuelve el nombre del usuario actual
+	 *
+	 * @return Objeto de tipo string
+	 * 
+	 */
 	public String currentUser() {
 
 		return String.valueOf(GaUI.getCurrent().getSession().getAttribute("user"));
 	}
 
-	public String currentTeacher() {
-
-		return getNomTutor(Integer.parseInt(String.valueOf(GaUI.getCurrent().getSession().getAttribute("id"))));
-
-	}
-
-	public String currentTeacherName() {
-		int id = 0;
-		try {
-			id = Integer.parseInt(String.valueOf(GaUI.getCurrent().getSession().getAttribute("id")));
-		} catch (NullPointerException | NumberFormatException e) {
-
-			return null;
-		}
-
-		return getNomTutorHeader(id);
-
-	}
-
+	/**
+	 * Este método cierra la conexión a la base de datos.
+	 * 
+	 */
 	public void closeTransaction() {
 
 		em.close();
