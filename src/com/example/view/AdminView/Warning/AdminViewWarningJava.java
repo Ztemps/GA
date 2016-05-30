@@ -85,11 +85,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 public class AdminViewWarningJava extends MainContentView {
 
-	/**
-	 * 
-	 * 
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private Grid grid;
 	private Window window = new Window();
