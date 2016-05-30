@@ -139,12 +139,12 @@ public class FinalReports {
 			}
 
 			try {
-				File f = new File("/home/ubuntu/informes/total");
+				File f = new File(rb.getString("zip_folder"));
 				if (!f.exists()) {
 					f.mkdirs();
 				}
 
-				fileWriter = new FileWriter("/home/ubuntu/informes/total" + grupos.get(x).getId() + ".xls");
+				fileWriter = new FileWriter(rb.getString("zip_folder") + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
 				// query.closeTransaction();
@@ -325,11 +325,11 @@ public class FinalReports {
 		try {
 
 			dates = readFile();
-			File f = new File("/home/ubuntu/informes/total/");
+			File f = new File(rb.getString("zip_folder"));
 			if (!f.exists()) {
 				f.mkdirs();
 			}
-			fileWriter = new FileWriter("/home/ubuntu/informes/total/resumen.xls");
+			fileWriter = new FileWriter(rb.getString("zip_folder")+"/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();

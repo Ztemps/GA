@@ -623,13 +623,11 @@ public class AdminView extends MainView implements View {
 	}
 
 	public void logout() {
-
 		getUI().getNavigator().navigateTo(LoginView.NAME);
 		getUI().getCurrent().getSession().setAttribute("id", null);
 		getUI().getCurrent().getSession().setAttribute("user", null);
 		getUI().getCurrent().getSession().close();
-		notif("Sessió tancada correctament!");
-
+		notif("Sessió tancada");
 	}
 
 	public void notif(String mensaje) {

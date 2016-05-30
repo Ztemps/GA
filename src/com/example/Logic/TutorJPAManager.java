@@ -90,8 +90,6 @@ public class TutorJPAManager {
 		//
 		Teacher docent = (Teacher) query.getSingleResult();
 
-		System.out.println(docent.toString());
-
 		return docent.getNom() + " " + docent.getCognoms();
 	}
 
