@@ -340,7 +340,7 @@ public class AdminViewReportsJava extends MainContentView {
 				trimestralReports.closeAllConnections();
 				File zip=null;
 				try {
-					zip = new File(zipFolder("/home/ubuntu/informes/trimestre1.zip", "/home/ubuntu/informes/trimestre1"));
+					zip = new File(zipFolder("/home/xmurcia/informes/trimestre1.zip", "/home/xmurcia/informes/trimestre1"));
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

@@ -1,17 +1,7 @@
-/*******************************************************************************
- * 
- * Gestió d'Amonestacions v1.0
- *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
- * 
- *******************************************************************************/
+
 package com.example.view.AdminView.Teacher;
+
+
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -51,11 +41,24 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
+
+/**
+ * 
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
+ * 
+ **/
+
 public class AdminViewTeacherFormJava extends AdminViewTeacherForm {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1038815527250707361L;
 	private TeachersJPAManager MA;
 	private UserJPAManager MA2;
@@ -89,6 +92,12 @@ public class AdminViewTeacherFormJava extends AdminViewTeacherForm {
 
 	}
 
+	
+	/**
+	 * Inserta un nuevo profesor en la base de datos, comprueba si es tutor o no
+	 * y además añade su nombre de usuario correspondiente. Asigna la contraseña
+	 * por defecto que se encuentra en el archivo properties.
+	 * */
 	public void insertDocent(Teacher teacher) {
 
 		MessageDigest md = null;
@@ -143,10 +152,12 @@ public class AdminViewTeacherFormJava extends AdminViewTeacherForm {
 		
 	}
 	
+	
+	/**Notificación
+	 *  personalizada */
 	public void notif(String mensaje) {
 
-		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
-																												// HTML
+		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); 
 
 		// Customize it
 		notif.show(Page.getCurrent());

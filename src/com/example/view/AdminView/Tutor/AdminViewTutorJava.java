@@ -52,7 +52,10 @@ public class AdminViewTutorJava extends MainContentView {
 	}
 
 
-
+	
+	/**
+	 * Configuración principal de botones y campos de texto
+	 * */
 	private void buttonsSettings() {
 
 		horizontalTitle.addStyleName("horizontal-title");
@@ -73,6 +76,12 @@ public class AdminViewTutorJava extends MainContentView {
 		buttonEdit.setVisible(false);
 	}
 
+	
+	/**
+	 * Configuración principal del componente grid, su container de datos
+	 * 
+	 * @return componente de tipo Grid
+	 * */
 	public Grid GridProperties() {
 
 		jdbccp = new JDBCConnectionPool();
@@ -98,6 +107,8 @@ public class AdminViewTutorJava extends MainContentView {
 		return grid;
 	}
 
+	
+	/**Actualiza los datos del componente Grid*/
 	public void reloadGrid() {
 
 		vHorizontalMain.removeAllComponents();
@@ -105,6 +116,10 @@ public class AdminViewTutorJava extends MainContentView {
 
 	}
 
+	
+	/**
+	 * Deselecciona las celdas del Grid
+	 * */
 	public void clear() {
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);
