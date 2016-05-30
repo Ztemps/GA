@@ -328,7 +328,7 @@ public class AdminViewReportsJava extends MainContentView {
 				File zip = null;
 				try {
 					zip = new File(
-							zipFolder(rb.getString("location1_zip"), rb.getString("zipt1_folder")));
+							zipFolder(rb.getString("locationt1_zip"), rb.getString("zipt1_folder")));
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
