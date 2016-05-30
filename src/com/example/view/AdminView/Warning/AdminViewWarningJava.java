@@ -126,23 +126,24 @@ public class AdminViewWarningJava extends MainContentView {
 
 	public AdminViewWarningJava() throws MalformedURLException, DocumentException, IOException {
 
+		WarningJPA = new WarningJPAManager();
+		tutorJPA = new TutorJPAManager();
+
 		GridProperties();
 		WindowProperties();
 		buttonsSettings();
 		WindowPdfProperties();
 		PopulateComboBoxProf();
 		PopulateComboBoxSubjects();
-		
+
 		amonestacioForm.datefield.addValueChangeListener(new ValueChangeListener() {
 
-		
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				// TODO Auto-generated method stub
 
-					amonestacioForm.time.setEnabled(true);
-					amonestacioForm.time.focus();
-				
+				amonestacioForm.time.setEnabled(true);
+				amonestacioForm.time.focus();
 
 			}
 		});
@@ -163,7 +164,6 @@ public class AdminViewWarningJava extends MainContentView {
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-
 
 					if (check()) {
 
@@ -191,9 +191,10 @@ public class AdminViewWarningJava extends MainContentView {
 							|| amonestacioForm.accio.getValue() == null || amonestacioForm.caracter.getValue() == null
 							|| amonestacioForm.motiu.getValue() == null || amonestacioForm.motiu2.getValue() == null
 							|| amonestacioForm.circunstancia.getValue() == null || amonestacioForm.grup.getValue() == ""
-							|| amonestacioForm.tutor.getValue() == "" || amonestacioForm.datefield.getValue() == null 
-							 || amonestacioForm.time.getValue() == null || amonestacioForm.time.getValue().length() > 5 
-							 || amonestacioForm.time.getValue().length() == 0  || amonestacioForm.time.getValue().length() < 5 ) {
+							|| amonestacioForm.tutor.getValue() == "" || amonestacioForm.datefield.getValue() == null
+							|| amonestacioForm.time.getValue() == null || amonestacioForm.time.getValue().length() > 5
+							|| amonestacioForm.time.getValue().length() == 0
+							|| amonestacioForm.time.getValue().length() < 5) {
 
 						notif("Omple els camps obligatoris");
 
@@ -340,7 +341,6 @@ public class AdminViewWarningJava extends MainContentView {
 				amonestacioForm.grup.setReadOnly(false);
 				clearFields();
 				window.close();
-				
 
 			}
 		});
@@ -390,7 +390,7 @@ public class AdminViewWarningJava extends MainContentView {
 		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
 		amonestacioForm.time.setEnabled(false);
-		
+
 		amonestacioForm.time.addValidator(new StringLengthValidator("Format incorrecte. Ex: 15:04", 5, 5, false));
 
 	}
@@ -575,17 +575,24 @@ public class AdminViewWarningJava extends MainContentView {
 
 		clearFields();
 
-		WarningJPA = new WarningJPAManager();
-		tutorJPA = new TutorJPAManager();
-
 		Object name = event.getItem().getItemProperty("nom");
 		Object surname = event.getItem().getItemProperty("cognoms");
 		Object grup = event.getItem().getItemProperty("grup");
 
-		int idtutor = tutorJPA.getIdTutor(grup.toString());
-		String nametutor = tutorJPA.getNomTutor(idtutor);
-		
-		amonestacioForm.tutor.setValue(nametutor);
+		int idtutor = 0;
+
+		String nametutor = "";
+
+		try {
+
+			idtutor = tutorJPA.getIdTutor(grup.toString());
+			nametutor = tutorJPA.getNomTutor(idtutor);
+
+		} catch (Exception e) {
+
+			notif("ERROR: L'alumne no té cap tutor");
+		}
+
 		amonestacioForm.nom.setValue(name.toString());
 		amonestacioForm.cognoms.setValue(surname.toString());
 		amonestacioForm.grup.setValue(grup.toString());
@@ -599,6 +606,9 @@ public class AdminViewWarningJava extends MainContentView {
 		amonestacioForm.cognoms.setReadOnly(true);
 		amonestacioForm.tutor.setReadOnly(true);
 		amonestacioForm.grup.setReadOnly(true);
+
+		nomCognom = amonestacioForm.nom.getValue() + " " + amonestacioForm.cognoms.getValue();
+
 	}
 
 	private void getItemSelectedToAmonestacioForm() {
@@ -614,15 +624,25 @@ public class AdminViewWarningJava extends MainContentView {
 		UI.getCurrent().addWindow(window);
 		window.setVisible(true);
 
-		WarningJPA = new WarningJPAManager();
 		clearFields();
 
 		Object name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom");
 		Object surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms");
 		Object grup = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("grup");
 
-		int idtutor = tutorJPA.getIdTutor(grup.toString());
-		String nametutor = tutorJPA.getNomTutor(idtutor);
+		int idtutor = 0;
+
+		String nametutor = "";
+
+		try {
+
+			idtutor = tutorJPA.getIdTutor(grup.toString());
+			nametutor = tutorJPA.getNomTutor(idtutor);
+
+		} catch (Exception e) {
+
+			notif("ERROR: L'alumne no té cap tutor");
+		}
 
 		amonestacioForm.nom.setValue(name.toString());
 		amonestacioForm.cognoms.setValue(surname.toString());
@@ -637,6 +657,8 @@ public class AdminViewWarningJava extends MainContentView {
 		amonestacioForm.cognoms.setReadOnly(true);
 		amonestacioForm.tutor.setReadOnly(true);
 		amonestacioForm.grup.setReadOnly(true);
+
+		nomCognom = amonestacioForm.nom.getValue() + " " + amonestacioForm.cognoms.getValue();
 
 	}
 
@@ -653,7 +675,6 @@ public class AdminViewWarningJava extends MainContentView {
 		amonestacioForm.nom.setRequired(true);
 		amonestacioForm.datefield.setRequired(true);
 		amonestacioForm.time.setRequired(true);
-
 
 		amonestacioForm.nom.setRequiredError("El camp nom és obligatori");
 		amonestacioForm.cognoms.setRequiredError("El camp cognoms és obligatori");
@@ -752,11 +773,10 @@ public class AdminViewWarningJava extends MainContentView {
 			amonestat = amonestacioForm.accio.getValue().toString();
 			localitzacio = amonestacioForm.circunstancia.getValue().toString();
 			System.out.println("Nombreprofe: " + nameTeacher);
-			
 
 			if (amonestat.equals("Amonestat")) {
 				amonestat2 = "true";
-			} else{
+			} else {
 				amonestat2 = "false";
 			}
 			altres_motius = amonestacioForm.amotius.getValue();

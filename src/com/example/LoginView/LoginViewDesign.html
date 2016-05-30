@@ -6,27 +6,23 @@
  <body> 
   <vaadin-css-layout responsive size-full> 
    <vaadin-vertical-layout spacing responsive height="95%" _id="vMainLogin"> 
-    <vaadin-vertical-layout spacing responsive width="35%" height="45%" _id="vLogin" :middle :center> 
-     <vaadin-label responsive size-auto plain-text _id="txtTitle" :middle :center>
+    <vaadin-vertical-layout spacing responsive width="30%" height="45%" margin _id="vLogin" :middle :center> 
+     <vaadin-label visible="false" responsive size-auto plain-text _id="txtTitle" :middle :center>
        Plataforma Gestió d'Amoestacions 
      </vaadin-label> 
-     <vaadin-text-field caption="Usuari" required responsive immediate _id="txtUsername" :middle :center></vaadin-text-field> 
-     <vaadin-password-field caption="Contrasenya" required responsive immediate _id="txtPassword" :middle :center></vaadin-password-field> 
-     <vaadin-button responsive plain-text _id="bLogin" :middle :center>
-       Entrar 
+     <vaadin-text-field caption="Usuari" required responsive immediate width="70%" _id="txtUsername" :middle :center></vaadin-text-field> 
+     <vaadin-password-field caption="Contrasenya" required responsive immediate width="70%" _id="txtPassword" :middle :center></vaadin-password-field> 
+     <vaadin-button responsive width="35%" plain-text _id="bLogin" :middle :center>
+       Iniciar 
      </vaadin-button> 
     </vaadin-vertical-layout> 
    </vaadin-vertical-layout> 
-   <vaadin-horizontal-layout spacing responsive width-full height="5%" _id="login_footer"> 
-    <vaadin-label responsive size-auto plain-text :middle :center>
-      Gestió d'amonestacions 
+   <vaadin-horizontal-layout spacing responsive width-full height="5%" margin-left _id="login_footer"> 
+    <vaadin-label responsive plain-text _id="footer_title" :middle :center :expand>
+      Plataforma Gestió d'amonestacions - IES El Puig Castellar 
     </vaadin-label> 
-    <vaadin-label responsive size-auto plain-text :middle :center>
-      GA developers 
-    </vaadin-label> 
-    <vaadin-link caption="Autors" :middle :center></vaadin-link> 
-    <vaadin-label size-auto plain-text :middle :center>
-      More info 
+    <vaadin-label visible="false" responsive plain-text :middle :center :expand>
+      Developed by students 
     </vaadin-label> 
    </vaadin-horizontal-layout> 
   </vaadin-css-layout>  

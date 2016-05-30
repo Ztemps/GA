@@ -30,6 +30,7 @@ public class LoginViewDesign extends CssLayout {
 	protected PasswordField txtPassword;
 	protected Button bLogin;
 	protected HorizontalLayout login_footer;
+	protected Label footer_title;
 
 	public LoginViewDesign() {
 		Design.read(this);

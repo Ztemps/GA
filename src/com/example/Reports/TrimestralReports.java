@@ -131,12 +131,12 @@ public class TrimestralReports {
 
 			try {
 
-				File f = new File("/home/ubuntu/informes/trimestre1");
+				File f = new File(rb.getString("zipt1_folder"));
 				if (!f.exists()) {
 					f.mkdirs();
 				}
 
-				fileWriter = new FileWriter("/home/ubuntu/informes/trimestre1/alumnes" + grupos.get(x).getId() + ".xls");
+				fileWriter = new FileWriter(rb.getString("zipt1_folder")+"/"+ grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
 				// query.closeTransaction();
@@ -330,12 +330,12 @@ public class TrimestralReports {
 			}
 
 			try {
-				File f = new File("/home/ubuntu/informes/trimestre2");
+				File f = new File(rb.getString("zipt2_folder"));
 				if (!f.exists()) {
 					f.mkdirs();
 				}
 
-				fileWriter = new FileWriter("/home/ubuntu/informes/trimestre2/alumnes" + grupos.get(x).getId() + ".xls");
+				fileWriter = new FileWriter(rb.getString("zipt2_folder")+"/"+grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
 				// query.closeTransaction();
@@ -527,12 +527,12 @@ public class TrimestralReports {
 
 			try {
 
-				File f = new File("/home/ubuntu/informes/trimestre3");
+				File f = new File(rb.getString("zipt3_folder"));
 				if (!f.exists()) {
 					f.mkdirs();
 				}
 
-				fileWriter = new FileWriter("/home/ubuntu/informes/trimestre3/alumnes" + grupos.get(x).getId() + ".xls");
+				fileWriter = new FileWriter(rb.getString("zipt3_folder")+ "/" + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
 				// query.closeTransaction();
@@ -726,11 +726,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-			File f2 = new File("/home/ubuntu/informes/trimestre1");
+			File f2 = new File(rb.getString("zipt1_folder"));
 			if (!f2.exists()) {
 				f2.mkdirs();
 			}
-			fileWriter = new FileWriter("/home/ubuntu/informes/trimestre1/resumen.xls");
+			fileWriter = new FileWriter(rb.getString("zipt3_folder")+"/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -895,11 +895,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-			File f = new File("/home/ubuntu/informes/trimestre2");
+			File f = new File(rb.getString("zipt2_folder"));
 			if (!f.exists()) {
 				f.mkdirs();
 			}
-			fileWriter = new FileWriter("/home/ubuntu/informes/trimestre2/resumen.xls");
+			fileWriter = new FileWriter(rb.getString("zipt2_folder")+"/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -1064,11 +1064,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-			File f = new File("/home/ubuntu/informes/trimestre3");
+			File f = new File(rb.getString("zipt3_folder"));
 			if (!f.exists()) {
 				f.mkdirs();
 			}
-			fileWriter = new FileWriter("/home/ubuntu/informes/trimestre3/resumen.xls");
+			fileWriter = new FileWriter(rb.getString("zipt3_folder")+"/resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -1236,11 +1236,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-			File f = new File("/home/ubuntu/informes/trimestre1");
+			File f = new File(rb.getString("zipt1_folder"));
 			if (!f.exists()) {
 				f.mkdirs();
 			}
-			fileWriter = new FileWriter("/home/ubuntu/informes/trimestre1/resumen2.xls");
+			fileWriter = new FileWriter(rb.getString("zipt1_folder")+"/resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -1402,11 +1402,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-			File f = new File("/home/ubuntu/informes/trimestre2");
+			File f = new File(rb.getString("zipt2_folder"));
 			if (!f.exists()) {
 				f.mkdirs();
 			}
-			fileWriter = new FileWriter("/home/ubuntu/informes/trimestre2/resumen2.xls");
+			fileWriter = new FileWriter(rb.getString("zipt2_folder")+"/resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -1568,11 +1568,11 @@ public class TrimestralReports {
 		try {
 
 			dates = readFile();
-			File f = new File("/home/ubuntu/informes/trimestre3");
+			File f = new File(rb.getString("zipt3_folder"));
 			if (!f.exists()) {
 				f.mkdirs();
 			}
-			fileWriter = new FileWriter("/home/ubuntu/informes/trimestre3/resumen2.xls");
+			fileWriter = new FileWriter(rb.getString("zipt3_folder")+"/resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();

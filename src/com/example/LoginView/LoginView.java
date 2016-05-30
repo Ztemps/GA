@@ -29,6 +29,8 @@ import com.example.view.TeacherView.TeacherView;
 import com.example.view.TutorView.TutorView;
 import com.github.wolfie.popupextension.PopupExtension;
 import com.vaadin.annotations.Title;
+import com.vaadin.event.ContextClickEvent;
+import com.vaadin.event.ContextClickEvent.ContextClickListener;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ShortcutAction.KeyCode;
@@ -46,6 +48,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Component.Event;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -98,7 +101,7 @@ public class LoginView extends LoginViewDesign implements View {
 		iconsAndCaption();
 		styles();
 		listeners();
-
+		
 	}
 
 	public void iconsAndCaption() {
@@ -113,7 +116,6 @@ public class LoginView extends LoginViewDesign implements View {
 		txtPassword.setIcon(FontAwesome.LOCK);
 
 	}
-
 	public void styles() {
 		txtTitle.addStyleName("loginTitle");
 		bLogin.addStyleName(ValoTheme.BUTTON_PRIMARY);

@@ -38,10 +38,6 @@ import com.vaadin.ui.themes.ValoTheme;
 public class AdminViewReportsJava extends MainContentView {
 	private File file;
 	private AdminReportCSVUpload csv;
-	private Button generateReportTrimestre1;
-	private Button generateReportTrimestre2;
-	private Button generateReportTrimestre3;
-	private Button generateReportTotal;
 
 	private StreamResource sr = getTrimestral1Zip();
 	private StreamResource sr2 = getTrimestral2Zip();
@@ -61,7 +57,7 @@ public class AdminViewReportsJava extends MainContentView {
 		csv = new AdminReportCSVUpload();
 		trimestralReports = new TrimestralReports();
 		finalreports = new FinalReports();
-		
+
 		generalSettings();
 
 		// INFORMES TRIMESTRALS
@@ -71,15 +67,9 @@ public class AdminViewReportsJava extends MainContentView {
 		csv.mainTotal.addStyleName("whiteBackground");
 		csv.txtUpTrimestral.setValue("Carrega d'Informes Trimestrals");
 		csv.txtUpTrimestral.addStyleName("marginTitle");
-		csv.hTrimestral.removeAllComponents();
 
 		// Add buttons to layout
 		csv.hTrimestral.addStyleName("buttonsLayout");
-		csv.hTrimestral.addComponent(generateReportTrimestre1);
-		csv.hTrimestral.addComponent(generateReportTrimestre2);
-		csv.hTrimestral.addComponent(generateReportTrimestre3);
-		csv.hTotal.addComponent(generateReportTotal);
-		
 
 		// csv.horizontalTrimestral.setComponentAlignment(uploadStudent,
 		// Alignment.MIDDLE_CENTER);
@@ -89,22 +79,25 @@ public class AdminViewReportsJava extends MainContentView {
 		csv.txtUpTotal.addStyleName("marginTitle");
 
 		csv.hTotal.addStyleName("buttonsLayout");
-		
+
 		// csv.hTotal.removeAllComponents();
 		// csv.hTotal.addComponents(uploadtrimestre1);
 
 		// csv.horizontalTotal.setComponentAlignment(uploadStudent,
 		// Alignment.MIDDLE_CENTER);
-		fileDownloader.extend(generateReportTrimestre1);
-		fileDownloader2.extend(generateReportTrimestre2);
-		fileDownloader3.extend(generateReportTrimestre3);
-		fileDownloader4.extend(generateReportTotal);
+		fileDownloader.extend(csv.generateReportTrimestre1);
+		fileDownloader2.extend(csv.generateReportTrimestre2);
+		fileDownloader3.extend(csv.generateReportTrimestre3);
+		fileDownloader4.extend(csv.generateReportTotal);
+
+		vHorizontalMain.removeAllComponents();
+		vHorizontalMain.addComponent(csv);
+
 	}
 
 	/**
 	 * 
 	 */
-
 
 	private StreamResource getTrimestral4Zip() {
 		// TODO Auto-generated method stub
@@ -112,22 +105,21 @@ public class AdminViewReportsJava extends MainContentView {
 
 			public InputStream getStream() {
 				// return your file/bytearray as an InputStream
-				
-				Thread t1 = new Thread(){
-					public void run(){
+
+				Thread t1 = new Thread() {
+					public void run() {
 						finalreports.calcularResumenTotal();
 
 					}
 				};
-				
-				Thread t2 = new Thread(){
-					public void run(){
+
+				Thread t2 = new Thread() {
+					public void run() {
 						finalreports.calcularTotalporAlumnos();
 
 					}
 				};
-				
-				
+
 				t1.start();
 				t2.start();
 				try {
@@ -136,14 +128,12 @@ public class AdminViewReportsJava extends MainContentView {
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
-				
+
 				finalreports.closeAllConnections();
-				
-				
-				
-				File zip=null;
+
+				File zip = null;
 				try {
-					zip = new File(zipFolder("/home/ubuntu/informes/totalcurs.zip", rb.getString("zip_total")));
+					zip = new File(zipFolder(rb.getString("location_zip"), rb.getString("zip_folder")));
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -162,33 +152,32 @@ public class AdminViewReportsJava extends MainContentView {
 		};
 		StreamResource resource = new StreamResource(source, getFileName4());
 		return resource;
-		
+
 	}
-	
-	
+
 	private StreamResource getTrimestral3Zip() {
 		// TODO Auto-generated method stub
 		StreamResource.StreamSource source = new StreamResource.StreamSource() {
 
 			public InputStream getStream() {
 				// return your file/bytearray as an InputStream
-				
-				Thread t1 = new Thread(){
-					public void run(){
+
+				Thread t1 = new Thread() {
+					public void run() {
 						trimestralReports.calcularResumenTrimestre3();
 
 					}
 				};
-				
-				Thread t2 = new Thread(){
-					public void run(){
+
+				Thread t2 = new Thread() {
+					public void run() {
 						trimestralReports.calcularTercerTrimestre();
 
 					}
 				};
-				
-				Thread t3 = new Thread(){
-					public void run(){
+
+				Thread t3 = new Thread() {
+					public void run() {
 						trimestralReports.calcularResumen2Trimestre3();
 
 					}
@@ -204,13 +193,12 @@ public class AdminViewReportsJava extends MainContentView {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+
 				trimestralReports.closeAllConnections();
-				
-				
-				File zip=null;
+
+				File zip = null;
 				try {
-					zip = new File(zipFolder("/home/ubuntu/informes/trimestre3.zip", "/home/ubuntu/informes/trimestre3"));
+					zip = new File(zipFolder(rb.getString("locationt3_zip"), rb.getString("zipt3_folder")));
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -229,32 +217,32 @@ public class AdminViewReportsJava extends MainContentView {
 		};
 		StreamResource resource = new StreamResource(source, getFileName3());
 		return resource;
-		
+
 	}
 
 	private StreamResource getTrimestral2Zip() {
-		// TODO Auto-generated method stub	
-	        StreamResource.StreamSource source = new StreamResource.StreamSource() {
+		// TODO Auto-generated method stub
+		StreamResource.StreamSource source = new StreamResource.StreamSource() {
 
 			public InputStream getStream() {
 				// return your file/bytearray as an InputStream
-				
-				Thread t1 = new Thread(){
-					public void run(){
+
+				Thread t1 = new Thread() {
+					public void run() {
 						trimestralReports.calcularResumenTrimestre2();
 
 					}
 				};
-				
-				Thread t2 = new Thread(){
-					public void run(){
+
+				Thread t2 = new Thread() {
+					public void run() {
 						trimestralReports.calcularSegundoTrimestre();
 
 					}
 				};
-				
-				Thread t3 = new Thread(){
-					public void run(){
+
+				Thread t3 = new Thread() {
+					public void run() {
 						trimestralReports.calcularResumen2Trimestre2();
 
 					}
@@ -270,13 +258,13 @@ public class AdminViewReportsJava extends MainContentView {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+
 				trimestralReports.closeAllConnections();
-				
-				
-				File zip=null;
+
+				File zip = null;
 				try {
-					zip = new File(zipFolder("/home/ubuntu/informes/trimestre2.zip", "/home/ubuntu/informes/trimestre2"));
+					zip = new File(
+							zipFolder(rb.getString("locationt2_zip"), rb.getString("zipt2_folder") ));
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -288,7 +276,6 @@ public class AdminViewReportsJava extends MainContentView {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 
 				return targetStream;
 
@@ -304,27 +291,27 @@ public class AdminViewReportsJava extends MainContentView {
 
 			public InputStream getStream() {
 				// return your file/bytearray as an InputStream
-				Thread t1 = new Thread(){
-					public void run(){
+				Thread t1 = new Thread() {
+					public void run() {
 						trimestralReports.calcularResumenTrimestre1();
 
 					}
 				};
-				
-				Thread t2 = new Thread(){
-					public void run(){
+
+				Thread t2 = new Thread() {
+					public void run() {
 						trimestralReports.calcularPrimerTrimestre();
 
 					}
 				};
-				
-				Thread t3 = new Thread(){
-					public void run(){
+
+				Thread t3 = new Thread() {
+					public void run() {
 						trimestralReports.calcularResumen2Trimestre1();
 
 					}
 				};
-				
+
 				t1.start();
 				t2.start();
 				t3.start();
@@ -336,11 +323,13 @@ public class AdminViewReportsJava extends MainContentView {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+
 				trimestralReports.closeAllConnections();
-				File zip=null;
+				File zip = null;
 				try {
-					zip = new File(zipFolder("/home/xmurcia/informes/trimestre1.zip", "/home/xmurcia/informes/trimestre1"));
+
+					zip = new File(
+							zipFolder(rb.getString("locationt1_zip"), rb.getString("zipt1_folder")));
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -368,7 +357,7 @@ public class AdminViewReportsJava extends MainContentView {
 
 		return suggestedSaveFile;
 	}
-	
+
 	private String getFileName2() {
 		// TODO Auto-generated method stub
 
@@ -376,7 +365,7 @@ public class AdminViewReportsJava extends MainContentView {
 
 		return suggestedSaveFile;
 	}
-	
+
 	private String getFileName3() {
 		// TODO Auto-generated method stub
 
@@ -384,8 +373,7 @@ public class AdminViewReportsJava extends MainContentView {
 
 		return suggestedSaveFile;
 	}
-	
-	
+
 	private String getFileName4() {
 		// TODO Auto-generated method stub
 
@@ -398,35 +386,24 @@ public class AdminViewReportsJava extends MainContentView {
 		// TODO Auto-generated method stub
 
 		// Button trimestral 1 reports
-		generateReportTrimestre1 = new Button("Genera informe 1r trimestre", FontAwesome.CLOUD_DOWNLOAD);
-		generateReportTrimestre1.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		generateReportTrimestre1.addStyleName("settings");
+		csv.generateReportTrimestre1.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		// csv.generateReportTrimestre1.addStyleName("settings");
 
 		// Button trimestral 2 reports
-		generateReportTrimestre2 = new Button("Genera informe 2on trimestre", FontAwesome.CLOUD_DOWNLOAD);
-		generateReportTrimestre2.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		generateReportTrimestre2.addStyleName("settings");
+		csv.generateReportTrimestre2.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		// csv.generateReportTrimestre2.addStyleName("settings");
 
 		// Button trimestral 3 reports
-		generateReportTrimestre3 = new Button("Genera informe 3er trimestre", FontAwesome.CLOUD_DOWNLOAD);
-		generateReportTrimestre3.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		generateReportTrimestre3.addStyleName("settings");
-		
-		// Button trimestral 3 reports
-		generateReportTotal = new Button("Genera informe total del curs", FontAwesome.CLOUD_DOWNLOAD);
-		generateReportTotal.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		generateReportTotal.addStyleName("settings");
-		
+		csv.generateReportTrimestre3.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		// csv.generateReportTrimestre3.addStyleName("settings");
 
-		vHorizontalMain.addComponent(csv);
-		vHorizontalMain.setComponentAlignment(csv, Alignment.TOP_LEFT);
-
+		// Button reports total
+		csv.generateReportTotal.addStyleName(ValoTheme.BUTTON_PRIMARY);
 
 		horizontalTitle.addStyleName("horizontal-title");
 		txtTitle.addStyleName("main-title");
 		txtTitle.setValue("Informes");
-		
-		
+
 		bAdd.setVisible(false);
 		buttonEdit.setVisible(false);
 		bDelete.setVisible(false);
@@ -434,101 +411,48 @@ public class AdminViewReportsJava extends MainContentView {
 		txtSearch.setVisible(false);
 		clearTxt.setVisible(false);
 
-
 	}
 
-//	public String ZipFiles(String zipFile, String folder) {
-//
-//		try {
-//			FileOutputStream fos = new FileOutputStream(zipFile);
-//			ZipOutputStream zos = new ZipOutputStream(fos);
-//
-//			Files.walk(Paths.get(folder)).forEach(filePath -> {
-//				if (Files.isRegularFile(filePath)) {
-//					String path = filePath.toString();
-//					System.out.println("PATHHH " + path);
-//					try {
-//						addToZipFile(path, zos);
-//					} catch (Exception e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				}
-//			});
-//
-//			zos.close();
-//			fos.close();
-//
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//
-//		return zipFile;
-//	}
+	static public String zipFolder(String destZipFile, String srcFolder) throws Exception {
+		ZipOutputStream zip = null;
+		FileOutputStream fileWriter = null;
 
-//	public static void addToZipFile(String fileName, ZipOutputStream zos) throws FileNotFoundException, IOException {
-//
-//		System.out.println("Writing '" + fileName + "' to zip file");
-//
-//		File file = new File(fileName);
-//		FileInputStream fis = new FileInputStream(file);
-//		ZipEntry zipEntry = new ZipEntry(fileName);
-//		zos.putNextEntry(zipEntry);
-//
-//		byte[] bytes = new byte[1048576];
-//		int length;
-//		while ((length = fis.read(bytes)) >= 0) {
-//			zos.write(bytes, 0, length);
-//		}
-//
-//		zos.closeEntry();
-//		fis.close();
-//	}
-	
-	static public String zipFolder(String destZipFile,String srcFolder) throws Exception {
-	    ZipOutputStream zip = null;
-	    FileOutputStream fileWriter = null;
+		fileWriter = new FileOutputStream(destZipFile);
+		zip = new ZipOutputStream(fileWriter);
 
-	    fileWriter = new FileOutputStream(destZipFile);
-	    zip = new ZipOutputStream(fileWriter);
+		addFolderToZip("", srcFolder, zip);
+		zip.flush();
+		zip.close();
 
-	    addFolderToZip("", srcFolder, zip);
-	    zip.flush();
-	    zip.close();
-	    
-	    return destZipFile;
-	  }
-	
-	static private void addFileToZip(String path, String srcFile, ZipOutputStream zip)
-		      throws Exception {
+		return destZipFile;
+	}
 
-		    File folder = new File(srcFile);
-		    if (folder.isDirectory()) {
-		      addFolderToZip(path, srcFile, zip);
-		    } else {
-		      byte[] buf = new byte[1024];
-		      int len;
-		      FileInputStream in = new FileInputStream(srcFile);
-		      zip.putNextEntry(new ZipEntry(path + "/" + folder.getName()));
-		      while ((len = in.read(buf)) > 0) {
-		        zip.write(buf, 0, len);
-		      }
-		    }
-		  }
-	
-	static private void addFolderToZip(String path, String srcFolder, ZipOutputStream zip)
-		      throws Exception {
-		    File folder = new File(srcFolder);
+	static private void addFileToZip(String path, String srcFile, ZipOutputStream zip) throws Exception {
 
-		    for (String fileName : folder.list()) {
-		      if (path.equals("")) {
-		        addFileToZip(folder.getName(), srcFolder + "/" + fileName, zip);
-		      } else {
-		        addFileToZip(path + "/" + folder.getName(), srcFolder + "/" + fileName, zip);
-		      }
-		    }
-		  }
+		File folder = new File(srcFile);
+		if (folder.isDirectory()) {
+			addFolderToZip(path, srcFile, zip);
+		} else {
+			byte[] buf = new byte[1024];
+			int len;
+			FileInputStream in = new FileInputStream(srcFile);
+			zip.putNextEntry(new ZipEntry(path + "/" + folder.getName()));
+			while ((len = in.read(buf)) > 0) {
+				zip.write(buf, 0, len);
+			}
+		}
+	}
+
+	static private void addFolderToZip(String path, String srcFolder, ZipOutputStream zip) throws Exception {
+		File folder = new File(srcFolder);
+
+		for (String fileName : folder.list()) {
+			if (path.equals("")) {
+				addFileToZip(folder.getName(), srcFolder + "/" + fileName, zip);
+			} else {
+				addFileToZip(path + "/" + folder.getName(), srcFolder + "/" + fileName, zip);
+			}
+		}
+	}
 
 }
