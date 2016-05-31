@@ -43,11 +43,11 @@ public class TrimestralReports {
 	public ReportQuerys query;
 	ArrayList<Date> dates = new ArrayList<Date>();
 	// CSV file header
-	public  GroupJPAManager jpa;
-	private  List<Group> grupos = null;
+	public GroupJPAManager jpa;
+	private List<Group> grupos = null;
 
 	ConverterDates datas;
-		
+
 	public void calcularPrimerTrimestre() {
 		datas = new ConverterDates();
 		// CALCULO DE FECHAS
@@ -101,7 +101,7 @@ public class TrimestralReports {
 			for (int i = 0; i < ids.size(); i++) {
 				idList.add(ids.get(i));
 
-			//	System.out.println(ids.get(i));
+				// System.out.println(ids.get(i));
 			}
 
 			// FOR NOMS
@@ -135,9 +135,13 @@ public class TrimestralReports {
 				File f = new File(rb.getString("zipt1_folder"));
 				if (!f.exists()) {
 					f.mkdirs();
+				} else {
+
+					f.delete();
+					f.mkdir();
 				}
 
-				fileWriter = new FileWriter(rb.getString("zipt1_folder")+"/"+ grupos.get(x).getId() + ".xls");
+				fileWriter = new FileWriter(rb.getString("zipt1_folder") + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
 				// query.closeTransaction();
@@ -205,8 +209,10 @@ public class TrimestralReports {
 						calculoExpuls = new ArrayList<>();
 
 						// Debería de pasarle solo el id del alumnno
-						calculoAmonest = calcularAmonestadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1, semana2);
-						calculoExpuls = calcularExpulsadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1, semana2);
+						calculoAmonest = calcularAmonestadosPorSemana(Integer.parseInt(idList.get(i).toString()),
+								semana1, semana2);
+						calculoExpuls = calcularExpulsadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1,
+								semana2);
 
 						semana1 = semana2;
 						diaInicisetmanes.add(Calendar.DATE, 7);
@@ -244,7 +250,8 @@ public class TrimestralReports {
 				e.printStackTrace();
 			}
 
-			//System.out.println("Grup " + grupos.get(x).getId() + "finalitzat");
+			// System.out.println("Grup " + grupos.get(x).getId() +
+			// "finalitzat");
 
 		}
 	}
@@ -334,9 +341,13 @@ public class TrimestralReports {
 				File f = new File(rb.getString("zipt2_folder"));
 				if (!f.exists()) {
 					f.mkdirs();
+				} else {
+
+					f.delete();
+					f.mkdir();
 				}
 
-				fileWriter = new FileWriter(rb.getString("zipt2_folder")+"/"+grupos.get(x).getId() + ".xls");
+				fileWriter = new FileWriter(rb.getString("zipt2_folder")+ grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
 				// query.closeTransaction();
@@ -400,8 +411,10 @@ public class TrimestralReports {
 						calculoExpuls = new ArrayList<>();
 						calculoAmonest = new ArrayList<>();
 
-						calculoAmonest = calcularAmonestadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1, semana2);
-						calculoExpuls = calcularExpulsadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1, semana2);
+						calculoAmonest = calcularAmonestadosPorSemana(Integer.parseInt(idList.get(i).toString()),
+								semana1, semana2);
+						calculoExpuls = calcularExpulsadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1,
+								semana2);
 
 						semana1 = semana2;
 						diaInicisetmanes.add(Calendar.DATE, 7);
@@ -439,7 +452,8 @@ public class TrimestralReports {
 				e.printStackTrace();
 			}
 
-			//System.out.println("Grup " + grupos.get(x).getId() + "finalitzat");
+			// System.out.println("Grup " + grupos.get(x).getId() +
+			// "finalitzat");
 
 		}
 	}
@@ -531,9 +545,13 @@ public class TrimestralReports {
 				File f = new File(rb.getString("zipt3_folder"));
 				if (!f.exists()) {
 					f.mkdirs();
+				} else {
+
+					f.delete();
+					f.mkdir();
 				}
 
-				fileWriter = new FileWriter(rb.getString("zipt3_folder")+ "/" + grupos.get(x).getId() + ".xls");
+				fileWriter = new FileWriter(rb.getString("zipt3_folder") + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
 				String dateCurs = query.getDateCurs();
 				// query.closeTransaction();
@@ -597,8 +615,10 @@ public class TrimestralReports {
 						calculoExpuls = new ArrayList<>();
 						calculoAmonest = new ArrayList<>();
 
-						calculoAmonest = calcularAmonestadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1, semana2);
-						calculoExpuls = calcularExpulsadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1, semana2);
+						calculoAmonest = calcularAmonestadosPorSemana(Integer.parseInt(idList.get(i).toString()),
+								semana1, semana2);
+						calculoExpuls = calcularExpulsadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1,
+								semana2);
 
 						semana1 = semana2;
 						diaInicisetmanes.add(Calendar.DATE, 7);
@@ -636,13 +656,12 @@ public class TrimestralReports {
 				e.printStackTrace();
 			}
 
-			//System.out.println("Grup " + grupos.get(x).getId() + "finalitzat");
+			// System.out.println("Grup " + grupos.get(x).getId() +
+			// "finalitzat");
 
 		}
 	}
-	
-	
-	
+
 	private List calcularAmonestadosPorSemana2(List idList, Date semana1, Date semana2) {
 
 		List amonestacions1;
@@ -675,10 +694,7 @@ public class TrimestralReports {
 		}
 		return expulsions1;
 
-	
 	}
-	
-	
 
 	private List calcularAmonestadosPorSemana(int idList, Date semana1, Date semana2) {
 
@@ -686,11 +702,9 @@ public class TrimestralReports {
 
 		amonestacions1 = new ArrayList<>();
 
-			query = new ReportQuerys();
-			amonestacions1.add(query.getWarningCurs(idList, semana1, semana2));
-			// query.closeTransaction();
-
-		
+		query = new ReportQuerys();
+		amonestacions1.add(query.getWarningCurs(idList, semana1, semana2));
+		// query.closeTransaction();
 
 		return amonestacions1;
 
@@ -703,11 +717,9 @@ public class TrimestralReports {
 
 		expulsions1 = new ArrayList<>();
 
-			query = new ReportQuerys();
-			expulsions1.add(query.getExpulsionCurs(idList, semana1, semana2));
-			// query.closeTransaction();
-
-		
+		query = new ReportQuerys();
+		expulsions1.add(query.getExpulsionCurs(idList, semana1, semana2));
+		// query.closeTransaction();
 
 		return expulsions1;
 	}
@@ -730,8 +742,13 @@ public class TrimestralReports {
 			File f2 = new File(rb.getString("zipt1_folder"));
 			if (!f2.exists()) {
 				f2.mkdirs();
+			} else {
+
+				f2.delete();
+				f2.mkdir();
 			}
-			fileWriter = new FileWriter(rb.getString("zipt3_folder")+"/resumen.xls");
+
+			fileWriter = new FileWriter(rb.getString("zipt1_folder") + "resumen1.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -899,8 +916,12 @@ public class TrimestralReports {
 			File f = new File(rb.getString("zipt2_folder"));
 			if (!f.exists()) {
 				f.mkdirs();
+			} else {
+
+				f.delete();
+				f.mkdir();
 			}
-			fileWriter = new FileWriter(rb.getString("zipt2_folder")+"/resumen.xls");
+			fileWriter = new FileWriter(rb.getString("zipt2_folder") + "resumen1.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -1068,8 +1089,12 @@ public class TrimestralReports {
 			File f = new File(rb.getString("zipt3_folder"));
 			if (!f.exists()) {
 				f.mkdirs();
+			} else {
+
+				f.delete();
+				f.mkdir();
 			}
-			fileWriter = new FileWriter(rb.getString("zipt3_folder")+"/resumen.xls");
+			fileWriter = new FileWriter(rb.getString("zipt3_folder") + "resumen1.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -1240,8 +1265,12 @@ public class TrimestralReports {
 			File f = new File(rb.getString("zipt1_folder"));
 			if (!f.exists()) {
 				f.mkdirs();
+			} else {
+
+				f.delete();
+				f.mkdir();
 			}
-			fileWriter = new FileWriter(rb.getString("zipt1_folder")+"/resumen2.xls");
+			fileWriter = new FileWriter(rb.getString("zipt1_folder") + "resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -1406,8 +1435,12 @@ public class TrimestralReports {
 			File f = new File(rb.getString("zipt2_folder"));
 			if (!f.exists()) {
 				f.mkdirs();
+			} else {
+
+				f.delete();
+				f.mkdir();
 			}
-			fileWriter = new FileWriter(rb.getString("zipt2_folder")+"/resumen2.xls");
+			fileWriter = new FileWriter(rb.getString("zipt2_folder") + "resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -1572,8 +1605,12 @@ public class TrimestralReports {
 			File f = new File(rb.getString("zipt3_folder"));
 			if (!f.exists()) {
 				f.mkdirs();
+			} else {
+
+				f.delete();
+				f.mkdir();
 			}
-			fileWriter = new FileWriter(rb.getString("zipt3_folder")+"/resumen2.xls");
+			fileWriter = new FileWriter(rb.getString("zipt3_folder") + "resumen2.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
@@ -1717,7 +1754,6 @@ public class TrimestralReports {
 
 	}
 
-
 	private ArrayList<Date> readFile() throws ReadOnlyException, ConversionException, IOException {
 		FileReader reader;
 		File currDir = new File(".");
@@ -1731,12 +1767,10 @@ public class TrimestralReports {
 		ArrayList<Date> fechas = new ArrayList<Date>();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
-		
-
-		File f = new File(rb.getString("file_settings"));	
+		File f = new File(rb.getString("file_settings"));
 		BufferedReader br = new BufferedReader(new FileReader(f));
 		if (br.readLine() == null) {
-			//System.out.println("No Hay fecha en el documento settings");
+			// System.out.println("No Hay fecha en el documento settings");
 
 		} else {
 
