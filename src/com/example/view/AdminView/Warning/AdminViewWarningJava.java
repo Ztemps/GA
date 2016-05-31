@@ -54,6 +54,7 @@ import com.vaadin.data.Container.Filterable;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.filter.SimpleStringFilter;
+import com.vaadin.data.validator.RegexpValidator;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.SelectionEvent;
@@ -147,6 +148,9 @@ public class AdminViewWarningJava extends MainContentView {
 			}
 		});
 
+		amonestacioForm.time.addValidator(
+				new RegexpValidator("^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$", "Introdueixi una hora válida. "));
+
 		amonestacioForm.comboProf.addValueChangeListener(new ValueChangeListener() {
 
 			@Override
@@ -208,6 +212,12 @@ public class AdminViewWarningJava extends MainContentView {
 						notif("Omple els camps obligatoris");
 
 						return false;
+
+					} else if (amonestacioForm.time.isValid() == false) {
+						notif("El camp hora no té un format correcte. ");
+						
+						return false;
+
 					} else {
 
 						return true;
@@ -970,7 +980,6 @@ public class AdminViewWarningJava extends MainContentView {
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);
 		grid.deselectAll();
-		
 
 	}
 
@@ -1046,7 +1055,7 @@ public class AdminViewWarningJava extends MainContentView {
 		}
 
 	}
-	
+
 	public void reloadGrid() {
 
 		vHorizontalMain.removeAllComponents();

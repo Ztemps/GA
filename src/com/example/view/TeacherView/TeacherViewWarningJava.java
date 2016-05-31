@@ -878,6 +878,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		windowpdf.setCaption("Confirmar amonestació");
 		windowpdf.center();
 		amonestacioForm.baceptar.setEnabled(true);
+		//
 	}
 
 	/**
