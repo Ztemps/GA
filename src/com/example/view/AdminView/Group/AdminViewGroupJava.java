@@ -63,7 +63,7 @@ import com.vaadin.ui.themes.ValoTheme;
  * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
  * 
  * 
- * 			Clase que muestra todos los grupos existentes en el centro
+ * 			Clase que muestra  todos los grupos existentes en el centro
  * 
  **/
 
