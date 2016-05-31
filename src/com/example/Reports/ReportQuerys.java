@@ -27,11 +27,12 @@ public class ReportQuerys {
 	public Query queryWarnings = null;
 	public Query queryExpulsion = null;
 	
-	EntityManagerUtil emu = new EntityManagerUtil();
-	private EntityManager em = emu.getEntityManager();
+	private EntityManager em;
 
 	public ReportQuerys() {
 
+		EntityManagerUtil emu = new EntityManagerUtil();
+		em = emu.getEntityManager();
 	}
 	
 	public List getIdAlumnes(String grup) {
