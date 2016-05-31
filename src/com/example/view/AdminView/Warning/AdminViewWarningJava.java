@@ -85,7 +85,6 @@ import com.vaadin.ui.themes.ValoTheme;
 
 public class AdminViewWarningJava extends MainContentView {
 
-	
 	private static final long serialVersionUID = 1L;
 	private Grid grid;
 	private Window window = new Window();
@@ -132,6 +131,10 @@ public class AdminViewWarningJava extends MainContentView {
 		PopulateComboBoxProf();
 		PopulateComboBoxSubjects();
 
+		/**
+		 * Listener que activa el campo "time" cuando se introduce la fecha en
+		 * el calendario
+		 */
 		amonestacioForm.datefield.addValueChangeListener(new ValueChangeListener() {
 
 			@Override
@@ -154,6 +157,11 @@ public class AdminViewWarningJava extends MainContentView {
 		});
 		try {
 
+			/**
+			 * Al rellenar los campo del formulario de la amonestación se abre
+			 * una nueva ventana con un archivo pdf incrustado que muestra toda
+			 * la imformación referente al parte para su posterior confiramción
+			 */
 			amonestacioForm.baceptar.addClickListener(new ClickListener() {
 
 				private static final long serialVersionUID = 1L;
@@ -180,6 +188,11 @@ public class AdminViewWarningJava extends MainContentView {
 
 				}
 
+				/**
+				 * Comprobamos que los campos que son obligatorios contengan
+				 * información en su interior Si no estan rellenados
+				 * notificaremos al usuario que ha de hacerlo
+				 */
 				private boolean check() {
 					// TODO Auto-generated method stub
 
@@ -208,6 +221,16 @@ public class AdminViewWarningJava extends MainContentView {
 
 		}
 
+		/**
+		 * Confirma la introducción de la amonestación definitiva. Comprueba
+		 * también en la configuración si estan marcadas las opciones de enviar
+		 * mail a los padres o mensaje de telegram. Si estan activadas se envian
+		 * 
+		 * @throws DocumentException
+		 * @throws IOException
+		 * @throws NullPointerException
+		 * @throws ParseException
+		 */
 		pdf.aceptarButton.addClickListener(new ClickListener() {
 
 			/**
@@ -218,7 +241,6 @@ public class AdminViewWarningJava extends MainContentView {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				try {
-					// printPDF(FicheroPdf(),choosePrinter());
 					WarningJPAManager war = new WarningJPAManager();
 					war.introducirParte(returnQuery2());
 					notif("Amonestació posada correctament");
@@ -311,6 +333,10 @@ public class AdminViewWarningJava extends MainContentView {
 
 		});
 
+		/**
+		 * El botón cancelar, en la ventana que muestra el pdf, elimina el
+		 * fichero creado y cierra la ventana.
+		 */
 		pdf.cancelarButton.addClickListener(new Button.ClickListener() {
 
 			private static final long serialVersionUID = 1L;
@@ -324,6 +350,11 @@ public class AdminViewWarningJava extends MainContentView {
 
 			}
 		});
+
+		/**
+		 * El botón cancelar, en el formulario de la amonestación, elimina los
+		 * campos de solo lectura y limpia los campos de texto
+		 */
 		amonestacioForm.bcancelar.addClickListener(new Button.ClickListener() {
 
 			private static final long serialVersionUID = 1L;
@@ -341,6 +372,9 @@ public class AdminViewWarningJava extends MainContentView {
 			}
 		});
 
+		/**
+		 * Abre la ventana del formulario de amonestación
+		 */
 		bAdd.addClickListener(new ClickListener() {
 
 			/**
@@ -363,6 +397,9 @@ public class AdminViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * Configuración principal de botones y estilos.
+	 */
 	private void buttonsSettings() {
 		// TODO Auto-generated method stub
 
@@ -391,6 +428,9 @@ public class AdminViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * Notificación personalizada para el usuario
+	 */
 	public void notif(String mensaje) {
 
 		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
@@ -403,6 +443,9 @@ public class AdminViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * Filtro para el nombre del alumno
+	 */
 	private void FilterGridName() {
 
 		cell = filterRow.getCell(AL_NOM);
@@ -424,6 +467,9 @@ public class AdminViewWarningJava extends MainContentView {
 		cell.setComponent(filterField);
 	}
 
+	/**
+	 * Filtro para el apellido del alumno
+	 */
 	private void FilterGridSurName() {
 
 		cell = filterRow.getCell(AL_COGNOMS);
@@ -445,43 +491,30 @@ public class AdminViewWarningJava extends MainContentView {
 
 	}
 
-	/*
-	 * private void FilterGridCurs(){
-	 * 
-	 * cell = filterRow.getCell(AL_CURS); // Have an input field to use for
-	 * filter filterField = new TextField(); filterField.setSizeFull();
-	 * filterField.setInputPrompt("Filtra per curs"); // Update filter When the
-	 * filter input is changed filterField.addTextChangeListener(change -> { //
-	 * Can't modify filters so need to replace
-	 * alumnes.removeContainerFilters(AL_CURS);
-	 * 
-	 * // (Re)create the filter if necessary if (! change.getText().isEmpty())
-	 * alumnes.addContainerFilter( new SimpleStringFilter(AL_CURS,
-	 * change.getText(), true, false));
-	 * 
-	 * 
-	 * }); cell.setComponent(filterField); }
+	/**
+	 * Filtro para el grupo del alumno
 	 */
-
 	private void FilterGridGrup() {
 
 		cell = filterRow.getCell(AL_GRUP);
-		// Have an input field to use for filter
 		filterField = new TextField();
 		filterField.setSizeFull();
 		filterField.setInputPrompt("Filtra per grup");
-		// Update filter When the filter input is changed
 		filterField.addTextChangeListener(change -> {
-			// Can't modify filters so need to replace
 			students.removeContainerFilters(AL_GRUP);
 
-			// (Re)create the filter if necessary
 			if (!change.getText().isEmpty())
 				students.addContainerFilter(new SimpleStringFilter(AL_GRUP, change.getText(), true, false));
 		});
 		cell.setComponent(filterField);
 	}
 
+	/**
+	 * Propiedades principales del componente Grid: Estilo, contenedor,
+	 * selección...
+	 * 
+	 * @return Componente Grid configurado
+	 */
 	private Grid GridProperties() {
 
 		// Fill the grid with data
@@ -539,12 +572,19 @@ public class AdminViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * Propiedades principales de la ventana de introducción de la amonestación
+	 * 
+	 * @throws MalformedURLException
+	 * @throws DocumentException
+	 * @throws IOException
+	 * 
+	 */
 	private void WindowProperties() throws MalformedURLException, DocumentException, IOException {
 
 		amonestacioForm = new AdminWarning();
 
 		window.setWidth(900.0f, Unit.PIXELS);
-		// window.setContent(form);
 		window.setHeight("80%");
 		window.setWidth("70%");
 		window.setDraggable(false);
@@ -556,6 +596,10 @@ public class AdminViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * Elemento con doble click del grid para autocompletar con datos el
+	 * formulario de amonestacion
+	 */
 	public void getItemSelectedToAmonestacioForm(ItemClickEvent event) {
 
 		amonestacioForm.nom.setReadOnly(false);
@@ -607,6 +651,10 @@ public class AdminViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * Elemento seleccionado del grid para autocompletar con datos el formulario
+	 * de amonestacion
+	 */
 	private void getItemSelectedToAmonestacioForm() {
 
 		amonestacioForm.nom.setReadOnly(false);
@@ -658,6 +706,9 @@ public class AdminViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * Marca todos los campos necesarios con requerido
+	 */
 	private void fieldsRequired() {
 		// TODO Auto-generated method stub
 		amonestacioForm.nom.setRequired(true);
@@ -685,6 +736,9 @@ public class AdminViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * Adjunta el documento pdf en la ventana
+	 */
 	@SuppressWarnings("deprecation")
 	public void popupPDF() throws IOException, DocumentException {
 		// TODO Auto-generated method stub
@@ -715,6 +769,9 @@ public class AdminViewWarningJava extends MainContentView {
 		windowpdf.setVisible(true);
 	}
 
+	/**
+	 * Limpia todos los campos de la amonestación para su próximo uso
+	 */
 	private void clearFields() {
 		// TODO Auto-generated method stub
 
@@ -731,6 +788,16 @@ public class AdminViewWarningJava extends MainContentView {
 		amonestacioForm.time.clear();
 	}
 
+	/**
+	 * Genera un array de strings con todos los datos que necesitamos para
+	 * mapear la amonestación
+	 * 
+	 * @returns Array de strings con información para la amonestación
+	 * 
+	 * @throws MalformedURLException
+	 * @throws DocumentException
+	 * @throws IOException
+	 */
 	public String[] returnQuery() throws MalformedURLException, DocumentException, IOException {
 		// TODO Auto-generated method stub
 		String expulsat = "";
@@ -794,11 +861,23 @@ public class AdminViewWarningJava extends MainContentView {
 
 		System.out.println("TIMEEE " + time);
 
-		// DATOS PARA INTRODUCIR EN EL PARTE
-
 		return query;
 	}
 
+	/**
+	 * Genera un array de strings con todos los datos que necesitamos para
+	 * mapear la amonestación. versión alternativa.
+	 * 
+	 * @throws MalformedURLException
+	 * @throws DocumentException
+	 * @throws IOException
+	 * 
+	 * @see returnQuery();
+	 * @see addWarning();
+	 * 
+	 * @returns Array de strings para utilizar en el mapeo.
+	 * 
+	 */
 	public String[] returnQuery2() throws MalformedURLException, DocumentException, IOException {
 		// TODO Auto-generated method stub
 		String expulsat = "";
@@ -870,6 +949,9 @@ public class AdminViewWarningJava extends MainContentView {
 		return query;
 	}
 
+	/**
+	 * Configuración principal de la ventana que muestra el pdf
+	 */
 	private void WindowPdfProperties() throws MalformedURLException, DocumentException, IOException {
 		windowpdf.setHeight("95%");
 		windowpdf.setWidth("95%");
@@ -891,6 +973,11 @@ public class AdminViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * ArrayList de assignaturas para rellanar el componente Combobox del
+	 * formulario de amonestación.
+	 * 
+	 */
 	private void PopulateComboBoxSubjects() {
 
 		List subjects = new ArrayList<>();
@@ -929,6 +1016,10 @@ public class AdminViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * Relleno del componente Combobox con el nombre de todos los profesores
+	 * guardados en la base de datos.
+	 */
 	private void PopulateComboBoxProf() {
 
 		TeachersJPAManager ma = new TeachersJPAManager();
@@ -952,21 +1043,6 @@ public class AdminViewWarningJava extends MainContentView {
 			amonestacioForm.comboProf.addItem(lista.get(i).getNom() + " " + lista.get(i).getCognoms());
 
 		}
-
-		/*
-		 * amonestacioForm.comboProf.setNewItemHandler(new NewItemHandler() {
-		 * 
-		 * @Override public void addNewItem(final String newItemCaption) {
-		 * boolean newItem = true; for (final Object itemId :
-		 * amonestacioForm.comboProf.getItemIds()) { if
-		 * (newItemCaption.equalsIgnoreCase(
-		 * amonestacioForm.comboProf.getItemCaption(itemId))) { newItem = false;
-		 * break; } } if (newItem) { // Adds new option if (
-		 * amonestacioForm.comboProf.addItem(newItemCaption) != null) { final
-		 * Item item = amonestacioForm.comboProf.getItem(newItemCaption);
-		 * 
-		 * amonestacioForm.comboProf.setValue(newItemCaption); } } } });
-		 */
 
 	}
 

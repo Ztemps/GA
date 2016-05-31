@@ -53,6 +53,9 @@ import com.vaadin.ui.themes.ValoTheme;
  * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net
  * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net
  * 
+ * 
+ * 		Clase que muestra todos los alumnos del centro.
+ * 
  **/
 
 public class AdminViewStudentJava extends MainContentView {

@@ -30,7 +30,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-/*******************************************************************************
+/**
  * 
  * Gestió d'Amonestacions v1.0
  *
@@ -42,7 +42,7 @@ import com.vaadin.ui.themes.ValoTheme;
  * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
  * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
  * 
- *******************************************************************************/
+ */
 
 public class TutorViewGrupsJava extends MainContentView {
 
@@ -90,6 +90,10 @@ public class TutorViewGrupsJava extends MainContentView {
 
 	}
 
+	
+	/**
+	 * Configuración principal de la ventana emergente
+	 * */
 	private void WindowDetailProperties() {
 		// TODO Auto-generated method stub
 		windowDetails.setHeight("650px");
@@ -103,6 +107,10 @@ public class TutorViewGrupsJava extends MainContentView {
 		windowDetails.setVisible(true);
 	}
 
+	
+	/**
+	 * Detalles del alumno seleccionado, incluyendo número de partes que tiene.
+	 * */
 	private void detailsStudent() {
 
 		UI.getCurrent().addWindow(windowDetails);
@@ -171,6 +179,9 @@ public class TutorViewGrupsJava extends MainContentView {
 
 	}
 
+	/**
+	 * Configuración principal de los botones y estilos
+	 * */
 	private void buttonsSettings() {
 		// TODO Auto-generated method stub
 
@@ -200,13 +211,18 @@ public class TutorViewGrupsJava extends MainContentView {
 
 	}
 
+	
+	/**
+	 * Propiedades principales del componente TextField
+	 * 
+	 * @return TextField con filtro por grupo
+	 * */
 	private TextField filterTextProperties() {
 		// TODO Auto-generated method stub
 		txtSearch.setInputPrompt("Filtra per grup");
 		txtSearch.addTextChangeListener(new TextChangeListener() {
 
 			SimpleStringFilter filter = null;
-			SimpleStringFilter filter2 = null;
 
 			@Override
 			public void textChange(TextChangeEvent event) {
@@ -214,21 +230,22 @@ public class TutorViewGrupsJava extends MainContentView {
 
 				Filterable f = (Filterable) mygrid.getContainerDataSource();
 
-				// Remove old filter
 				if (filter != null)
 					f.removeContainerFilter(filter);
 
-				// Set new filter for the "Name" column
 				filter = new SimpleStringFilter("id", event.getText(), true, false);
-				// filter2 = new SimpleStringFilter("cognom", event.getText(),
-				// true, false);
 				f.addContainerFilter(filter);
-				// f.addContainerFilter(filter2);
 			}
 		});
 		return txtSearch;
 	}
 
+	
+	/**
+	 * Configuración principal del componente Grid: container, filtro, columnas...
+	 * 
+	 * @return componente Grid configurado
+	 * */
 	public Grid gridProperties() {
 
 		students = JPAContainerFactory.make(Student.class, em);

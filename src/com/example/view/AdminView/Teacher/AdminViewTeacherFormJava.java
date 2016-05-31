@@ -54,6 +54,9 @@ import com.vaadin.ui.Button.ClickListener;
  * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
  * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
  * 
+ * 
+ * 			Clase para configurar el formulario de gestión profesores.
+ * 
  **/
 
 public class AdminViewTeacherFormJava extends AdminViewTeacherForm {

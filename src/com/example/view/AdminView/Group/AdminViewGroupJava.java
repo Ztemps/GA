@@ -1,16 +1,4 @@
-/*******************************************************************************
- * 
- * Gestió d'Amonestacions v1.0
- *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
- * 
- *******************************************************************************/
+
 package com.example.view.AdminView.Group;
 
 import java.util.Date;
@@ -60,6 +48,24 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table.TableDragMode;
 import com.vaadin.ui.themes.ValoTheme;
+
+
+/**
+ * 
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
+ * 
+ * 
+ * 			Clase que muestra todos los grupos existentes en el centro
+ * 
+ **/
 
 public class AdminViewGroupJava extends MainContentView {
 

@@ -69,6 +69,10 @@ public class TeacherConfigView extends MainContentView {
 		vHorizontalMain.addComponent(vl);
 		vHorizontalMain.setComponentAlignment(vl, Alignment.MIDDLE_CENTER);
 
+		
+		/**
+		 * Comprueba que el password actual para este usuario existe y es correcto
+		 * */
 		acceptOldPass.addClickListener(new ClickListener() {
 
 			@Override
@@ -87,6 +91,9 @@ public class TeacherConfigView extends MainContentView {
 			}
 		});
 
+		/**
+		 * Actualiza el password del usuario
+		 * */
 		acceptNewPass.addClickListener(new ClickListener() {
 
 			@Override
@@ -128,6 +135,10 @@ public class TeacherConfigView extends MainContentView {
 		});
 	}
 
+	
+	/**
+	 * Componente que forman parte del Layout principal
+	 * */
 	private void vLayoutComponents() {
 		vl.addStyleName("settingBackgroundTeacher");
 		vl.setSpacing(true);
@@ -140,6 +151,10 @@ public class TeacherConfigView extends MainContentView {
 		
 	}
 
+	
+	/**
+	 * Configuración principal de botones y estilos
+	 * */
 	public void ButtonProperties() {
 
 		acceptOldPass.setStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -154,12 +169,20 @@ public class TeacherConfigView extends MainContentView {
 				.execute("document.getElementsByClassName('xyz')[0].setAttribute('autocomplete', 'off')");
 	}
 
+	/**
+	 * Limpia los campos de texto de la configuración de la contraseña
+	 * */
 	public void ClearFields() {
 		oldPass.clear();
 		newPass.clear();
 		confirmNewPass.clear();
 	}
 
+	
+	/**
+	 * Funciona para cambiar elemento oculto por visible y viceversa
+	 * cuando se comprueba que el password antiguo existe y es correcto.
+	 * */
 	private void ShowNewPassTextField() {
 
 		if (oldPass.isVisible()) {
@@ -178,6 +201,10 @@ public class TeacherConfigView extends MainContentView {
 		}
 	}
 
+	
+	/**
+	 * Oculta los componentes de la plantilla principal
+	 * */
 	private void HideTemplateComponents() {
 
 		bAdd.setVisible(false);
@@ -190,6 +217,10 @@ public class TeacherConfigView extends MainContentView {
 
 	}
 
+	
+	/**
+	 * Propiedades del textfield del password actual
+	 * */
 	private void OldPassTextFieldProperties() {
 
 		oldPass.setCaption("Introdueixi password actual");
@@ -197,6 +228,10 @@ public class TeacherConfigView extends MainContentView {
 		oldPass.setVisible(true);
 	}
 
+	
+	/**
+	 * Propiedades del textfield del password nuevo
+	 * */
 	private void NewPassTextFieldProperties() {
 
 		newPass.setCaption("Introdueixi nou password");
@@ -207,6 +242,17 @@ public class TeacherConfigView extends MainContentView {
 		acceptNewPass.setVisible(false);
 	}
 
+	
+	/**
+	 * Comprueba que la contraseña que introduce el usuario coincide con su propia
+	 * contraseña de la base de datos.
+	 * 
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * 
+	 * @see ShowNewPassTextField();
+
+	 * */
 	private void CheckPassword() throws ClassNotFoundException, SQLException {
 
 		MessageDigest md = null;
@@ -261,6 +307,10 @@ public class TeacherConfigView extends MainContentView {
 
 	}
 
+	
+	/**
+	 * Notificación personalizada 
+	 * */
 	public void notif(String mensaje) {
 
 		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
@@ -272,6 +322,10 @@ public class TeacherConfigView extends MainContentView {
 		notif.setPosition(Position.TOP_CENTER);
 	}
 	
+	
+	/**
+	 * Notificación de error personalizada
+	 * */
 	public void notifWrong(String mensaje) {
 
 		Notification notif = new Notification(mensaje, null, Notification.Type.WARNING_MESSAGE, true); // Contains
