@@ -143,6 +143,11 @@ public class FinalReports {
 				if (!f.exists()) {
 					f.mkdirs();
 				}
+				else{
+					
+					f.delete();
+					f.mkdir();
+				}
 
 				fileWriter = new FileWriter(rb.getString("zip_folder") + grupos.get(x).getId() + ".xls");
 				query = new ReportQuerys();
@@ -328,8 +333,12 @@ public class FinalReports {
 			File f = new File(rb.getString("zip_folder"));
 			if (!f.exists()) {
 				f.mkdirs();
+			}	else{
+				
+				f.delete();
+				f.mkdir();
 			}
-			fileWriter = new FileWriter(rb.getString("zip_folder")+"/resumen.xls");
+			fileWriter = new FileWriter(rb.getString("zip_folder")+"resumen.xls");
 			query = new ReportQuerys();
 			String dateCurs = query.getDateCurs();
 			// query.closeTransaction();
