@@ -1,16 +1,4 @@
-/*******************************************************************************
- * 
- * Gestió d'Amonestacions v1.0
- *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
- * 
- *******************************************************************************/
+
 package com.example.view.AdminView.Tutor;
 
 import java.sql.SQLException;
@@ -36,6 +24,23 @@ import com.vaadin.ui.Grid;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.themes.ValoTheme;
+
+/**
+ * 
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
+ * 
+ * 
+ * 		Vista de los tutores
+ * 
+ */
 
 public class AdminViewTutorJava extends MainContentView {
 

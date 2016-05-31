@@ -1,16 +1,3 @@
-/*******************************************************************************
- * 
- * Gestió d'Amonestacions v1.0
- *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
- * 
- *******************************************************************************/
 package com.example.view.TeacherView;
 
 import java.net.MalformedURLException;
@@ -80,6 +67,22 @@ import com.vaadin.ui.themes.ValoTheme;
 import jdk.nashorn.internal.runtime.ListAdapter;
 
 import java.io.*;
+
+/**
+ * 
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia
+ * Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative
+ * Commons. Para ver una copia de esta licencia, visite
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ * 
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net
+ * 
+ */
 
 public class TeacherViewWarningJava extends MainContentView {
 
@@ -157,6 +160,10 @@ public class TeacherViewWarningJava extends MainContentView {
 
 				}
 
+				/**
+				 * Comprobación de los campos de texto, han de estar
+				 * obligatoriamente todos los requeridos rellenados.
+				 */
 				private boolean check() {
 					// TODO Auto-generated method stub
 
@@ -267,6 +274,9 @@ public class TeacherViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * Relleno del componente Combobox con las asignaturas correspondientes
+	 */
 	private void PopulateComboBoxSubjects() {
 
 		List subjects = new ArrayList<>();
@@ -305,6 +315,9 @@ public class TeacherViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * Relleno del componente Combobox con las profesores.
+	 */
 	private void PopulateComboBoxProf() {
 
 		TeachersJPAManager ma = new TeachersJPAManager();
@@ -337,6 +350,9 @@ public class TeacherViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * Configuración principal de los botones y estilos
+	 */
 	private void buttonsSettings() {
 		// TODO Auto-generated method stub
 
@@ -361,6 +377,9 @@ public class TeacherViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * Notificación personalizada
+	 */
 	public void notif(String mensaje) {
 
 		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
@@ -372,6 +391,9 @@ public class TeacherViewWarningJava extends MainContentView {
 		notif.setPosition(Position.TOP_CENTER);
 	}
 
+	/**
+	 * Filtro por nombre para el Grid
+	 */
 	private void FilterGridName() {
 
 		cell = filterRow.getCell(AL_NOM);
@@ -414,6 +436,9 @@ public class TeacherViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * Filtro por grupo para el Grid
+	 */
 	private void FilterGridGrup() {
 
 		cell = filterRow.getCell(AL_GRUP);
@@ -433,6 +458,9 @@ public class TeacherViewWarningJava extends MainContentView {
 		cell.setComponent(filterField);
 	}
 
+	/**
+	 * Configuración principal del Grid: container, columnas...
+	 */
 	private Grid GridProperties() {
 
 		// Fill the grid with data
@@ -488,6 +516,14 @@ public class TeacherViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * Configuración de la ventana emergente de la amonestación.
+	 * 
+	 * @throws MalformedURLException
+	 * @throws DocumentException
+	 * @throws IOException
+	 * 
+	 */
 	private void WindowProperties() throws MalformedURLException, DocumentException, IOException {
 
 		amonestacioForm = new WarningTeacher();
@@ -505,6 +541,10 @@ public class TeacherViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * Rellena el formulario de amonestación, con doble click, con los elementos
+	 * necesarios seleccionados en el componente Grid.
+	 */
 	public void getItemSelectedToAmonestacioForm(ItemClickEvent event) {
 
 		amonestacioForm.nom.setReadOnly(false);
@@ -544,6 +584,10 @@ public class TeacherViewWarningJava extends MainContentView {
 		amonestacioForm.grup.setReadOnly(true);
 	}
 
+	/**
+	 * Rellena el formulario de amonestación con los elementos necesarios
+	 * seleccionados en el componente Grid.
+	 */
 	private void getItemSelectedToAmonestacioForm() {
 
 		amonestacioForm.nom.setReadOnly(false);
@@ -593,6 +637,9 @@ public class TeacherViewWarningJava extends MainContentView {
 
 	}
 
+	/**
+	 * Marca todos los campos que son obligatorios
+	 */
 	private void fieldsRequired() {
 		// TODO Auto-generated method stub
 		amonestacioForm.nom.setRequired(true);
@@ -615,6 +662,9 @@ public class TeacherViewWarningJava extends MainContentView {
 		amonestacioForm.accio.setRequiredError("El camp acció és obligatori");
 	}
 
+	/**
+	 * Muestra la ventana con el pdf añadido.
+	 */
 	@SuppressWarnings("deprecation")
 	public void popupPDF() throws IOException, DocumentException {
 		// TODO Auto-generated method stub
@@ -643,6 +693,9 @@ public class TeacherViewWarningJava extends MainContentView {
 		windowpdf.setVisible(true);
 	}
 
+	/**
+	 * Limpia los campos del formulario
+	 */
 	private void clearFields() {
 		// TODO Auto-generated method stub
 
@@ -658,6 +711,16 @@ public class TeacherViewWarningJava extends MainContentView {
 		// amonestacioForm.baceptar.click();
 	}
 
+	/**
+	 * Array de string con datos necesarios para poder mapear una amonestacion.
+	 * 
+	 * @throws MalformedURLException
+	 * @throws DocumentException
+	 * @throws IOException
+	 * 
+	 * @returns Array de strings, para su mapeado.
+	 * 
+	 */
 	public String[] returnQuery() throws MalformedURLException, DocumentException, IOException {
 		// TODO Auto-generated method stub
 		String expulsat = "";
@@ -719,6 +782,17 @@ public class TeacherViewWarningJava extends MainContentView {
 		return query;
 	}
 
+	/**
+	 * Array de string con datos necesarios para poder mapear una amonestacion.
+	 * Versión alternativa.
+	 * 
+	 * @throws MalformedURLException
+	 * @throws DocumentException
+	 * @throws IOException
+	 * 
+	 * @returns Array de strings, para su mapeado.
+	 * 
+	 */
 	public String[] returnQuery2() throws MalformedURLException, DocumentException, IOException {
 		// TODO Auto-generated method stub
 		String expulsat = "";
@@ -787,6 +861,14 @@ public class TeacherViewWarningJava extends MainContentView {
 		return query;
 	}
 
+	/**
+	 * Propiedades de la ventana emergente que muestra el pdf
+	 * 
+	 * @throws MalformedURLException
+	 * @throws DocumentException
+	 * @throws IOException
+	 * 
+	 */
 	private void WindowPdfProperties() throws MalformedURLException, DocumentException, IOException {
 		windowpdf.setHeight("95%");
 		windowpdf.setWidth("95%");
@@ -798,6 +880,9 @@ public class TeacherViewWarningJava extends MainContentView {
 		amonestacioForm.baceptar.setEnabled(true);
 	}
 
+	/**
+	 * Deselección de todos los elementos marcados en el componente Grid
+	 * */
 	public void clear() {
 		// TODO Auto-generated method stub
 
