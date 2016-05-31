@@ -106,6 +106,7 @@ public class TrimestralReports {
 
 			// FOR NOMS
 			query = new ReportQuerys();
+			grupos.get(0);
 			List noms = query.getNomAlumnes(grupos.get(x).getId());
 			// query.closeTransaction();
 
