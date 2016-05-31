@@ -447,7 +447,8 @@ public class AdminView extends MainView implements View {
 	private void viewWarning() {
 		// TODO Auto-generated method stub
 
-		// ViewWarning.clear();
+		ViewWarning.clear();
+		ViewWarning.reloadGrid();
 		ViewWarning.setVisible(true);
 		ViewGrupos.setVisible(false);
 		ViewDocents.setVisible(false);

@@ -888,6 +888,7 @@ public class AdminViewWarningJava extends MainContentView {
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);
 		grid.deselectAll();
+		
 
 	}
 
@@ -967,6 +968,13 @@ public class AdminViewWarningJava extends MainContentView {
 		 * 
 		 * amonestacioForm.comboProf.setValue(newItemCaption); } } } });
 		 */
+
+	}
+	
+	public void reloadGrid() {
+
+		vHorizontalMain.removeAllComponents();
+		vHorizontalMain.addComponent(GridProperties());
 
 	}
 
