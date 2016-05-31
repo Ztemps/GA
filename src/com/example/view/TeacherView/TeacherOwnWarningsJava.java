@@ -88,16 +88,14 @@ public class TeacherOwnWarningsJava extends MainContentView {
 			}
 		});
 
-		vHorizontalMain.addComponent(gridProperties());
+		try{
+			vHorizontalMain.addComponent(gridProperties());
 
-		grid.addSelectionListener(new SelectionListener() {
+		}catch(NullPointerException e){
+			
+		}
 
-			@Override
-			public void select(SelectionEvent event) {
-				bAdd.setEnabled(true);
-				
-			}
-		});
+		
 	}
 
 	
@@ -127,7 +125,14 @@ public class TeacherOwnWarningsJava extends MainContentView {
 			// TODO Auto-generated catch block
 
 		}
+		grid.addSelectionListener(new SelectionListener() {
 
+			@Override
+			public void select(SelectionEvent event) {
+				bAdd.setEnabled(true);
+				
+			}
+		});
 		
 		
 

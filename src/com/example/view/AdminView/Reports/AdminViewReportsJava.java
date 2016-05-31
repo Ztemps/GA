@@ -28,11 +28,21 @@ import java.util.zip.ZipOutputStream;
 import com.example.Reports.FinalReports;
 import com.example.Reports.TrimestralReports;
 import com.example.Templates.MainContentView;
+import com.example.view.AdminView.AdminView;
+import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.server.StreamResource;
+import com.vaadin.shared.Position;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.ProgressBar;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class AdminViewReportsJava extends MainContentView {
@@ -50,16 +60,16 @@ public class AdminViewReportsJava extends MainContentView {
 	private FileDownloader fileDownloader3 = new FileDownloader(sr3);
 	private FileDownloader fileDownloader4 = new FileDownloader(sr4);
 
+
 	TrimestralReports trimestralReports;
 	FinalReports finalreports;
 
 	public AdminViewReportsJava() {
+
 		csv = new AdminReportCSVUpload();
 		trimestralReports = new TrimestralReports();
 		finalreports = new FinalReports();
-
 		generalSettings();
-
 		// INFORMES TRIMESTRALS
 
 		csv.mainTrimestral.addStyleName("whiteBackground");
@@ -99,8 +109,19 @@ public class AdminViewReportsJava extends MainContentView {
 	 * 
 	 */
 
+	public void notif(String mensaje) {
+
+		Notification notif = new Notification(mensaje, null, Notification.Type.WARNING_MESSAGE, true); // Contains
+		
+		notif.show(Page.getCurrent());
+		notif.setDelayMsec(3000);
+		notif.setPosition(Position.BOTTOM_CENTER);
+
+	}
 	private StreamResource getTrimestral4Zip() {
 		// TODO Auto-generated method stub
+
+
 		StreamResource.StreamSource source = new StreamResource.StreamSource() {
 
 			public InputStream getStream() {
@@ -134,6 +155,7 @@ public class AdminViewReportsJava extends MainContentView {
 				File zip = null;
 				try {
 					zip = new File(zipFolder(rb.getString("location_zip"), rb.getString("zip_folder")));
+
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -144,6 +166,9 @@ public class AdminViewReportsJava extends MainContentView {
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				}finally {
+					notif("Informe generado correctamente");
+
 				}
 
 				return targetStream;
@@ -151,6 +176,7 @@ public class AdminViewReportsJava extends MainContentView {
 			}
 		};
 		StreamResource resource = new StreamResource(source, getFileName4());
+
 		return resource;
 
 	}
@@ -263,8 +289,7 @@ public class AdminViewReportsJava extends MainContentView {
 
 				File zip = null;
 				try {
-					zip = new File(
-							zipFolder(rb.getString("locationt2_zip"), rb.getString("zipt2_folder") ));
+					zip = new File(zipFolder(rb.getString("locationt2_zip"), rb.getString("zipt2_folder")));
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -328,8 +353,7 @@ public class AdminViewReportsJava extends MainContentView {
 				File zip = null;
 				try {
 
-					zip = new File(
-							zipFolder(rb.getString("locationt1_zip"), rb.getString("zipt1_folder")));
+					zip = new File(zipFolder(rb.getString("locationt1_zip"), rb.getString("zipt1_folder")));
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -382,11 +406,14 @@ public class AdminViewReportsJava extends MainContentView {
 		return suggestedSaveFile;
 	}
 
+
+
 	private void generalSettings() {
 		// TODO Auto-generated method stub
 
 		// Button trimestral 1 reports
 		csv.generateReportTrimestre1.addStyleName(ValoTheme.BUTTON_PRIMARY);
+
 		// csv.generateReportTrimestre1.addStyleName("settings");
 
 		// Button trimestral 2 reports

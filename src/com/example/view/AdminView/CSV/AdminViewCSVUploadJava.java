@@ -204,7 +204,6 @@ public class AdminViewCSVUploadJava extends MainContentView {
 				new Notification("Error al carregar el fitxer: Comproba que el format del" + "fitxer sigui .csv",
 						Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());
 
-				// Si no es csv, pim pam
 				getUI().getNavigator().navigateTo(AdminView.NAME);
 				AdminView.viewCsv();
 

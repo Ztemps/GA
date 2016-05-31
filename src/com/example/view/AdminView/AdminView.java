@@ -505,6 +505,7 @@ public class AdminView extends MainView implements View {
 
 	private void viewStudents() {
 
+		ViewWarning.clear();
 		ViewStudents.clear();
 		ViewStudents.reloadGrid();
 		ViewStudents.setVisible(true);
@@ -524,7 +525,7 @@ public class AdminView extends MainView implements View {
 
 	public static void viewCsv() {
 
-		// ViewCSV.reloadGrid();
+		//ViewCSV.reloadGrid();
 		ViewStudents.setVisible(false);
 		ViewGrupos.setVisible(false);
 		ViewDocents.setVisible(false);
