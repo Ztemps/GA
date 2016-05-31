@@ -1,16 +1,3 @@
-/*******************************************************************************
- * 
- * Gestió d'Amonestacions v1.0
- *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
- * 
- *******************************************************************************/
 package com.example.view.AdminView.User;
 
 import java.security.MessageDigest;
@@ -58,6 +45,20 @@ import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Grid.SingleSelectionModel;
 import com.vaadin.ui.themes.ValoTheme;
 
+/**
+ * 
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
+ * 
+ */
+
 public class AdminViewUser extends MainContentView {
 	private Grid grid;
 	private Window windowEdit = new Window();
@@ -83,7 +84,11 @@ public class AdminViewUser extends MainContentView {
 		vHorizontalMain.addComponent(GridProperties());
 
 	}
-
+	
+	
+	/**
+	 * Acciones/listeners de los botones principales
+	 * */
 	private void buttonsAction() {
 		// TODO Auto-generated method stub
 		
@@ -113,6 +118,11 @@ public class AdminViewUser extends MainContentView {
 		bDelete.addClickListener(e -> deleteUser());
 	}
 
+	
+	/**
+	 * Edición de usuario. Usuario admin no se puede editar.
+	 * 
+	 * */
 	private void editUser() {
 
 		userformEdit.txtGrup.setReadOnly(false);
@@ -174,6 +184,9 @@ public class AdminViewUser extends MainContentView {
 
 	}
 
+	/**
+	 * Limpia el campo password del formulario
+	 * */
 	private void clearEditForm() {
 		// TODO Auto-generated method stub
 
@@ -181,6 +194,10 @@ public class AdminViewUser extends MainContentView {
 
 	}
 
+	
+	/**Obtiene el objeto de tipo usuario que esta seleccionado en el componente Grid
+	 * 
+	 * @return Objeto de tipo usuario*/
 	private User getUserEdit() {
 
 		Object id = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
@@ -192,12 +209,20 @@ public class AdminViewUser extends MainContentView {
 		return usuari;
 	}
 
+	
+	/**
+	 * Añade la ventana emergente
+	 * */
 	private void getItemSelected() {
 
 		UI.getCurrent().addWindow(windowEdit);
 
 	}
 
+	
+	/**
+	 * Propiedades principales de la ventana emergente
+	 * */
 	private void WindowProperties() {
 		
 		windowEdit.setWidth(900.0f, Unit.PIXELS);
@@ -210,6 +235,12 @@ public class AdminViewUser extends MainContentView {
 		windowEdit.setContent(userformEdit);
 	}
 
+	
+	/**
+	 * Configuración principal del componente Grid: container, tamaño, modo de selección...
+	 * 
+	 * @return Componente Grid configurado correctamente
+	 * */
 	public Grid GridProperties() {
 
 		// Fill the grid with data
@@ -235,7 +266,11 @@ public class AdminViewUser extends MainContentView {
 
 		return grid;
 	}
-
+	
+	
+	/**
+	 * Añade la ventana para eliminar el usuario 
+	 * */
 	private void deleteUser() {
 		MA = new UserJPAManager();
 
@@ -248,6 +283,13 @@ public class AdminViewUser extends MainContentView {
 
 	}
 
+	
+	/**
+	 * Configuración de ventana para borrado de usuario.
+	 * Administrador no se puede eliminar.
+	 * Listeners para botones, si se cancela se cierra ventana, si se 
+	 * acepta se borra de la base de datos
+	 * */
 	public Window DeleteSubWindows(int id, String nom) {
 
 		Window win = new Window("Esborrar usuari");
@@ -307,6 +349,10 @@ public class AdminViewUser extends MainContentView {
 
 	}
 
+	
+	/**
+	 * Notificación personalizada para informar al usuario.
+	 * */
 	public void notif(String mensaje) {
 
 		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); // Contains
@@ -318,6 +364,11 @@ public class AdminViewUser extends MainContentView {
 		notif.setPosition(Position.TOP_CENTER);
 	}
 
+	
+	/**
+	 * Actualizacion de la Grid para mostrar nuevos elementos o dejar de mostrar
+	 * elementos ya borrados.
+	 * */
 	public void reloadGrid() {
 
 		vHorizontalMain.removeAllComponents();
@@ -325,6 +376,10 @@ public class AdminViewUser extends MainContentView {
 
 	}
 
+	
+	/**
+	 * Filtro por nombre para el container de la Grid
+	 * */
 	private TextField filterTextProperties() {
 		// TODO Auto-generated method stub
 		txtSearch.setInputPrompt("Filtra per nom");
@@ -350,6 +405,10 @@ public class AdminViewUser extends MainContentView {
 		return txtSearch;
 	}
 
+	
+	/**
+	 * Configuración general de los botones y estilos
+	 * */
 	private void buttonsSettings() {
 		// TODO Auto-generated method stub
 
@@ -375,6 +434,7 @@ public class AdminViewUser extends MainContentView {
 
 	}
 
+	/**Limpia los campos seleccionados de la Grid*/
 	public void clear() {
 		// bAdd.setEnabled(false);
 		bDelete.setEnabled(false);

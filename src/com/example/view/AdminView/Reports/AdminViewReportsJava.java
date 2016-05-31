@@ -327,6 +327,7 @@ public class AdminViewReportsJava extends MainContentView {
 				trimestralReports.closeAllConnections();
 				File zip = null;
 				try {
+
 					zip = new File(
 							zipFolder(rb.getString("locationt1_zip"), rb.getString("zipt1_folder")));
 				} catch (Exception e1) {

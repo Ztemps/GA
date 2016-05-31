@@ -1,16 +1,3 @@
-/*******************************************************************************
- * 
- * Gestió d'Amonestacions v1.0
- *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
- * 
- *******************************************************************************/
 package com.example.view.AdminView.Students;
 
 import java.text.ParseException;
@@ -52,11 +39,24 @@ import com.vaadin.ui.Grid.SingleSelectionModel;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.themes.ValoTheme;
 
+/**
+ * 
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia
+ * Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative
+ * Commons. Para ver una copia de esta licencia, visite
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ * 
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net
+ * 
+ **/
+
 public class AdminViewStudentJava extends MainContentView {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8408971161693178388L;
 
 	private ConverterDates datas;
@@ -96,15 +96,16 @@ public class AdminViewStudentJava extends MainContentView {
 				buttonEdit.setEnabled(false);
 			}
 		});
-		
-	
+
 	}
 
-	
-	
+	/**
+	 * En dobleclick aparece la ventana de edición del alumno con los campos
+	 * autocompletados para su edición
+	 */
 	private void editStudent(ItemClickEvent event) {
 		// TODO Auto-generated method stub
-		
+
 		datas = new ConverterDates();
 
 		UI.getCurrent().addWindow(windowEdit);
@@ -145,19 +146,19 @@ public class AdminViewStudentJava extends MainContentView {
 		studentsFormEdit.curs.setValue(curs.toString());
 		studentsFormEdit.grup.setValue(grup.toString());
 
-	
-
-
-
 		if (windowEdit.isAttached()) {
 
 			getUI().removeWindow(windowEdit);
 		}
 		UI.getCurrent().addWindow(windowEdit);
-		
+
 	}
+
+	/**
+	 * Listeners de los botones inferiores, edición, registro, añadido
+	 */
 	private void Listeners() {
-	
+
 		buttonEdit.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -187,6 +188,10 @@ public class AdminViewStudentJava extends MainContentView {
 
 	}
 
+	/**
+	 * Añade un nuevo alumno, aparecerá la fila del grid (la última posición) para que el usuario compruebe
+	 * que se ha introducido el nuevo alumno
+	 * */
 	private void addStudent() {
 
 		studentsFormAdd.aceptarButton.addClickListener(new ClickListener() {
@@ -238,6 +243,11 @@ public class AdminViewStudentJava extends MainContentView {
 
 	}
 
+	
+	/**
+	 * Añade un nuevo alumno, aparecerá la fila del grid (la última posición) para que el usuario compruebe
+	 * que se ha introducido el nuevo alumno
+	 * */
 	private void editStudent() {
 		PopulateNativeSelect();
 
@@ -309,7 +319,6 @@ public class AdminViewStudentJava extends MainContentView {
 
 		});
 
-	
 		if (windowEdit.isAttached()) {
 
 			getUI().removeWindow(windowEdit);
@@ -418,12 +427,12 @@ public class AdminViewStudentJava extends MainContentView {
 		bAdd.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		bRegister.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonEdit.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		
+
 		horizontalTitle.addStyleName("horizontal-title");
 		txtTitle.addStyleName("main-title");
 		bAdd.setCaption("Afegir");
 		txtTitle.setValue("Gestió d'Alumnes");
-		
+
 		bDelete.setEnabled(false);
 		bDelete.setVisible(false);
 		buttonEdit.setEnabled(false);
@@ -453,7 +462,7 @@ public class AdminViewStudentJava extends MainContentView {
 
 			}
 		});
-		
+
 		grid.addItemClickListener(new ItemClickListener() {
 
 			private static final long serialVersionUID = 991142819147193429L;
@@ -473,9 +482,7 @@ public class AdminViewStudentJava extends MainContentView {
 
 			}
 
-			
 		});
-		
 
 		return grid;
 	}
