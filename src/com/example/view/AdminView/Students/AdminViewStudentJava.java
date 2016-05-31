@@ -12,12 +12,13 @@ import com.example.Entities.Student;
 import com.example.Logic.CurrentCourse;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.StudentsJPAManager;
-import com.example.Templates.AdminAddStudentForm;
 import com.example.Templates.MainContentView;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
 import com.vaadin.data.Container.Filterable;
 import com.vaadin.data.util.filter.SimpleStringFilter;
+import com.vaadin.data.validator.EmailValidator;
+import com.vaadin.data.validator.RegexpValidator;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
@@ -96,6 +97,16 @@ public class AdminViewStudentJava extends MainContentView {
 				buttonEdit.setEnabled(false);
 			}
 		});
+		
+		//VALIDATORS FORM
+		
+		studentsFormAdd.nom.addValidator(new RegexpValidator("[a-zA-Z]{1,30}", "Nombre incorrecte"));
+		studentsFormAdd.cognom.addValidator(new RegexpValidator("[a-zA-Z]{1,20}.{1,}", "Cognom incorrecte"));
+
+		studentsFormAdd.teléfons.addValidator(new RegexpValidator(
+				"^(0034|\\+34)?(\\d\\d\\d)-? ?(\\d\\d)-? ?(\\d)-? ?(\\d)-? ?(\\d\\d)$", "Teléfon incorrecte"));
+
+		studentsFormAdd.emails.addValidator(new EmailValidator("Aquest mail no és válid"));
 
 	}
 
@@ -143,7 +154,6 @@ public class AdminViewStudentJava extends MainContentView {
 		}
 
 		studentsFormEdit.teléfons.setValue(phone.toString());
-		studentsFormEdit.curs.setValue(curs.toString());
 		studentsFormEdit.grup.setValue(grup.toString());
 
 		if (windowEdit.isAttached()) {
@@ -189,9 +199,9 @@ public class AdminViewStudentJava extends MainContentView {
 	}
 
 	/**
-	 * Añade un nuevo alumno, aparecerá la fila del grid (la última posición) para que el usuario compruebe
-	 * que se ha introducido el nuevo alumno
-	 * */
+	 * Añade un nuevo alumno, aparecerá la fila del grid (la última posición)
+	 * para que el usuario compruebe que se ha introducido el nuevo alumno
+	 */
 	private void addStudent() {
 
 		studentsFormAdd.aceptarButton.addClickListener(new ClickListener() {
@@ -199,27 +209,34 @@ public class AdminViewStudentJava extends MainContentView {
 			@Override
 			public void buttonClick(ClickEvent event) {
 
-				try {
+				if (!studentsFormAdd.emails.isValid() || !studentsFormAdd.teléfons.isValid() || !studentsFormAdd.nom.isValid() || !studentsFormAdd.cognom.isValid()) {
 
-					MA = new StudentsJPAManager();
-					Student alumn = getStudentAdd();
-					MA.updateStudent(alumn);
-					MA.closeTransaction();
-					reloadGrid();
-					windowAdd.close();
-					SingleSelectionModel m = (SingleSelectionModel) grid.getSelectionModel();
+					notif("Omple correctament els camps");
 
-					int Fila = (grid.getContainerDataSource().getItemIds().size()) - 1;
+				} else {
 
-					Object id = grid.getContainerDataSource().getIdByIndex(Fila);
-					m.select(id);
-					grid.scrollTo(id);
-					clearAddForm();
-					notif("Alumne afegit corretament");
+					try {
 
-				} catch (NullPointerException e) {
+						MA = new StudentsJPAManager();
+						Student alumn = getStudentAdd();
+						MA.updateStudent(alumn);
+						MA.closeTransaction();
+						reloadGrid();
+						windowAdd.close();
+						SingleSelectionModel m = (SingleSelectionModel) grid.getSelectionModel();
 
-					notif("Omple els camps obligatoris");
+						int Fila = (grid.getContainerDataSource().getItemIds().size()) - 1;
+
+						Object id = grid.getContainerDataSource().getIdByIndex(Fila);
+						m.select(id);
+						grid.scrollTo(id);
+						clearAddForm();
+						notif("Alumne afegit corretament");
+
+					} catch (NullPointerException e) {
+						notif("Omple els camps obligatoris");
+
+					}
 
 				}
 
@@ -243,11 +260,10 @@ public class AdminViewStudentJava extends MainContentView {
 
 	}
 
-	
 	/**
-	 * Añade un nuevo alumno, aparecerá la fila del grid (la última posición) para que el usuario compruebe
-	 * que se ha introducido el nuevo alumno
-	 * */
+	 * Añade un nuevo alumno, aparecerá la fila del grid (la última posición)
+	 * para que el usuario compruebe que se ha introducido el nuevo alumno
+	 */
 	private void editStudent() {
 		PopulateNativeSelect();
 
@@ -288,7 +304,6 @@ public class AdminViewStudentJava extends MainContentView {
 		}
 
 		studentsFormEdit.teléfons.setValue(phone.toString());
-		studentsFormEdit.curs.setValue(curs.toString());
 		studentsFormEdit.grup.setValue(grup.toString());
 
 		studentsFormEdit.aceptarButton.addClickListener(new ClickListener() {
@@ -407,7 +422,6 @@ public class AdminViewStudentJava extends MainContentView {
 		studentsFormEdit.emails.clear();
 		studentsFormEdit.emails.clear();
 		studentsFormEdit.teléfons.clear();
-		studentsFormEdit.curs.clear();
 		studentsFormEdit.grup.clear();
 	}
 
@@ -417,7 +431,6 @@ public class AdminViewStudentJava extends MainContentView {
 		studentsFormAdd.emails.clear();
 		studentsFormAdd.emails.clear();
 		studentsFormAdd.teléfons.clear();
-		studentsFormAdd.curs.clear();
 		studentsFormAdd.grup.clear();
 	}
 
@@ -439,8 +452,6 @@ public class AdminViewStudentJava extends MainContentView {
 		bRegister.setVisible(false);
 		bAdd.setEnabled(true);
 		clearTxt.setVisible(false);
-		studentsFormEdit.curs.setVisible(false);
-		studentsFormAdd.curs.setVisible(false);
 
 	}
 
