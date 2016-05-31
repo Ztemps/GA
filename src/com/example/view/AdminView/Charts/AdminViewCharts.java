@@ -60,11 +60,13 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
+/**
+ * Clase de la vista administrador, que muestra los gráficos.
+ */
+
 public class AdminViewCharts extends MainContentView {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 4404820936112694539L;
 	private SQLContainer container;
 	private SQLContainer container2;

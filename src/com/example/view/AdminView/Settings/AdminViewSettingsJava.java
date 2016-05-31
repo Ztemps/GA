@@ -49,6 +49,9 @@ import com.vaadin.ui.Button.ClickListener;
  * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
  * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
  * 
+ * 
+ * 		Clase que permite hacer configuraciones varias al administrador.
+ * 
  */
 
 public class AdminViewSettingsJava extends MainContentView {

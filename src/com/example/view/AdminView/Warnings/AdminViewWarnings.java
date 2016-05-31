@@ -89,6 +89,11 @@ public class AdminViewWarnings extends MainContentView {
 
 	}
 
+	/**
+	 * Muestra la ventana del .pdf del detalles de las amonestaciones que ya han
+	 * sido introducidas
+	 * 
+	 */
 	public void popupPDF() throws IOException, DocumentException {
 
 		generatePDF generatepdf = new generatePDF();
@@ -109,19 +114,29 @@ public class AdminViewWarnings extends MainContentView {
 
 	}
 
-
+	/**
+	 * Selecciona el nombre y apellido de la row seleccionada en el componente Grid
+	 * 
+	 * @return Nombre y apellido del alumno (concatenados)
+	 * */
 	private String getItemNomCognomSelected() {
 
-		String name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom").getValue().toString();
+		String name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom").getValue()
+				.toString();
 		String surname = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("cognoms")
 				.getValue().toString();
 
-		String nomCognom = (name.concat(" "+surname)).replaceFirst(" ", "").replaceAll(" ", "_");
+		String nomCognom = (name.concat(" " + surname)).replaceFirst(" ", "").replaceAll(" ", "_");
 
 		return nomCognom;
 
 	}
 
+	/**
+	 * Selecciona la fecha de la row seleccionada en el componente Grid
+	 * 
+	 * @return fecha de la amonestación 
+	 * */
 	private String getDateSelected() {
 
 		Object data = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("data").getValue();
@@ -130,6 +145,13 @@ public class AdminViewWarnings extends MainContentView {
 		return fecha.substring(11, 16);
 	}
 
+	
+	/**
+	 * Propiedades principales del componente Grid: Container, columnas...
+	 * En doble click abre la ventana del .pdf
+	 * 
+	 * @returns Grid configurado
+	 * */
 	private Grid gridProperties() throws PSQLException {
 
 		jdbccp = new JDBCConnectionPool();
@@ -147,18 +169,18 @@ public class AdminViewWarnings extends MainContentView {
 		grid = new Grid("", AllWarnings);
 		grid.setSizeFull();
 		grid.setColumns("nom", "cognoms", "grup", "materia", "data", "localitzacio");
-		if(AllWarnings!=null){
+		if (AllWarnings != null) {
 			grid.setContainerDataSource(AllWarnings);
 
 		}
 		grid.addItemClickListener(new ItemClickListener() {
-			
+
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				// TODO Auto-generated method stub
-				
-				if (event.isDoubleClick()){
-					
+
+				if (event.isDoubleClick()) {
+
 					try {
 						popupPDF();
 					} catch (IOException | DocumentException e) {
@@ -182,7 +204,7 @@ public class AdminViewWarnings extends MainContentView {
 
 			}
 		});
-		
+
 		return grid;
 	}
 
@@ -202,6 +224,12 @@ public class AdminViewWarnings extends MainContentView {
 		window.center();
 	}
 
+	
+	/**
+	 * Configuración de componente TextField
+	 * 
+	 * @return textfield con filtro por apellido incluido
+	 * */
 	private TextField filterTextProperties() {
 
 		txtSearch.setInputPrompt("Filtra per cognom");
@@ -226,6 +254,10 @@ public class AdminViewWarnings extends MainContentView {
 		return txtSearch;
 	}
 
+	
+	/**
+	 * Configuración principal de botones y estilos
+	 * */
 	private void buttonsSettings() {
 
 		horizontalTitle.addStyleName("horizontal-title");
@@ -244,6 +276,10 @@ public class AdminViewWarnings extends MainContentView {
 
 	}
 
+	
+	/**
+	 * Deselección de cualquier row seleccionada del componente Grid
+	 * */
 	public void clear() {
 
 		bDelete.setEnabled(false);

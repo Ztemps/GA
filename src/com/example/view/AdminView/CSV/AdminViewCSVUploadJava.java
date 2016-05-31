@@ -1,16 +1,4 @@
-/*******************************************************************************
- * 
- * Gestió d'Amonestacions v1.0
- *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
- * 
- *******************************************************************************/
+
 package com.example.view.AdminView.CSV;
 
 import java.io.File;
@@ -45,6 +33,23 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.ValoTheme;
+
+/**
+ * 
+ * Gestió d'Amonestacions v1.0
+ *
+ * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
+ * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ *  
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
+ * 
+ * 		
+ * 		Clase necesaria para poder subir archivos CSV
+ * 
+ */
 
 public class AdminViewCSVUploadJava extends MainContentView {
 

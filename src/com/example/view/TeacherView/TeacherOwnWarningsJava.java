@@ -94,15 +94,18 @@ public class TeacherOwnWarningsJava extends MainContentView {
 
 			@Override
 			public void select(SelectionEvent event) {
-				// TODO Auto-generated method stub
 				bAdd.setEnabled(true);
-				// buttonEdit.setEnabled(true);
-				// bDelete.setEnabled(true);
-
+				
 			}
 		});
 	}
 
+	
+	/**
+	 * Propiedades principales del componente Grid: container, columnas...
+	 * 
+	 * @return componente Grid configurado
+	 * */
 	public Grid gridProperties() {
 
 		usuari = teacherJPA.currentTeacherName();
@@ -131,6 +134,10 @@ public class TeacherOwnWarningsJava extends MainContentView {
 		return grid;
 	}
 
+	
+	/**
+	 * Limpia la selección del componente Grid
+	 * */
 	public void clear() {
 		// TODO Auto-generated method stub
 		bDelete.setEnabled(false);
@@ -138,6 +145,9 @@ public class TeacherOwnWarningsJava extends MainContentView {
 		grid.deselectAll();
 	}
 
+	/**
+	 * Configuración principal de botones y estilos
+	 * */
 	private void buttonsSettings() {
 		// TODO Auto-generated method stub
 
@@ -156,6 +166,15 @@ public class TeacherOwnWarningsJava extends MainContentView {
 
 	}
 
+	
+	/**
+	 * Propiedades principales de la ventana de visualización de la amonestación
+	 * 
+	 * @throws MalformedURLException
+	 * @throws DocumentException
+	 * @throws IOException
+	 * 
+	 * */
 	private void WindowProperties() throws MalformedURLException, DocumentException, IOException {
 
 		window.setHeight("95%");
@@ -168,6 +187,12 @@ public class TeacherOwnWarningsJava extends MainContentView {
 
 	}
 
+	
+	/**
+	 * Nombre y apellidos del alumno seleccionado en la Grid
+	 * 
+	 * @returns Nombre y apellido del alumno.
+	 * */
 	private String getItemNomCognomSelected() {
 
 		String name = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("nom").getValue()
@@ -179,6 +204,13 @@ public class TeacherOwnWarningsJava extends MainContentView {
 
 	}
 
+	
+	/**
+	 * Obtiene la fecha cuando se produjo el parte
+	 * 
+	 * @returns fecha del parte
+	 * 
+	 * */
 	private String getDateSelected() {
 
 		Object data = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("data").getValue();
@@ -188,6 +220,10 @@ public class TeacherOwnWarningsJava extends MainContentView {
 		return hora;
 	}
 
+	
+	/**
+	 * Abre y inserta el fichero .pdf de la amonestación dentro de la ventana emergente
+	 * */
 	@SuppressWarnings("deprecation")
 	public void popupPDF() throws IOException, DocumentException {
 

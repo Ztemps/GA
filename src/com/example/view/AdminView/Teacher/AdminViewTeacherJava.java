@@ -51,13 +51,18 @@ import com.vaadin.ui.themes.ValoTheme;
  * 
  * Gestió d'Amonestacions v1.0
  *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
+ * Esta obra está sujeta a la licencia
+ * Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative
+ * Commons. Para ver una copia de esta licencia, visite
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/.
+ * 
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net
+ * 
+ * 
+ * 		Clase para gestionar los profesores
  * 
  **/
 
@@ -89,10 +94,9 @@ public class AdminViewTeacherJava extends MainContentView {
 
 	}
 
-	
 	/**
 	 * Listeners de los botones principales
-	 * */
+	 */
 	private void listeners() {
 		buttonEdit.addClickListener(new ClickListener() {
 			@Override
@@ -128,12 +132,13 @@ public class AdminViewTeacherJava extends MainContentView {
 
 		});
 	}
-	
-	
+
 	/**
-	 * Listener que dispara la comprobación del correo del profesor,
-	 * si no existe lo introduciremos, si existe lanzamos notificación
-	 * */
+	 * Listener que dispara la comprobación del correo del profesor, si no
+	 * existe lo introduciremos, si existe lanzamos notificación
+	 * 
+	 * @throws PSQLException
+	 */
 	private void addTeacher() throws PSQLException {
 		professorAddForm.aceptarButton.addClickListener(new ClickListener() {
 
@@ -147,7 +152,7 @@ public class AdminViewTeacherJava extends MainContentView {
 				MA.closeTransaction();
 
 				boolean noexiste = true;
-				System.out.println("tamaño: "+lista.size());
+				System.out.println("tamaño: " + lista.size());
 				for (int i = 0; i < lista.size(); i++) {
 					System.out.println(lista.get(i).toString());
 					if (lista.get(i).getEmail().equals(teacher.getEmail())) {
@@ -192,11 +197,12 @@ public class AdminViewTeacherJava extends MainContentView {
 		UI.getCurrent().addWindow(windowAdd);
 
 	}
-	
+
 	/**
-	 * los datos profesor que seleccionamos en el componente grid, se incorporan a la ventana
-	 * emergente donde podremos editarlos, el listener del botón aceptar hace los cambios en la base de datos mediante JPA
-	 * */
+	 * los datos profesor que seleccionamos en el componente grid, se incorporan
+	 * a la ventana emergente donde podremos editarlos, el listener del botón
+	 * aceptar hace los cambios en la base de datos mediante JPA
+	 */
 	private void editTeacher() {
 
 		UI.getCurrent().addWindow(windowEdit);
@@ -267,13 +273,13 @@ public class AdminViewTeacherJava extends MainContentView {
 	}
 
 	/**
-	 *Si los campos estan vacios notifica al usuario de que es obligatorio llenarlos.
-	 *Sin embargo, si todos los campos son correctos obtenemos el valor para construir un objeto de
-	 *tipo profesor
+	 * Si los campos estan vacios notifica al usuario de que es obligatorio
+	 * llenarlos. Sin embargo, si todos los campos son correctos obtenemos el
+	 * valor para construir un objeto de tipo profesor
 	 *
 	 * 
 	 * @return Objeto de tipo Teacher
-	 * */
+	 */
 	private Teacher getTeacherAdd() {
 
 		Teacher tc = null;
@@ -293,12 +299,12 @@ public class AdminViewTeacherJava extends MainContentView {
 
 		return tc;
 	}
-	
+
 	/**
 	 * Selección de los campos que nos permiten obtener un profesor en concreto
 	 * 
 	 * @return Objeto de tipo Teacher
-	 * */
+	 */
 	private Teacher getTeacherEdit() {
 		Object id = grid.getContainerDataSource().getItem(grid.getSelectedRow()).getItemProperty("id");
 		String nom = professorEditForm.nom.getValue().toString();
@@ -309,11 +315,11 @@ public class AdminViewTeacherJava extends MainContentView {
 		return tc;
 	}
 
-	
-	/**Filtro para encontrar profesores por apellido
+	/**
+	 * Filtro para encontrar profesores por apellido
 	 * 
 	 * @return componente de tipo TextField con su listener configurado
-	 * */
+	 */
 	private TextField filterTextProperties() {
 		// TODO Auto-generated method stub
 		txtSearch.setInputPrompt("Filtra per cognom");
@@ -334,16 +340,15 @@ public class AdminViewTeacherJava extends MainContentView {
 				// Set new filter for the "Name" column
 				filter = new SimpleStringFilter("cognoms", event.getText(), true, false);
 				f.addContainerFilter(filter);
-				
+
 			}
 		});
 		return txtSearch;
 	}
 
-	
 	/**
 	 * Limpia los campos del formulario de edición de profesor
-	 * */
+	 */
 	private void clearEditForm() {
 		professorEditForm.nom.clear();
 		professorEditForm.cognoms.clear();
@@ -353,7 +358,7 @@ public class AdminViewTeacherJava extends MainContentView {
 
 	/**
 	 * Limpia los campos del formulario de añadir de profesor
-	 * */
+	 */
 	private void clearAddForm() {
 		professorAddForm.nom.clear();
 		professorAddForm.cognoms.clear();
@@ -362,10 +367,9 @@ public class AdminViewTeacherJava extends MainContentView {
 
 	}
 
-	
 	/**
 	 * Configuración principal de botones y estilos de la clase
-	 * */
+	 */
 	private void buttonsSettings() {
 		// TODO Auto-generated method stub
 
@@ -391,7 +395,7 @@ public class AdminViewTeacherJava extends MainContentView {
 	 * Configuración principal de las funciones principales del componente Grid
 	 * 
 	 * @return Componente Grid
-	 * */
+	 */
 	public Grid GridProperties() {
 
 		// Fill the grid with data
@@ -411,7 +415,6 @@ public class AdminViewTeacherJava extends MainContentView {
 				bAdd.setEnabled(true);
 				buttonEdit.setEnabled(true);
 				bDelete.setEnabled(false);
-				
 
 			}
 		});
@@ -419,10 +422,9 @@ public class AdminViewTeacherJava extends MainContentView {
 		return grid;
 	}
 
-	
 	/**
 	 * Configuración principal de la ventana emergente de añadir profesor
-	 * */
+	 */
 	private void WindowPropertiesAddTeacher() {
 
 		windowAdd.setCaption("Introdueix nou professor");
@@ -434,10 +436,9 @@ public class AdminViewTeacherJava extends MainContentView {
 		windowAdd.setContent(professorAddForm);
 	}
 
-	
 	/**
 	 * Configuración principal de la ventana emergente de editar profesor
-	 * */
+	 */
 	private void WindowPropertiesEditTeacher() {
 
 		// window.setContent(form);
@@ -450,13 +451,12 @@ public class AdminViewTeacherJava extends MainContentView {
 		windowEdit.setContent(professorEditForm);
 	}
 
-	
 	/**
 	 * Configuración personalizada de las notificaciones al usuario
-	 * */
+	 */
 	public void notif(String mensaje) {
 
-		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true); 
+		Notification notif = new Notification(mensaje, null, Notification.Type.ASSISTIVE_NOTIFICATION, true);
 
 		notif.show(Page.getCurrent());
 		notif.setDelayMsec(500);
@@ -465,7 +465,7 @@ public class AdminViewTeacherJava extends MainContentView {
 
 	/**
 	 * Recarga de la Grid, para actualizacion de datos al momento
-	 * */
+	 */
 	public void reloadGrid() {
 		grid.setVisible(false);
 		grid = new Grid();
@@ -473,34 +473,32 @@ public class AdminViewTeacherJava extends MainContentView {
 
 	}
 
-
-	
 	/**
-	 * Relleno de datos para el componente NativeSelect 
-	 * de los grupos. Compara los grupos totales creados con los que 
-	 * tienen asignado profesor, para así, mostrar en el componente solo
-	 * los grupos que no tienen asignado un tutor
-	 * */
+	 * Relleno de datos para el componente NativeSelect de los grupos. Compara
+	 * los grupos totales creados con los que tienen asignado profesor, para
+	 * así, mostrar en el componente solo los grupos que no tienen asignado un
+	 * tutor
+	 */
 	private void PopulateNativeSelect() {
 		List<Group> lista1 = new ArrayList<Group>();
 		List<Tutor> lista2 = new ArrayList<Tutor>();
 		List<String> listaBuena = new ArrayList<String>();
 
-		grupsjpa= new GroupJPAManager();
+		grupsjpa = new GroupJPAManager();
 		lista1 = grupsjpa.getGroups();
 		lista2 = grupsjpa.getGroups2();
-		
-		boolean existe=false;
+
+		boolean existe = false;
 
 		System.out.println(lista1.size());
 
-		for (int i=0; i< lista1.size(); i++){
-			for (int j=0; j< lista2.size(); j++){
-				if(lista1.get(i).getId().equals(lista2.get(j).getGrup())){
+		for (int i = 0; i < lista1.size(); i++) {
+			for (int j = 0; j < lista2.size(); j++) {
+				if (lista1.get(i).getId().equals(lista2.get(j).getGrup())) {
 					lista1.remove(i);
-					
+
 				}
-				
+
 			}
 		}
 		professorAddForm.selectGroup.removeAllItems();
@@ -512,10 +510,9 @@ public class AdminViewTeacherJava extends MainContentView {
 
 	}
 
-	
 	/**
 	 * Limpia las celdas seleccionadas del componente Grid
-	 * */
+	 */
 	public void clear() {
 		// TODO Auto-generated method stub
 
