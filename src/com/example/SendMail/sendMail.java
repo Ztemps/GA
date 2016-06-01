@@ -44,10 +44,9 @@ public class sendMail {
 	private String emailSubject = null;
 	private String filename = null;
 	private ResourceBundle rb = ResourceBundle.getBundle("GA");
-	private String senderEmailID = "smtp.gmail.com";
-	
+	private String senderEmailID = rb.getString("sender_mail");
 	private String senderPassword = rb.getString("sender_pass");
-	private String emailSMTPserver = rb.getString("sender_smpt");
+	private String emailSMTPserver = rb.getString("sender_smtp");
 	private String emailServerPort = rb.getString("sender_port");
 
 	/**
@@ -89,18 +88,18 @@ public class sendMail {
 		props.put("mail.smtp.port", emailServerPort);
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.ssl.enable","true");
 		// props.put("mail.smtp.debug", "true");
 		props.put("mail.smtp.socketFactory.port", emailServerPort);
 		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-		props.put("mail.smtp.socketFactory.fallback", "false");
+//		props.put("mail.smtp.socketFactory.fallback", "false");
 
 		SecurityManager security = System.getSecurityManager();
 
 		try {
 			Authenticator auth = new SMTPAuthenticator();
 			Session session = Session.getInstance(props, auth);
-			// session.setDebug(true);
-
+		    //session.setDebug(true); // Verbose!
 			MimeMessage msg = new MimeMessage(session);
 			msg.setSubject(emailSubject);
 			msg.setFrom(new InternetAddress(senderEmailID));

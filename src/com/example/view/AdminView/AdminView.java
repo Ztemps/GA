@@ -330,7 +330,6 @@ public class AdminView extends MainView implements View {
 	private void ViewCharts() {
 		// TODO Auto-generated method stub
 
-		ViewCharts.clear();
 		ViewCharts.reloadChart();
 
 		ViewTeachersWarnings.setVisible(false);

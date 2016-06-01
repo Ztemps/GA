@@ -454,7 +454,6 @@ public class AdminViewStudentJava extends MainContentView {
 		buttonEdit.setEnabled(false);
 		bRegister.setVisible(false);
 		bAdd.setEnabled(true);
-		clearTxt.setVisible(false);
 
 	}
 

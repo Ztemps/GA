@@ -212,7 +212,6 @@ public class TeacherConfigView extends MainContentView {
 		bRegister.setVisible(false);
 		buttonEdit.setVisible(false);
 		horizontalTitle.setVisible(false);
-		clearTxt.setVisible(false);
 		txtSearch.setVisible(false);
 
 	}

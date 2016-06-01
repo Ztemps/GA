@@ -132,6 +132,9 @@ public class AdminViewSettingsJava extends MainContentView {
 
 			}
 		});
+		vHorizontalMain.removeAllComponents();
+		vHorizontalMain.addComponent(adminsettings);
+
 	}
 	
 	
@@ -183,11 +186,6 @@ public class AdminViewSettingsJava extends MainContentView {
 	 * */
 	private void GeneralSettings() {
 
-		vHorizontalMain.addComponent(adminsettings);
-		vHorizontalMain.setComponentAlignment(adminsettings, Alignment.MIDDLE_CENTER);
-		adminsettings.setVisible(true);
-		adminsettings.setStyleName("whiteBackground");
-
 		adminsettings.checkEmailPares.addStyleName("settings");
 		adminsettings.checkWhatsPares.addStyleName("settings");
 		adminsettings.startDateGrade.addStyleName("settings");
@@ -210,7 +208,6 @@ public class AdminViewSettingsJava extends MainContentView {
 		txtTitle.addStyleName("main-title");
 		txtTitle.setValue("Configuració");
 		txtSearch.setVisible(false);
-		clearTxt.setVisible(false);
 		bAdd.setVisible(true);
 		bAdd.setCaption("Desar configuració");
 		bAdd.addStyleName(ValoTheme.BUTTON_PRIMARY);

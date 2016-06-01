@@ -269,7 +269,6 @@ public class TutorOwnWarningsJava extends MainContentView {
 		bRegister.setCaption("Detalls");
 		bRegister.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		txtSearch.setVisible(false);
-		clearTxt.setVisible(false);
 
 		// AdminViewCarregarCSVJava upload = new AdminViewCarregarCSVJava();
 

@@ -431,7 +431,6 @@ public class AdminViewWarningJava extends MainContentView {
 		bRegister.setVisible(false);
 		bAdd.setEnabled(false);
 		txtSearch.setVisible(false);
-		clearTxt.setVisible(false);
 		amonestacioForm.time.setEnabled(false);
 
 		amonestacioForm.time.addValidator(new StringLengthValidator("Format incorrecte. Ex: 15:04", 5, 5, false));
@@ -763,7 +762,6 @@ public class AdminViewWarningJava extends MainContentView {
 		Embedded c = new Embedded();
 		sourceFile = new File(timewarning[0]);
 
-		System.out.println("source file: " + sourceFile);
 		c.setSource(new FileResource(sourceFile));
 		c.setWidth("100%");
 		c.setHeight("600px");
@@ -845,7 +843,6 @@ public class AdminViewWarningJava extends MainContentView {
 			motiu2 = amonestacioForm.motiu2.getValue().toString();
 			amonestat = amonestacioForm.accio.getValue().toString();
 			localitzacio = amonestacioForm.circunstancia.getValue().toString();
-			System.out.println("Nombreprofe: " + nameTeacher);
 
 			if (amonestat.equals("Amonestat")) {
 				amonestat2 = "true";
@@ -868,8 +865,6 @@ public class AdminViewWarningJava extends MainContentView {
 
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
 				altres_motius, motiu2, nameTeacher, convertedDate, time };
-
-		System.out.println("TIMEEE " + time);
 
 		return query;
 	}
@@ -918,7 +913,6 @@ public class AdminViewWarningJava extends MainContentView {
 		try {
 
 			data = amonestacioForm.datefield.getValue().toString();
-			System.out.println("FECHAAAAA" + data);
 
 			convertDate = new ConverterDates();
 			String convertedDate = convertDate.converterDate2(data);
@@ -930,7 +924,6 @@ public class AdminViewWarningJava extends MainContentView {
 			motiu2 = amonestacioForm.motiu2.getValue().toString();
 			amonestat = amonestacioForm.accio.getValue().toString();
 			localitzacio = amonestacioForm.circunstancia.getValue().toString();
-			System.out.println("Nombreprofe: " + nameTeacher);
 
 			if (amonestat.equals("Amonestat")) {
 				amonestat2 = "true";

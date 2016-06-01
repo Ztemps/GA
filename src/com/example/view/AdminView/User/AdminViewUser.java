@@ -414,7 +414,6 @@ public class AdminViewUser extends MainContentView {
 
 		horizontalTitle.addStyleName("horizontal-title");
 		txtTitle.addStyleName("main-title");
-		clearTxt.setIcon(FontAwesome.TIMES);
 
 		txtTitle.setValue("Gestió d'Usuaris");
 		bDelete.addStyleName(ValoTheme.BUTTON_DANGER);
@@ -427,7 +426,6 @@ public class AdminViewUser extends MainContentView {
 		bRegister.setVisible(false);
 		bAdd.setEnabled(false);
 		bAdd.setVisible(false);
-		clearTxt.setVisible(false);
 
 		bAdd.setCaption("Donar d'alta");
 		bDelete.setCaption("Donar de baixa");

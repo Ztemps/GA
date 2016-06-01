@@ -166,7 +166,6 @@ public class TeacherOwnWarningsJava extends MainContentView {
 		bRegister.setCaption("Detalls");
 		bRegister.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		txtSearch.setVisible(false);
-		clearTxt.setVisible(false);
 
 
 	}

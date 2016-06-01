@@ -73,8 +73,17 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		buttonsSettings();
 		WindowProperties();
 
-		resource = new FileResource(new File(rb.getString("upload_icon")));
-
+		FileResource resource = new FileResource(new File(rb.getString("upload_icon")));
+		Image logo = new Image("", resource);
+		logo.setWidth("15%");
+		logo.setHeight("15%");
+		
+		FileResource resourceTeacher = new FileResource(new File(rb.getString("upload_icon")));
+		Image upload_teacher = new Image("", resourceTeacher);
+		upload_teacher.setWidth("15%");
+		upload_teacher.setHeight("15%");
+		
+		
 		// CSV STUDENTS
 		uploadStudent.setButtonCaption(null);
 		uploadStudent.addSucceededListener(receiver);
@@ -92,9 +101,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		csv.txtUpStudents.setValue("Carrega de alumnes");
 		csv.txtUpStudents.addStyleName("upload-title");
 		csv.vStudents.addStyleName("whiteBackground");
-		csv.vStudents.removeAllComponents();
-		csv.vStudents.addComponents(new Image("", resource), uploadStudent);
-
+		csv.vStudents.addComponents(logo, uploadStudent);
 		csv.vStudents.setComponentAlignment(uploadStudent, Alignment.MIDDLE_CENTER);
 
 		// CSV DOCENTS
@@ -114,8 +121,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		csv.vTeachers.addStyleName("whiteBackground");
 		csv.txtUpTeachers.setValue("Carrega de profesors");
 		csv.txtUpTeachers.addStyleName("upload-title");
-		csv.vTeachers.removeAllComponents();
-		csv.vTeachers.addComponents(new Image("", resource), uploadTeacher);
+		csv.vTeachers.addComponents(upload_teacher, uploadTeacher);
 		csv.vTeachers.setComponentAlignment(uploadTeacher, Alignment.MIDDLE_CENTER);
 
 	}
@@ -147,7 +153,6 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		bDelete.setVisible(false);
 		bRegister.setVisible(false);
 		txtSearch.setVisible(false);
-		clearTxt.setVisible(false);
 		horizontalTitle.addStyleName("horizontal-title");
 		txtTitle.addStyleName("main-title");
 		txtTitle.setValue("Carrega de CSV");
