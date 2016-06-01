@@ -127,16 +127,13 @@ public class AdminViewReportsJava extends MainContentView {
 			public InputStream getStream() {
 				// return your file/bytearray as an InputStream
 
-			
+				finalreports.calcularTotalporAlumnos();
+
 						finalreports.calcularResumenTotal();
 
-				
 
-		
-						finalreports.calcularTotalporAlumnos();
 
 			
-
 				finalreports.closeAllConnections();
 
 				File zip = null;
@@ -175,14 +172,17 @@ public class AdminViewReportsJava extends MainContentView {
 			public InputStream getStream() {
 				// return your file/bytearray as an InputStream
 
+				trimestralReports.calcularTercerTrimestre();
+
 						trimestralReports.calcularResumenTrimestre3();
+
+
+
 						trimestralReports.calcularResumen2Trimestre3();
 
-
+					
 				
-						trimestralReports.calcularTercerTrimestre();
-
-			
+				
 
 				trimestralReports.closeAllConnections();
 
@@ -217,13 +217,17 @@ public class AdminViewReportsJava extends MainContentView {
 			public InputStream getStream() {
 				// return your file/bytearray as an InputStream
 
-			
+				trimestralReports.calcularSegundoTrimestre();
+
 						trimestralReports.calcularResumenTrimestre2();
+
+
+				
+
+				
+
+				
 						trimestralReports.calcularResumen2Trimestre2();
-
-			
-						trimestralReports.calcularSegundoTrimestre();
-
 
 				
 
@@ -258,32 +262,20 @@ public class AdminViewReportsJava extends MainContentView {
 
 			public InputStream getStream() {
 				// return your file/bytearray as an InputStream
-				Thread t1 = new Thread() {
-					public void run() {
+				trimestralReports.calcularPrimerTrimestre();
+
 						trimestralReports.calcularResumenTrimestre1();
-						trimestralReports.calcularResumen2Trimestre1();
 
-					}
-				};
+			
 
-				Thread t2 = new Thread() {
-					public void run() {
-						trimestralReports.calcularPrimerTrimestre();
-
-					}
-				};
+			
 
 				
 
-				t1.start();
-				t2.start();
-				try {
-					t1.join();
-					t2.join();
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				
+						trimestralReports.calcularResumen2Trimestre1();
+
+				
 
 				trimestralReports.closeAllConnections();
 				File zip = null;
