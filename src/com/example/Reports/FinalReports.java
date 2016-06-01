@@ -229,7 +229,6 @@ public class FinalReports {
 						// Debería de pasarle solo el id del alumnno
 						calculoAmonest = calcularAmonestadosPorSemana(Integer.parseInt(idList.get(i).toString()), diaIniciTrimestre, diaFinalTrimestre);
 						calculoExpuls.add(calculoAmonest.get(1).toString());
-
 						/*
 						 * for (int n=0; n<calculoAmonest.size(); n++){
 						 * totalAmonest=totalAmonest+Integer.parseInt(

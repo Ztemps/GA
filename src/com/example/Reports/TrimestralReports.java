@@ -41,8 +41,6 @@ public class TrimestralReports {
 	private static final String FILE_HEADER = "ALUMNE,A,E";
 	ResourceBundle rb = ResourceBundle.getBundle("GA");
 	public ReportQuerys query;
-	public ReportQuerys query2;
-
 	ArrayList<Date> dates = new ArrayList<Date>();
 	// CSV file header
 	public GroupJPAManager jpa;
@@ -214,6 +212,7 @@ public class TrimestralReports {
 						calculoAmonest = calcularAmonestadosPorSemana(Integer.parseInt(idList.get(i).toString()),
 								semana1, semana2);
 						calculoExpuls.add(calculoAmonest.get(1).toString());
+
 
 						semana1 = semana2;
 						diaInicisetmanes.add(Calendar.DATE, 7);
@@ -703,10 +702,10 @@ public class TrimestralReports {
 
 		amonestacions1 = new ArrayList<>();
 
-		query2 = new ReportQuerys();
-		amonestacions1.add(query2.getWarningCurs(idList, semana1, semana2));
-		query2 = new ReportQuerys();
-		amonestacions1.add(query2.getExpulsionCurs(idList, semana1, semana2));
+		query = new ReportQuerys();
+		amonestacions1.add(query.getWarningCurs(idList, semana1, semana2));
+		query = new ReportQuerys();
+		amonestacions1.add(query.getExpulsionCurs(idList, semana1, semana2));
 
 		// query.closeTransaction();
 
