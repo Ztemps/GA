@@ -49,8 +49,8 @@ public class Group implements Serializable {
 	/**
 	 * Constructor completo de la clase Group
 	 * 
-	 * @params id identificador del alumno
-	 * @params max_alumnes número máximo de alumno
+	 * @param id identificador del alumno
+	 * @param max_alumnes número máximo de alumno
 	 * 
 	 */
 	public Group(String id, int max_alumnes) {

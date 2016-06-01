@@ -31,7 +31,7 @@ public class ConverterDates {
 	 * Método que convierte la fecha que le pasamos, la corta con el método
 	 * split
 	 * 
-	 * @params initialDate la fecha de la clase Date que queremos convertir
+	 * @param initialDate la fecha de la clase Date que queremos convertir
 	 * 
 	 * @return fecha en formato dd-MM-yyyy en una String
 	 */
@@ -49,7 +49,7 @@ public class ConverterDates {
 	 * Método que convierte la fecha que le pasamos, la corta con el método
 	 * split
 	 * 
-	 * @params month el nombre del mes en formato reducido...ene, feb...tanto en
+	 * @param month el nombre del mes en formato reducido...ene, feb...tanto en
 	 *         inglés como en español
 	 * 
 	 * @return fecha en formato dd-MM-yyyy en una String
@@ -66,7 +66,7 @@ public class ConverterDates {
 	 * Método que devuelve el número de mes dependiendo de el parámetro que le
 	 * pasamos
 	 * 
-	 * @params month el nombre del mes en formato reducido...ene, feb...tanto en
+	 * @param month el nombre del mes en formato reducido...ene, feb...tanto en
 	 *         inglés como en español
 	 * @return Número de mes
 	 */

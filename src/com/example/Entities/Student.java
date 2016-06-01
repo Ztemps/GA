@@ -54,14 +54,14 @@ public class Student implements Serializable {
 	/**
 	 * Constructor completo de la clase Student
 	 * 
-	 * @params id identificador del alumno
-	 * @params nom nombre del alumno
-	 * @params cognom apellido del alumno
-	 * @params email del padre del alumno
-	 * @params telefon telefono del padre del alumno
-	 * @params curs curso actual
-	 * @params data_naixement fecha de nacimiento del alumno
-	 * @params grup grupo al cual pertenece el alumno (ESO 1A, ESO 1B...)
+	 * @param id identificador del alumno
+	 * @param nom nombre del alumno
+	 * @param cognom apellido del alumno
+	 * @param email del padre del alumno
+	 * @param telefon telefono del padre del alumno
+	 * @param curs curso actual
+	 * @param data_naixement fecha de nacimiento del alumno
+	 * @param grup grupo al cual pertenece el alumno (ESO 1A, ESO 1B...)
 	 * 
 	 */
 	public Student(int id, String nom, String cognom, String email, String telefon, String curs, Date data_naixement,

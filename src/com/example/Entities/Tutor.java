@@ -39,8 +39,8 @@ public class Tutor implements Serializable{
 	/**
 	 * Constructor completo de la clase Tutor
 	 * 
-	 * @params docent identificador del alumno
-	 * @params grup nombre del grupo (ESO 1A, ESO 1B...)
+	 * @param docent identificador del alumno
+	 * @param grup nombre del grupo (ESO 1A, ESO 1B...)
 	 * 
 	 */
 	public Tutor(int docent, String grup) {

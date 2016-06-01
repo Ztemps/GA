@@ -52,19 +52,19 @@ public class Warning implements Serializable {
 	/**
 	 * Constructor completo de la clase Warning
 	 * 
-	 * @params docent identificador del profesor
-	 * @params data fecha de la amonestación
-	 * @params grup grupo del alumno
-	 * @params alumne id del alumno
-	 * @params gravetat gravedad de la amonestación (LLEU, GREU...)
-	 * @params localitzacio lugar donde se produjo la amonestación
-	 * @params materia assignatura en la que se produjo la amonestación
-	 * @params tutor identificador del tutor del alumno
-	 * @params amonestat indica si el alumno fue amonestado
-	 * @params explulsat indica si el alumno fue expulsado
-	 * @params curs curso actual del alumno
-	 * @params motiu motivo o motivos de la amonestación
-	 * @params altre_motius motivos no contemplados en motiu
+	 * @param docent identificador del profesor
+	 * @param data fecha de la amonestación
+	 * @param grup grupo del alumno
+	 * @param alumne id del alumno
+	 * @param gravetat gravedad de la amonestación (LLEU, GREU...)
+	 * @param localitzacio lugar donde se produjo la amonestación
+	 * @param materia assignatura en la que se produjo la amonestación
+	 * @param tutor identificador del tutor del alumno
+	 * @param amonestat indica si el alumno fue amonestado
+	 * @param expulsat indica si el alumno fue expulsado
+	 * @param curs curso actual del alumno
+	 * @param motiu motivo o motivos de la amonestación
+	 * @param altres_motius motivos no contemplados en motiu
 	 * 
 	 */
 	public Warning(int docent, Date data, String grup, int alumne, String gravetat, String localitzacio,

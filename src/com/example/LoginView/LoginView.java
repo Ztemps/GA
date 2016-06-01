@@ -317,7 +317,7 @@ public class LoginView extends LoginViewDesign implements View {
 	 * Asignación de los atributos de sesión para el usuario, los cuales
 	 * usaremos mas tarde
 	 * 
-	 * @params username nombre del usuario que se ha logueado correctamente y
+	 * @param username nombre del usuario que se ha logueado correctamente y
 	 *         accede a la plataforma6-
 	 */
 	public void setAttributeSession(String username) {

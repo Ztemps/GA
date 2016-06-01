@@ -42,10 +42,10 @@ public class Teacher implements Serializable {
 	/**
 	 * Constructor completo de la clase Teacher
 	 * 
-	 * @params id identificador del profesor
-	 * @params nom nombre del profesor
-	 * @params cognom apellido del profesor
-	 * @params email del profesor
+	 * @param id identificador del profesor
+	 * @param nom nombre del profesor
+	 * @param cognom apellido del profesor
+	 * @param email del profesor
 	 * 	 * 
 	 */
 	public Teacher(int id, String nom,String cognoms, String email) {

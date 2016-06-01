@@ -122,7 +122,7 @@ public class UserJPAManager {
 	 * Este método se encarga de añadir una amonestación en la tabla
 	 * amonestaciones de la base de datos a través de un objeto de tipo Warning.
 	 * 
-	 * @return
+	 * @return lista de usuarios
 	 */
 	public List<User> listUsers() {
 

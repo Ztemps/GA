@@ -295,7 +295,7 @@ public class AdminViewCharts extends ChartsContainerView {
 	 * Obtiene las fechas de ubn fichero y las añade al ArrayList<Date>
 	 * 
 	 * @return fechas de inicio de los trimestres
-	 * @see FinalReports, método readFile()
+	 * @see readFile();
 	 */
 	public ArrayList<Date> Dates() throws ReadOnlyException, ConversionException, IOException {
 

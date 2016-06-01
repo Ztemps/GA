@@ -55,10 +55,10 @@ public class User implements Serializable {
 	/**
 	 * Constructor completo de la clase User
 	 * 
-	 * @params id identificador del usuario
-	 * @params password del usuario
-	 * @params username nickname del usuario
-	 * @params rol al que está asignado este usuario
+	 * @param id identificador del usuario
+	 * @param password del usuario
+	 * @param username nickname del usuario
+	 * @param rol al que está asignado este usuario
 	 * 
 	 */
 	public User(int id, String password, String username, String rol) {
