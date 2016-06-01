@@ -2,6 +2,7 @@
 package com.example.view.AdminView.CSV;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -14,6 +15,7 @@ import com.example.CSVLoader.CSVLoader;
 import com.example.Pdf.generatePDF;
 import com.example.Templates.MainContentView;
 import com.example.view.AdminView.AdminView;
+import com.google.gwt.thirdparty.guava.common.io.Files;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinService;
@@ -180,9 +182,10 @@ public class AdminViewCSVUploadJava extends MainContentView {
 			String path = null;
 
 			String extension = filename.substring(filename.indexOf("."));
-
+			//String ext = Files.getFileExtension(filename);
+			System.out.println(extension);
+			
 			if (extension.equals(".csv")) {
-
 				try {
 					File currDir = new File(".");
 					try {
@@ -194,7 +197,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 					file = new File(rb.getString("path_csv") + filename);
 					fos = new FileOutputStream(file);
 
-				} catch (final java.io.FileNotFoundException e) {
+				} catch (FileNotFoundException e) {
 					new Notification("No s'ha pogut obrir el fitxer", e.getMessage(), Notification.Type.ERROR_MESSAGE)
 							.show(Page.getCurrent());
 					return null;
@@ -204,7 +207,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 				new Notification("Error al carregar el fitxer: Comproba que el format del" + "fitxer sigui .csv",
 						Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());
 
-				getUI().getNavigator().navigateTo(AdminView.NAME);
+//				getUI().getNavigator().navigateTo(AdminView.NAME);
 				AdminView.viewCsv();
 
 				return null;
@@ -217,10 +220,15 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		@Override
 		public void uploadSucceeded(SucceededEvent event) {
 			try {
+				String ext = Files.getFileExtension(file.getAbsolutePath());
 
-				if (file.exists()) {
-					csvloader.loadStudents(file);
+				if(ext.equals(".csv")){
+					
+					if (file.exists()) {
+						csvloader.loadStudents(file);
+					}
 				}
+				
 
 			} catch (IOException | SQLException | ParseException e) {
 				new Notification("El fitxer no está estructurat com ha de ser", Notification.Type.ERROR_MESSAGE)

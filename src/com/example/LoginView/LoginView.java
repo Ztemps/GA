@@ -4,6 +4,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -14,6 +15,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
@@ -33,9 +36,12 @@ import com.vaadin.event.ContextClickEvent;
 import com.vaadin.event.ContextClickEvent.ContextClickListener;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.event.LayoutEvents.LayoutClickEvent;
+import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinService;
@@ -50,6 +56,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component.Event;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
@@ -94,14 +101,61 @@ public class LoginView extends LoginViewDesign implements View {
 	private ArrayList<User> users;
 	private Notification notif;
 	private Notification notifMayus;
+	private int contador = 0;
+	private ResourceBundle rb = ResourceBundle.getBundle("GA");
+	private EasterEgg egg;
 
+	@SuppressWarnings("deprecation")
 	public LoginView() throws ClassNotFoundException, IOException {
 
 		login_footer.addStyleName("loginfooter");
 		iconsAndCaption();
 		styles();
 		listeners();
-		
+		egg = new EasterEgg();
+
+		login_footer.addListener(new LayoutClickListener() {
+
+			@Override
+			public void layoutClick(LayoutClickEvent event) {
+				// TODO Auto-generated method stub
+
+				contador = contador + 1;
+
+				if (contador == 6) {
+
+					try {
+						pascuawindow();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					contador = 0;
+
+				}
+			}
+		});
+
+	}
+
+	public void pascuawindow() throws IOException {
+
+		Window w = new Window();
+		w.center();
+		w.setModal(true);
+		w.setSizeFull();
+		w.setWidth("50%");
+		w.setHeight("50%");
+		setLogo();
+		egg.txtAuthros.addStyleName("txtAuthors");
+		egg.txtlicence.addStyleName("txtLicense");
+		egg.vAuthors.addStyleName("vAuthors");
+		w.setContent(egg);
+		w.setResizable(false);
+
+		getUI().getCurrent().addWindow(w);
+		w.setVisible(true);
+
 	}
 
 	public void iconsAndCaption() {
@@ -116,6 +170,7 @@ public class LoginView extends LoginViewDesign implements View {
 		txtPassword.setIcon(FontAwesome.LOCK);
 
 	}
+
 	public void styles() {
 		txtTitle.addStyleName("loginTitle");
 		bLogin.addStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -257,15 +312,31 @@ public class LoginView extends LoginViewDesign implements View {
 		conn.close();
 
 	}
-	
-	/**Asignación de los atributos de sesión para el usuario, los cuales usaremos mas tarde
+
+	/**
+	 * Asignación de los atributos de sesión para el usuario, los cuales
+	 * usaremos mas tarde
 	 * 
-	 * @params username nombre del usuario que se ha logueado correctamente y accede a la plataforma6-*/
+	 * @params username nombre del usuario que se ha logueado correctamente y
+	 *         accede a la plataforma6-
+	 */
 	public void setAttributeSession(String username) {
 
 		getUI().getSession().setAttribute("user", username);
 		getUI().getSession().setAttribute("id", user.getId());
 		getUI().getSession().setAttribute("login", "true");
+
+	}
+	
+	private void setLogo() throws IOException {
+		// TODO Auto-generated method stub
+
+		FileResource resource = new FileResource(new File(rb.getString("main_logo")));
+		Image logo = new Image("", resource);
+		logo.setWidth("15%");
+		logo.setHeight("15%");
+		egg.vImage.removeAllComponents();
+		egg.vImage.addComponent(logo);
 
 	}
 
