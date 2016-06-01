@@ -75,7 +75,6 @@ public class AdminViewTutorJava extends MainContentView {
 		bDelete.setVisible(false);
 		buttonEdit.setEnabled(false);
 		bRegister.setVisible(false);
-		clearTxt.setVisible(false);
 		bDelete.setVisible(false);
 		txtSearch.setVisible(false);
 		buttonEdit.setVisible(false);

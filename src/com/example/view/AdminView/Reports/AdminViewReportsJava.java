@@ -436,7 +436,6 @@ public class AdminViewReportsJava extends MainContentView {
 		bDelete.setVisible(false);
 		bRegister.setVisible(false);
 		txtSearch.setVisible(false);
-		clearTxt.setVisible(false);
 
 	}
 

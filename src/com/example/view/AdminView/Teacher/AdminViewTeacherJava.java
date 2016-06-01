@@ -387,7 +387,6 @@ public class AdminViewTeacherJava extends MainContentView {
 		bRegister.setVisible(false);
 		bDelete.setVisible(false);
 		bAdd.setEnabled(true);
-		clearTxt.setVisible(false);
 
 	}
 

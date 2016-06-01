@@ -187,7 +187,6 @@ public class TutorViewGrupsJava extends MainContentView {
 
 		horizontalTitle.addStyleName("horizontal-title");
 		txtTitle.addStyleName("main-title");
-		clearTxt.setIcon(FontAwesome.TIMES);
 
 		txtTitle.setValue("Gestió de Grups");
 		bDelete.addStyleName(ValoTheme.BUTTON_DANGER);
@@ -198,7 +197,6 @@ public class TutorViewGrupsJava extends MainContentView {
 		buttonEdit.setCaption("Detalls");
 
 		txtSearch.setVisible(false);
-		clearTxt.setVisible(false);
 
 		bDelete.setEnabled(false);
 		bDelete.setVisible(false);

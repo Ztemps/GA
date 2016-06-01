@@ -276,7 +276,6 @@ public class AdminViewWarnings extends MainContentView {
 		bRegister.setVisible(false);
 		bAdd.setEnabled(false);
 		bAdd.setCaption("Veure Detalls");
-		clearTxt.setVisible(false);
 
 	}
 

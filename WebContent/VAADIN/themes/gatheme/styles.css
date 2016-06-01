@@ -13066,10 +13066,16 @@ font-weight:bold;
 	margin-bottom: 15px;
 }
 
-.gatheme #vertical {
-	border-radius: 18px;
-	background-color: rgba(255, 255, 255, 0.3);
+.whiteBackground{
+	border-radius: 1px;
 	background: rgba(255, 255, 255, 0.8);
+	border: 4px solid #d4d4d4;
+	
+}
+.gatheme #vSettings  {
+	border-radius: 1px;
+	background: rgba(255, 255, 255, 0.8);
+	border: 4px solid #d4d4d4;
 }
 
 .gatheme .dataInit {
@@ -13120,7 +13126,7 @@ font-weight:bold;
 	
 }
 
-.whiteBackground{
+.vSettings{
 	border-radius: 18px;
 	background-color: rgba(255, 255, 255, 0.3);
 	background: rgba(255, 255, 255, 0.8);

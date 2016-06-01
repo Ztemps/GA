@@ -98,7 +98,6 @@ public class WarningJPAManager {
 
 		try {
 			if (query[7].equals("true")) {
-				System.out.println("query7" + query[7]);
 				amonestat2 = true;
 				expulsat = false;
 			} else {
@@ -185,10 +184,17 @@ public class WarningJPAManager {
 		addWarning(new Warning(user.getId(), dateFormat.parse(fecha), query[2], al.getId(), query[3], query[4],
 				query[5], tutor, amonestat2, expulsat, "15/16", querycon, query[10]));
 
-		if (al.getEmail().contains("@") || al.getEmail() != null) {
-			sendMail = new sendMail(al.getEmail(), "El seu fill " + query[0] + " " + query[1] + " a sigut amonestat ",
-					query[12]);
+		try{
+			
+			if (al.getEmail().contains("@")) {
+				sendMail = new sendMail(al.getEmail(), "El seu fill " + query[0] + " " + query[1] + " a sigut amonestat ",
+						query[12]);
+			}
+			
+		}catch(NullPointerException e){
+			
 		}
+		
 	}
 
 	/**

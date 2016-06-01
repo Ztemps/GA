@@ -1,21 +1,20 @@
 <!doctype html>
 <html>
  <head>
-  <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src&quot;,&quot;THEME&quot;:&quot;ga&quot;}">
+  <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src&quot;,&quot;THEME&quot;:&quot;gatheme&quot;}">
  </head> 
  <body> 
-  <vaadin-css-layout size-full> 
-   <vaadin-horizontal-layout width-full height="52px" _id="horizontalTitle"> 
-    <vaadin-label size-auto plain-text _id="txtTitle" :middle :center>
+  <vaadin-css-layout responsive size-full> 
+   <vaadin-horizontal-layout responsive width-full _id="horizontalTitle"> 
+    <vaadin-label plain-text _id="txtTitle" :middle :center :expand>
       THE MAIN TITTLE 
     </vaadin-label> 
    </vaadin-horizontal-layout> 
-   <vaadin-horizontal-layout spacing width="185px" height="38px"> 
+   <vaadin-horizontal-layout spacing responsive width-full> 
     <vaadin-text-field _id="txtSearch" :middle :center></vaadin-text-field> 
    </vaadin-horizontal-layout> 
-   <vaadin-native-button width="37px" height="37px" plain-text _id="clearTxt"></vaadin-native-button> 
-   <vaadin-horizontal-layout width="95%" height="75%" _id="vHorizontalMain"></vaadin-horizontal-layout> 
-   <vaadin-horizontal-layout spacing height="72px"> 
+   <vaadin-horizontal-layout spacing responsive width="95%" height="80%" margin _id="vHorizontalMain"></vaadin-horizontal-layout> 
+   <vaadin-horizontal-layout spacing responsive margin-left margin-right> 
     <vaadin-button plain-text _id="bAdd" :middle :center>
       Afegir 
     </vaadin-button> 
