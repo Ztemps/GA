@@ -28,6 +28,7 @@ import com.example.Templates.MainContentView;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.log.SysoCounter;
 import com.vaadin.data.Container.Filterable;
+import com.vaadin.data.util.filter.Compare;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.data.util.sqlcontainer.query.FreeformQuery;
@@ -65,7 +66,9 @@ public class AdminViewWarnings extends MainContentView {
 	private HeaderCell cell;
 
 	public AdminViewWarnings() throws SQLException {
-
+		
+		
+		
 		buttonsSettings();
 		filterTextProperties();
 		WindowProperties();
@@ -146,6 +149,7 @@ public class AdminViewWarnings extends MainContentView {
 	}
 
 	
+	
 	/**
 	 * Propiedades principales del componente Grid: Container, columnas...
 	 * En doble click abre la ventana del .pdf
@@ -165,7 +169,7 @@ public class AdminViewWarnings extends MainContentView {
 		} catch (SQLException e) {
 
 		}
-
+		
 		grid = new Grid("", AllWarnings);
 		grid.setSizeFull();
 		grid.setColumns("nom", "cognoms", "grup", "materia", "data", "localitzacio");
