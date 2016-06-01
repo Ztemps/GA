@@ -127,28 +127,15 @@ public class AdminViewReportsJava extends MainContentView {
 			public InputStream getStream() {
 				// return your file/bytearray as an InputStream
 
-				Thread t1 = new Thread() {
-					public void run() {
+			
 						finalreports.calcularResumenTotal();
 
-					}
-				};
+				
 
-				Thread t2 = new Thread() {
-					public void run() {
+		
 						finalreports.calcularTotalporAlumnos();
 
-					}
-				};
-
-				t1.start();
-				t2.start();
-				try {
-					t1.join();
-					t2.join();
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
+			
 
 				finalreports.closeAllConnections();
 
@@ -188,37 +175,14 @@ public class AdminViewReportsJava extends MainContentView {
 			public InputStream getStream() {
 				// return your file/bytearray as an InputStream
 
-				Thread t1 = new Thread() {
-					public void run() {
 						trimestralReports.calcularResumenTrimestre3();
-
-					}
-				};
-
-				Thread t2 = new Thread() {
-					public void run() {
-						trimestralReports.calcularTercerTrimestre();
-
-					}
-				};
-
-				Thread t3 = new Thread() {
-					public void run() {
 						trimestralReports.calcularResumen2Trimestre3();
 
-					}
-				};
-				t1.start();
-				t2.start();
-				t3.start();
-				try {
-					t1.join();
-					t2.join();
-					t3.join();
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+
+				
+						trimestralReports.calcularTercerTrimestre();
+
+			
 
 				trimestralReports.closeAllConnections();
 
@@ -253,37 +217,15 @@ public class AdminViewReportsJava extends MainContentView {
 			public InputStream getStream() {
 				// return your file/bytearray as an InputStream
 
-				Thread t1 = new Thread() {
-					public void run() {
+			
 						trimestralReports.calcularResumenTrimestre2();
-
-					}
-				};
-
-				Thread t2 = new Thread() {
-					public void run() {
-						trimestralReports.calcularSegundoTrimestre();
-
-					}
-				};
-
-				Thread t3 = new Thread() {
-					public void run() {
 						trimestralReports.calcularResumen2Trimestre2();
 
-					}
-				};
-				t1.start();
-				t2.start();
-				t3.start();
-				try {
-					t1.join();
-					t2.join();
-					t3.join();
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+			
+						trimestralReports.calcularSegundoTrimestre();
+
+
+				
 
 				trimestralReports.closeAllConnections();
 
@@ -319,6 +261,7 @@ public class AdminViewReportsJava extends MainContentView {
 				Thread t1 = new Thread() {
 					public void run() {
 						trimestralReports.calcularResumenTrimestre1();
+						trimestralReports.calcularResumen2Trimestre1();
 
 					}
 				};
@@ -330,20 +273,13 @@ public class AdminViewReportsJava extends MainContentView {
 					}
 				};
 
-				Thread t3 = new Thread() {
-					public void run() {
-						trimestralReports.calcularResumen2Trimestre1();
-
-					}
-				};
+				
 
 				t1.start();
 				t2.start();
-				t3.start();
 				try {
 					t1.join();
 					t2.join();
-					t3.join();
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

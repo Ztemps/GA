@@ -228,7 +228,7 @@ public class FinalReports {
 
 						// Debería de pasarle solo el id del alumnno
 						calculoAmonest = calcularAmonestadosPorSemana(Integer.parseInt(idList.get(i).toString()), diaIniciTrimestre, diaFinalTrimestre);
-						calculoExpuls = calcularExpulsadosPorSemana(Integer.parseInt(idList.get(i).toString()), diaIniciTrimestre, diaFinalTrimestre);
+						calculoExpuls.add(calculoAmonest.get(1).toString());
 
 						/*
 						 * for (int n=0; n<calculoAmonest.size(); n++){
@@ -554,6 +554,9 @@ public class FinalReports {
 
 			query = new ReportQuerys();
 			amonestacions1.add(query.getWarningCurs(idList, semana1, semana2));
+			query = new ReportQuerys();
+			amonestacions1.add(query.getExpulsionCurs(idList, semana1, semana2));
+
 			// query.closeTransaction();
 			//System.out.println(amonestacions1.get(0));
 
@@ -563,21 +566,7 @@ public class FinalReports {
 
 	}
 
-	private List calcularExpulsadosPorSemana(int idList, Date semana1, Date semana2) {
-
-		List expulsions1;
-		List expulsionsList1 = null;
-
-		expulsions1 = new ArrayList<>();
-
-			query = new ReportQuerys();
-			expulsions1.add(query.getExpulsionCurs(idList, semana1, semana2));
-			// query.closeTransaction();
-			//System.out.println(expulsions1.get(0));
-		
-
-		return expulsions1;
-	}
+	
 	
 	
 	private List calcularAmonestadosPorSemana2(List idList, Date semana1, Date semana2) {

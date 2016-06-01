@@ -41,6 +41,8 @@ public class TrimestralReports {
 	private static final String FILE_HEADER = "ALUMNE,A,E";
 	ResourceBundle rb = ResourceBundle.getBundle("GA");
 	public ReportQuerys query;
+	public ReportQuerys query2;
+
 	ArrayList<Date> dates = new ArrayList<Date>();
 	// CSV file header
 	public GroupJPAManager jpa;
@@ -211,8 +213,7 @@ public class TrimestralReports {
 						// Debería de pasarle solo el id del alumnno
 						calculoAmonest = calcularAmonestadosPorSemana(Integer.parseInt(idList.get(i).toString()),
 								semana1, semana2);
-						calculoExpuls = calcularExpulsadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1,
-								semana2);
+						calculoExpuls.add(calculoAmonest.get(1).toString());
 
 						semana1 = semana2;
 						diaInicisetmanes.add(Calendar.DATE, 7);
@@ -413,8 +414,8 @@ public class TrimestralReports {
 
 						calculoAmonest = calcularAmonestadosPorSemana(Integer.parseInt(idList.get(i).toString()),
 								semana1, semana2);
-						calculoExpuls = calcularExpulsadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1,
-								semana2);
+						calculoExpuls.add(calculoAmonest.get(1).toString());
+
 
 						semana1 = semana2;
 						diaInicisetmanes.add(Calendar.DATE, 7);
@@ -617,8 +618,8 @@ public class TrimestralReports {
 
 						calculoAmonest = calcularAmonestadosPorSemana(Integer.parseInt(idList.get(i).toString()),
 								semana1, semana2);
-						calculoExpuls = calcularExpulsadosPorSemana(Integer.parseInt(idList.get(i).toString()), semana1,
-								semana2);
+						calculoExpuls.add(calculoAmonest.get(1).toString());
+
 
 						semana1 = semana2;
 						diaInicisetmanes.add(Calendar.DATE, 7);
@@ -702,27 +703,18 @@ public class TrimestralReports {
 
 		amonestacions1 = new ArrayList<>();
 
-		query = new ReportQuerys();
-		amonestacions1.add(query.getWarningCurs(idList, semana1, semana2));
+		query2 = new ReportQuerys();
+		amonestacions1.add(query2.getWarningCurs(idList, semana1, semana2));
+		query2 = new ReportQuerys();
+		amonestacions1.add(query2.getExpulsionCurs(idList, semana1, semana2));
+
 		// query.closeTransaction();
 
 		return amonestacions1;
 
 	}
 
-	private List calcularExpulsadosPorSemana(int idList, Date semana1, Date semana2) {
-
-		List expulsions1;
-		List expulsionsList1 = null;
-
-		expulsions1 = new ArrayList<>();
-
-		query = new ReportQuerys();
-		expulsions1.add(query.getExpulsionCurs(idList, semana1, semana2));
-		// query.closeTransaction();
-
-		return expulsions1;
-	}
+	
 
 	public void calcularResumenTrimestre1() {
 		FileWriter fileWriter = null;
@@ -942,7 +934,7 @@ public class TrimestralReports {
 			diff = diaFinalTrimestre2.getTime() - diaIniciTrimestre2.getTime();
 			numSetmanes = (diff / (24 * 60 * 60 * 1000)) / 7;
 
-			fileWriter.append("1r Trimestre   Curs: " + dateCurs);
+			fileWriter.append("2r Trimestre   Curs: " + dateCurs);
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append(NEW_LINE_SEPARATOR);
 			fileWriter.append(NEW_LINE_SEPARATOR);
