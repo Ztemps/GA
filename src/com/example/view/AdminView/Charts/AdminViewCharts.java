@@ -27,6 +27,7 @@ import com.example.Entities.Warning;
 import com.example.Logic.EntityManagerUtil;
 import com.example.Logic.JDBCConnectionPool;
 import com.example.Reports.FinalReports;
+import com.example.Templates.ChartsContainerView;
 import com.example.Templates.MainContentView;
 import com.itextpdf.text.TabStop.Alignment;
 import com.vaadin.addon.charts.Chart;
@@ -64,7 +65,7 @@ import com.vaadin.ui.themes.ValoTheme;
  * Clase de la vista administrador, que muestra los gráficos.
  */
 
-public class AdminViewCharts extends MainContentView {
+public class AdminViewCharts extends ChartsContainerView {
 
 	
 	private static final long serialVersionUID = 4404820936112694539L;
@@ -124,25 +125,11 @@ public class AdminViewCharts extends MainContentView {
 	 */
 	private void generalSettings() {
 
-		bDelete.addStyleName(ValoTheme.BUTTON_DANGER);
-		bAdd.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		bRegister.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonEdit.addStyleName(ValoTheme.BUTTON_PRIMARY);
-
 		horizontalTitle.addStyleName("horizontal-title");
 		txtTitle.addStyleName("main-title");
-		bAdd.setCaption("Generar informe");
 		txtTitle.setValue("Gràfiques");
 
 		txtSearch.setVisible(false);
-		buttonEdit.setVisible(false);
-		bDelete.setVisible(false);
-		bAdd.setVisible(false);
-		bDelete.setEnabled(false);
-		buttonEdit.setEnabled(false);
-		bRegister.setVisible(false);
-		bAdd.setEnabled(true);
-		clearTxt.setVisible(false);
 
 	}
 
@@ -275,12 +262,14 @@ public class AdminViewCharts extends MainContentView {
 
 		try {
 			names = new String[container.size()];
+			xaxis.setCategories(names);
+			configuration.addxAxis(xaxis);
 		} catch (NullPointerException e) {
 
 		}
 
-		xaxis.setCategories(names);
-		configuration.addxAxis(xaxis);
+
+		
 
 		YAxis yaxis = new YAxis();
 		yaxis.setTitle("Amonestacions");
@@ -478,12 +467,13 @@ public class AdminViewCharts extends MainContentView {
 
 		try {
 			names = new String[container.size()];
+			xaxis.setCategories(names);
+			configuration.addxAxis(xaxis);
 		} catch (NullPointerException e) {
 
 		}
 
-		xaxis.setCategories(names);
-		configuration.addxAxis(xaxis);
+		
 
 		YAxis yaxis = new YAxis();
 		yaxis.setTitle("Amonestacions");
@@ -668,11 +658,5 @@ public class AdminViewCharts extends MainContentView {
 	}
 
 	
-	public void clear() {
-		// TODO Auto-generated method stub
-		bDelete.setEnabled(false);
-		buttonEdit.setEnabled(false);
-
-	}
 
 }

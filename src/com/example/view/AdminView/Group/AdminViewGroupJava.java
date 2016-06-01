@@ -300,7 +300,6 @@ public class AdminViewGroupJava extends MainContentView {
 
 		horizontalTitle.addStyleName("horizontal-title");
 		txtTitle.addStyleName("main-title");
-		clearTxt.setIcon(FontAwesome.TIMES);
 		txtTitle.setValue("Llista de Grups");
 		bDelete.addStyleName(ValoTheme.BUTTON_DANGER);
 		bAdd.addStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -312,7 +311,6 @@ public class AdminViewGroupJava extends MainContentView {
 		buttonEdit.setVisible(false);
 		bRegister.setVisible(false);
 		bAdd.setEnabled(true);
-		clearTxt.setVisible(false);
 		txtSearch.setVisible(false);
 
 	}

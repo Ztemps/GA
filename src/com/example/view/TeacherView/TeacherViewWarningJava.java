@@ -262,13 +262,7 @@ public class TeacherViewWarningJava extends MainContentView {
 
 			}
 		});
-		clearTxt.setDescription("Limpiar contenido actual...");
-		clearTxt.addClickListener(e -> {
-
-			txtSearch.clear();
-
-		});
-		clearTxt.setIcon(FontAwesome.TIMES);
+		
 
 		vHorizontalMain.addComponent(GridProperties());
 
@@ -368,7 +362,6 @@ public class TeacherViewWarningJava extends MainContentView {
 		buttonEdit.addStyleName(ValoTheme.BUTTON_PRIMARY);
 
 		txtSearch.setVisible(false);
-		clearTxt.setVisible(false);
 
 		bDelete.setVisible(false);
 		buttonEdit.setVisible(false);

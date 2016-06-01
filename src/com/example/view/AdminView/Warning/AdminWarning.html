@@ -1,77 +1,74 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
  <head>
   <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src&quot;,&quot;THEME&quot;:&quot;gatheme&quot;}">
  </head> 
  <body> 
-  <vaadin-css-layout width-full> 
-   <vaadin-vertical-layout responsive width="80%"> 
-    <vaadin-horizontal-layout spacing size-full margin-top margin-bottom :middle :center :expand> 
-     <vaadin-text-field icon="fonticon://FontAwesome/f007" caption="Nom" width-full _id="nom" :middle :center :expand></vaadin-text-field> 
-     <vaadin-text-field icon="fonticon://FontAwesome/f007" caption="Cognoms" width-full _id="cognoms" :middle :center :expand></vaadin-text-field> 
-     <vaadin-text-field icon="fonticon://FontAwesome/f0c0" caption="Grup" width-full _id="grup" :middle :center :expand></vaadin-text-field> 
-     <vaadin-popup-date-field icon="fonticon://FontAwesome/f133" caption="Data" width-full _id="datefield" :middle :center :expand></vaadin-popup-date-field> 
-     <vaadin-text-field caption="Hora [HH:mm]" width-full _id="time" :middle :center :expand></vaadin-text-field> 
+  <vaadin-css-layout width-full="true"> 
+   <vaadin-vertical-layout responsive="true" width="80%"> 
+    <vaadin-horizontal-layout spacing="true" size-full="true" margin-top="true" margin-bottom="true" :middle="" :center="" :expand=""> 
+     <vaadin-text-field icon="fonticon://FontAwesome/f007" caption="Nom" width-full="true" _id="nom" :middle="" :center="" :expand=""></vaadin-text-field> 
+     <vaadin-text-field icon="fonticon://FontAwesome/f007" caption="Cognoms" width-full="true" _id="cognoms" :middle="" :center="" :expand=""></vaadin-text-field> 
+     <vaadin-text-field icon="fonticon://FontAwesome/f0c0" caption="Grup" width-full="true" _id="grup" :middle="" :center="" :expand=""></vaadin-text-field> 
+     <vaadin-popup-date-field icon="fonticon://FontAwesome/f133" caption="Data" width-full="true" _id="datefield" :middle="" :center="" :expand=""></vaadin-popup-date-field> 
+     <vaadin-text-field caption="Hora [HH:mm]" width-full="true" _id="time" :middle="" :center="" :expand=""></vaadin-text-field> 
     </vaadin-horizontal-layout> 
-    <vaadin-horizontal-layout spacing size-full :middle :center :expand> 
-     <vaadin-combo-box icon="fonticon://FontAwesome/f02d" caption="Matèria" width-full _id="comboSubject" :middle :center :expand> 
+    <vaadin-horizontal-layout spacing="true" size-full="true" :middle="" :center="" :expand=""> 
+     <vaadin-combo-box icon="fonticon://FontAwesome/f02d" caption="Matèria" width-full="true" _id="comboSubject" :middle="" :center="" :expand=""> 
       <option>Option 1</option> 
       <option>Option 2</option> 
       <option>Option 3</option> 
      </vaadin-combo-box> 
-     <vaadin-native-select icon="fonticon://FontAwesome/f124" caption="Circumstància" item-caption-mode="id" width-full _id="circunstancia" :middle :center :expand> 
+     <vaadin-native-select icon="fonticon://FontAwesome/f124" caption="Circumstància" item-caption-mode="id" width-full="true" _id="circunstancia" :middle="" :center="" :expand=""> 
       <option>Aula</option> 
       <option>Pati</option> 
       <option>Banys</option> 
       <option>Pasadissos</option> 
       <option>Sortida</option> 
      </vaadin-native-select> 
-     <vaadin-combo-box icon="fonticon://FontAwesome/f0f0" caption="Professor" item-caption-mode="id" width-full _id="comboProf" :middle :center :expand> 
+     <vaadin-combo-box icon="fonticon://FontAwesome/f0f0" caption="Professor" item-caption-mode="id" width-full="true" _id="comboProf" :middle="" :center="" :expand=""> 
       <option>Option 1</option> 
       <option>Option 2</option> 
       <option>Option 3</option> 
      </vaadin-combo-box> 
-     <vaadin-text-field icon="fonticon://FontAwesome/f0f0" caption="Tutor" width-full _id="tutor" :middle :center :expand></vaadin-text-field> 
-     <vaadin-native-select icon="fonticon://FontAwesome/f06a" caption="Caràcter de la falta" item-caption-mode="id" width-full _id="caracter" :middle :center :expand> 
+     <vaadin-text-field icon="fonticon://FontAwesome/f0f0" caption="Tutor" width-full="true" _id="tutor" :middle="" :center="" :expand=""></vaadin-text-field> 
+     <vaadin-native-select icon="fonticon://FontAwesome/f06a" caption="Caràcter de la falta" item-caption-mode="id" width-full="true" _id="caracter" :middle="" :center="" :expand=""> 
       <option>Lleu</option> 
       <option>Greu</option> 
      </vaadin-native-select> 
     </vaadin-horizontal-layout> 
-    <vaadin-horizontal-layout spacing width-full :middle :center> 
-     <vaadin-option-group icon="fonticon://FontAwesome/f058" caption="Acció" item-caption-mode="id" width-full _id="accio" :middle :center :expand> 
+    <vaadin-horizontal-layout spacing="true" width-full="true" :middle="" :center=""> 
+     <vaadin-option-group icon="fonticon://FontAwesome/f058" caption="Acció" item-caption-mode="id" width-full="true" _id="accio" :middle="" :center="" :expand=""> 
       <option>Amonestat</option> 
       <option>Expulsat</option> 
      </vaadin-option-group> 
-     <vaadin-option-group icon="fonticon://FontAwesome/f127" caption="Motiu" item-caption-mode="id" width-full _id="motiu" :middle :center :expand> 
+     <vaadin-option-group icon="fonticon://FontAwesome/f127" caption="Motiu" item-caption-mode="id" width-full="true" _id="motiu" :middle="" :center="" :expand=""> 
       <option>Faltar al respecte al professor</option> 
       <option>Faltar al respecte a algún company</option> 
       <option>Acumulació d'amonestacions lleus</option> 
      </vaadin-option-group> 
-     <vaadin-option-group icon="fonticon://FontAwesome/f127" caption=" " item-caption-mode="id" width-full _id="motiu2" :middle :center :expand> 
+     <vaadin-option-group icon="fonticon://FontAwesome/f127" caption=" " item-caption-mode="id" width-full="true" _id="motiu2" :middle="" :center="" :expand=""> 
       <option>Causar dany o desperfecte material</option> 
       <option>Negar-se a realitzar treballs encomanats</option> 
       <option>Molestar o distreure de forma reiterada als companys</option> 
      </vaadin-option-group> 
     </vaadin-horizontal-layout> 
-    <vaadin-horizontal-layout spacing width-full :middle :center> 
-     <vaadin-text-area icon="fonticon://FontAwesome/f086" caption="Altres motius" width-full _id="amotius" :middle :center :expand></vaadin-text-area> 
+    <vaadin-horizontal-layout spacing="true" width-full="true" :middle="" :center=""> 
+     <vaadin-text-area icon="fonticon://FontAwesome/f086" caption="Altres motius" width-full="true" _id="amotius" :middle="" :center="" :expand=""></vaadin-text-area> 
     </vaadin-horizontal-layout> 
-    <vaadin-vertical-layout :middle :center> 
-     <vaadin-label responsive plain-text :middle :center>
+    <vaadin-vertical-layout :middle="" :center=""> 
+     <vaadin-label responsive="true" plain-text="" :middle="" :center="">
        * Els camps amb astericos són obligatoris. 
      </vaadin-label> 
-     <vaadin-label responsive plain-text :middle :center>
-       * Si el camp data i hora són vuits, s'inseriran la data i hora actuals. 
-     </vaadin-label> 
-     <vaadin-label responsive plain-text :middle :center>
+     <vaadin-label responsive="true" plain-text="" :middle="" :center="">
        * Si vosté pasa amonestacions per a un altre professor, introdueixi el seu nom al camp professor. 
      </vaadin-label> 
     </vaadin-vertical-layout> 
-    <vaadin-horizontal-layout spacing width-full margin :middle :center> 
-     <vaadin-button icon="fonticon://FontAwesome/f057" style-name="danger" plain-text _id="bcancelar" :middle :center>
+    <vaadin-horizontal-layout spacing="true" width-full="true" margin="true" :middle="" :center=""> 
+     <vaadin-button icon="fonticon://FontAwesome/f057" style-name="danger" plain-text="" _id="bcancelar" :middle="" :center="">
        Cancelar 
      </vaadin-button> 
-     <vaadin-button icon="fonticon://FontAwesome/f0a9" style-name="friendly" height-full plain-text _id="baceptar" :middle :center>
+     <vaadin-button icon="fonticon://FontAwesome/f0a9" style-name="friendly" height-full="true" plain-text="" _id="baceptar" :middle="" :center="">
        Aceptar 
      </vaadin-button> 
     </vaadin-horizontal-layout> 

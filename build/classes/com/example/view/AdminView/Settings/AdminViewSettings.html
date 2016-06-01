@@ -1,41 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
  <head>
   <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src&quot;,&quot;THEME&quot;:&quot;gatheme&quot;}">
  </head> 
  <body> 
-  <vaadin-css-layout width="836px" height="565px"> 
-   <vaadin-vertical-layout primary-style-name="v-verticallayout" spacing="true" id="vertical" width="807px" height-full="true" _id="vertical"> 
-    <vaadin-horizontal-layout primary-style-name="v-horizontallayout" spacing="true" width-full="true"> 
-     <vaadin-date-field caption="Inici 1er Trimestre" invalid-committed="true" width="80%" _id="startDateGrade"></vaadin-date-field> 
-     <vaadin-date-field caption="Final 1er Trimestre" width="80%" _id="firstTrimesterEndDate"></vaadin-date-field> 
+  <vaadin-css-layout style-name="vSettings" responsive id="vertical" width="60%"> 
+   <vaadin-vertical-layout spacing responsive margin> 
+    <vaadin-horizontal-layout spacing width-full :middle :center> 
+     <vaadin-date-field caption="Inici 1er Trimestre" invalid-committed width-full _id="startDateGrade" :middle :center :expand></vaadin-date-field> 
+     <vaadin-date-field caption="Final 1er Trimestre" width-full _id="firstTrimesterEndDate" :middle :center :expand></vaadin-date-field> 
     </vaadin-horizontal-layout> 
-    <vaadin-horizontal-layout primary-style-name="v-horizontallayout2" spacing="true" width-full="true"> 
-     <vaadin-date-field caption="Inici 2n Trimestre" width="80%" _id="secondTrimesterStartDate"></vaadin-date-field> 
-     <vaadin-date-field caption="Final 2n Trimestre" width="80%" _id="secondTrimesterEndDate"></vaadin-date-field> 
+    <vaadin-horizontal-layout primary-style-name="v-horizontallayout2" spacing width-full :middle :center> 
+     <vaadin-date-field caption="Inici 2n Trimestre" width-full _id="secondTrimesterStartDate" :middle :center :expand></vaadin-date-field> 
+     <vaadin-date-field caption="Final 2n Trimestre" width-full _id="secondTrimesterEndDate" :middle :center :expand></vaadin-date-field> 
     </vaadin-horizontal-layout> 
-    <vaadin-horizontal-layout primary-style-name="v-horizontallayout3" spacing="true" width-full="true"> 
-     <vaadin-date-field caption="Inici 3er Trimestre" width="80%" _id="thirdTrimesterStartDate3"></vaadin-date-field> 
-     <vaadin-date-field caption="Final 3er Trimestre" width="80%" _id="endGradeDate3"></vaadin-date-field> 
+    <vaadin-horizontal-layout primary-style-name="v-horizontallayout3" spacing width-full :middle :center> 
+     <vaadin-date-field caption="Inici 3er Trimestre" width-full _id="thirdTrimesterStartDate3" :middle :center :expand></vaadin-date-field> 
+     <vaadin-date-field caption="Final 3er Trimestre" width-full _id="endGradeDate3" :middle :center :expand></vaadin-date-field> 
     </vaadin-horizontal-layout> 
-    <vaadin-horizontal-layout primary-style-name="v-horizontallayout3" style-name="settings" spacing="true" width-full="true" height="37px" _id="changePassLayout" :middle="" :center=""> 
-     <vaadin-password-field input-prompt="Password actual" style-name="settings" _id="oldPass" :middle="" :center=""></vaadin-password-field> 
-     <vaadin-button style-name="primary" responsive="true" plain-text="" _id="checkOldPass" :bottom="" :center="">
+    <vaadin-horizontal-layout primary-style-name="v-horizontallayout3" style-name="settings" spacing width-full _id="changePassLayout" :middle :center> 
+     <vaadin-password-field input-prompt="Password actual" style-name="settings" width-full _id="oldPass" :middle :center :expand></vaadin-password-field> 
+     <vaadin-button style-name="primary" responsive plain-text _id="checkOldPass" :middle :center>
        Acceptar 
      </vaadin-button> 
-     <vaadin-password-field input-prompt="Nou password" _id="newPass" :middle="" :center=""></vaadin-password-field> 
-     <vaadin-password-field input-prompt="Repeteixi nou password" _id="confirmNewPass" :middle="" :center=""></vaadin-password-field> 
-     <vaadin-button style-name="primary" responsive="true" plain-text="" _id="enterNewPass" :bottom="" :center="">
+     <vaadin-password-field input-prompt="Nou password" width-full _id="newPass" :middle :center :expand></vaadin-password-field> 
+     <vaadin-password-field input-prompt="Repeteixi nou password" width-full _id="confirmNewPass" :middle :center :expand></vaadin-password-field> 
+     <vaadin-button style-name="primary" responsive plain-text _id="enterNewPass" :middle :center>
        Acceptar 
      </vaadin-button> 
     </vaadin-horizontal-layout> 
-    <vaadin-horizontal-layout primary-style-name="v-horizontallayout" width-full="true" height="48px"> 
-     <vaadin-check-box caption="Enviar e-mail als Tutors" id="checkEmailTutors" _id="checkEmailTutors" :middle=""></vaadin-check-box> 
-    </vaadin-horizontal-layout> 
-    <vaadin-horizontal-layout primary-style-name="v-horizontallayout" width-full="true"> 
-     <vaadin-check-box caption="Enviar e-mail als Pares" width="30%" _id="checkEmailPares" :middle=""></vaadin-check-box> 
-    </vaadin-horizontal-layout> 
-    <vaadin-check-box caption="Enviar Telegram als Pares" width="30%" _id="checkWhatsPares"></vaadin-check-box> 
+   </vaadin-vertical-layout> 
+   <vaadin-vertical-layout spacing responsive margin-left> 
+    <vaadin-check-box caption="Enviar e-mail als Pares" width-full _id="checkEmailPares"></vaadin-check-box> 
+    <vaadin-check-box caption="Enviar Telegram als Pares" width-full _id="checkWhatsPares"></vaadin-check-box> 
+    <vaadin-check-box caption="Enviar e-mail als Tutors" id="checkEmailTutors" width-full _id="checkEmailTutors"></vaadin-check-box> 
    </vaadin-vertical-layout> 
   </vaadin-css-layout>  
  </body>

@@ -108,9 +108,6 @@ public class TutorJPAManager {
 		query.setParameter("id", id);
 		//
 		Teacher docent = (Teacher) query.getSingleResult();
-
-		System.out.println(docent.toString());
-
 		return docent.getNom();
 	}
 
