@@ -115,7 +115,6 @@ public class TutorViewGrupsJava extends MainContentView {
 
 		UI.getCurrent().addWindow(windowDetails);
 
-		tutorviewdetailsform.imageStudent.setVisible(false);
 		tutorviewdetailsform.dateStudent.setReadOnly(false);
 		tutorviewdetailsform.lastnameStudent.setReadOnly(false);
 		tutorviewdetailsform.nameStudent.setReadOnly(false);

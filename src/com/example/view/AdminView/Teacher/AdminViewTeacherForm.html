@@ -6,15 +6,15 @@
  <body> 
   <vaadin-form-layout> 
    <vaadin-vertical-layout :middle :center> 
-    <vaadin-horizontal-layout spacing width-full margin-bottom :middle :center> 
+    <vaadin-horizontal-layout spacing width-full margin-left margin-right margin-top :middle :center> 
      <vaadin-text-field icon="fonticon://FontAwesome/f007" caption="Nom" required immediate width-full _id="nom" :middle :center></vaadin-text-field> 
      <vaadin-text-field icon="fonticon://FontAwesome/f007" caption="Cognoms" required immediate width-full _id="cognoms" :middle :center></vaadin-text-field> 
     </vaadin-horizontal-layout> 
-    <vaadin-horizontal-layout spacing width-full :middle :center> 
+    <vaadin-horizontal-layout spacing width-full margin-left margin-right :middle :center> 
      <vaadin-text-field icon="fonticon://FontAwesome/f003" caption="Email" required immediate width-full _id="email" :middle :center :expand></vaadin-text-field> 
      <vaadin-text-field caption="Usuari" width-full _id="txtUsername" :middle :center :expand></vaadin-text-field> 
     </vaadin-horizontal-layout> 
-    <vaadin-horizontal-layout spacing width-full margin :middle :center> 
+    <vaadin-horizontal-layout spacing responsive width="50%" margin-left margin-right margin-top :middle :center> 
      <vaadin-vertical-layout :middle :center :expand> 
       <vaadin-check-box caption="Tutor" width-full _id="isTutor" :middle :center></vaadin-check-box> 
      </vaadin-vertical-layout> 
@@ -26,7 +26,7 @@
       </vaadin-native-select> 
      </vaadin-vertical-layout> 
     </vaadin-horizontal-layout> 
-    <vaadin-horizontal-layout spacing responsive width-full margin :middle :center> 
+    <vaadin-horizontal-layout spacing responsive width-full margin-left margin-right margin-top :middle :center> 
      <vaadin-button icon="fonticon://FontAwesome/f00c" style-name="icon-align-right primary" width-full plain-text _id="aceptarButton" :middle :center :expand>
        Aceptar 
      </vaadin-button> 

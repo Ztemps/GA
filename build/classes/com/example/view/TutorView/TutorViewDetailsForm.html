@@ -1,22 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
  <head>
-  <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src&quot;,&quot;THEME&quot;:&quot;gestioamonestacions&quot;}">
+  <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src&quot;,&quot;THEME&quot;:&quot;gatheme&quot;}">
  </head> 
  <body> 
-  <vaadin-form-layout caption="Cancelar" id="FormAmonestacio" width-auto="true" height="598px" margin="true"> 
-   <vaadin-horizontal-layout primary-style-name="v-horizontallayout" spacing="true" width="118px" height="103px"> 
-    <vaadin-image width="120px" height="110px" _id="imageStudent"></vaadin-image> 
-   </vaadin-horizontal-layout> 
-   <vaadin-text-field caption="Nom" required="true" immediate="true" width="317px" _id="nameStudent"></vaadin-text-field> 
-   <vaadin-text-field caption="Cognoms" required="true" immediate="true" width="317px" _id="lastnameStudent"></vaadin-text-field> 
-   <vaadin-text-field caption="Data " required="true" immediate="true" width="317px" _id="dateStudent"></vaadin-text-field> 
-   <vaadin-text-field caption="Teléfons" required="true" immediate="true" width="317px" _id="phoneStudent"></vaadin-text-field> 
-   <vaadin-text-field caption="Emails " required="true" immediate="true" width="317px" _id="emailStudent"></vaadin-text-field> 
-   <vaadin-text-field caption="Curs" required="true" immediate="true" width="317px" _id="coursStudent"></vaadin-text-field> 
-   <vaadin-text-field caption="Nº Amonestacions" required="true" immediate="true" width="317px" _id="nameStudent2"></vaadin-text-field> 
-   <vaadin-horizontal-layout primary-style-name="v-horizontallayout" spacing="true" width="296px" height="103px" :middle=""> 
-    <vaadin-button icon="fonticon://FontAwesome/f00d" style-name="danger icon-align-right" width="118px" plain-text="" _id="cancelButton" :middle="">
+  <vaadin-form-layout caption="Cancelar" responsive id="FormAmonestacio" margin> 
+   <vaadin-text-field caption="Nom" required responsive immediate width-full _id="nameStudent" :middle :center></vaadin-text-field> 
+   <vaadin-text-field caption="Cognoms" required responsive immediate width-full _id="lastnameStudent" :middle :center></vaadin-text-field> 
+   <vaadin-text-field caption="Data " required responsive immediate width-full _id="dateStudent" :middle :center></vaadin-text-field> 
+   <vaadin-text-field caption="Teléfons" required responsive immediate width-full _id="phoneStudent" :middle :center></vaadin-text-field> 
+   <vaadin-text-field caption="Emails " required responsive immediate width-full _id="emailStudent" :middle :center></vaadin-text-field> 
+   <vaadin-text-field caption="Curs" required responsive immediate width-full _id="coursStudent" :middle :center></vaadin-text-field> 
+   <vaadin-text-field caption="Nº Amonestacions" required responsive immediate width-full _id="nameStudent2" :middle :center></vaadin-text-field> 
+   <vaadin-horizontal-layout spacing responsive width-full :middle> 
+    <vaadin-button icon="fonticon://FontAwesome/f00d" style-name="danger icon-align-right" plain-text _id="cancelButton" :middle :center>
       Sortir 
     </vaadin-button> 
    </vaadin-horizontal-layout> 
