@@ -110,6 +110,7 @@ public class AdminViewWarningJava extends MainContentView {
 	private HeaderRow filterRow;
 	private TextField filterField;
 	private HeaderCell cell;
+	private TeachersJPAManager teacherJPA;
 	private WarningJPAManager war;
 	private ResourceBundle rb = ResourceBundle.getBundle("GA");
 	private static final String AL_NOM = "nom";
@@ -915,19 +916,21 @@ public class AdminViewWarningJava extends MainContentView {
 		subjects.add("Català");
 		subjects.add("Ciències de la naturalesa");
 		subjects.add("Economia");
-		subjects.add("Educaciò Fisica");
-		subjects.add("Educaciò per la ciutadania");
+		subjects.add("Educació Fisica");
+		subjects.add("Educació per la ciutadania");
 		subjects.add("Educació visual i plàstica");
 		subjects.add("Llatí");
 		subjects.add("Filosofia");
 		subjects.add("Física i química");
 		subjects.add("Geologia");
 		subjects.add("História");
-		subjects.add("Informatica");
+		subjects.add("Informàtica");
 		subjects.add("Matemàtiques");
 		subjects.add("Música");
 		subjects.add("Religió");
 		subjects.add("Tecnologia");
+		subjects.add("Francès");
+
 
 		amonestacioForm.comboSubject.setFilteringMode(FilteringMode.CONTAINS);
 		amonestacioForm.comboSubject.setImmediate(true);
@@ -950,8 +953,8 @@ public class AdminViewWarningJava extends MainContentView {
 	 */
 	private void PopulateComboBoxProf() {
 
-		TeachersJPAManager ma = new TeachersJPAManager();
-		List<Teacher> lista = ma.getNoms();
+		teacherJPA  = new TeachersJPAManager();
+		List<Teacher> lista = teacherJPA.getNoms();
 		// Set the appropriate filtering mode for this example
 		amonestacioForm.comboProf.setFilteringMode(FilteringMode.CONTAINS);
 		amonestacioForm.comboProf.setImmediate(true);
@@ -971,6 +974,8 @@ public class AdminViewWarningJava extends MainContentView {
 			amonestacioForm.comboProf.addItem(lista.get(i).getNom() + " " + lista.get(i).getCognoms());
 
 		}
+		
+		teacherJPA.closeTransaction();
 
 	}
 

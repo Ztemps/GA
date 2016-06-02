@@ -156,7 +156,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		txtSearch.setVisible(false);
 		horizontalTitle.addStyleName("horizontal-title");
 		txtTitle.addStyleName("main-title");
-		txtTitle.setValue("Carrega de CSV");
+		txtTitle.setValue("Càrrega CSV");
 		csv.bButtonHelp.setReadOnly(true);
 	}
 
