@@ -99,21 +99,21 @@ public class TutorView extends MainView implements View {
 		mevesAmonestacions.addClickListener(e -> ownWarnings());
 		configuracio.addClickListener(e -> Config());
 		logout.addClickListener(e -> logoutActions());
+		groupsTutor.addClickListener(e -> viewGroups());
 
 		content.removeAllComponents();
 		content.addComponents(vistaAmonestacion, TutorViewGrups, tutorownwarning, vistaConfig);
 
-		groupsTutor.addClickListener(new ClickListener() {
+	
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-				vistaAmonestacion.setVisible(false);
-				TutorViewGrups.setVisible(true);
-				tutorownwarning.setVisible(false);
-			}
-		});
+	}
 
+	private void viewGroups() {
+		// TODO Auto-generated method stub
+		vistaAmonestacion.setVisible(false);
+		TutorViewGrups.setVisible(true);
+		tutorownwarning.setVisible(false);
+		vistaConfig.setVisible(false);
 	}
 
 	/**
@@ -145,6 +145,7 @@ public class TutorView extends MainView implements View {
 	 */
 	private void ownWarnings() {
 		// TODO Auto-generated method stub
+		
 		TutorViewGrups.setVisible(false);
 		vistaAmonestacion.setVisible(false);
 		tutorownwarning.setVisible(true);
