@@ -68,8 +68,6 @@ public class GaUI extends UI {
 		addStyleName(ValoTheme.UI_WITH_MENU);
 
 		new Navigator(this, this);
-		setTheme("ga");
-
 		getNavigator().addView(LoginView.NAME, LoginView.class);//
 		getNavigator().addView(TeacherView.NAME, TeacherView.class);//
 		getNavigator().addView(AdminView.NAME, AdminView.class);//

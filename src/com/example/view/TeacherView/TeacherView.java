@@ -72,6 +72,11 @@ import com.vaadin.ui.themes.ValoTheme;
 
 public class TeacherView extends MainView implements View {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static final String NAME = "Professor";
 
 	//private TeacherViewWarningJava vistaAmonestacion;
@@ -160,7 +165,11 @@ public class TeacherView extends MainView implements View {
 			
 		}catch(NullPointerException e){
 			
+		}finally {
+			ma.closeTransaction();
+			tutorJPA.closeTransaction();
 		}
+		
 		
 	}
 
@@ -174,14 +183,20 @@ public class TeacherView extends MainView implements View {
 		// TODO Auto-generated method stub
 		// en caso de no haberse logeado anteriormente se mandara a la vista principal(login)
 
-		if (getUI().getCurrent().getSession().getAttribute("login") == null) {
-			getUI().getSession().setAttribute("id", 0);
-			getUI().getPage().setLocation("http://localhost:8082/GA");
-			VaadinService.getCurrentRequest().getWrappedSession().invalidate();
+		if (getUI().getSession().getAttribute("login") == null || 
+				!getUI().getSession().getAttribute("rol").equals("Professor"))  {
+			
+			getUI().getSession().setAttribute("user", null);
+			getUI().getSession().setAttribute("id", null);
+			getUI().getSession().setAttribute("rol", null);
+			getUI().getSession().setAttribute("login", null);
+			getUI().getPage().setLocation("/GA");
+			
 		}else{
 			
 			setWellcome();
 		}
+
 	}
 
 	public Window DeleteSubWindows() {
@@ -246,13 +261,12 @@ public class TeacherView extends MainView implements View {
 		notif.setPosition(Position.TOP_CENTER);
 	}
 	public void logout() {
-
 		getUI().getNavigator().navigateTo(LoginView.NAME);
 		getUI().getCurrent().getSession().setAttribute("id", null);
 		getUI().getCurrent().getSession().setAttribute("user", null);
-		getUI().getCurrent().getSession().close();
-		notif("Sessió tancada correctament!");
-
+		getUI().getCurrent().getSession().setAttribute("rol", null);
+		getUI().getCurrent().getSession().setAttribute("login", null);
+		notif("Sessió tancada");
 	}
 
 	private void setLogo() throws IOException {

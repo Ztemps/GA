@@ -45,7 +45,6 @@ import com.example.Templates.ConfirmWarningPDF;
 import com.example.Templates.MainContentView;
 import com.example.view.AdminView.AdminView;
 import com.example.view.AdminView.Settings.AdminViewSettingsJava;
-import com.example.view.TeacherView.WarningTeacher;
 import com.itextpdf.text.DocumentException;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;

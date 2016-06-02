@@ -224,4 +224,7 @@ public class WarningJPAManager {
 		return String.valueOf(GaUI.getCurrent().getSession().getAttribute("user"));
 	}
 
+	public void closeTransaction() {
+		em.close();
+	}
 }

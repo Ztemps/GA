@@ -21,12 +21,12 @@ import com.vaadin.ui.declarative.Design;
 @SuppressWarnings("serial")
 public class AdminCSVUpload extends CssLayout {
 	protected VerticalLayout mainStudent;
-	protected Button bButtonHelp;
 	protected Label txtUpStudents;
+	protected Button bButtonHelp;
 	protected VerticalLayout vStudents;
 	protected VerticalLayout mainTeacer;
-	protected Button bButtonHelpTeacher;
 	protected Label txtUpTeachers;
+	protected Button bButtonHelpTeacher;
 	protected VerticalLayout vTeachers;
 
 	public AdminCSVUpload() {

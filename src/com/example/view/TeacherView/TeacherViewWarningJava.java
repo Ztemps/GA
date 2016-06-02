@@ -21,6 +21,7 @@ import com.example.Pdf.generatePDF;
 import com.example.Templates.ConfirmWarningPDF;
 import com.example.Templates.MainContentView;
 import com.example.view.AdminView.AdminView;
+import com.example.view.AdminView.Warning.AdminWarning;
 import com.google.gwt.resources.css.ast.CssProperty.StringValue;
 import com.itextpdf.text.DocumentException;
 import com.vaadin.addon.jpacontainer.JPAContainer;
@@ -95,7 +96,7 @@ public class TeacherViewWarningJava extends MainContentView {
 	private Window windowpdf = new Window();
 	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
 	private JPAContainer<Student> alumnes;
-	private WarningTeacher amonestacioForm;
+	private AdminWarning amonestacioForm;
 	private WarningJPAManager WarningJPA;
 	private TutorJPAManager tutorJPA;
 	private File sourceFile;
@@ -262,7 +263,6 @@ public class TeacherViewWarningJava extends MainContentView {
 
 			}
 		});
-		
 
 		vHorizontalMain.addComponent(GridProperties());
 
@@ -280,8 +280,8 @@ public class TeacherViewWarningJava extends MainContentView {
 		subjects.add("Català");
 		subjects.add("Ciències de la naturalesa");
 		subjects.add("Economia");
-		subjects.add("Educaciò Fisica");
-		subjects.add("Educaciò per la ciutadania");
+		subjects.add("Educació Fisica");
+		subjects.add("Educació per la ciutadania");
 		subjects.add("Educació visual i plàstica");
 		subjects.add("Llatí");
 		subjects.add("Filosofia");
@@ -293,18 +293,19 @@ public class TeacherViewWarningJava extends MainContentView {
 		subjects.add("Música");
 		subjects.add("Religió");
 		subjects.add("Tecnologia");
+		subjects.add("Francès");
 
-		amonestacioForm.materia.setFilteringMode(FilteringMode.CONTAINS);
-		amonestacioForm.materia.setImmediate(true);
+		amonestacioForm.comboSubject.setFilteringMode(FilteringMode.CONTAINS);
+		amonestacioForm.comboSubject.setImmediate(true);
 
-		amonestacioForm.materia.setNullSelectionAllowed(true);
-		amonestacioForm.materia.setDescription("Llista de materies que s'imparteixen al col·legi.");
+		amonestacioForm.comboSubject.setNullSelectionAllowed(true);
+		amonestacioForm.comboSubject.setDescription("Llista de materies que s'imparteixen al col·legi.");
 
-		amonestacioForm.materia.removeAllItems();
+		amonestacioForm.comboSubject.removeAllItems();
 
 		for (int i = 0; i < subjects.size(); i++) {
 
-			amonestacioForm.materia.addItem(subjects.get(i));
+			amonestacioForm.comboSubject.addItem(subjects.get(i));
 		}
 
 	}
@@ -336,6 +337,7 @@ public class TeacherViewWarningJava extends MainContentView {
 
 		}
 
+		ma.closeTransaction();
 	}
 
 	private String mailStudent() {
@@ -408,6 +410,10 @@ public class TeacherViewWarningJava extends MainContentView {
 		cell.setComponent(filterField);
 	}
 
+	/**
+	 * Filtro por apellidos para el Grid
+	 */
+
 	private void FilterGridSurName() {
 
 		cell = filterRow.getCell(AL_COGNOMS);
@@ -459,6 +465,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		// Fill the grid with data
 		alumnes = JPAContainerFactory.make(Student.class, em);
 		grid = new Grid("", alumnes);
+//		alumnes.commit();
 		grid.setSizeFull();
 		grid.setContainerDataSource(alumnes);
 		grid.setColumnReorderingAllowed(true);
@@ -519,7 +526,7 @@ public class TeacherViewWarningJava extends MainContentView {
 	 */
 	private void WindowProperties() throws MalformedURLException, DocumentException, IOException {
 
-		amonestacioForm = new WarningTeacher();
+		amonestacioForm = new AdminWarning();
 
 		window.setWidth(900.0f, Unit.PIXELS);
 		// window.setContent(form);
@@ -575,6 +582,9 @@ public class TeacherViewWarningJava extends MainContentView {
 		amonestacioForm.cognoms.setReadOnly(true);
 		amonestacioForm.tutor.setReadOnly(true);
 		amonestacioForm.grup.setReadOnly(true);
+
+		WarningJPA.closeTransaction();
+		tutorJPA.closeTransaction();
 	}
 
 	/**
@@ -628,6 +638,9 @@ public class TeacherViewWarningJava extends MainContentView {
 		amonestacioForm.tutor.setReadOnly(true);
 		amonestacioForm.grup.setReadOnly(true);
 
+		WarningJPA.closeTransaction();
+		tutorJPA.closeTransaction();
+
 	}
 
 	/**
@@ -637,7 +650,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		// TODO Auto-generated method stub
 		amonestacioForm.nom.setRequired(true);
 		amonestacioForm.cognoms.setRequired(true);
-		amonestacioForm.materia.setRequired(false);
+		amonestacioForm.comboSubject.setRequired(false);
 		amonestacioForm.circunstancia.setRequired(true);
 		amonestacioForm.tutor.setRequired(true);
 		amonestacioForm.grup.setRequired(true);
@@ -647,7 +660,7 @@ public class TeacherViewWarningJava extends MainContentView {
 
 		amonestacioForm.nom.setRequiredError("El camp nom és obligatori");
 		amonestacioForm.cognoms.setRequiredError("El camp cognoms és obligatori");
-		amonestacioForm.materia.setRequiredError("El camp materia és obligatori");
+		amonestacioForm.comboSubject.setRequiredError("El camp materia és obligatori");
 		amonestacioForm.circunstancia.setRequiredError("El camp circunstancia és obligatori");
 		amonestacioForm.tutor.setRequiredError("El camp tutor és obligatori");
 		amonestacioForm.grup.setRequiredError("El camp grup és obligatori");
@@ -666,8 +679,6 @@ public class TeacherViewWarningJava extends MainContentView {
 		generatePDF generatepdf = new generatePDF();
 		timewarning = generatepdf.generate(returnQuery());
 
-		String nomCognom = amonestacioForm.nom.getValue() + " " + amonestacioForm.cognoms.getValue();
-
 		Embedded c = new Embedded();
 		sourceFile = new File(timewarning[0]);
 
@@ -675,6 +686,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		c.setWidth("100%");
 		c.setHeight("600px");
 		c.setType(Embedded.TYPE_BROWSER);
+
 		pdf.verticalpdf.removeAllComponents();
 
 		pdf.verticalpdf.setSizeFull();
@@ -700,7 +712,7 @@ public class TeacherViewWarningJava extends MainContentView {
 		amonestacioForm.motiu2.clear();
 		amonestacioForm.circunstancia.clear();
 		amonestacioForm.accio.clear();
-		amonestacioForm.materia.clear();
+		amonestacioForm.comboSubject.clear();
 		// amonestacioForm.baceptar.click();
 	}
 
@@ -736,6 +748,7 @@ public class TeacherViewWarningJava extends MainContentView {
 
 		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 
+		tutorJPA = new TutorJPAManager();
 		tutor = tutorJPA.getNomTutor(id);
 		try {
 			grup = amonestacioForm.grup.getValue();
@@ -744,7 +757,6 @@ public class TeacherViewWarningJava extends MainContentView {
 			motiu2 = amonestacioForm.motiu2.getValue().toString();
 			amonestat = amonestacioForm.accio.getValue().toString();
 			localitzacio = amonestacioForm.circunstancia.getValue().toString();
-			System.out.println("Nombreprofe: " + nameTeacher);
 			if (amonestat.equals("Amonestat")) {
 				amonestat2 = "true";
 			} else
@@ -756,22 +768,19 @@ public class TeacherViewWarningJava extends MainContentView {
 			// TODO Auto-generated catch block
 			Notification.show("Els camps obligatoris s'han d'emplenar");
 		}
-		if (String.valueOf(amonestacioForm.materia.getValue()).equals("null")) {
+		if (String.valueOf(amonestacioForm.comboSubject.getValue()).equals("null")) {
 
 			assignatura = null;
 		} else {
-			assignatura = amonestacioForm.materia.getValue().toString();
+			assignatura = amonestacioForm.comboSubject.getValue().toString();
 		}
 
-		System.out.println("amonestat:" + amonestat + " gravetat: " + gravetat);
-		System.out.println("amonestat2:" + amonestat2 + " gravetat: " + gravetat);
-
+		
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
 				altres_motius, motiu2, nameTeacher, "" };
 
-		System.out.println("TIEMPO: " + timewarning);
-		// DATOS PARA INTRODUCIR EN EL PARTE
 
+		tutorJPA.closeTransaction();
 		return query;
 	}
 
@@ -812,12 +821,7 @@ public class TeacherViewWarningJava extends MainContentView {
 
 		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 
-		// if(!amonestacioForm.datefield.getValue().toString().equals("")){
-		// System.out.println("valor date: "+
-		// amonestacioForm.datefield.getValue().toString());
-		// timewarning = amonestacioForm.datefield.getValue().toString()+"
-		// "+amonestacioForm.time.getValue().toString();
-		// }
+		tutorJPA = new TutorJPAManager();
 		tutor = tutorJPA.getNomTutor(id);
 		try {
 			grup = amonestacioForm.grup.getValue();
@@ -826,7 +830,6 @@ public class TeacherViewWarningJava extends MainContentView {
 			motiu2 = amonestacioForm.motiu2.getValue().toString();
 			amonestat = amonestacioForm.accio.getValue().toString();
 			localitzacio = amonestacioForm.circunstancia.getValue().toString();
-			System.out.println("Nombreprofe: " + nameTeacher);
 
 			if (amonestat.equals("Amonestat")) {
 				amonestat2 = "true";
@@ -840,10 +843,10 @@ public class TeacherViewWarningJava extends MainContentView {
 			Notification.show("Els camps obligatoris s'han d'emplenar");
 			e.printStackTrace();
 		}
-		if (String.valueOf(amonestacioForm.materia.getValue()).equals("null")) {
+		if (String.valueOf(amonestacioForm.comboSubject.getValue()).equals("null")) {
 			assignatura = null;
 		} else {
-			assignatura = amonestacioForm.materia.getValue().toString();
+			assignatura = amonestacioForm.comboSubject.getValue().toString();
 		}
 
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
@@ -876,7 +879,7 @@ public class TeacherViewWarningJava extends MainContentView {
 
 	/**
 	 * Deselección de todos los elementos marcados en el componente Grid
-	 * */
+	 */
 	public void clear() {
 		// TODO Auto-generated method stub
 

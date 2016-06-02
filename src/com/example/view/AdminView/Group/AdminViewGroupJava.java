@@ -80,12 +80,11 @@ public class AdminViewGroupJava extends MainContentView {
 	private Window windowAdd = new Window();
 	private Window windowEdit = new Window();
 	private GroupJPAManager MA;
-	private EntityManagerUtil entitymanager;
-	private EntityManager em;
+	private EntityManagerUtil entitymanager = new EntityManagerUtil();
+	private EntityManager em = entitymanager.getEntityManager();
 
 	public AdminViewGroupJava() throws PersistenceException, PSQLException {
-		entitymanager = new EntityManagerUtil();
-		em = entitymanager.getEntityManager();
+		
 		// TODO Auto-generated constructor stub
 		grupFormAdd = new AdminViewGroupForm();
 		grupFormAdd = new AdminViewGroupForm();
@@ -160,8 +159,6 @@ public class AdminViewGroupJava extends MainContentView {
 						int Fila = (grid.getContainerDataSource().getItemIds().size()) - 1;
 
 						Object id = grid.getContainerDataSource().getIdByIndex(Fila);
-						System.out.println("Fila: " + Fila);
-						System.out.println("Grup: " + id);
 
 						m.select(id);
 						grid.scrollTo(id);
@@ -175,8 +172,9 @@ public class AdminViewGroupJava extends MainContentView {
 
 					notif("Omple els camps obligatoris");
 				}
-
 			}
+			
+		
 
 		});
 

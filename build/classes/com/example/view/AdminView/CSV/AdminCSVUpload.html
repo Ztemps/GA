@@ -4,26 +4,30 @@
   <meta charset="UTF-8" name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:true,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:88,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src&quot;,&quot;THEME&quot;:&quot;gatheme&quot;}">
  </head> 
  <body> 
-  <vaadin-css-layout responsive width-full> 
+  <vaadin-css-layout responsive width-full height="80%"> 
    <vaadin-vertical-layout> 
-    <vaadin-vertical-layout spacing responsive width="50%" _id="mainStudent" :middle :center> 
+    <vaadin-vertical-layout spacing responsive width="60%" _id="mainStudent" :middle :center> 
      <vaadin-vertical-layout spacing responsive :middle :center :expand> 
-      <vaadin-button icon="fonticon://FontAwesome/f128" description="Ejemple fitxer alumnes.csv : ID,NOM_COMPLET,GRUP,DATA_NAXIMENET,PAIS_NAXIMENET,NACIONALITAT,TELEFON_CONTACTE
+      <vaadin-horizontal-layout responsive width-full :middle :center> 
+       <vaadin-label plain-text _id="txtUpStudents" :middle :right>
+         Alumnes 
+       </vaadin-label> 
+       <vaadin-button icon="fonticon://FontAwesome/f128" description="Ejemple fitxer alumnes.csv : ID,NOM_COMPLET,GRUP,DATA_NAXIMENET,PAIS_NAXIMENET,NACIONALITAT,TELEFON_CONTACTE
 1,GERARD PAULINO,ESO 1A,21/11/2003,ESPANYA,ESPANYOLA,673492265" plain-text _id="bButtonHelp" :middle :center></vaadin-button> 
-      <vaadin-label plain-text _id="txtUpStudents" :middle :center>
-        Carrega de professors 
-      </vaadin-label> 
-      <vaadin-vertical-layout responsive _id="vStudents" :middle :center></vaadin-vertical-layout> 
+      </vaadin-horizontal-layout> 
+      <vaadin-vertical-layout responsive _id="vStudents"></vaadin-vertical-layout> 
      </vaadin-vertical-layout> 
     </vaadin-vertical-layout> 
-    <vaadin-vertical-layout spacing responsive width="50%" _id="mainTeacer" :middle :center> 
+    <vaadin-vertical-layout spacing responsive width="60%" _id="mainTeacer" :middle :center> 
      <vaadin-vertical-layout spacing responsive :middle :center> 
-      <vaadin-button icon="fonticon://FontAwesome/f128" description="Ejemple fitxer professors.csv : NOM,COGNOMS,MAIL,USUARI,CONTRASENYA,GRUP(ej: ESO 1A o null)     Gerard,Paulino,gpaulino@elpuig.xeill.net,gpaulino,Nomeolvides1,ESO 1A
+      <vaadin-horizontal-layout width-full :middle :center> 
+       <vaadin-label responsive plain-text _id="txtUpTeachers" :middle :right>
+         Professors 
+       </vaadin-label> 
+       <vaadin-button icon="fonticon://FontAwesome/f128" description="Ejemple fitxer professors.csv : NOM,COGNOMS,MAIL,USUARI,CONTRASENYA,GRUP(ej: ESO 1A o null)     Gerard,Paulino,gpaulino@elpuig.xeill.net,gpaulino,Nomeolvides1,ESO 1A
 " responsive plain-text _id="bButtonHelpTeacher" :middle :center></vaadin-button> 
-      <vaadin-label responsive plain-text _id="txtUpTeachers" :middle :center>
-        Carrega de professors 
-      </vaadin-label> 
-      <vaadin-vertical-layout responsive _id="vTeachers" :middle :center></vaadin-vertical-layout> 
+      </vaadin-horizontal-layout> 
+      <vaadin-vertical-layout responsive _id="vTeachers"></vaadin-vertical-layout> 
      </vaadin-vertical-layout> 
     </vaadin-vertical-layout> 
    </vaadin-vertical-layout> 
