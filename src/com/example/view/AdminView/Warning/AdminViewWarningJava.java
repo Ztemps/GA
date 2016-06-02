@@ -110,6 +110,7 @@ public class AdminViewWarningJava extends MainContentView {
 	private HeaderRow filterRow;
 	private TextField filterField;
 	private HeaderCell cell;
+	private WarningJPAManager war;
 	private ResourceBundle rb = ResourceBundle.getBundle("GA");
 	private static final String AL_NOM = "nom";
 	private static final String AL_COGNOMS = "cognoms";
@@ -250,7 +251,7 @@ public class AdminViewWarningJava extends MainContentView {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				try {
-					WarningJPAManager war = new WarningJPAManager();
+					war = new WarningJPAManager();
 					war.introducirParte(returnQuery2());
 					notif("Amonestació posada correctament");
 
@@ -260,82 +261,7 @@ public class AdminViewWarningJava extends MainContentView {
 				} finally {
 					window.close();
 					windowpdf.close();
-
-					// sendTel.sendWarning("Gerard_Paulino", timewarning[0]);
-
-					FileReader reader;
-					String path2 = null;
-					File currDir = new File(".");
-					String linea = null;
-					boolean checkTutor = false;
-					boolean checkPares = false;
-					boolean checkTelegram = false;
-
-					try {
-						path2 = currDir.getCanonicalPath();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-
-					File f = new File(rb.getString("file_settings"));
-
-					try {
-						if (!f.exists()) {
-							f.createNewFile();
-						}
-
-						BufferedReader br = new BufferedReader(new FileReader(f));
-						if (br.readLine() == null) {
-
-						} else {
-
-							reader = new FileReader(f);
-							BufferedReader flux = new BufferedReader(reader);
-
-							while ((linea = flux.readLine()) != null) {
-								StringTokenizer st = new StringTokenizer(linea, ",");
-								while (st.hasMoreTokens()) {
-
-									String aux1 = st.nextToken();
-									String aux2 = st.nextToken();
-									String aux3 = st.nextToken();
-									String aux4 = st.nextToken();
-									String aux5 = st.nextToken();
-									String aux6 = st.nextToken();
-
-									if (st.nextToken().equals("true")) {
-										checkTutor = true;
-									} else {
-										checkTutor = false;
-									}
-
-									if (st.nextToken().equals("true")) {
-										checkPares = true;
-									} else {
-										checkPares = false;
-									}
-
-									if (st.nextToken().equals("true")) {
-										checkTelegram = true;
-										sendTel = new SendTelegram();
-										String contacteProba = "Gerard_Paulino";
-										sendTel.sendWarning(contacteProba, timewarning[0]);
-
-									} else {
-										checkTelegram = false;
-
-									}
-
-								}
-							}
-
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
+					war.closeTransaction();
 				}
 
 			}
