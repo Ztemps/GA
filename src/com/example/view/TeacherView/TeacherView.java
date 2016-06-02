@@ -86,7 +86,10 @@ public class TeacherView extends MainView implements View {
 	private UserJPAManager ma;
 	private TutorJPAManager tutorJPA;
 	private ResourceBundle rb = ResourceBundle.getBundle("GA");
-
+	
+	/**
+	 * Constructor TeacherView
+	 * */
 	public TeacherView() throws MalformedURLException, DocumentException, IOException, SQLException {
 
 		content.addStyleName("contenido");
@@ -94,7 +97,7 @@ public class TeacherView extends MainView implements View {
 		vistaAmonestacion = new AdminViewWarningJava();
 		vistaOwn = new TeacherOwnWarningsJava();
 		vistaConfig = new TeacherConfigView();
-		Items();
+		generalSettings();
 		vistaConfig.setVisible(false);
 
 		content.addComponent(vistaAmonestacion);
@@ -103,11 +106,16 @@ public class TeacherView extends MainView implements View {
 
 		warning.addClickListener(e -> Amonestacions());
 		mevesAmonestacions.addClickListener(e -> MevesAmonestacions());
-		configuracio.addClickListener(e -> Config());
+		configuracio.addClickListener(e -> ViewConfig());
 
 	}
 
-	private void Items() throws IOException {
+	
+	
+	/**
+	 * Funcion que configura los botones principales 
+	 * */
+	private void generalSettings() throws IOException {
 
 		setLogo();
 		students.setVisible(false);
@@ -133,13 +141,19 @@ public class TeacherView extends MainView implements View {
 
 	}
 
-	public void Config() {
+	
+	/**
+	 * Funcion que configura los botones principales 
+	 * */
+	public void ViewConfig() {
 		vistaAmonestacion.setVisible(false);
 		vistaOwn.setVisible(false);
 		vistaConfig.setVisible(true);
 
 	}
-
+	/**
+	 * Funcion que configura los botones principales 
+	 * */
 	public void MevesAmonestacions() {
 		vistaAmonestacion.setVisible(false);
 		vistaConfig.setVisible(false);
@@ -151,7 +165,6 @@ public class TeacherView extends MainView implements View {
 		vistaOwn.setVisible(false);
 		vistaConfig.setVisible(false);
 		vistaAmonestacion.setVisible(true);
-
 	}
 
 	private void setWellcome() {

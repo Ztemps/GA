@@ -58,6 +58,9 @@ public class TeacherConfigView extends MainContentView {
 	private VerticalLayout vl = new VerticalLayout();
 	UserJPAManager MA;
 
+	/**
+	 * Constructor TeacherConfigView
+	 * */
 	public TeacherConfigView() {
 
 		HideTemplateComponents();
