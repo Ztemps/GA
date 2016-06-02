@@ -40,16 +40,18 @@ import com.vaadin.ui.themes.ValoTheme;
  * 
  * Gestió d'Amonestacions v1.0
  *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
+ * Esta obra está sujeta a la licencia
+ * Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative
+ * Commons. Para ver una copia de esta licencia, visite
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/.
  * 
- * 		
- * 		Clase necesaria para poder subir archivos CSV
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net
+ * 
+ * 
+ *         Clase necesaria para poder subir archivos CSV
  * 
  */
 
@@ -77,13 +79,12 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		Image logo = new Image("", resource);
 		logo.setWidth("15%");
 		logo.setHeight("15%");
-		
+
 		FileResource resourceTeacher = new FileResource(new File(rb.getString("upload_icon")));
 		Image upload_teacher = new Image("", resourceTeacher);
 		upload_teacher.setWidth("15%");
 		upload_teacher.setHeight("15%");
-		
-		
+
 		// CSV STUDENTS
 		uploadStudent.setButtonCaption(null);
 		uploadStudent.addSucceededListener(receiver);
@@ -187,9 +188,9 @@ public class AdminViewCSVUploadJava extends MainContentView {
 			String path = null;
 
 			String extension = filename.substring(filename.indexOf("."));
-			//String ext = Files.getFileExtension(filename);
+			// String ext = Files.getFileExtension(filename);
 			System.out.println(extension);
-			
+
 			if (extension.equals(".csv")) {
 				try {
 					File currDir = new File(".");
@@ -212,7 +213,7 @@ public class AdminViewCSVUploadJava extends MainContentView {
 				new Notification("Error al carregar el fitxer: Comproba que el format del" + "fitxer sigui .csv",
 						Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());
 
-//				getUI().getNavigator().navigateTo(AdminView.NAME);
+				getUI().getNavigator().navigateTo(AdminView.NAME);
 				AdminView.viewCsv();
 
 				return null;
@@ -227,13 +228,9 @@ public class AdminViewCSVUploadJava extends MainContentView {
 			try {
 				String ext = Files.getFileExtension(file.getAbsolutePath());
 
-				if(ext.equals(".csv")){
-					
-					if (file.exists()) {
-						csvloader.loadStudents(file);
-					}
+				if (file.exists()) {
+					csvloader.loadStudents(file);
 				}
-				
 
 			} catch (IOException | SQLException | ParseException e) {
 				new Notification("El fitxer no está estructurat com ha de ser", Notification.Type.ERROR_MESSAGE)

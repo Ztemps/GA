@@ -62,7 +62,6 @@ public class GaUI extends UI {
 	protected void init(VaadinRequest request) {
 
 		datePicker = new InlineDateField();
-		
 		datePicker.setLocale(java.util.Locale.getDefault());
 		getPage().setTitle(TITLE);
 		addStyleName(ValoTheme.UI_WITH_MENU);

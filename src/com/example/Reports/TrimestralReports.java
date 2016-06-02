@@ -1106,7 +1106,7 @@ public class TrimestralReports {
 			diff = diaFinalTrimestre3.getTime() - diaIniciTrimestre3.getTime();
 			numSetmanes = (diff / (24 * 60 * 60 * 1000)) / 7;
 
-			fileWriter.append("1r Trimestre   Curs: " + dateCurs);
+			fileWriter.append("3r Trimestre   Curs: " + dateCurs);
 			fileWriter.append(COMMA_DELIMITER);
 			fileWriter.append(NEW_LINE_SEPARATOR);
 			fileWriter.append(NEW_LINE_SEPARATOR);
