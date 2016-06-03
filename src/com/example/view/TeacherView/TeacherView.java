@@ -78,8 +78,6 @@ public class TeacherView extends MainView implements View {
 	private static final long serialVersionUID = 1L;
 
 	public static final String NAME = "Professor";
-
-	//private TeacherViewWarningJava vistaAmonestacion;
 	private AdminViewWarningJava vistaAmonestacion;
 	private TeacherOwnWarningsJava vistaOwn;
 	private TeacherConfigView vistaConfig;

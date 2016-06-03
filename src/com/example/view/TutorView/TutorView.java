@@ -92,8 +92,8 @@ public class TutorView extends MainView implements View {
 		content.setMargin(false);
 		content.setSpacing(true);
 		sep5.setVisible(false);
-		sep4.setVisible(false);
-		sep3.setVisible(false);
+		sep4.setVisible(true);
+		sep3.setVisible(true);
 
 		warning.addClickListener(e -> viewWarnings());
 		mevesAmonestacions.addClickListener(e -> ownWarnings());

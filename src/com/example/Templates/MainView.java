@@ -29,12 +29,12 @@ public class MainView extends HorizontalLayout {
 	protected Label wellcome;
 	protected Button sep;
 	protected Button warning;
-	protected Button groupsTutor;
-	protected Button mevesAmonestacions;
 	protected Button sep3;
 	protected Button students;
 	protected Button tutors;
+	protected Button mevesAmonestacions;
 	protected Button teachers;
+	protected Button groupsTutor;
 	protected Button groups;
 	protected Button usuaris;
 	protected Button sep4;

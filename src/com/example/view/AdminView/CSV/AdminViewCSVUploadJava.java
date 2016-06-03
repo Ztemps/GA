@@ -188,8 +188,6 @@ public class AdminViewCSVUploadJava extends MainContentView {
 			String path = null;
 
 			String extension = filename.substring(filename.indexOf("."));
-			// String ext = Files.getFileExtension(filename);
-			System.out.println(extension);
 
 			if (extension.equals(".csv")) {
 				try {
@@ -266,20 +264,13 @@ public class AdminViewCSVUploadJava extends MainContentView {
 		@Override
 		public OutputStream receiveUpload(String filename, String mimeType) {
 			FileOutputStream fos = null;
-			String path = null;
 
 			String extension = filename.substring(filename.indexOf("."));
 			if (extension.equals(".csv")) {
 
 				try {
 					// Open the file for writing.
-					File currDir = new File(".");
-					try {
-						path = currDir.getCanonicalPath();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				
 
 					file = new File(rb.getString("path_csv") + filename);
 					fos = new FileOutputStream(file);
@@ -292,7 +283,9 @@ public class AdminViewCSVUploadJava extends MainContentView {
 				new Notification("Error al carregar el fitxer: Comproba que el format del" + "fitxer sigui .csv",
 						Notification.Type.ERROR_MESSAGE).show(Page.getCurrent());
 
-				// Si no es csv, pim pam
+
+				getUI().getNavigator().navigateTo(AdminView.NAME);
+				AdminView.viewCsv();
 
 				return null;
 
