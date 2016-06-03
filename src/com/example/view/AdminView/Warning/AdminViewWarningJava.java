@@ -92,7 +92,6 @@ public class AdminViewWarningJava extends MainContentView {
 	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
 	private JPAContainer<Student> students;
 	private AdminWarning amonestacioForm;
-	private TutorJPAManager t;
 	private TutorJPAManager tutorJPA;
 	private File sourceFile;
 	private FileResource resource;
@@ -122,7 +121,6 @@ public class AdminViewWarningJava extends MainContentView {
 
 	public AdminViewWarningJava() throws MalformedURLException, DocumentException, IOException {
 
-		GridProperties();
 		WindowProperties();
 		buttonsSettings();
 		WindowPdfProperties();
@@ -212,7 +210,7 @@ public class AdminViewWarningJava extends MainContentView {
 
 					} else if (amonestacioForm.time.isValid() == false) {
 						notif("El camp hora no té un format correcte. ");
-
+						
 						return false;
 
 					} else {
@@ -515,6 +513,7 @@ public class AdminViewWarningJava extends MainContentView {
 
 		amonestacioForm = new AdminWarning();
 
+		window.setWidth(900.0f, Unit.PIXELS);
 		window.setHeight("80%");
 		window.setWidth("70%");
 		window.setDraggable(false);
@@ -553,8 +552,8 @@ public class AdminViewWarningJava extends MainContentView {
 
 		String nametutor = "";
 
-		tutorJPA = new TutorJPAManager();
 		try {
+			tutorJPA = new TutorJPAManager();
 
 			idtutor = tutorJPA.getIdTutor(grup.toString());
 			nametutor = tutorJPA.getNomTutor(idtutor);
@@ -580,7 +579,6 @@ public class AdminViewWarningJava extends MainContentView {
 
 		nomCognom = amonestacioForm.nom.getValue() + " " + amonestacioForm.cognoms.getValue();
 
-		tutorJPA.closeTransaction();
 	}
 
 	/**
@@ -588,6 +586,7 @@ public class AdminViewWarningJava extends MainContentView {
 	 * de amonestacion
 	 */
 	private void getItemSelectedToAmonestacioForm() {
+		tutorJPA = new TutorJPAManager();
 
 		amonestacioForm.nom.setReadOnly(false);
 		amonestacioForm.cognoms.setReadOnly(false);
@@ -635,7 +634,7 @@ public class AdminViewWarningJava extends MainContentView {
 		amonestacioForm.grup.setReadOnly(true);
 
 		nomCognom = amonestacioForm.nom.getValue() + " " + amonestacioForm.cognoms.getValue();
-
+		tutorJPA.closeTransaction();
 	}
 
 	/**
@@ -733,6 +732,7 @@ public class AdminViewWarningJava extends MainContentView {
 		// TODO Auto-generated method stub
 		String expulsat = "";
 
+		tutorJPA = new TutorJPAManager();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
 
 		// Obtener la id del alumno
@@ -752,9 +752,8 @@ public class AdminViewWarningJava extends MainContentView {
 		String amonestat2 = null;
 		String time = null;
 
-		int id = (int) getUI().getSession().getAttribute("id");
+		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 
-		tutorJPA = new TutorJPAManager();
 		tutor = tutorJPA.getNomTutor(id);
 		try {
 			data = amonestacioForm.datefield.getValue().toString();
@@ -811,6 +810,8 @@ public class AdminViewWarningJava extends MainContentView {
 	public String[] returnQuery2() throws MalformedURLException, DocumentException, IOException {
 		// TODO Auto-generated method stub
 		String expulsat = "";
+		
+		tutorJPA = new TutorJPAManager();
 
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
 
@@ -832,12 +833,15 @@ public class AdminViewWarningJava extends MainContentView {
 		String data = null;
 		String time = null;
 
-		int id = (int) getUI().getSession().getAttribute("id");
+		int id = (int) getUI().getCurrent().getSession().getAttribute("id");
 
 		tutor = tutorJPA.getNomTutor(id);
 		try {
 
 			data = amonestacioForm.datefield.getValue().toString();
+
+			convertDate = new ConverterDates();
+			String convertedDate = convertDate.converterDate2(data);
 
 			time = amonestacioForm.time.getValue().toString();
 			grup = amonestacioForm.grup.getValue();
@@ -870,7 +874,7 @@ public class AdminViewWarningJava extends MainContentView {
 				altres_motius, motiu2, timewarning[0], nameTeacher, convertedDate, timewarning[2] };
 
 		// DATOS PARA INTRODUCIR EN EL PARTE
-
+		tutorJPA.closeTransaction();
 		return query;
 	}
 
@@ -927,6 +931,7 @@ public class AdminViewWarningJava extends MainContentView {
 		subjects.add("Tecnologia");
 		subjects.add("Francès");
 
+
 		amonestacioForm.comboSubject.setFilteringMode(FilteringMode.CONTAINS);
 		amonestacioForm.comboSubject.setImmediate(true);
 
@@ -948,7 +953,7 @@ public class AdminViewWarningJava extends MainContentView {
 	 */
 	private void PopulateComboBoxProf() {
 
-		teacherJPA = new TeachersJPAManager();
+		teacherJPA  = new TeachersJPAManager();
 		List<Teacher> lista = teacherJPA.getNoms();
 		// Set the appropriate filtering mode for this example
 		amonestacioForm.comboProf.setFilteringMode(FilteringMode.CONTAINS);
@@ -969,7 +974,7 @@ public class AdminViewWarningJava extends MainContentView {
 			amonestacioForm.comboProf.addItem(lista.get(i).getNom() + " " + lista.get(i).getCognoms());
 
 		}
-
+		
 		teacherJPA.closeTransaction();
 
 	}

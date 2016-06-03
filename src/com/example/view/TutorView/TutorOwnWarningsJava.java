@@ -61,7 +61,6 @@ public class TutorOwnWarningsJava extends MainContentView {
 	private SQLContainer container;
 	private SQLContainer containerGroups;
 	private EntityManagerUtil entman = new EntityManagerUtil();
-
 	private EntityManager em = entman.getEntityManager();
 
 	private String usuari;
@@ -86,8 +85,6 @@ public class TutorOwnWarningsJava extends MainContentView {
 	public TutorOwnWarningsJava() throws MalformedURLException, DocumentException, IOException {
 
 		buttonsSettings();
-		gridProperties();
-		gridGroupProperties();
 		WindowProperties();
 		
 		jdbccp = new JDBCConnectionPool();
@@ -209,6 +206,7 @@ public class TutorOwnWarningsJava extends MainContentView {
 		buttonEdit.setCaption("Les meves amonestacions");
 
 		try {
+		
 			teacherJPA = new TeachersJPAManager();
 			int id = Integer.parseInt(getUI().getSession().getAttribute("id").toString());
 			usuari = teacherJPA.currentTeacherName();

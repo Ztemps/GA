@@ -273,17 +273,15 @@ public class TeacherView extends MainView implements View {
 	}
 	public void logout() {
 		getUI().getNavigator().navigateTo(LoginView.NAME);
-		getUI().getCurrent().getSession().setAttribute("id", null);
-		getUI().getCurrent().getSession().setAttribute("user", null);
-		getUI().getCurrent().getSession().setAttribute("rol", null);
-		getUI().getCurrent().getSession().setAttribute("login", null);
+		getUI().getSession().setAttribute("id", null);
+		getUI().getSession().setAttribute("user", null);
+		getUI().getSession().setAttribute("rol", null);
+		getUI().getSession().setAttribute("login", null);
 		notif("Sessió tancada");
 	}
 
 	private void setLogo() throws IOException {
 		// TODO Auto-generated method stub
-		File currDir = new File(".");
-		String path2 = currDir.getCanonicalPath();
 
 		FileResource resource = new FileResource(new File(rb.getString("main_logo")));		Image logo = new Image("", resource);
 		logo.setWidth("90px");
