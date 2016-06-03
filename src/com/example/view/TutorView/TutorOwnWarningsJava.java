@@ -1,7 +1,6 @@
 
 package com.example.view.TutorView;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -34,30 +33,34 @@ import com.vaadin.ui.themes.ValoTheme;
 
 /*******************************************************************************
  * 
- * Gestió d'Amonestacions v1.0  
+ * Gestió d'Amonestacions v1.0
  *
- * Esta obra está sujeta a la licencia Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative Commons. 
- * Para ver una copia de esta licencia, visite http://creativecommons.org/licenses/by-nc-nd/4.0/.
- *  
- * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net 
- * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net 
- * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net 
- * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net 
+ * Esta obra está sujeta a la licencia
+ * Reconocimiento-NoComercial-SinObraDerivada 4.0 Internacional de Creative
+ * Commons. Para ver una copia de esta licencia, visite
+ * http://creativecommons.org/licenses/by-nc-nd/4.0/.
  * 
- * 	En esta clase se mostrarán los partes de los alumnos del Tutor
+ * @author Francisco Javier Casado Moreno - fcasado@elpuig.xeill.net
+ * @author Daniel Pérez Palacino - dperez@elpuig.xeill.net
+ * @author Gerard Enrique Paulino Decena - gpaulino@elpuig.xeill.net
+ * @author Xavier Murcia Gámez - xmurcia@elpuig.xeill.net
+ * 
+ *         En esta clase se mostrarán los partes de los alumnos del Tutor
  * 
  *******************************************************************************/
 
 public class TutorOwnWarningsJava extends MainContentView {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private File sourceFile;
-	private String nomCognoms;
 	private String fecha;
 	private String hora;
 	private SQLContainer container;
 	private SQLContainer containerGroups;
 	private EntityManagerUtil entman = new EntityManagerUtil();
-
 	private EntityManager em = entman.getEntityManager();
 
 	private String usuari;
@@ -67,10 +70,9 @@ public class TutorOwnWarningsJava extends MainContentView {
 	private Query query = null;
 
 	private Window window = new Window();
-	private TeachersJPAManager teacherJPA = new TeachersJPAManager();
-	private JDBCConnectionPool jdbccp = new JDBCConnectionPool();
-	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
-	private Button b = new Button();
+	private TeachersJPAManager teacherJPA;
+	private JDBCConnectionPool jdbccp ;
+	private ConfirmWarningPDF pdf;
 
 	private boolean gridUsed = false;
 	private boolean gridUsedGroup = false;
@@ -83,10 +85,10 @@ public class TutorOwnWarningsJava extends MainContentView {
 	public TutorOwnWarningsJava() throws MalformedURLException, DocumentException, IOException {
 
 		buttonsSettings();
-		gridProperties();
-		gridGroupProperties();
 		WindowProperties();
-
+		
+		jdbccp = new JDBCConnectionPool();
+		pdf = new ConfirmWarningPDF();
 		bRegister.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -134,12 +136,14 @@ public class TutorOwnWarningsJava extends MainContentView {
 
 		});
 		vHorizontalMain.addComponent(gridProperties());
+		
+		
 	}
 
 	/**
-	 *	Método que contiene las propiedas de la grid de alumnos
-	 * @return grid
-	 * 			Contiene los datos de los alumnos
+	 * Método que contiene las propiedas de la grid de alumnos
+	 * 
+	 * @return grid Contiene los datos de los alumnos
 	 */
 	public Grid gridProperties() {
 
@@ -149,6 +153,7 @@ public class TutorOwnWarningsJava extends MainContentView {
 		txtTitle.setValue("Les meves amonestacions");
 		buttonEdit.setCaption("Els meus Grups/Amonestats");
 
+		teacherJPA = new TeachersJPAManager();
 		usuari = teacherJPA.currentTeacherName();
 		try {
 
@@ -158,36 +163,39 @@ public class TutorOwnWarningsJava extends MainContentView {
 							+ "where a.docent=d.id and a.alumne=al.id and d.nom LIKE '" + usuari + "'",
 					jdbccp.GetConnection()));
 
-		} catch (SQLException e) {
+			grid = new Grid("", container);
+			grid.setContainerDataSource(container);
+			grid.setColumns("nom", "cognoms", "grup", "data");
+			grid.setSizeFull();
+			grid.setColumnReorderingAllowed(true);
+			grid.setSelectionMode(SelectionMode.SINGLE);
+			
+			grid.addSelectionListener(new SelectionListener() {
+
+				@Override
+				public void select(SelectionEvent event) {
+					// TODO Auto-generated method stub
+					bAdd.setEnabled(true);
+					// buttonEdit.setEnabled(true);
+					// bDelete.setEnabled(true);
+
+				}
+			});
+			
+		} catch (SQLException | NullPointerException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
-		grid = new Grid("", container);
-		grid.setContainerDataSource(container);
-		grid.setColumns("nom", "cognoms", "grup", "data");
-		grid.setSizeFull();
-		grid.setColumnReorderingAllowed(true);
-		grid.setSelectionMode(SelectionMode.SINGLE);
-		grid.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void select(SelectionEvent event) {
-				// TODO Auto-generated method stub
-				bAdd.setEnabled(true);
-				// buttonEdit.setEnabled(true);
-				// bDelete.setEnabled(true);
-
-			}
-		});
+		teacherJPA.closeTransaction();
+		
 
 		return grid;
 	}
 
 	/**
-	 *	Método que contiene las propiedades de la grid de grupos
-	 * @return grid
-	 * 			Con datos de los grupos
+	 * Método que contiene las propiedades de la grid de grupos
+	 * 
+	 * @return grid Con datos de los grupos
 	 */
 	public Grid gridGroupProperties() {
 		gridUsedGroup = true;
@@ -197,19 +205,22 @@ public class TutorOwnWarningsJava extends MainContentView {
 		txtTitle.setValue("Els meus Grups/Amonestats");
 		buttonEdit.setCaption("Les meves amonestacions");
 
-		int id = Integer.parseInt(getUI().getCurrent().getSession().getAttribute("id").toString());
+		try {
+		
+			teacherJPA = new TeachersJPAManager();
+			int id = Integer.parseInt(getUI().getSession().getAttribute("id").toString());
+			usuari = teacherJPA.currentTeacherName();
+			query = em.createNativeQuery(
 
-		usuari = teacherJPA.currentTeacherName();
-		em.getTransaction().begin();
+					"SELECT grup FROM usuari u, tutor t WHERE t.docent= u.id_docent AND u.id_docent = " + id
+							+ " LIMIT 1");
 
-		query = em.createNativeQuery(
+		} catch (NullPointerException e) {
 
-				"SELECT grup FROM usuari u, tutor t WHERE t.docent= u.id_docent AND u.id_docent = " + id + " LIMIT 1");
-
-		em.getTransaction().commit();
+		}
 
 		try {
-	
+
 			String tutorGroup = query.getSingleResult().toString();
 			containerGroups = new SQLContainer(new FreeformQuery(
 					"select al.nom, " + "al.cognoms," + " a.grup, " + "a.motius_selection," + " a.altres_motius,"
@@ -218,28 +229,18 @@ public class TutorOwnWarningsJava extends MainContentView {
 							+ tutorGroup + "'",
 					jdbccp.GetConnection()));
 
-		} catch (SQLException e) {
+			gridGroups = new Grid("", containerGroups);
+			gridGroups.setContainerDataSource(containerGroups);
+			gridGroups.setColumns("nom", "cognoms", "grup", "data");
+			gridGroups.setSizeFull();
+			gridGroups.setColumnReorderingAllowed(true);
+			gridGroups.setSelectionMode(SelectionMode.SINGLE);
+
+		} catch (SQLException | NullPointerException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
-		gridGroups = new Grid("", containerGroups);
-		gridGroups.setContainerDataSource(containerGroups);
-		gridGroups.setColumns("nom", "cognoms", "grup", "data");
-		gridGroups.setSizeFull();
-		gridGroups.setColumnReorderingAllowed(true);
-		gridGroups.setSelectionMode(SelectionMode.SINGLE);
-		gridGroups.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void select(SelectionEvent event) {
-				// TODO Auto-generated method stub
-				bAdd.setEnabled(true);
-				// buttonEdit.setEnabled(true);
-				// bDelete.setEnabled(true);
-
-			}
-		});
+		teacherJPA.closeTransaction();
 
 		return gridGroups;
 	}
@@ -248,7 +249,7 @@ public class TutorOwnWarningsJava extends MainContentView {
 	 * Método que limpiará los campos
 	 */
 	public void clear() {
-		
+
 		// TODO Auto-generated method stub
 		bDelete.setEnabled(false);
 		buttonEdit.setEnabled(false);
@@ -275,9 +276,9 @@ public class TutorOwnWarningsJava extends MainContentView {
 	}
 
 	/**
-	 * 	Método que contiene las opciones de los botones
+	 * Método que contiene las opciones de los botones
 	 */
-	private void WindowProperties(){
+	private void WindowProperties() {
 
 		window.setHeight("95%");
 		window.setWidth("95%");
@@ -291,6 +292,7 @@ public class TutorOwnWarningsJava extends MainContentView {
 
 	/**
 	 * Método que consigue el nombre y apellido del item seleccionado
+	 * 
 	 * @return nomCognom
 	 */
 	private String getItemNomCognomSelected() {
@@ -307,7 +309,8 @@ public class TutorOwnWarningsJava extends MainContentView {
 	}
 
 	/**
-	 *	Método que consigue la hora del item seleccionado
+	 * Método que consigue la hora del item seleccionado
+	 * 
 	 * @return hora
 	 */
 	private String getDateSelected() {
@@ -321,7 +324,8 @@ public class TutorOwnWarningsJava extends MainContentView {
 
 	/**
 	 * 
-	 *  Método que consigue el nombre y apellido del grupo seleccionado
+	 * Método que consigue el nombre y apellido del grupo seleccionado
+	 * 
 	 * @return nomCognom
 	 */
 	private String getItemGroupsNomCognomSelected() {
@@ -339,6 +343,7 @@ public class TutorOwnWarningsJava extends MainContentView {
 
 	/**
 	 * Método que consigue la hora del grupo seleccionado
+	 * 
 	 * @return
 	 */
 	private String getGroupsDateSelected() {
@@ -351,10 +356,11 @@ public class TutorOwnWarningsJava extends MainContentView {
 		return hora;
 	}
 
-	
 	/**
 	 * 
-	 * Método que genera un PDF una ventana con el PDF ya generado a partir de la ruta seleccionada
+	 * Método que genera un PDF una ventana con el PDF ya generado a partir de
+	 * la ruta seleccionada
+	 * 
 	 * @throws IOException
 	 * @throws DocumentException
 	 */
@@ -381,7 +387,9 @@ public class TutorOwnWarningsJava extends MainContentView {
 
 	/**
 	 * 
-	 * Método que genera un PDF una ventana con el PDF ya generado a partir de la ruta seleccionada
+	 * Método que genera un PDF una ventana con el PDF ya generado a partir de
+	 * la ruta seleccionada
+	 * 
 	 * @throws IOException
 	 * @throws DocumentException
 	 */

@@ -305,12 +305,14 @@ public class LoginView extends LoginViewDesign implements View {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			rs.close();
+			st.close();
+			conn.close();
+
 		}
 		// Cerramos la conexion con la base de datos
-		rs.close();
-		st.close();
-		conn.close();
-
+		
 	}
 
 	/**
@@ -325,6 +327,7 @@ public class LoginView extends LoginViewDesign implements View {
 		getUI().getSession().setAttribute("user", username);
 		getUI().getSession().setAttribute("id", user.getId());
 		getUI().getSession().setAttribute("login", "true");
+		getUI().getSession().setAttribute("rol", user.getRol());
 
 	}
 	

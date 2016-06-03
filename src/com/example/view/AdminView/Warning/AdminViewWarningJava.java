@@ -45,7 +45,6 @@ import com.example.Templates.ConfirmWarningPDF;
 import com.example.Templates.MainContentView;
 import com.example.view.AdminView.AdminView;
 import com.example.view.AdminView.Settings.AdminViewSettingsJava;
-import com.example.view.TeacherView.WarningTeacher;
 import com.itextpdf.text.DocumentException;
 import com.vaadin.addon.jpacontainer.JPAContainer;
 import com.vaadin.addon.jpacontainer.JPAContainerFactory;
@@ -93,8 +92,6 @@ public class AdminViewWarningJava extends MainContentView {
 	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
 	private JPAContainer<Student> students;
 	private AdminWarning amonestacioForm;
-	private TutorJPAManager t;
-	private WarningJPAManager WarningJPA;
 	private TutorJPAManager tutorJPA;
 	private File sourceFile;
 	private FileResource resource;
@@ -111,6 +108,8 @@ public class AdminViewWarningJava extends MainContentView {
 	private HeaderRow filterRow;
 	private TextField filterField;
 	private HeaderCell cell;
+	private TeachersJPAManager teacherJPA;
+	private WarningJPAManager war;
 	private ResourceBundle rb = ResourceBundle.getBundle("GA");
 	private static final String AL_NOM = "nom";
 	private static final String AL_COGNOMS = "cognoms";
@@ -122,10 +121,6 @@ public class AdminViewWarningJava extends MainContentView {
 
 	public AdminViewWarningJava() throws MalformedURLException, DocumentException, IOException {
 
-		WarningJPA = new WarningJPAManager();
-		tutorJPA = new TutorJPAManager();
-
-		GridProperties();
 		WindowProperties();
 		buttonsSettings();
 		WindowPdfProperties();
@@ -251,7 +246,7 @@ public class AdminViewWarningJava extends MainContentView {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				try {
-					WarningJPAManager war = new WarningJPAManager();
+					war = new WarningJPAManager();
 					war.introducirParte(returnQuery2());
 					notif("Amonestació posada correctament");
 
@@ -261,83 +256,8 @@ public class AdminViewWarningJava extends MainContentView {
 				} finally {
 					window.close();
 					windowpdf.close();
-
-					// sendTel.sendWarning("Gerard_Paulino", timewarning[0]);
-
-					FileReader reader;
-					String path2 = null;
-					File currDir = new File(".");
-					String linea = null;
-					boolean checkTutor = false;
-					boolean checkPares = false;
-					boolean checkTelegram = false;
-
-					try {
-						path2 = currDir.getCanonicalPath();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-
-					File f = new File(rb.getString("file_settings"));
-
-					try {
-						if (!f.exists()) {
-							f.createNewFile();
-						}
-
-						BufferedReader br = new BufferedReader(new FileReader(f));
-						if (br.readLine() == null) {
-
-						} else {
-
-							reader = new FileReader(f);
-							BufferedReader flux = new BufferedReader(reader);
-
-							while ((linea = flux.readLine()) != null) {
-								StringTokenizer st = new StringTokenizer(linea, ",");
-								while (st.hasMoreTokens()) {
-
-									String aux1 = st.nextToken();
-									String aux2 = st.nextToken();
-									String aux3 = st.nextToken();
-									String aux4 = st.nextToken();
-									String aux5 = st.nextToken();
-									String aux6 = st.nextToken();
-
-									if (st.nextToken().equals("true")) {
-										checkTutor = true;
-									} else {
-										checkTutor = false;
-									}
-
-									if (st.nextToken().equals("true")) {
-										checkPares = true;
-									} else {
-										checkPares = false;
-									}
-
-									if (st.nextToken().equals("true")) {
-										checkTelegram = true;
-										sendTel = new SendTelegram();
-										String contacteProba = "Gerard_Paulino";
-										sendTel.sendWarning(contacteProba, timewarning[0]);
-
-									} else {
-										checkTelegram = false;
-
-									}
-
-								}
-							}
-
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
 				}
+				war.closeTransaction();
 
 			}
 
@@ -633,6 +553,7 @@ public class AdminViewWarningJava extends MainContentView {
 		String nametutor = "";
 
 		try {
+			tutorJPA = new TutorJPAManager();
 
 			idtutor = tutorJPA.getIdTutor(grup.toString());
 			nametutor = tutorJPA.getNomTutor(idtutor);
@@ -665,6 +586,7 @@ public class AdminViewWarningJava extends MainContentView {
 	 * de amonestacion
 	 */
 	private void getItemSelectedToAmonestacioForm() {
+		tutorJPA = new TutorJPAManager();
 
 		amonestacioForm.nom.setReadOnly(false);
 		amonestacioForm.cognoms.setReadOnly(false);
@@ -712,7 +634,7 @@ public class AdminViewWarningJava extends MainContentView {
 		amonestacioForm.grup.setReadOnly(true);
 
 		nomCognom = amonestacioForm.nom.getValue() + " " + amonestacioForm.cognoms.getValue();
-
+		tutorJPA.closeTransaction();
 	}
 
 	/**
@@ -810,6 +732,7 @@ public class AdminViewWarningJava extends MainContentView {
 		// TODO Auto-generated method stub
 		String expulsat = "";
 
+		tutorJPA = new TutorJPAManager();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
 
 		// Obtener la id del alumno
@@ -866,6 +789,7 @@ public class AdminViewWarningJava extends MainContentView {
 		String[] query = { name, surname, grup, gravetat, localitzacio, assignatura, tutor, amonestat2, expulsat, motiu,
 				altres_motius, motiu2, nameTeacher, convertedDate, time };
 
+		tutorJPA.closeTransaction();
 		return query;
 	}
 
@@ -886,6 +810,8 @@ public class AdminViewWarningJava extends MainContentView {
 	public String[] returnQuery2() throws MalformedURLException, DocumentException, IOException {
 		// TODO Auto-generated method stub
 		String expulsat = "";
+		
+		tutorJPA = new TutorJPAManager();
 
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
 
@@ -948,7 +874,7 @@ public class AdminViewWarningJava extends MainContentView {
 				altres_motius, motiu2, timewarning[0], nameTeacher, convertedDate, timewarning[2] };
 
 		// DATOS PARA INTRODUCIR EN EL PARTE
-
+		tutorJPA.closeTransaction();
 		return query;
 	}
 
@@ -990,19 +916,21 @@ public class AdminViewWarningJava extends MainContentView {
 		subjects.add("Català");
 		subjects.add("Ciències de la naturalesa");
 		subjects.add("Economia");
-		subjects.add("Educaciò Fisica");
-		subjects.add("Educaciò per la ciutadania");
+		subjects.add("Educació Fisica");
+		subjects.add("Educació per la ciutadania");
 		subjects.add("Educació visual i plàstica");
 		subjects.add("Llatí");
 		subjects.add("Filosofia");
 		subjects.add("Física i química");
 		subjects.add("Geologia");
 		subjects.add("História");
-		subjects.add("Informatica");
+		subjects.add("Informàtica");
 		subjects.add("Matemàtiques");
 		subjects.add("Música");
 		subjects.add("Religió");
 		subjects.add("Tecnologia");
+		subjects.add("Francès");
+
 
 		amonestacioForm.comboSubject.setFilteringMode(FilteringMode.CONTAINS);
 		amonestacioForm.comboSubject.setImmediate(true);
@@ -1025,8 +953,8 @@ public class AdminViewWarningJava extends MainContentView {
 	 */
 	private void PopulateComboBoxProf() {
 
-		TeachersJPAManager ma = new TeachersJPAManager();
-		List<Teacher> lista = ma.getNoms();
+		teacherJPA  = new TeachersJPAManager();
+		List<Teacher> lista = teacherJPA.getNoms();
 		// Set the appropriate filtering mode for this example
 		amonestacioForm.comboProf.setFilteringMode(FilteringMode.CONTAINS);
 		amonestacioForm.comboProf.setImmediate(true);
@@ -1046,6 +974,8 @@ public class AdminViewWarningJava extends MainContentView {
 			amonestacioForm.comboProf.addItem(lista.get(i).getNom() + " " + lista.get(i).getCognoms());
 
 		}
+		
+		teacherJPA.closeTransaction();
 
 	}
 

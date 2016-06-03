@@ -57,12 +57,14 @@ public class TeacherOwnWarningsJava extends MainContentView {
 	private String usuari;
 	private Grid grid;
 	private Window window = new Window();
-	private UserJPAManager UserJPA = new UserJPAManager();
-	private TeachersJPAManager teacherJPA = new TeachersJPAManager();
+	private TeachersJPAManager teacherJPA;
 	private JDBCConnectionPool jdbccp = new JDBCConnectionPool();
 	private ConfirmWarningPDF pdf = new ConfirmWarningPDF();
 	private Button b = new Button();
 
+	/**
+	 * Constructor TeacherOwnWarningsJava
+	 * */
 	public TeacherOwnWarningsJava() throws MalformedURLException, DocumentException, IOException {
 
 		buttonsSettings();
@@ -106,6 +108,7 @@ public class TeacherOwnWarningsJava extends MainContentView {
 	 * */
 	public Grid gridProperties() {
 
+		teacherJPA =  new TeachersJPAManager();
 		usuari = teacherJPA.currentTeacherName();
 		try {
 
@@ -135,6 +138,7 @@ public class TeacherOwnWarningsJava extends MainContentView {
 		});
 		
 		
+		teacherJPA.closeTransaction();
 
 		return grid;
 	}
@@ -191,7 +195,6 @@ public class TeacherOwnWarningsJava extends MainContentView {
 
 	}
 
-	
 	/**
 	 * Nombre y apellidos del alumno seleccionado en la Grid
 	 * 

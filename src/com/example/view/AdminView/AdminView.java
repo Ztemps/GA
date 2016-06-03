@@ -97,14 +97,17 @@ public class AdminView extends MainView implements View {
 	@Override
 	public void enter(ViewChangeEvent event) {
 
-		if (getUI().getCurrent().getSession().getAttribute("login") == null) {
-
-			getUI().getSession().setAttribute("user", "");
-			getUI().getSession().setAttribute("id", "");
+		if (getUI().getSession().getAttribute("login") == null || 
+				!getUI().getSession().getAttribute("rol").equals("Administrador"))  {
+			
+			getUI().getSession().setAttribute("user", null);
+			getUI().getSession().setAttribute("id", null);
+			getUI().getSession().setAttribute("rol", null);
+			getUI().getSession().setAttribute("login", null);
 			getUI().getPage().setLocation("/GA");
-
-		} else {
-
+			
+		}else{
+			
 			setWellcome();
 		}
 
@@ -271,7 +274,7 @@ public class AdminView extends MainView implements View {
 
 		// TUTOR
 		tutors.addClickListener(new ClickListener() {
-			
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
@@ -284,7 +287,7 @@ public class AdminView extends MainView implements View {
 
 		// ALUMNES
 		students.addClickListener(new ClickListener() {
-			
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// TODO Auto-generated method stub
@@ -524,7 +527,7 @@ public class AdminView extends MainView implements View {
 
 	public static void viewCsv() {
 
-		//ViewCSV.reloadGrid();
+		// ViewCSV.reloadGrid();
 		ViewStudents.setVisible(false);
 		ViewGrupos.setVisible(false);
 		ViewDocents.setVisible(false);
@@ -627,7 +630,8 @@ public class AdminView extends MainView implements View {
 		getUI().getNavigator().navigateTo(LoginView.NAME);
 		getUI().getCurrent().getSession().setAttribute("id", null);
 		getUI().getCurrent().getSession().setAttribute("user", null);
-		getUI().getCurrent().getSession().close();
+		getUI().getCurrent().getSession().setAttribute("rol", null);
+		getUI().getCurrent().getSession().setAttribute("login", null);
 		notif("Sessió tancada");
 	}
 

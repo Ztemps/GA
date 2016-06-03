@@ -5,35 +5,33 @@
  </head> 
  <body> 
   <vaadin-css-layout size-full> 
-   <vaadin-vertical-layout size-full> 
+   <vaadin-vertical-layout spacing margin> 
     <vaadin-vertical-layout spacing _id="mainTrimestral" :middle :center> 
-     <vaadin-vertical-layout size-full :middle :center :expand> 
-      <vaadin-label plain-text _id="txtUpTrimestral" :middle :center>
+     <vaadin-vertical-layout responsive :middle :center :expand> 
+      <vaadin-label responsive plain-text _id="txtUpTrimestral" :middle :center>
         Informes Trimestrals 
       </vaadin-label> 
       <vaadin-horizontal-layout spacing responsive width-full margin _id="hTrimestral" :middle :center :expand> 
-       <vaadin-button width-full plain-text _id="generateReportTrimestre1" :middle :center :expand>
+       <vaadin-button responsive width-full plain-text _id="generateReportTrimestre1" :middle :center :expand>
          1r Trimestre 
        </vaadin-button> 
-       <vaadin-button width-full plain-text _id="generateReportTrimestre2" :middle :center :expand>
+       <vaadin-button responsive width-full plain-text _id="generateReportTrimestre2" :middle :center :expand>
          2on Trimestre 
        </vaadin-button> 
-       <vaadin-button width-full plain-text _id="generateReportTrimestre3" :middle :center :expand>
+       <vaadin-button responsive width-full plain-text _id="generateReportTrimestre3" :middle :center :expand>
          3er Trimestre 
        </vaadin-button> 
       </vaadin-horizontal-layout> 
      </vaadin-vertical-layout> 
     </vaadin-vertical-layout> 
-    <vaadin-vertical-layout spacing _id="mainTotal" :middle :center> 
-     <vaadin-vertical-layout spacing size-full :middle :center> 
-      <vaadin-label plain-text _id="txtUpTotal" :middle :center>
+    <vaadin-vertical-layout responsive _id="mainTotal" :middle :center> 
+     <vaadin-vertical-layout responsive margin :middle :center> 
+      <vaadin-label responsive plain-text _id="txtUpTotal" :middle :center>
         Informes Anuals 
       </vaadin-label> 
-      <vaadin-horizontal-layout spacing responsive _id="hTotal" :middle :center :expand> 
-       <vaadin-button plain-text _id="generateReportTotal" :middle :center>
-         Total Curs 
-       </vaadin-button> 
-      </vaadin-horizontal-layout> 
+      <vaadin-button responsive width="20%" plain-text _id="generateReportTotal" :middle :center>
+        Total Curs 
+      </vaadin-button> 
      </vaadin-vertical-layout> 
     </vaadin-vertical-layout> 
    </vaadin-vertical-layout> 

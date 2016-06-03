@@ -29,7 +29,6 @@ public class AdminReportCSVUpload extends CssLayout {
 	protected Button generateReportTrimestre3;
 	protected VerticalLayout mainTotal;
 	protected Label txtUpTotal;
-	protected HorizontalLayout hTotal;
 	protected Button generateReportTotal;
 
 	public AdminReportCSVUpload() {

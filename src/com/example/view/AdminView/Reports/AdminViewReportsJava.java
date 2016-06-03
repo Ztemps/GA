@@ -88,8 +88,6 @@ public class AdminViewReportsJava extends MainContentView {
 		csv.txtUpTotal.setValue("Carrega d'Informes Anuals");
 		csv.txtUpTotal.addStyleName("marginTitle");
 
-		csv.hTotal.addStyleName("buttonsLayout");
-
 		// csv.hTotal.removeAllComponents();
 		// csv.hTotal.addComponents(uploadtrimestre1);
 
