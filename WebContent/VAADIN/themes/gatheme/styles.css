@@ -12397,7 +12397,7 @@ font-weight:bold;
 	color: black;
 	font-size: 14px;
 	line-height: 30px;
-	border-right: 1px solid #3b3b3b;
+	border-right: 3px solid #d4d4d4;
 	white-space: nowrap;
 }
 
@@ -12740,7 +12740,7 @@ font-weight:bold;
 
 .gatheme .valo-menu-part.large-icons .valo-menu-item {
 	display: block;
-	font-size: 26px;
+	font-size: 18px;
 	line-height: 1;
 	padding: 12px;
 	text-align: center;

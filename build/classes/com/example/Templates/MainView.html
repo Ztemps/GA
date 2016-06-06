@@ -5,9 +5,9 @@
  </head> 
  <body> 
   <vaadin-horizontal-layout style-name="valo-menu-responsive" responsive id="responsive-application-template" size-full> 
-   <vaadin-css-layout style-name="valo-menu"> 
+   <vaadin-css-layout style-name="valo-menu" responsive :middle :center> 
     <vaadin-css-layout style-name="valo-menu-part"> 
-     <vaadin-horizontal-layout style-name="valo-menu-title" width-full _id="menuTitle"> 
+     <vaadin-horizontal-layout style-name="valo-menu-title" responsive width-full _id="menuTitle"> 
       <vaadin-label size-auto _id="menuTitleLabel" :middle :expand>
         Gestió 
        <strong>d'Amonestacions</strong> 
@@ -80,7 +80,7 @@
      </vaadin-css-layout> 
     </vaadin-css-layout> 
    </vaadin-css-layout> 
-   <vaadin-vertical-layout spacing size-full margin _id="content" :middle :center :expand></vaadin-vertical-layout> 
+   <vaadin-vertical-layout spacing responsive size-full margin _id="content" :middle :center :expand></vaadin-vertical-layout> 
   </vaadin-horizontal-layout>  
  </body>
 </html>
